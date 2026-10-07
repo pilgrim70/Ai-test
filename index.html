@@ -225,6 +225,51 @@
         <!-- Interactive AI Studio Showcase (Core Shorts Generator) -->
         <section class="studio-section" id="studio">
             <div class="container">
+
+                <!-- Hero Unlimited Input Box Section -->
+                <div class="hero-shorts-banner glass-card" id="hero-input-box" style="margin-bottom: 36px; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9)); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 20px; padding: 32px 24px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);">
+                    <div style="text-align: center; max-width: 820px; margin: 0 auto 24px auto;">
+                        <div class="unlimited-badge" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(90deg, #2563eb, #7c3aed); color: #ffffff; padding: 6px 18px; border-radius: 20px; font-weight: 800; font-size: 13px; margin-bottom: 16px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);">
+                            <i class="fa-solid fa-infinity"></i> 무제한 0원 FREE · AI 자동 설교 감지 Engine v3.5
+                        </div>
+                        <h2 style="font-size: 30px; font-weight: 800; color: #ffffff; margin-bottom: 10px; line-height: 1.3;">
+                            유튜브 링크 입력 한 번으로 <span class="gradient-text" style="background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">1분 은혜 쇼츠 무제한 생성</span>
+                        </h2>
+                        <p style="font-size: 14px; color: #94a3b8; margin: 0; line-height: 1.6;">
+                            긴 주일 예배 풀영상에서 AI가 감동적인 설교 핵심 구간만 3초 만에 9:16 세로 쇼츠로 자동 추출합니다.
+                        </p>
+                    </div>
+
+                    <!-- YouTube Link Input Form -->
+                    <div class="url-input-card" style="max-width: 780px; margin: 0 auto 20px auto; background: rgba(15, 23, 42, 0.85); border: 1px solid #334155; border-radius: 16px; padding: 10px 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+                        <i class="fa-brands fa-youtube" style="font-size: 28px; color: #ff0000; margin-left: 8px;"></i>
+                        <input type="text" id="youtube-url-input" placeholder="https://www.youtube.com/watch?v=예배풀영상링크 입력..." style="flex: 1; background: transparent; border: none; color: #ffffff; font-size: 15px; font-weight: 500; outline: none; padding: 10px 6px;">
+                        <button class="btn btn-primary" id="start-ai-youtube" onclick="processShortsCreation()" style="background: linear-gradient(135deg, #2563eb, #7c3aed); color: #ffffff; font-weight: 700; font-size: 15px; border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; transition: all 0.2s; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>무료로 쇼츠 만들기</span>
+                        </button>
+                    </div>
+
+                    <!-- File Drag & Drop Dropzone Box -->
+                    <div id="dropzone" class="dropzone-box" style="max-width: 780px; margin: 0 auto 20px auto; border: 2px dashed #334155; border-radius: 14px; padding: 20px; text-align: center; background: rgba(15, 23, 42, 0.4); cursor: pointer; transition: all 0.2s;" onclick="document.getElementById('file-input').click()">
+                        <i class="fa-solid fa-cloud-arrow-up" style="font-size: 32px; color: #38bdf8; margin-bottom: 8px;"></i>
+                        <div style="font-weight: 700; font-size: 14px; color: #e2e8f0; margin-bottom: 4px;">여기로 주일 예배 동영상 파일(MP4, MOV, MKV)을 드래그하거나 클릭하여 업로드</div>
+                        <div style="font-size: 12px; color: #64748b;">최대 용량 제한 없음 · 무제한 4K/1080p 처리</div>
+                        <input type="file" id="file-input" accept="video/*" style="display: none;">
+                    </div>
+
+                    <!-- Quick Sample Video Presets & Feature Badges -->
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; text-align: center;">
+                        <span style="font-size: 13px; color: #64748b; font-weight: 600;">⚡ 빠른 체험 샘플:</span>
+                        <button class="sample-chip" onclick="loadSampleVideo('pastor_lee')" style="background: rgba(30, 41, 59, 0.8); border: 1px solid #475569; color: #cbd5e1; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-cross" style="color: #38bdf8;"></i> 2026 주일예배 설교 (34분)
+                        </button>
+                        <button class="sample-chip" onclick="loadSampleVideo('pastor_kim')" style="background: rgba(30, 41, 59, 0.8); border: 1px solid #475569; color: #cbd5e1; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-fire" style="color: #f97316;"></i> 금요 은혜 기도회 (45분)
+                        </button>
+                    </div>
+                </div>
+
                 <div class="section-header center">
                     <div class="section-tag"><i class="fa-solid fa-sliders"></i> LIVE INTERACTIVE STUDIO</div>
                     <h2 class="section-title">스스로 찾아내는 <span class="gradient-text">AI 설교 감지 & 1분 쇼츠 메이커</span></h2>
@@ -391,32 +436,109 @@
                                 </div>
                             </div>
 
-                            <!-- Shorts Styling Controls -->
-                            <div class="shorts-customizer">
-                                <h4><i class="fa-solid fa-palette"></i> 자막 & 스타일 커스텀</h4>
+                            <!-- Shorts Styling & Video Workbench Controls -->
+                            <div class="shorts-customizer glass-card" style="margin-top: 16px; padding: 20px; border-radius: 16px; background: rgba(15, 23, 42, 0.7); border: 1px solid #1e293b;">
+                                <h4 style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                                    <span><i class="fa-solid fa-sliders" style="color: #38bdf8;"></i> 비디오 편집 & 자막 레이아웃</span>
+                                    <span style="font-size: 11px; background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 6px; font-weight: 800;">무제한 FREE</span>
+                                </h4>
                                 
-                                <div class="style-presets">
-                                    <button class="preset-btn active" onclick="setSubtitleStyle('neon')">🌟 네온 강조</button>
-                                    <button class="preset-btn" onclick="setSubtitleStyle('modern')">📱 깔끔 모던</button>
-                                    <button class="preset-btn" onclick="setSubtitleStyle('classic')">🕊️ 클래식</button>
-                                    <button class="preset-btn" onclick="setSubtitleStyle('box')">📦 박스 자막</button>
+                                <!-- 1. Aspect Ratio Selector -->
+                                <div style="margin-bottom: 16px;">
+                                    <label style="font-size: 12px; font-weight: 600; color: #94a3b8; display: block; margin-bottom: 8px;">📐 화면 비율 선택</label>
+                                    <div class="aspect-ratio-selector" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                                        <button class="aspect-btn active" onclick="setAspectRatio('9:16')" style="background: rgba(30, 41, 59, 0.9); border: 1px solid #38bdf8; color: #ffffff; padding: 8px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">📱 9:16 쇼츠</button>
+                                        <button class="aspect-btn" onclick="setAspectRatio('16:9')" style="background: rgba(30, 41, 59, 0.4); border: 1px solid #334155; color: #94a3b8; padding: 8px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">📺 16:9 가로</button>
+                                        <button class="aspect-btn" onclick="setAspectRatio('1:1')" style="background: rgba(30, 41, 59, 0.4); border: 1px solid #334155; color: #94a3b8; padding: 8px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">🔳 1:1 정방형</button>
+                                    </div>
                                 </div>
 
-                                <div class="toggle-options">
-                                    <label class="toggle-item">
-                                        <input type="checkbox" id="toggle-face-track" checked>
-                                        <span class="slider-round"></span>
-                                        <span class="toggle-label"><i class="fa-solid fa-face-smile"></i> 목사님 9:16 얼굴 자동 추적</span>
+                                <!-- 2. Video Time Range Trimmer -->
+                                <div style="margin-bottom: 16px; background: rgba(30, 41, 59, 0.5); padding: 12px; border-radius: 10px; border: 1px solid #334155;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <label style="font-size: 12px; font-weight: 600; color: #38bdf8;"><i class="fa-solid fa-scissors"></i> 구간 정밀 자르기 (Trimmer)</label>
+                                        <span id="trimmer-duration-badge" style="font-size: 11px; background: #0284c7; color: white; padding: 2px 8px; border-radius: 4px; font-weight: 700;">총 58초 (1분 컷)</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="flex: 1; display: flex; align-items: center; gap: 4px;">
+                                            <span style="font-size: 11px; color: #94a3b8;">시작:</span>
+                                            <input type="number" id="trim-start-min" value="32" min="0" max="180" style="width: 44px; background: #0f172a; border: 1px solid #334155; color: #fff; padding: 4px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 12px;" onchange="updateTrimmerTime()"> 분
+                                            <input type="number" id="trim-start-sec" value="14" min="0" max="59" style="width: 44px; background: #0f172a; border: 1px solid #334155; color: #fff; padding: 4px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 12px;" onchange="updateTrimmerTime()"> 초
+                                        </div>
+                                        <span style="color: #64748b; font-weight: 800;">~</span>
+                                        <div style="flex: 1; display: flex; align-items: center; gap: 4px;">
+                                            <span style="font-size: 11px; color: #94a3b8;">종료:</span>
+                                            <input type="number" id="trim-end-min" value="33" min="0" max="180" style="width: 44px; background: #0f172a; border: 1px solid #334155; color: #fff; padding: 4px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 12px;" onchange="updateTrimmerTime()"> 분
+                                            <input type="number" id="trim-end-sec" value="12" min="0" max="59" style="width: 44px; background: #0f172a; border: 1px solid #334155; color: #fff; padding: 4px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 12px;" onchange="updateTrimmerTime()"> 초
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 3. Subtitle Preset Style Buttons -->
+                                <div style="margin-bottom: 16px;">
+                                    <label style="font-size: 12px; font-weight: 600; color: #94a3b8; display: block; margin-bottom: 8px;">🎨 자막 스타일 프리셋</label>
+                                    <div class="style-presets" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                                        <button class="preset-btn active" onclick="setSubtitleStyle('neon')">🌟 네온 강조</button>
+                                        <button class="preset-btn" onclick="setSubtitleStyle('modern')">📱 깔끔 모던</button>
+                                        <button class="preset-btn" onclick="setSubtitleStyle('classic')">🕊️ 클래식</button>
+                                        <button class="preset-btn" onclick="setSubtitleStyle('box')">📦 박스 자막</button>
+                                    </div>
+                                </div>
+
+                                <!-- 4. Subtitle Font Selector -->
+                                <div style="margin-bottom: 16px;">
+                                    <label style="font-size: 12px; font-weight: 600; color: #94a3b8; display: block; margin-bottom: 6px;">🔤 자막 폰트</label>
+                                    <select id="font-family-select" onchange="changeFontFamily(this.value)" style="width: 100%; background: #0f172a; border: 1px solid #334155; color: #ffffff; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; outline: none; cursor: pointer;">
+                                        <option value="'Noto Sans KR', sans-serif">Noto Sans KR (기본 깔끔)</option>
+                                        <option value="'Inter', sans-serif">Inter (모던 글로벌)</option>
+                                        <option value="'Black Han Sans', sans-serif">Black Han Sans (굵은 강조)</option>
+                                        <option value="'Outfit', sans-serif">Outfit (스타일리시)</option>
+                                    </select>
+                                </div>
+
+                                <!-- 5. BGM & Audio Settings -->
+                                <div style="margin-bottom: 16px; background: rgba(30, 41, 59, 0.5); padding: 12px; border-radius: 10px; border: 1px solid #334155;">
+                                    <label style="font-size: 12px; font-weight: 600; color: #38bdf8; display: block; margin-bottom: 8px;"><i class="fa-solid fa-music"></i> 배경음악 (BGM) & 오디오</label>
+                                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                        <select id="bgm-select" style="flex: 1; background: #0f172a; border: 1px solid #334155; color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 12px;" onchange="changeBgmTrack(this.value)">
+                                            <option value="piano">🎹 은혜로운 잔잔한 피아노</option>
+                                            <option value="orchestra">🎻 감동적인 시네마틱 오케스트라</option>
+                                            <option value="cello">🎻 깊은 은혜 첼로</option>
+                                            <option value="none">🔇 BGM 없음 (목소리만)</option>
+                                        </select>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 11px; color: #94a3b8;">BGM 볼륨:</span>
+                                        <input type="range" id="bgm-volume" min="0" max="100" value="30" style="flex: 1; accent-color: #38bdf8;" oninput="updateBgmVolume(this.value)">
+                                        <span id="bgm-volume-val" style="font-size: 11px; color: #cbd5e1; font-weight: 700; width: 30px;">30%</span>
+                                    </div>
+                                </div>
+
+                                <!-- 6. Church Logo / Watermark Text Input -->
+                                <div style="margin-bottom: 16px;">
+                                    <label style="font-size: 12px; font-weight: 600; color: #94a3b8; display: block; margin-bottom: 6px;">⛪ 교회 로고 / 워터마크 문구</label>
+                                    <input type="text" id="church-logo-input" value="은혜샘교회 미디어팀" style="width: 100%; background: #0f172a; border: 1px solid #334155; color: #ffffff; padding: 8px 12px; border-radius: 8px; font-size: 13px; outline: none;" oninput="updateChurchBadge(this.value)">
+                                </div>
+
+                                <!-- 7. AI Toggle Controls -->
+                                <div class="toggle-options" style="margin-bottom: 16px;">
+                                    <label class="toggle-item" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; cursor: pointer;">
+                                        <span class="toggle-label" style="font-size: 13px; color: #cbd5e1;"><i class="fa-solid fa-face-smile" style="color: #f59e0b;"></i> 목사님 9:16 얼굴 자동 추적</span>
+                                        <input type="checkbox" id="toggle-face-track" checked style="accent-color: #2563eb; transform: scale(1.2);">
                                     </label>
-                                    <label class="toggle-item">
-                                        <input type="checkbox" id="toggle-noise" checked>
-                                        <span class="slider-round"></span>
-                                        <span class="toggle-label"><i class="fa-solid fa-waveform"></i> AI 잡음 제거 & 음성 명료화</span>
+                                    <label class="toggle-item" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; cursor: pointer;">
+                                        <span class="toggle-label" style="font-size: 13px; color: #cbd5e1;"><i class="fa-solid fa-waveform" style="color: #10b981;"></i> AI 음성 노이즈 제거 & 명료화</span>
+                                        <input type="checkbox" id="toggle-noise" checked style="accent-color: #2563eb; transform: scale(1.2);">
+                                    </label>
+                                    <label class="toggle-item" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                                        <span class="toggle-label" style="font-size: 13px; color: #cbd5e1;"><i class="fa-solid fa-bolt" style="color: #a855f7;"></i> AI 자막 오타/신학용어 자동 교정</span>
+                                        <input type="checkbox" id="toggle-spell" checked style="accent-color: #2563eb; transform: scale(1.2);">
                                     </label>
                                 </div>
 
-                                <button class="btn btn-primary btn-full export-shorts-btn" onclick="triggerShortsExport()">
-                                    <i class="fa-solid fa-download"></i> 1분 쇼츠 비디오 다운로드 (.mp4)
+                                <!-- 8. Unlimited Export Button -->
+                                <button class="btn btn-primary btn-full export-shorts-btn" onclick="triggerShortsExport()" style="width: 100%; background: linear-gradient(135deg, #2563eb, #7c3aed); border: none; padding: 14px; border-radius: 12px; color: white; font-weight: 800; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); transition: all 0.2s;">
+                                    <i class="fa-solid fa-download"></i> ✨ 무제한 4K / 1080p HD 쇼츠 비디오 다운로드 (.mp4)
                                 </button>
                             </div>
                         </div>
@@ -1550,6 +1672,82 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeModal('modal-game-flappy')">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 16: Unlimited Shorts Creator Studio Modal (쇼츠 메이커 무제한 팝업) -->
+    <div class="modal-backdrop" id="modal-shorts-creator">
+        <div class="modal-window glass-card modal-lg" style="background: #0b0e17; color: #fff; max-width: 840px; border: 1px solid rgba(56, 189, 248, 0.4); box-shadow: 0 25px 60px rgba(0,0,0,0.7);">
+            <div class="modal-header" style="border-bottom: 1px solid #1e293b; padding: 18px 24px;">
+                <div class="modal-title" style="color: #38bdf8; font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-wand-magic-sparkles" style="color: #818cf8;"></i>
+                    <span>무제한 1분 은혜 쇼츠 메이커 (Unlimited 0원 FREE)</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('modal-shorts-creator')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="modal-body" style="padding: 24px;">
+                <!-- AI Scanning Simulation Banner -->
+                <div id="shorts-modal-scanning" style="background: rgba(30, 41, 59, 0.7); border: 1px solid #334155; border-radius: 14px; padding: 16px; margin-bottom: 20px; text-align: center;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px;">
+                        <span class="status-dot green" style="width: 10px; height: 10px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
+                        <strong style="color: #38bdf8; font-size: 14px;" id="modal-scan-title">AI 설교 구간 자동 감지 Engine 가동 중...</strong>
+                    </div>
+                    <div style="background: #0f172a; border-radius: 10px; height: 8px; width: 100%; overflow: hidden; margin-bottom: 8px;">
+                        <div id="modal-scan-bar" style="background: linear-gradient(90deg, #3b82f6, #8b5cf6); height: 100%; width: 100%; transition: width 0.4s ease;"></div>
+                    </div>
+                    <div style="font-size: 12px; color: #94a3b8;" id="modal-scan-status">
+                        ✅ 설교 구간 34분 18초 추출 완료 · 🔥 Top 3 1분 하이라이트 쇼츠가 준비되었습니다.
+                    </div>
+                </div>
+
+                <!-- Input / URL Bar Inside Modal -->
+                <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid #1e293b; border-radius: 14px; padding: 14px; margin-bottom: 20px;">
+                    <label style="font-size: 12px; font-weight: 700; color: #cbd5e1; display: block; margin-bottom: 8px;">🔗 유튜브 링크 또는 샘플 영상 선택</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="modal-yt-url" placeholder="https://www.youtube.com/watch?v=예배풀영상..." value="https://www.youtube.com/watch?v=sample2026" style="flex: 1; background: #0f172a; border: 1px solid #334155; color: #fff; padding: 10px 14px; border-radius: 8px; font-size: 13px; outline: none;">
+                        <button class="btn btn-primary" onclick="processModalShortsCreation()" style="background: linear-gradient(135deg, #2563eb, #7c3aed); border: none; padding: 10px 18px; border-radius: 8px; color: white; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap;">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> 3초 쇼츠 생성
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Highlight Clip Cards in Modal -->
+                <div style="margin-bottom: 20px;">
+                    <h4 style="font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+                        <span><i class="fa-solid fa-scissors" style="color: #f59e0b;"></i> AI 추천 1분 명장면 클립</span>
+                        <span style="font-size: 11px; color: #94a3b8;">원하는 클립 선택 시 즉시 반영</span>
+                    </h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                        <div class="modal-hl-card active" onclick="selectModalHighlight(0)" style="background: rgba(30, 41, 59, 0.8); border: 1px solid #38bdf8; border-radius: 10px; padding: 12px; cursor: pointer;">
+                            <span style="font-size: 10px; background: rgba(239, 68, 68, 0.2); color: #ef4444; padding: 2px 6px; border-radius: 4px; font-weight: 800;">🔥 99점</span>
+                            <h5 style="font-size: 12px; font-weight: 700; color: #fff; margin: 6px 0 4px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">두려움을 이기는 담대한 믿음</h5>
+                            <p style="font-size: 11px; color: #94a3b8; margin: 0;">32:14 ~ 33:12 (58초)</p>
+                        </div>
+                        <div class="modal-hl-card" onclick="selectModalHighlight(1)" style="background: rgba(30, 41, 59, 0.4); border: 1px solid #334155; border-radius: 10px; padding: 12px; cursor: pointer;">
+                            <span style="font-size: 10px; background: rgba(59, 130, 246, 0.2); color: #3b82f6; padding: 2px 6px; border-radius: 4px; font-weight: 800;">✨ 은혜 강추</span>
+                            <h5 style="font-size: 12px; font-weight: 700; color: #fff; margin: 6px 0 4px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">고난 속 감사하는 진짜 이유</h5>
+                            <p style="font-size: 11px; color: #94a3b8; margin: 0;">41:05 ~ 42:01 (56초)</p>
+                        </div>
+                        <div class="modal-hl-card" onclick="selectModalHighlight(2)" style="background: rgba(30, 41, 59, 0.4); border: 1px solid #334155; border-radius: 10px; padding: 12px; cursor: pointer;">
+                            <span style="font-size: 10px; background: rgba(168, 85, 247, 0.2); color: #a855f7; padding: 2px 6px; border-radius: 4px; font-weight: 800;">📱 청년부 추천</span>
+                            <h5 style="font-size: 12px; font-weight: 700; color: #fff; margin: 6px 0 4px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">말씀으로 시작하는 하루</h5>
+                            <p style="font-size: 11px; color: #94a3b8; margin: 0;">48:50 ~ 49:50 (60초)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Action Footer Buttons -->
+                <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px;">
+                    <button class="btn btn-secondary" onclick="scrollToStudioAndCloseModal()" style="background: #1e293b; border: 1px solid #334155; color: #cbd5e1; font-weight: 600; padding: 10px 18px; border-radius: 10px; cursor: pointer;">
+                        <i class="fa-solid fa-sliders"></i> 스튜디오에서 상세 편집
+                    </button>
+                    <button class="btn btn-primary" onclick="triggerShortsExport(); closeModal('modal-shorts-creator');" style="background: linear-gradient(135deg, #2563eb, #7c3aed); border: none; color: white; font-weight: 800; padding: 10px 22px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-download"></i> ✨ 무제한 4K HD 쇼츠 다운로드 (.mp4)
+                    </button>
+                </div>
             </div>
         </div>
     </div>

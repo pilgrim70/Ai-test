@@ -2703,5 +2703,43 @@ body {
     display: none !important;
 }
 
+/* Unlimited Shorts Maker UI Enhancements */
+.sample-chip:hover {
+    background: rgba(51, 65, 85, 0.95) !important;
+    border-color: #38bdf8 !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.dropzone-box:hover {
+    border-color: #38bdf8 !important;
+    background: rgba(30, 41, 59, 0.6) !important;
+}
+
+.aspect-btn:hover {
+    border-color: #38bdf8 !important;
+    color: #ffffff !important;
+}
+
+.modal-hl-card:hover {
+    border-color: #38bdf8 !important;
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+}
+
+.unlimited-badge {
+    animation: pulseGlow 2.5s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    }
+    100% {
+        box-shadow: 0 6px 25px rgba(124, 58, 237, 0.7);
+    }
+}
+
+
 
 

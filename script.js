@@ -1480,3 +1480,151 @@ function flappyGameOver() {
     showToast(`GAME OVER! 최종 점수: ${flappyScore}점`);
 }
 
+/* ==========================================================================
+   Unlimited Shorts Creator Engine & Studio Workbench Handlers
+   ========================================================================== */
+
+function openShortsMakerModal(customUrl) {
+    const modal = document.getElementById('modal-shorts-creator');
+    if (modal) {
+        modal.classList.add('active');
+        if (customUrl) {
+            const urlInput = document.getElementById('modal-yt-url');
+            if (urlInput) urlInput.value = customUrl;
+        }
+        processModalShortsCreation();
+    } else {
+        scrollToSection('hero-input-box');
+    }
+}
+
+function processShortsCreation() {
+    const ytInput = document.getElementById('youtube-url-input');
+    const url = ytInput ? ytInput.value.trim() : '';
+    
+    showToast('⚡ AI 설교 구간 자동 탐지 Engine 가동 중...');
+    
+    const projTitle = document.getElementById('current-project-title');
+    if (projTitle && url) {
+        projTitle.textContent = `Project: ${url.replace('https://www.youtube.com/watch?v=', '')}_설교분석.mp4`;
+    }
+
+    setTimeout(() => {
+        scrollToSection('studio');
+        showToast('✨ 무제한 1분 은혜 쇼츠 생성이 완료되었습니다! 원하는 스타일로 편집하세요.');
+    }, 800);
+}
+
+function processModalShortsCreation() {
+    const scanBar = document.getElementById('modal-scan-bar');
+    const scanStatus = document.getElementById('modal-scan-status');
+    const scanTitle = document.getElementById('modal-scan-title');
+    
+    if (scanBar) scanBar.style.width = '10%';
+    if (scanTitle) scanTitle.textContent = 'AI 설교 구간 스캐닝 중... (0%)';
+    
+    setTimeout(() => {
+        if (scanBar) scanBar.style.width = '60%';
+        if (scanTitle) scanTitle.textContent = '설교 오디오 분석 & 9:16 얼굴 트래킹 중... (60%)';
+    }, 300);
+
+    setTimeout(() => {
+        if (scanBar) scanBar.style.width = '100%';
+        if (scanTitle) scanTitle.textContent = 'AI 설교 구간 추출 완료! (100%)';
+        if (scanStatus) scanStatus.textContent = '✅ 설교 구간 34분 18초 추출 완료 · 🔥 무제한 4K HD 1분 쇼츠가 준비되었습니다.';
+        showToast('🎉 무제한 쇼츠 생성이 준비되었습니다!');
+    }, 700);
+}
+
+function selectModalHighlight(idx) {
+    document.querySelectorAll('.modal-hl-card').forEach((card, i) => {
+        if (i === idx) {
+            card.classList.add('active');
+            card.style.borderColor = '#38bdf8';
+            card.style.background = 'rgba(30, 41, 59, 0.8)';
+        } else {
+            card.classList.remove('active');
+            card.style.borderColor = '#334155';
+            card.style.background = 'rgba(30, 41, 59, 0.4)';
+        }
+    });
+    selectHighlight(idx);
+}
+
+function scrollToStudioAndCloseModal() {
+    closeModal('modal-shorts-creator');
+    scrollToSection('studio');
+}
+
+function setAspectRatio(ratio) {
+    const phoneFrame = document.querySelector('.phone-frame');
+    document.querySelectorAll('.aspect-btn').forEach(btn => {
+        if (btn.innerText.includes(ratio)) {
+            btn.classList.add('active');
+            btn.style.borderColor = '#38bdf8';
+            btn.style.background = 'rgba(30, 41, 59, 0.9)';
+            btn.style.color = '#ffffff';
+        } else {
+            btn.classList.remove('active');
+            btn.style.borderColor = '#334155';
+            btn.style.background = 'rgba(30, 41, 59, 0.4)';
+            btn.style.color = '#94a3b8';
+        }
+    });
+
+    if (phoneFrame) {
+        if (ratio === '16:9') {
+            phoneFrame.style.aspectRatio = '16 / 9';
+            phoneFrame.style.maxHeight = '320px';
+        } else if (ratio === '1:1') {
+            phoneFrame.style.aspectRatio = '1 / 1';
+            phoneFrame.style.maxHeight = '400px';
+        } else {
+            phoneFrame.style.aspectRatio = '9 / 16';
+            phoneFrame.style.maxHeight = '580px';
+        }
+    }
+    showToast(`📐 화면 비율이 '${ratio}'(으)로 변경되었습니다.`);
+}
+
+function updateTrimmerTime() {
+    const startMin = parseInt(document.getElementById('trim-start-min')?.value || 0);
+    const startSec = parseInt(document.getElementById('trim-start-sec')?.value || 0);
+    const endMin = parseInt(document.getElementById('trim-end-min')?.value || 0);
+    const endSec = parseInt(document.getElementById('trim-end-sec')?.value || 0);
+
+    const totalStartSec = startMin * 60 + startSec;
+    const totalEndSec = endMin * 60 + endSec;
+    const diff = Math.max(0, totalEndSec - totalStartSec);
+
+    const badge = document.getElementById('trimmer-duration-badge');
+    if (badge) {
+        badge.textContent = `총 ${diff}초 (${diff <= 60 ? '1분 컷' : '롱폼 컷'})`;
+    }
+}
+
+function changeFontFamily(font) {
+    const subText = document.getElementById('sub-text-box');
+    if (subText) {
+        subText.style.fontFamily = font;
+    }
+    showToast('🔤 자막 폰트가 변경되었습니다.');
+}
+
+function changeBgmTrack(track) {
+    showToast(`🎵 배경음악이 변경되었습니다.`);
+}
+
+function updateBgmVolume(val) {
+    const volVal = document.getElementById('bgm-volume-val');
+    if (volVal) volVal.textContent = `${val}%`;
+}
+
+function updateChurchBadge(val) {
+    const badge = document.getElementById('shorts-church-badge');
+    if (badge) {
+        badge.innerHTML = `<i class="fa-solid fa-church"></i> ${val || '미디어팀'}`;
+    }
+}
+
+
