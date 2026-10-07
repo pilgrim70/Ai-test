@@ -1,0 +1,4 @@
+*.pyc
+__pycache__/
+leaderboard.txt
+leaderboard_hard.txt

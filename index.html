@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraceClip AI | 예배 영상 AI 설교 추출 & 1분 은혜 쇼츠 자동 제작</title>
+    <meta name="description" content="긴 예배 풀영상에서 AI가 설교 구간만 완벽 감지! 가장 감동적인 1분 명장면을 9:16 세로 쇼츠와 카드뉴스, 소그룹 나눔지, 가정예배지로 3분 만에 자동 생성합니다.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+
+    <!-- Glowing Background Lights -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+
+    <!-- Navigation Bar (Matching Reference Screenshot Top Bar) -->
+    <header class="navbar-container">
+        <nav class="navbar glass-nav">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <span class="logo-text">GraceClip <span class="logo-highlight">AI</span></span>
+            </div>
+            
+            <div class="nav-right-group">
+                <a href="#pricing" class="nav-simple-link">요금제</a>
+                <a href="#testimonials" class="nav-simple-link">블로그</a>
+                <button class="btn btn-ghost" id="theme-toggle" aria-label="다크/라이트 모드 전환">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="btn btn-dark-pill nav-start-btn" onclick="scrollToSection('hero-input-box')">시작하기</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section (Exactly Styled Like Reference Screenshot) -->
+        <section class="hero-section">
+            <div class="container hero-container">
+                
+                <!-- Main Catchy Title -->
+                <h1 class="hero-title-main">
+                    예배 영상 하나로, <span class="highlight-blue-text">한 주 사역 자료 & 1분 쇼츠 끝</span>
+                </h1>
+
+                <!-- Subtitle Chips -->
+                <p class="hero-tags-sub">
+                    쇼츠 비디오 · 카드뉴스 · QT · 소그룹 나눔지 · 설교요약 · PPT
+                </p>
+                <p class="hero-time-sub">3분이면 전부 완성</p>
+
+                <!-- Primary Upload Button (Matching Reference Image Blue Glow Button) -->
+                <div class="hero-cta-wrapper">
+                    <button class="btn btn-hero-blue" onclick="scrollToSection('hero-input-box')">
+                        <span>이번 주 예배 영상 올려보기</span>
+                    </button>
+                    <p class="hero-trust-text">
+                        <strong class="highlight-blue-count">12,400명</strong>의 목회자가 함께하고 있습니다
+                    </p>
+                </div>
+
+                <!-- Real User Testimonial Cards (Exactly matching screenshot middle 3 quotes) -->
+                <div class="hero-quotes-grid">
+                    <div class="quote-card glass-card">
+                        <p class="quote-body">"더 필요한 게 생각이 안 날 정도로 엄청나게 대단합니다. 시간을 엄청 절약할 수 있을 것 같습니다!"</p>
+                        <span class="quote-author">황 목사님</span>
+                    </div>
+                    <div class="quote-card glass-card">
+                        <p class="quote-body">"감탄 100입니다. 설교, 쇼츠, 사역자료 정말 딱 필요한 것을 만났네요. 군더더기 없이 깔끔하게 이루어진 부분도 너무 좋습니다."</p>
+                        <span class="quote-author">미니** 님</span>
+                    </div>
+                    <div class="quote-card glass-card">
+                        <p class="quote-body">"예배 풀영상에서 AI가 알아서 설교 핵심 1분 쇼츠와 소그룹 나눔지를 만드는데, 제가 만들었던 나눔지보다 훨씬 뛰어납니다."</p>
+                        <span class="quote-author">김 목사님</span>
+                    </div>
+                </div>
+
+                <!-- Input / Upload Card Box -->
+                <div class="hero-input-box glass-card" id="hero-input-box">
+                    <div class="input-tabs">
+                        <button class="tab-btn active" data-target="tab-youtube">
+                            <i class="fa-brands fa-youtube red-icon"></i> 유튜브 링크 입력
+                        </button>
+                        <button class="tab-btn" data-target="tab-file">
+                            <i class="fa-solid fa-cloud-arrow-up blue-icon"></i> 예배 영상 파일 업로드
+                        </button>
+                    </div>
+
+                    <div class="tab-content active" id="tab-youtube">
+                        <div class="url-input-wrapper">
+                            <i class="fa-solid fa-link input-icon"></i>
+                            <input type="text" id="youtube-url-input" placeholder="https://www.youtube.com/watch?v=예배풀영상주소" value="https://www.youtube.com/watch?v=K392_GraceSermon2026">
+                            <button class="btn btn-primary btn-lg start-ai-btn" id="start-ai-youtube">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span>AI 설교 감지 & 쇼츠 생성</span>
+                            </button>
+                        </div>
+                        <div class="sample-demo-bar">
+                            <span class="demo-label"><i class="fa-solid fa-bolt"></i> 바로 체험하기:</span>
+                            <button class="demo-chip" onclick="loadSampleVideo('pastor_lee')">
+                                🎬 2026 신년 대예배 (1시간 40분)
+                            </button>
+                            <button class="demo-chip" onclick="loadSampleVideo('pastor_kim')">
+                                🔥 금요 기도회 찬양 & 설교 (2시간)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab-file">
+                        <div class="file-dropzone" id="dropzone">
+                            <div class="dropzone-icon">
+                                <i class="fa-solid fa-file-video"></i>
+                            </div>
+                            <div class="dropzone-text">
+                                <h3>예배 영상 파일(.mp4, .mov, .mkv)을 이곳에 드래그하세요</h3>
+                                <p>최대 4K 화질 및 10GB 파일 지원 | 자동 음성 분석 및 고화질 처리</p>
+                            </div>
+                            <button class="btn btn-secondary btn-file-select" onclick="triggerFileSelect()">
+                                파일 선택하기
+                            </button>
+                            <input type="file" id="file-input" accept="video/*" style="display:none;">
+                        </div>
+                    </div>
+
+                    <div class="feature-pills">
+                        <span><i class="fa-solid fa-check"></i> 찬양/광고 자동 분리</span>
+                        <span><i class="fa-solid fa-check"></i> 9:16 목사님 자동 구도 추적</span>
+                        <span><i class="fa-solid fa-check"></i> 성경/신학 용어 전문 한글 자막</span>
+                        <span><i class="fa-solid fa-check"></i> 카드뉴스 & 나눔지 패키지</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Interactive AI Studio Showcase (Core Shorts Generator) -->
+        <section class="studio-section" id="studio">
+            <div class="container">
+                <div class="section-header center">
+                    <div class="section-tag"><i class="fa-solid fa-sliders"></i> LIVE INTERACTIVE STUDIO</div>
+                    <h2 class="section-title">스스로 찾아내는 <span class="gradient-text">AI 설교 감지 & 1분 쇼츠 메이커</span></h2>
+                    <p class="section-subtitle">복잡한 영상 편집 프로그램 없이, 클릭 몇 번으로 최고 화질의 세로 쇼츠와 사역 자료가 완성됩니다.</p>
+                </div>
+
+                <!-- Main Studio Workspace Card -->
+                <div class="studio-window glass-card">
+                    <!-- Studio Top Navigation bar -->
+                    <div class="studio-topbar">
+                        <div class="window-controls">
+                            <span class="control red"></span>
+                            <span class="control yellow"></span>
+                            <span class="control green"></span>
+                        </div>
+                        <div class="studio-title-badge">
+                            <i class="fa-solid fa-video"></i>
+                            <span id="current-project-title">Project: 2026_주일예배_풀영상_설교분석.mp4</span>
+                        </div>
+                        <div class="studio-status">
+                            <span class="status-dot green"></span>
+                            <span id="ai-status-text">AI 설교 구간 추출 완료 (설교 길이: 34분 18초)</span>
+                        </div>
+                    </div>
+
+                    <!-- Studio Body Grid -->
+                    <div class="studio-body">
+                        <!-- Left Panel: Video Timeline & Detection & Highlight List -->
+                        <div class="studio-main-panel">
+                            <!-- 1. Full Worship Video Timeline Banner -->
+                            <div class="timeline-box">
+                                <div class="timeline-header">
+                                    <div class="timeline-title">
+                                        <i class="fa-solid fa-chart-simple"></i>
+                                        <span>예배 전체 타임라인 오토 스캐닝 (총 1시간 42분)</span>
+                                    </div>
+                                    <div class="timeline-confidence">
+                                        <span>설교 감지 신뢰도:</span>
+                                        <strong class="highlight-text">99.8%</strong>
+                                    </div>
+                                </div>
+
+                                <!-- Visual Track Bar -->
+                                <div class="visual-track-container">
+                                    <div class="track-segment praise" style="width: 20%;" title="00:00 ~ 20:15 찬양팀 사역">
+                                        <span>찬양 (20분)</span>
+                                    </div>
+                                    <div class="track-segment sermon active-segment" style="width: 55%;" title="20:15 ~ 54:33 목사님 설교 [AI 자동 선택]">
+                                        <span class="sermon-label"><i class="fa-solid fa-sparkles"></i> AI 설교 구간 (34분 18초)</span>
+                                        <div class="highlight-pin pin-1" style="left: 25%;" title="하이라이트 #1 1분 컷">쇼츠 1</div>
+                                        <div class="highlight-pin pin-2" style="left: 55%;" title="하이라이트 #2 1분 컷">쇼츠 2</div>
+                                        <div class="highlight-pin pin-3" style="left: 80%;" title="하이라이트 #3 1분 컷">쇼츠 3</div>
+                                    </div>
+                                    <div class="track-segment blessing" style="width: 25%;" title="54:33 ~ 01:42:00 봉헌 및 축도">
+                                        <span>봉헌/축도 (47분)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. AI Selected 1-Minute Shorts Highlight Cards -->
+                            <div class="highlights-container">
+                                <div class="highlights-header">
+                                    <h3><i class="fa-solid fa-scissors"></i> AI가 뽑은 1분 은혜 쇼츠 명장면 (Top 3)</h3>
+                                    <span class="highlights-count">알고리즘 추천 순</span>
+                                </div>
+
+                                <div class="highlight-cards-list">
+                                    <!-- Card 1 -->
+                                    <div class="hl-card active" onclick="selectHighlight(0)" id="hl-card-0">
+                                        <div class="hl-badge viral">🔥 조회수 예측 99점</div>
+                                        <div class="hl-info">
+                                            <h4 class="hl-title">"두려움을 이기는 담대한 믿음의 3가지 원리"</h4>
+                                            <p class="hl-quote">"인생의 폭풍이 불어올 때 우리가 바라보아야 할 것은 파도가 아니라 바로 예수 그리스도의 말씀입니다!"</p>
+                                            <div class="hl-meta">
+                                                <span><i class="fa-regular fa-clock"></i> 32:14 ~ 33:12 (58초)</span>
+                                                <span class="hl-tag">#믿음 #승리 #은혜</span>
+                                            </div>
+                                        </div>
+                                        <div class="hl-action">
+                                            <button class="btn-play-mini"><i class="fa-solid fa-play"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 2 -->
+                                    <div class="hl-card" onclick="selectHighlight(1)" id="hl-card-1">
+                                        <div class="hl-badge grace">✨ 은혜/결단 강추</div>
+                                        <div class="hl-info">
+                                            <h4 class="hl-title">"고난 속에서도 감사해야 하는 진짜 이유"</h4>
+                                            <p class="hl-quote">"하나님의 거절은 더 큰 축복을 위한 거룩한 기다림입니다. 오늘 당신의 기도는 결코 땅에 떨어지지 않습니다."</p>
+                                            <div class="hl-meta">
+                                                <span><i class="fa-regular fa-clock"></i> 41:05 ~ 42:01 (56초)</span>
+                                                <span class="hl-tag">#감사 #기도 #위로</span>
+                                            </div>
+                                        </div>
+                                        <div class="hl-action">
+                                            <button class="btn-play-mini"><i class="fa-solid fa-play"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 3 -->
+                                    <div class="hl-card" onclick="selectHighlight(2)" id="hl-card-2">
+                                        <div class="hl-badge youth">📱 청년부 공유 추천</div>
+                                        <div class="hl-info">
+                                            <h4 class="hl-title">"말씀으로 하루를 시작할 때 일어나는 기적"</h4>
+                                            <p class="hl-quote">"아침의 첫 10분을 하나님께 드릴 때, 당신의 하루 24시간이 하나님의 능력 안에 머물게 됩니다."</p>
+                                            <div class="hl-meta">
+                                                <span><i class="fa-regular fa-clock"></i> 48:50 ~ 49:50 (60초)</span>
+                                                <span class="hl-tag">#QT #아침기도 #청년</span>
+                                            </div>
+                                        </div>
+                                        <div class="hl-action">
+                                            <button class="btn-play-mini"><i class="fa-solid fa-play"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Live 9:16 Vertical Shorts Simulator & Styling Options -->
+                        <div class="studio-preview-panel">
+                            <div class="phone-stage">
+                                <div class="phone-frame">
+                                    <div class="phone-notch"></div>
+                                    
+                                    <!-- Video Layer Simulator -->
+                                    <div class="phone-screen" id="phone-screen">
+                                        <!-- Video overlay & pastor preview -->
+                                        <div class="video-overlay-bg">
+                                            <img src="assets/hero_preview.jpg" alt="목사님 설교 쇼츠 프리뷰" id="preview-img-layer" class="preview-img">
+                                            <div class="video-vignette"></div>
+                                        </div>
+
+                                        <!-- Dynamic Subtitle Overlay -->
+                                        <div class="subtitle-overlay" id="subtitle-overlay">
+                                            <div class="sub-bible-ref" id="sub-bible-ref">📖 마태복음 14:29-31</div>
+                                            <div class="sub-text-box style-neon" id="sub-text-box">
+                                                "인생의 폭풍이 불어올 때<br>
+                                                <span class="highlight-word">파도 대신 예수를 바라보라!</span>"
+                                            </div>
+                                        </div>
+
+                                        <!-- Shorts Watermark / Church Badge -->
+                                        <div class="shorts-church-badge" id="shorts-church-badge">
+                                            <i class="fa-solid fa-church"></i> 은혜샘교회 미디어팀
+                                        </div>
+
+                                        <!-- Simulated Sound Equilizer -->
+                                        <div class="audio-equalizer">
+                                            <span></span><span></span><span></span><span></span><span></span>
+                                        </div>
+
+                                        <!-- Interactive Play Button Overlay -->
+                                        <button class="phone-play-btn" id="phone-play-btn" onclick="toggleShortsPlay()">
+                                            <i class="fa-solid fa-play" id="phone-play-icon"></i>
+                                        </button>
+
+                                        <!-- Floating Action Icons (TikTok/Reels UI) -->
+                                        <div class="phone-sidebar-actions">
+                                            <div class="action-btn"><i class="fa-solid fa-heart"></i> <span>2.4k</span></div>
+                                            <div class="action-btn"><i class="fa-solid fa-comment-dots"></i> <span>184</span></div>
+                                            <div class="action-btn"><i class="fa-solid fa-share-nodes"></i> <span>공유</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Shorts Styling Controls -->
+                            <div class="shorts-customizer">
+                                <h4><i class="fa-solid fa-palette"></i> 자막 & 스타일 커스텀</h4>
+                                
+                                <div class="style-presets">
+                                    <button class="preset-btn active" onclick="setSubtitleStyle('neon')">🌟 네온 강조</button>
+                                    <button class="preset-btn" onclick="setSubtitleStyle('modern')">📱 깔끔 모던</button>
+                                    <button class="preset-btn" onclick="setSubtitleStyle('classic')">🕊️ 클래식</button>
+                                    <button class="preset-btn" onclick="setSubtitleStyle('box')">📦 박스 자막</button>
+                                </div>
+
+                                <div class="toggle-options">
+                                    <label class="toggle-item">
+                                        <input type="checkbox" id="toggle-face-track" checked>
+                                        <span class="slider-round"></span>
+                                        <span class="toggle-label"><i class="fa-solid fa-face-smile"></i> 목사님 9:16 얼굴 자동 추적</span>
+                                    </label>
+                                    <label class="toggle-item">
+                                        <input type="checkbox" id="toggle-noise" checked>
+                                        <span class="slider-round"></span>
+                                        <span class="toggle-label"><i class="fa-solid fa-waveform"></i> AI 잡음 제거 & 음성 명료화</span>
+                                    </label>
+                                </div>
+
+                                <button class="btn btn-primary btn-full export-shorts-btn" onclick="triggerShortsExport()">
+                                    <i class="fa-solid fa-download"></i> 1분 쇼츠 비디오 다운로드 (.mp4)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Refined Ministry Package Section (Matching Reference Screenshot Layout!) -->
+        <section class="package-section" id="package">
+            <div class="container">
+                <div class="section-header center">
+                    <div class="section-tag"><i class="fa-solid fa-box-open"></i> ALL-IN-ONE MINISTRY ENGINE</div>
+                    <h2 class="section-title">설교 원고 하나로, <span class="gradient-blue">한 주 사역 자료 끝</span></h2>
+                    <p class="section-subtitle">참고자료 사이트의 사역 생성 알고리즘을 한눈에 알기 쉬운 현대적 레이아웃으로 통합했습니다.</p>
+                </div>
+
+                <!-- Reference Screenshot Inspired Dashboard Grid Layout -->
+                <div class="seolgyo-workbench-grid">
+                    
+                    <!-- Left Sidebar (Matching Reference Image Layout) -->
+                    <div class="seolgyo-sidebar">
+                        
+                        <!-- 1. 콘텐츠 (Content Categories) -->
+                        <div class="sidebar-group glass-card">
+                            <div class="sidebar-group-title">콘텐츠</div>
+                            <div class="sidebar-nav-list">
+                                <button class="side-nav-item active" data-tab="tab-summary">
+                                    <i class="fa-solid fa-file-alt"></i>
+                                    <span>설교 요약</span>
+                                </button>
+                                <button class="side-nav-item" data-tab="tab-smallgroup">
+                                    <i class="fa-solid fa-users"></i>
+                                    <span>소그룹 나눔</span>
+                                </button>
+                                <button class="side-nav-item" data-tab="tab-qt">
+                                    <i class="fa-solid fa-book-bible"></i>
+                                    <span>QT 5일치</span>
+                                </button>
+                                <button class="side-nav-item" data-tab="tab-cardnews">
+                                    <i class="fa-solid fa-images"></i>
+                                    <span>카드뉴스</span>
+                                </button>
+                                <button class="side-nav-item" data-tab="tab-script">
+                                    <i class="fa-solid fa-scroll"></i>
+                                    <span>쇼츠 대본</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 2. 이 설교로 만들기 (Generators from Reference Screenshot) -->
+                        <div class="sidebar-group glass-card">
+                            <div class="sidebar-group-title">이 설교로 만들기</div>
+                            <div class="generator-action-list">
+                                <button class="gen-action-item" onclick="triggerGenerator('ppt')">
+                                    <div class="gen-icon-bg blue-bg"><i class="fa-solid fa-desktop"></i></div>
+                                    <span>설교 PPT 다운로드</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                </button>
+
+                                <button class="gen-action-item" onclick="triggerGenerator('audio')">
+                                    <div class="gen-icon-bg green-bg"><i class="fa-solid fa-headphones"></i></div>
+                                    <span>음성으로 듣기</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                </button>
+
+                                <button class="gen-action-item" onclick="triggerGenerator('family')">
+                                    <div class="gen-icon-bg orange-bg"><i class="fa-solid fa-house-chimney-window"></i></div>
+                                    <span>가정예배지 만들기</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                </button>
+
+                                <button class="gen-action-item" onclick="triggerGenerator('review')">
+                                    <div class="gen-icon-bg purple-bg"><i class="fa-solid fa-pen-to-square"></i></div>
+                                    <span>설교 점검·제안</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                </button>
+
+                                <button class="gen-action-item" onclick="triggerGenerator('leader')">
+                                    <div class="gen-icon-bg sky-bg"><i class="fa-solid fa-file-contract"></i></div>
+                                    <span>소그룹 리더가이드</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                </button>
+
+                                <button class="gen-action-item" onclick="triggerGenerator('versecard')">
+                                    <div class="gen-icon-bg pink-bg"><i class="fa-solid fa-image"></i></div>
+                                    <span>말씀카드 이미지</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Viewer Workspace (Matching Reference Screenshot Browser Window Output) -->
+                    <div class="seolgyo-viewer glass-card">
+                        
+                        <!-- Content Display Window -->
+                        <div class="viewer-content-body">
+
+                            <!-- Tab 1: 설교 요약 (Sermon Summary) -->
+                            <div class="content-tab-pane active" id="tab-summary">
+                                <div class="pane-header">
+                                    <div class="pane-title-group">
+                                        <span class="pane-badge">설교 요약</span>
+                                        <h2>우리 마음을 지켜줍니다 (마태복음 14:22~33)</h2>
+                                    </div>
+                                    <div class="pane-btn-group">
+                                        <button class="btn btn-blue-sm" onclick="copySummaryText()"><i class="fa-solid fa-pen"></i> 수정</button>
+                                        <button class="btn btn-dark-sm" onclick="copySummaryText()"><i class="fa-solid fa-copy"></i> 복사</button>
+                                        <button class="btn btn-outline-sm" onclick="downloadSummaryDoc()"><i class="fa-solid fa-download"></i> 워드 다운로드</button>
+                                        <button class="btn btn-lightgreen-sm" onclick="downloadCardNews()"><i class="fa-regular fa-image"></i> 이미지 저장</button>
+                                    </div>
+                                </div>
+                                <div class="pane-paper-view">
+                                    <h3>📌 설교 요약 및 핵심 대지</h3>
+                                    <p><strong>1. 여는 문장:</strong> 인생의 거친 풍랑 속에서도 우리가 두려워하지 않고 믿음으로 바로 설 수 있는 비결은 시선을 예수님께 고정하는 것입니다.</p>
+                                    <div class="summary-points">
+                                        <div class="point-box">
+                                            <h4>대지 1. 풍랑이 아닌 주님의 말씀을 청종하라</h4>
+                                            <p>환경의 위협이 커질수록 우리는 세상의 소리가 아닌 주님의 음성에 귀를 기울여야 합니다.</p>
+                                        </div>
+                                        <div class="point-box">
+                                            <h4>대지 2. 의심을 버리고 순종의 발을 내딛으라</h4>
+                                            <p>안전지대인 배 안에 안주하지 않고 주님의 말씀을 의지해 물 위로 나아가는 勇氣가 필요합니다.</p>
+                                        </div>
+                                        <div class="point-box">
+                                            <h4>대지 3. 빠져들 때 즉시 구원의 주를 부르짖으라</h4>
+                                            <p>우리의 연약함으로 흔들릴 때 '주여 나를 구원하소서' 부르짖으면 주님은 지체 없이 손을 내미십니다.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab 2: 소그룹 나눔 (Small Group Discussion) -->
+                            <div class="content-tab-pane" id="tab-smallgroup">
+                                <div class="pane-header">
+                                    <div class="pane-title-group">
+                                        <span class="pane-badge blue">소그룹 나눔</span>
+                                        <h2>[순모임/구역예배 나눔지] 우리 마음을 지켜줍니다</h2>
+                                    </div>
+                                    <div class="pane-btn-group">
+                                        <button class="btn btn-blue-sm" onclick="copyDocText()"><i class="fa-solid fa-pen"></i> 수정</button>
+                                        <button class="btn btn-dark-sm" onclick="copyDocText()"><i class="fa-solid fa-copy"></i> 복사</button>
+                                        <button class="btn btn-outline-sm" onclick="downloadDoc('word')"><i class="fa-solid fa-download"></i> 워드 다운로드</button>
+                                        <button class="btn btn-lightgreen-sm" onclick="downloadCardNews()"><i class="fa-regular fa-image"></i> 이미지 저장</button>
+                                    </div>
+                                </div>
+                                <div class="pane-paper-view">
+                                    <h3>나눔 1. 여는 질문</h3>
+                                    <p>• 이번 주 머릿속에 가장 자주 떠오른 걱정이 있었다면, 그 생각이 하루 중 언제 가장 강하게 찾아왔나요?</p>
+                                    <p>• 설교는 염려할 힘이 있으면 기도할 힘도 있다고 했는데, 솔직히 걱정이 밀려올 때 기도보다 먼저 하게 되는 행동이 있다면 나누어주세요.</p>
+                                    <h3>나눔 2. 말씀 나눔</h3>
+                                    <p>• 빌립보서 4:6~7에서 바울은 기도의 세 요소로 '기도', '간구', '감사'를 함께 제시합니다. 이 세 가지가 어떻게 다른지, 본문과 설교를 바탕으로 나눠봅시다.</p>
+                                    <p>• 물 위를 걷다 바람을 보고 빠져든 베드로처럼, 최근 나의 믿음을 흔들었던 '세상의 바람'은 무엇이었나요?</p>
+                                </div>
+                            </div>
+
+                            <!-- Tab 3: QT 5일치 (QT 5 Days) -->
+                            <div class="content-tab-pane" id="tab-qt">
+                                <div class="pane-header">
+                                    <div class="pane-title-group">
+                                        <span class="pane-badge purple">QT 5일치</span>
+                                        <h2>주간 성도 묵상집 (월~금)</h2>
+                                    </div>
+                                    <div class="pane-btn-group">
+                                        <button class="btn btn-dark-sm" onclick="copyQtText()"><i class="fa-solid fa-comment-dots"></i> 카톡 전송용 복사</button>
+                                        <button class="btn btn-outline-sm" onclick="downloadQtPdf()"><i class="fa-solid fa-file-pdf"></i> PDF 소책자</button>
+                                    </div>
+                                </div>
+                                <div class="qt-grid-view">
+                                    <div class="qt-card-item">
+                                        <div class="qt-day-badge">월요일</div>
+                                        <h4>밤사경의 오심 (마 14:22-25)</h4>
+                                        <p>고난의 깊은 밤, 주님은 결코 우리를 홀로 두지 않으시고 물 위를 걸어 찾아오십니다.</p>
+                                    </div>
+                                    <div class="qt-card-item">
+                                        <div class="qt-day-badge">화요일</div>
+                                        <h4>안심하라 나니 (마 14:26-27)</h4>
+                                        <p>두려움의 환청을 찢는 주님의 평안의 음성을 청종하십시오.</p>
+                                    </div>
+                                    <div class="qt-card-item">
+                                        <div class="qt-day-badge">수요일</div>
+                                        <h4>배 밖으로 발 내딛기 (마 14:28-29)</h4>
+                                        <p>안전지대를 떠나 주님의 말씀을 의지해 담대히 내딛는 용기.</p>
+                                    </div>
+                                    <div class="qt-card-item">
+                                        <div class="qt-day-badge">목요일</div>
+                                        <h4>즉시 내민 손 (마 14:30-31)</h4>
+                                        <p>우리가 빠져들 때 부르짖으면, 주님의 구원의 손길은 지체되지 않습니다.</p>
+                                    </div>
+                                    <div class="qt-card-item">
+                                        <div class="qt-day-badge">금요일</div>
+                                        <h4>잔잔해진 바다 (마 14:32-33)</h4>
+                                        <p>예수께서 배에 오르시매 바람이 그치고 참된 평안이 임합니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab 4: 카드뉴스 (Card News) -->
+                            <div class="content-tab-pane" id="tab-cardnews">
+                                <div class="pane-header">
+                                    <div class="pane-title-group">
+                                        <span class="pane-badge green">카드뉴스</span>
+                                        <h2>인스타그램 & 카톡 공유용 5장 카드뉴스</h2>
+                                    </div>
+                                    <div class="pane-btn-group">
+                                        <button class="btn btn-dark-sm" onclick="copyCardNewsText()"><i class="fa-solid fa-copy"></i> 캡션 복사</button>
+                                        <button class="btn btn-lightgreen-sm" onclick="downloadCardNews()"><i class="fa-solid fa-file-archive"></i> 이미지 전체 다운로드 (.zip)</button>
+                                    </div>
+                                </div>
+                                <div class="cardnews-grid">
+                                    <div class="cn-slide slide-1">
+                                        <div class="cn-header">은혜샘교회 주일 설교 요약</div>
+                                        <h3 class="cn-title">두려움을 이기는<br><span class="cn-highlight">담대한 믿음</span></h3>
+                                        <p class="cn-sub">성경본문: 마태복음 14:22~33</p>
+                                        <div class="cn-footer">Swipe ➔</div>
+                                    </div>
+                                    <div class="cn-slide slide-2">
+                                        <span class="cn-num">01</span>
+                                        <h4>시선을 바꾸십시오</h4>
+                                        <p>"몰아치는 풍랑을 볼 때 두려움이 생기지만, 풍랑 위를 걸어오시는 예수님을 볼 때 믿음이 생깁니다."</p>
+                                    </div>
+                                    <div class="cn-slide slide-3">
+                                        <span class="cn-num">02</span>
+                                        <h4>순종의 발을 내딛으십시오</h4>
+                                        <p>"배 안은 안전해 보이지만, 배 밖으로 발을 내딛는 사람만이 물 위를 걷는 기적을 경험합니다."</p>
+                                    </div>
+                                    <div class="cn-slide slide-4">
+                                        <span class="cn-num">03</span>
+                                        <h4>즉시 주를 부르짖으십시오</h4>
+                                        <p>"의심으로 빠져들어갈 때 '주여 나를 구원하소서' 외치면, 주님은 즉시 손을 내밀어 잡으십니다."</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab 5: 쇼츠 대본 (Shorts Script) -->
+                            <div class="content-tab-pane" id="tab-script">
+                                <div class="pane-header">
+                                    <div class="pane-title-group">
+                                        <span class="pane-badge orange">쇼츠 대본</span>
+                                        <h2>1분 컷 쇼츠 오디오/동영상 대본 (Script)</h2>
+                                    </div>
+                                    <div class="pane-btn-group">
+                                        <button class="btn btn-dark-sm" onclick="copyScript()"><i class="fa-solid fa-copy"></i> 대본 복사</button>
+                                        <button class="btn btn-outline-sm" onclick="downloadDoc('script')"><i class="fa-solid fa-download"></i> 텍스트 저장</button>
+                                    </div>
+                                </div>
+                                <div class="script-view-box">
+                                    <div class="script-line">
+                                        <span class="time-code">[00:00 - 00:15]</span>
+                                        <p>인생의 파도가 거세게 밀려올 때, 여러분의 시선은 어디를 향하고 계십니까?</p>
+                                    </div>
+                                    <div class="script-line">
+                                        <span class="time-code">[00:15 - 00:35]</span>
+                                        <p>베드로는 몰아치는 바람을 보았을 때 두려워 바다 속으로 빠져들었습니다. 하지만 바로 그 순간 시선을 돌려 예수님을 바라보았을 때 기적이 일어났습니다!</p>
+                                    </div>
+                                    <div class="script-line">
+                                        <span class="time-code">[00:35 - 01:00]</span>
+                                        <p>"주여 나를 구원하소서" 부르짖으십시오. 주님의 구원의 손길은 당신이 빠져들도록 지체하지 않으십니다!</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Comparison -->
+        <section class="features-section" id="features">
+            <div class="container">
+                <div class="section-header center">
+                    <div class="section-tag"><i class="fa-solid fa-bolt"></i> WHY GRACECLIP AI</div>
+                    <h2 class="section-title">기존 편집 방식 vs <span class="gradient-text">GraceClip AI</span></h2>
+                    <p class="section-subtitle">수작업으로 3시간 이상 걸리던 미디어 작업을 단 3분 만에 혁신하세요.</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <!-- Old Method -->
+                    <div class="comp-card old-card">
+                        <div class="comp-header">
+                            <div class="comp-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+                            <h3>기존 수작업 영상 편집</h3>
+                            <span class="comp-time">평균 3시간~5시간 소요</span>
+                        </div>
+                        <ul class="comp-list">
+                            <li><i class="fa-solid fa-xmark red-icon"></i> 1~2시간 풀영상을 일일이 보며 설교 시작점 찾기</li>
+                            <li><i class="fa-solid fa-xmark red-icon"></i> 영상 편집 프로그램에서 9:16 프레임 잘라내기</li>
+                            <li><i class="fa-solid fa-xmark red-icon"></i> 한글 자막 일일이 받아적기 (오타 수정 번거로움)</li>
+                            <li><i class="fa-solid fa-xmark red-icon"></i> 카드뉴스 디자인 프로그램에서 별도 제작</li>
+                            <li><i class="fa-solid fa-xmark red-icon"></i> 전문 미디어 사역자 없으면 제작 불가능</li>
+                        </ul>
+                    </div>
+
+                    <!-- AI Method -->
+                    <div class="comp-card new-card glass-card">
+                        <div class="comp-badge">추천</div>
+                        <div class="comp-header">
+                            <div class="comp-icon ai-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                            <h3>GraceClip AI 자동화</h3>
+                            <span class="comp-time green-text">단 3분 만에 자동 완성</span>
+                        </div>
+                        <ul class="comp-list">
+                            <li><i class="fa-solid fa-check green-icon"></i> <strong>설교 구간 99.4% 자동 탐지</strong> (찬양/광고 스킵)</li>
+                            <li><i class="fa-solid fa-check green-icon"></i> <strong>AI 1분 하이라이트 딥러닝 추천</strong> (감동 포인트 추출)</li>
+                            <li><i class="fa-solid fa-check green-icon"></i> <strong>목사님 동선 9:16 자동 오토 트래킹</strong></li>
+                            <li><i class="fa-solid fa-check green-icon"></i> <strong>성경/신학 용어 전용 AI 자막</strong> (오타 제로)</li>
+                            <li><i class="fa-solid fa-check green-icon"></i> <strong>쇼츠+카드뉴스+소그룹 나눔지+QT 동시 생성</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section" id="testimonials">
+            <div class="container">
+                <div class="section-header center">
+                    <div class="section-tag"><i class="fa-solid fa-heart"></i> REVIEWS</div>
+                    <h2 class="section-title">전국 <span class="gradient-text">12,400여 목회자</span>의 진솔한 후기</h2>
+                    <p class="section-subtitle">바쁜 주일 사역 속에서 은혜의 스토리를 더 널리 전달하고 있습니다.</p>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card glass-card">
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="review-text">"주일 예배 영상을 유튜브에 올리고 링크만 넣으면, AI가 알아서 찬양 건너뛰고 설교 핵심 1분 쇼츠를 뽑아주니 신세계입니다. 주일 저녁 청년부 카톡방에 쇼츠를 바로 공유하고 있어요!"</p>
+                        <div class="reviewer">
+                            <img src="assets/pastor_1.jpg" alt="이성훈 목사" class="reviewer-img">
+                            <div class="reviewer-info">
+                                <strong>이성훈 목사님</strong>
+                                <span>선한목자교회 담임목사</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card glass-card">
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="review-text">"작은 시골 교회라 미디어 간사가 없어서 고민이 많았는데, GraceClip AI 덕분에 인스타그램 릴스와 소그룹 나눔지까지 한 번에 만들 수 있게 되었습니다. 사역 효율이 10배 늘어났습니다."</p>
+                        <div class="reviewer">
+                            <img src="assets/pastor_2.jpg" alt="김유진 전도사" class="reviewer-img">
+                            <div class="reviewer-info">
+                                <strong>김유진 간사님</strong>
+                                <span>은혜 미디어팀 팀장</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card glass-card">
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="review-text">"무엇보다 성경 구절과 신학 단어 오타가 없어서 자막 수정 시간을 엄청 아꼈습니다. 목사님의 설교 말씀이 쇼츠를 통해 불신자 청년들에게 전달되는 은혜가 큽니다."</p>
+                        <div class="reviewer">
+                            <div class="avatar-placeholder">박</div>
+                            <div class="reviewer-info">
+                                <strong>박동진 목사님</strong>
+                                <span>빛과소금교회 청년부</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="pricing-section" id="pricing">
+            <div class="container">
+                <div class="section-header center">
+                    <div class="section-tag"><i class="fa-solid fa-tags"></i> PRICING</div>
+                    <h2 class="section-title">합리적인 <span class="gradient-text">사역 지원 요금제</span></h2>
+                    <p class="section-subtitle">교회 규모와 사역 필요에 맞춰 자유롭게 선택하세요. 언제든 해지 가능합니다.</p>
+                </div>
+
+                <div class="pricing-grid">
+                    <!-- Starter Plan -->
+                    <div class="pricing-card glass-card">
+                        <div class="plan-name">무료 체험 (Starter)</div>
+                        <div class="plan-price">₩0 <span>/ 월</span></div>
+                        <p class="plan-desc">GraceClip AI를 처음 체험해보는 목회자분들</p>
+                        <ul class="plan-features">
+                            <li><i class="fa-solid fa-check"></i> 월 3회 예배 영상 분석</li>
+                            <li><i class="fa-solid fa-check"></i> 1분 쇼츠 생성 (720p HD)</li>
+                            <li><i class="fa-solid fa-check"></i> AI 설교 구간 자동 탐지</li>
+                            <li><i class="fa-solid fa-check"></i> 카드뉴스 텍스트 요약</li>
+                        </ul>
+                        <button class="btn btn-secondary btn-full" onclick="scrollToSection('hero-input-box')">무료로 시작하기</button>
+                    </div>
+
+                    <!-- Pro Pastor Plan (Featured) -->
+                    <div class="pricing-card glass-card featured">
+                        <div class="popular-ribbon">목회자 가장 선호</div>
+                        <div class="plan-name">Pro 목회자 패키지</div>
+                        <div class="plan-price">₩29,000 <span>/ 월</span></div>
+                        <p class="plan-desc">매주 주일 설교와 쇼츠, 사역자료를 챙기는 분</p>
+                        <ul class="plan-features">
+                            <li><i class="fa-solid fa-check"></i> <strong>월 무제한 예배 영상 분석</strong></li>
+                            <li><i class="fa-solid fa-check"></i> <strong>4K/1080p 초고화질 무워터마크 쇼츠</strong></li>
+                            <li><i class="fa-solid fa-check"></i> 9:16 목사님 자동 얼굴 트래킹</li>
+                            <li><i class="fa-solid fa-check"></i> 카드뉴스 + 소그룹나눔지 + QT 5일치</li>
+                            <li><i class="fa-solid fa-check"></i> AI 음성 노이즈 제거 & 은혜 BGM</li>
+                        </ul>
+                        <button class="btn btn-primary btn-full" onclick="alert('Pro 플랜 결제 페이지로 이동합니다.')">Pro 무료 체험 시작</button>
+                    </div>
+
+                    <!-- Church Team Plan -->
+                    <div class="pricing-card glass-card">
+                        <div class="plan-name">교회 미디어팀 플랜</div>
+                        <div class="plan-price">₩69,000 <span>/ 월</span></div>
+                        <p class="plan-desc">대예배, 청년부, 금요기도회 등 다중 사역팀</p>
+                        <ul class="plan-features">
+                            <li><i class="fa-solid fa-check"></i> Pro 플랜의 모든 기능 포함</li>
+                            <li><i class="fa-solid fa-check"></i> 팀 계정 5인 동시 접속 지원</li>
+                            <li><i class="fa-solid fa-check"></i> 맞춤형 교회 로고 & 자막 폰트 커스텀</li>
+                            <li><i class="fa-solid fa-check"></i> 1:1 사역 전담 기술 지원</li>
+                        </ul>
+                        <button class="btn btn-secondary btn-full" onclick="alert('교회팀 플랜 문의 페이지로 이동합니다.')">교회팀 도입 문의</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Banner Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-box glass-card">
+                    <h2>지금 바로 주일 예배 영상으로<br><span class="gradient-text">1분 은혜 쇼츠</span>를 만들어보세요</h2>
+                    <p>별도의 가입 절차 없이 유튜브 링크 입력만으로 3초 만에 결과물을 확인할 수 있습니다.</p>
+                    <div class="cta-actions">
+                        <button class="btn btn-primary btn-xl" onclick="scrollToSection('hero-input-box')">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> <span>무료로 쇼츠 만들기</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-container">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <span class="logo-text">GraceClip <span class="logo-highlight">AI</span></span>
+                </div>
+                <p>전 세계 미디어 사역자와 목회자를 위한 AI 설교 쇼츠 & 사역 자동화 플랫폼</p>
+            </div>
+            <div class="footer-links">
+                <div class="link-col">
+                    <h4>서비스</h4>
+                    <a href="#studio">AI 설교 구간 탐지</a>
+                    <a href="#studio">1분 쇼츠 메이커</a>
+                    <a href="#package">사역 스튜디오</a>
+                </div>
+                <div class="link-col">
+                    <h4>고객지원</h4>
+                    <a href="#">자주 묻는 질문</a>
+                    <a href="#">사용법 가이드</a>
+                    <a href="#">1:1 문의하기</a>
+                </div>
+                <div class="link-col">
+                    <h4>약관 및 정책</h4>
+                    <a href="#">이용약관</a>
+                    <a href="#">개인정보처리방침</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 GraceClip AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast-notification" id="toast">
+        <i class="fa-solid fa-circle-check" id="toast-icon"></i>
+        <span id="toast-message">작업이 성공적으로 완료되었습니다!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
