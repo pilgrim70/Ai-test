@@ -524,7 +524,7 @@
                                         <h2>우리 마음을 지켜줍니다 (마태복음 14:22~33)</h2>
                                     </div>
                                     <div class="pane-btn-group">
-                                        <button class="btn btn-blue-sm" onclick="copySummaryText()"><i class="fa-solid fa-pen"></i> 수정</button>
+                                        <button class="btn btn-blue-sm" onclick="openEditModal()"><i class="fa-solid fa-pen"></i> 수정</button>
                                         <button class="btn btn-dark-sm" onclick="copySummaryText()"><i class="fa-solid fa-copy"></i> 복사</button>
                                         <button class="btn btn-outline-sm" onclick="downloadSummaryDoc()"><i class="fa-solid fa-download"></i> 워드 다운로드</button>
                                         <button class="btn btn-lightgreen-sm" onclick="downloadCardNews()"><i class="fa-regular fa-image"></i> 이미지 저장</button>
@@ -558,7 +558,7 @@
                                         <h2>[순모임/구역예배 나눔지] 우리 마음을 지켜줍니다</h2>
                                     </div>
                                     <div class="pane-btn-group">
-                                        <button class="btn btn-blue-sm" onclick="copyDocText()"><i class="fa-solid fa-pen"></i> 수정</button>
+                                        <button class="btn btn-blue-sm" onclick="openEditModal()"><i class="fa-solid fa-pen"></i> 수정</button>
                                         <button class="btn btn-dark-sm" onclick="copyDocText()"><i class="fa-solid fa-copy"></i> 복사</button>
                                         <button class="btn btn-outline-sm" onclick="downloadDoc('word')"><i class="fa-solid fa-download"></i> 워드 다운로드</button>
                                         <button class="btn btn-lightgreen-sm" onclick="downloadCardNews()"><i class="fa-regular fa-image"></i> 이미지 저장</button>
@@ -902,6 +902,300 @@
     <div class="toast-notification" id="toast">
         <i class="fa-solid fa-circle-check" id="toast-icon"></i>
         <span id="toast-message">작업이 성공적으로 완료되었습니다!</span>
+    </div>
+
+    <!-- Modal 1: 설교 PPT 다운로드 & 프리뷰 모달 -->
+    <div class="modal-backdrop" id="modal-ppt">
+        <div class="modal-window glass-card">
+            <div class="modal-header">
+                <div class="modal-title"><i class="fa-solid fa-desktop blue-icon"></i> 설교 PPT 슬라이드 생성기</div>
+                <button class="modal-close-btn" onclick="closeModal('modal-ppt')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="ppt-stage">
+                    <div class="ppt-slide-canvas theme-blue" id="ppt-slide-canvas">
+                        <div class="ppt-slide-header" id="ppt-slide-hdr">은혜샘교회 주일 설교</div>
+                        <h2 class="ppt-slide-title" id="ppt-slide-title">두려움을 이기는 담대한 믿음</h2>
+                        <div class="ppt-slide-body" id="ppt-slide-body">
+                            "풍랑을 보지 말고 물 위를 걸어오시는 예수 그리스도를 바라보라"
+                        </div>
+                        <div class="ppt-slide-footer">
+                            <span>마태복음 14:22~33</span>
+                            <span id="ppt-slide-num">1 / 5 Slide</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ppt-controls">
+                    <div class="ppt-nav-btns">
+                        <button class="btn btn-secondary btn-sm" onclick="changePptSlide(-1)"><i class="fa-solid fa-chevron-left"></i> 이전 슬라이드</button>
+                        <button class="btn btn-secondary btn-sm" onclick="changePptSlide(1)">다음 슬라이드 <i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    <div class="ppt-theme-select">
+                        <span>테마 템플릿:</span>
+                        <button class="theme-chip active" onclick="setPptTheme('blue')">🌊 딥 블루</button>
+                        <button class="theme-chip" onclick="setPptTheme('green')">🌿 모던 그린</button>
+                        <button class="theme-chip" onclick="setPptTheme('dark')">🌌 클래식 다크</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('modal-ppt')">닫기</button>
+                <button class="btn btn-primary" onclick="downloadPptFile()"><i class="fa-solid fa-file-powerpoint"></i> PPTX 파워포인트 파일 다운로드</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: 음성으로 듣기 & AI 오디오 팟캐스트 플레이어 모달 -->
+    <div class="modal-backdrop" id="modal-audio">
+        <div class="modal-window glass-card">
+            <div class="modal-header">
+                <div class="modal-title"><i class="fa-solid fa-headphones green-icon"></i> AI 설교 음성 팟캐스트 플레이어</div>
+                <button class="modal-close-btn" onclick="closeModal('modal-audio')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="audio-player-card">
+                    <div class="audio-voice-select">
+                        <span>AI 목소리 선택:</span>
+                        <select id="voice-select" onchange="changeVoiceTone()">
+                            <option value="pastor1">🎙️ 김명훈 목사 (중후하고 깊은 목소리)</option>
+                            <option value="pastor2">🎙️ 이은혜 전도사 (따뜻하고 맑은 톤)</option>
+                            <option value="ai1">🎙️ 박성민 AI (차분하고 정갈한 보이스)</option>
+                        </select>
+                    </div>
+
+                    <div class="audio-visualizer">
+                        <div class="waveform-bar" id="waveform">
+                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+
+                    <div class="audio-time-bar">
+                        <span id="audio-curr-time">00:45</span>
+                        <input type="range" id="audio-progress" min="0" max="100" value="25" oninput="scrubAudio(this.value)">
+                        <span>03:45</span>
+                    </div>
+
+                    <div class="audio-controls-row">
+                        <button class="btn-audio-ctrl" onclick="seekAudio(-10)"><i class="fa-solid fa-rotate-left"></i> 10초</button>
+                        <button class="btn-audio-play-lg" id="modal-audio-play-btn" onclick="toggleModalAudioPlay()">
+                            <i class="fa-solid fa-play" id="modal-audio-play-icon"></i>
+                        </button>
+                        <button class="btn-audio-ctrl" onclick="seekAudio(10)">10초 <i class="fa-solid fa-rotate-right"></i></button>
+                        
+                        <div class="audio-speed-group">
+                            <button class="speed-btn active" onclick="setAudioSpeed(1.0)">1.0x</button>
+                            <button class="speed-btn" onclick="setAudioSpeed(1.25)">1.25x</button>
+                            <button class="speed-btn" onclick="setAudioSpeed(1.5)">1.5x</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('modal-audio')">닫기</button>
+                <button class="btn btn-primary" onclick="downloadMp3File()"><i class="fa-solid fa-download"></i> MP3 오디오 파일 다운로드</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: 가정예배지 만들기 모달 -->
+    <div class="modal-backdrop" id="modal-family">
+        <div class="modal-window glass-card modal-lg">
+            <div class="modal-header">
+                <div class="modal-title"><i class="fa-solid fa-house-chimney-window orange-icon"></i> 가정예배지 (온가족 주간 예배 가이드)</div>
+                <button class="modal-close-btn" onclick="closeModal('modal-family')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="family-doc-sheet" id="family-doc-print">
+                    <div class="fam-doc-hdr">
+                        <h2>[가정예배지] 온가족이 함께 나누는 말씀과 기도</h2>
+                        <p>은혜샘교회 가정사역부 | 2026년 10월 2주차</p>
+                    </div>
+
+                    <div class="fam-doc-sec">
+                        <h4>1. 🎵 가족 찬양</h4>
+                        <p>찬송가 413장 "내 평생에 가는 길" 또는 복음성가 "마음이 지쳐서 기도할 수 없고"</p>
+                    </div>
+
+                    <div class="fam-doc-sec">
+                        <h4>2. 📖 말씀 읽기 (마태복음 14:22~33)</h4>
+                        <p>"예수께서 즉시 이르시되 안심하라 나니 두려워하지 말라. 베드로가 대답하여 이르되 주여 만일 주님이시거든 나를 명하사 물 위로 오라 하소서 하니..."</p>
+                    </div>
+
+                    <div class="fam-doc-sec">
+                        <h4>3. 💬 생각 나누기 (어린이 & 부모)</h4>
+                        <p><strong>• 어린이 질문:</strong> 최근 학교나 친구 관계에서 마음이 떨리거나 무서웠던 순간이 있었나요?</p>
+                        <p><strong>• 부모님 나눔:</strong> 살면서 내 힘으로 안 될 때 하나님께 부르짖어 응답받은 경험을 자녀에게 들려주세요.</p>
+                    </div>
+
+                    <div class="fam-doc-sec">
+                        <h4>4. 🙏 합심 기도</h4>
+                        <p>"우리 가정이 세상의 폭풍 앞에서도 흔들리지 않고 예수님만 바라보는 담대한 믿음의 가정이 되게 하소서."</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="printModalDoc('family-doc-print')"><i class="fa-solid fa-print"></i> 바로 인쇄하기</button>
+                <button class="btn btn-primary" onclick="downloadFamilyPdf()"><i class="fa-solid fa-file-pdf"></i> 가정예배지 PDF 다운로드</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: 설교 점검·제안 AI 진단 리포트 모달 -->
+    <div class="modal-backdrop" id="modal-review">
+        <div class="modal-window glass-card modal-lg">
+            <div class="modal-header">
+                <div class="modal-title"><i class="fa-solid fa-pen-to-square purple-icon"></i> AI 설교 진단 & 메시지 강화 리포트</div>
+                <button class="modal-close-btn" onclick="closeModal('modal-review')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="review-dashboard">
+                    <div class="review-score-box">
+                        <div class="score-circle">
+                            <span class="score-num">98</span>
+                            <span class="score-max">/ 100점</span>
+                        </div>
+                        <div class="score-grade">A+ (매우 우수)</div>
+                        <p class="score-desc">설교 대지의 구조가 명확하고 청중의 결단을 이끄는 메시지 전달력이 탁월합니다.</p>
+                    </div>
+
+                    <div class="review-metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-hdr"><span>🎯 메시지 명확성</span> <strong>99점</strong></div>
+                            <div class="metric-bar"><span style="width: 99%;"></span></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-hdr"><span>📖 성경본문 연계성</span> <strong>97점</strong></div>
+                            <div class="metric-bar"><span style="width: 97%;"></span></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-hdr"><span>💡 청중 적용성</span> <strong>98점</strong></div>
+                            <div class="metric-bar"><span style="width: 98%;"></span></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-hdr"><span>⏱️ 딜리버리 템포</span> <strong>96점</strong></div>
+                            <div class="metric-bar"><span style="width: 96%;"></span></div>
+                        </div>
+                    </div>
+
+                    <div class="review-feedback-box">
+                        <h4>💡 AI 맞춤 개선 제안</h4>
+                        <ul>
+                            <li><i class="fa-solid fa-check green-icon"></i> <strong>도입부 비유:</strong> 바다의 풍랑 비유가 청중의 몰입을 극적으로 향상시킵니다.</li>
+                            <li><i class="fa-solid fa-lightbulb orange-icon"></i> <strong>강조 어조 제안:</strong> 32분 14초 "파도 대신 예수를 보라" 구절에서 5초간 묵음 포즈(Pause)를 주면 은혜가 배가됩니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('modal-review')">닫기</button>
+                <button class="btn btn-primary" onclick="downloadReviewReport()"><i class="fa-solid fa-file-contract"></i> 진단 리포트 PDF 저장</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 5: 소그룹 리더가이드 모달 -->
+    <div class="modal-backdrop" id="modal-leader">
+        <div class="modal-window glass-card modal-lg">
+            <div class="modal-header">
+                <div class="modal-title"><i class="fa-solid fa-file-contract sky-icon"></i> [순장/구역장 전용] 소그룹 리더가이드</div>
+                <button class="modal-close-btn" onclick="closeModal('modal-leader')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="leader-paper-view" id="leader-doc-print">
+                    <div class="leader-hdr">
+                        <h2>[순장/구역장 교안] 소그룹 리더용 나눔 지침서</h2>
+                        <p>은혜샘교회 양육사역부 | 보안: 순장/구역장 열람용</p>
+                    </div>
+
+                    <div class="leader-sec">
+                        <h4>🔑 1. 리더 코칭 & 마음가짐</h4>
+                        <p>이번 주 설교는 '두려움 극복'이 핵심 주제입니다. 순원 중 최근 경제적, 건강적 어려움으로 입을 열기 힘들어하는 이가 있다면 억지로 나눔을 강요하기보다 기도로 경청해주십시오.</p>
+                    </div>
+
+                    <div class="leader-sec">
+                        <h4>💡 2. 나눔 질문 1 모범 해설 (여는 질문)</h4>
+                        <p><strong>• 질문:</strong> 이번 주 일상 속 찾아온 작거나 큰 두려움은?</p>
+                        <p><strong>• 리더 가이드:</strong> 리더가 먼저 자신의 지난주 불안했던 일화를 구체적으로 고백하여 어색한 분위기를 누그러뜨리세요.</p>
+                    </div>
+
+                    <div class="leader-sec">
+                        <h4>💡 3. 나눔 질문 2 모범 해설 (본문 깊이)</h4>
+                        <p><strong>• 질문:</strong> 물 위를 걷다 빠져든 베드로의 시선 전환</p>
+                        <p><strong>• 리더 가이드:</strong> 베드로가 빠져든 원인은 '믿음의 부재'가 아니라 '시선의 이동(예수 ➔ 파도)'임을 짚어주세요.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="copyLeaderDoc()"><i class="fa-solid fa-copy"></i> 전체 복사</button>
+                <button class="btn btn-primary" onclick="downloadLeaderDoc()"><i class="fa-solid fa-file-word"></i> 리더가이드 워드 다운로드</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 6: 말씀카드 이미지 생성기 모달 -->
+    <div class="modal-backdrop" id="modal-versecard">
+        <div class="modal-window glass-card">
+            <div class="modal-header">
+                <div class="modal-title"><i class="fa-solid fa-image pink-icon"></i> 캘리그라피 말씀카드 이미지 생성기</div>
+                <button class="modal-close-btn" onclick="closeModal('modal-versecard')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="versecard-stage">
+                    <div class="versecard-canvas bg-sunset" id="versecard-canvas">
+                        <div class="vc-verse-text" id="vc-verse-text">
+                            "풍랑을 보지 말고<br>물 위를 걸어오시는<br>예수를 바라보라"
+                        </div>
+                        <div class="vc-ref-text" id="vc-ref-text">마태복음 14:29-31</div>
+                        <div class="vc-church-logo">은혜샘교회</div>
+                    </div>
+                </div>
+
+                <div class="versecard-controls">
+                    <div class="vc-bg-select">
+                        <span>배경 테마:</span>
+                        <button class="vc-theme-btn active" onclick="setVerseBg('sunset')">🌄 노을</button>
+                        <button class="vc-theme-btn" onclick="setVerseBg('starry')">🌌 야경</button>
+                        <button class="vc-theme-btn" onclick="setVerseBg('forest')">🌿 숲속</button>
+                        <button class="vc-theme-btn" onclick="setVerseBg('white')">🤍 미니멀</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('modal-versecard')">닫기</button>
+                <button class="btn btn-primary" onclick="downloadVerseImage()"><i class="fa-solid fa-download"></i> 고화질 이미지 저장 (.jpg)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 7: 콘텐츠 실시간 수정 (Inline Edit) 모달 -->
+    <div class="modal-backdrop" id="modal-edit">
+        <div class="modal-window glass-card modal-lg">
+            <div class="modal-header">
+                <div class="modal-title"><i class="fa-solid fa-pen blue-icon"></i> 콘텐츠 문구 수정하기</div>
+                <button class="modal-close-btn" onclick="closeModal('modal-edit')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="edit-form">
+                    <div class="form-group">
+                        <label>제목 / 주제</label>
+                        <input type="text" id="edit-title-input" class="form-control" value="우리 마음을 지켜줍니다 (마태복음 14:22~33)">
+                    </div>
+                    <div class="form-group">
+                        <label>본문 내용 / 질문지 수정</label>
+                        <textarea id="edit-content-input" class="form-control-area" rows="8">인생의 거친 풍랑 속에서도 우리가 두려워하지 않고 믿음으로 바로 설 수 있는 비결은 시선을 예수님께 고정하는 것입니다.
+
+대지 1: 풍랑이 아닌 주님의 말씀을 청종하라.
+대지 2: 의심을 버리고 순종의 발을 내딛으라.
+대지 3: 빠져들 때 즉시 구원의 주를 부르짖으라.</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('modal-edit')">취소</button>
+                <button class="btn btn-primary" onclick="saveEditedContent()"><i class="fa-solid fa-floppy-disk"></i> 수정사항 적용하기</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
