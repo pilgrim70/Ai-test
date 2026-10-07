@@ -1206,82 +1206,87 @@ window.addEventListener('keydown', (e) => {
 // 9. 초기화 및 UI 이벤트 바인딩
 // ==========================================================================
 window.addEventListener('DOMContentLoaded', () => {
+    function safeAddListener(id, event, callback) {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener(event, callback);
+    }
+
     // 1P 캔버스 획득
     canvas1P = document.getElementById('canvas-board-1p');
-    ctx1P = canvas1P.getContext('2d');
+    if (canvas1P) ctx1P = canvas1P.getContext('2d');
     canvasHold1P = document.getElementById('canvas-hold-1p');
-    ctxHold1P = canvasHold1P.getContext('2d');
+    if (canvasHold1P) ctxHold1P = canvasHold1P.getContext('2d');
     canvasNext1P = document.getElementById('canvas-next-1p');
-    ctxNext1P = canvasNext1P.getContext('2d');
+    if (canvasNext1P) ctxNext1P = canvasNext1P.getContext('2d');
 
     // 2P 캔버스 획득
     canvas2P = document.getElementById('canvas-board-2p');
-    ctx2P = canvas2P.getContext('2d');
+    if (canvas2P) ctx2P = canvas2P.getContext('2d');
     canvasHold2P = document.getElementById('canvas-hold-2p');
-    ctxHold2P = canvasHold2P.getContext('2d');
+    if (canvasHold2P) ctxHold2P = canvasHold2P.getContext('2d');
     canvasNext2P = document.getElementById('canvas-next-2p');
-    ctxNext2P = canvasNext2P.getContext('2d');
+    if (canvasNext2P) ctxNext2P = canvasNext2P.getContext('2d');
 
     // --- 메뉴 버튼 연결 ---
-    document.getElementById('btn-easy').addEventListener('click', () => {
-        initGame('easy');
-    });
-
-    document.getElementById('btn-hard').addEventListener('click', () => {
-        initGame('hard');
-    });
-
-    document.getElementById('btn-multi').addEventListener('click', () => {
-        initGame('multi');
-    });
-
-    document.getElementById('btn-training').addEventListener('click', () => {
-        initGame('training');
-    });
+    safeAddListener('btn-easy', 'click', () => initGame('easy'));
+    safeAddListener('btn-hard', 'click', () => initGame('hard'));
+    safeAddListener('btn-multi', 'click', () => initGame('multi'));
+    safeAddListener('btn-training', 'click', () => initGame('training'));
 
     // --- 리더보드 모달 ---
-    document.getElementById('btn-leaderboard').addEventListener('click', () => {
+    safeAddListener('btn-leaderboard', 'click', () => {
         renderLeaderboard('easy');
-        document.getElementById('tab-easy').classList.add('active');
-        document.getElementById('tab-hard').classList.remove('active');
-        document.getElementById('leaderboard-modal').classList.add('active');
+        const tabE = document.getElementById('tab-easy');
+        const tabH = document.getElementById('tab-hard');
+        const lbM = document.getElementById('leaderboard-modal');
+        if (tabE) tabE.classList.add('active');
+        if (tabH) tabH.classList.remove('active');
+        if (lbM) lbM.classList.add('active');
     });
 
-    document.getElementById('tab-easy').addEventListener('click', () => {
+    safeAddListener('tab-easy', 'click', () => {
         renderLeaderboard('easy');
-        document.getElementById('tab-easy').classList.add('active');
-        document.getElementById('tab-hard').classList.remove('active');
+        const tabE = document.getElementById('tab-easy');
+        const tabH = document.getElementById('tab-hard');
+        if (tabE) tabE.classList.add('active');
+        if (tabH) tabH.classList.remove('active');
     });
 
-    document.getElementById('tab-hard').addEventListener('click', () => {
+    safeAddListener('tab-hard', 'click', () => {
         renderLeaderboard('hard');
-        document.getElementById('tab-easy').classList.remove('active');
-        document.getElementById('tab-hard').classList.add('active');
+        const tabE = document.getElementById('tab-easy');
+        const tabH = document.getElementById('tab-hard');
+        if (tabE) tabE.classList.remove('active');
+        if (tabH) tabH.classList.add('active');
     });
 
-    document.getElementById('btn-close-leaderboard').addEventListener('click', () => {
-        document.getElementById('leaderboard-modal').classList.remove('active');
+    safeAddListener('btn-close-leaderboard', 'click', () => {
+        const lbM = document.getElementById('leaderboard-modal');
+        if (lbM) lbM.classList.remove('active');
     });
 
     // --- 설정 모달 ---
-    document.getElementById('btn-settings').addEventListener('click', () => {
-        document.getElementById('settings-modal').classList.add('active');
+    safeAddListener('btn-settings', 'click', () => {
+        const sm = document.getElementById('settings-modal');
+        if (sm) sm.classList.add('active');
     });
 
-    document.getElementById('vol-music').addEventListener('input', (e) => {
+    safeAddListener('vol-music', 'input', (e) => {
         const val = e.target.value;
-        document.getElementById('val-music').innerText = val;
+        const valM = document.getElementById('val-music');
+        if (valM) valM.innerText = val;
         sound.musicVolume = val / 10;
     });
 
-    document.getElementById('vol-effect').addEventListener('input', (e) => {
+    safeAddListener('vol-effect', 'input', (e) => {
         const val = e.target.value;
-        document.getElementById('val-effect').innerText = val;
+        const valE = document.getElementById('val-effect');
+        if (valE) valE.innerText = val;
         sound.effectVolume = val / 10;
         sound.playMove(); // 변경 확인용 효과음 피드백
     });
 
-    document.getElementById('bgm-select').addEventListener('change', (e) => {
+    safeAddListener('bgm-select', 'change', (e) => {
         sound.bgmType = e.target.value;
         if (sound.bgmPlaying) {
             sound.stopBGM();
@@ -1289,54 +1294,49 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.getElementById('btn-close-settings').addEventListener('click', () => {
-        document.getElementById('settings-modal').classList.remove('active');
+    safeAddListener('btn-close-settings', 'click', () => {
+        const sm = document.getElementById('settings-modal');
+        if (sm) sm.classList.remove('active');
     });
 
     // --- 일시정지 제어 ---
-    document.getElementById('btn-pause').addEventListener('click', () => {
-        togglePause();
+    safeAddListener('btn-pause', 'click', () => togglePause());
+    safeAddListener('btn-resume', 'click', () => togglePause());
+    safeAddListener('btn-pause-settings', 'click', () => {
+        const sm = document.getElementById('settings-modal');
+        if (sm) sm.classList.add('active');
     });
-
-    document.getElementById('btn-resume').addEventListener('click', () => {
-        togglePause();
-    });
-
-    document.getElementById('btn-pause-settings').addEventListener('click', () => {
-        document.getElementById('settings-modal').classList.add('active');
-    });
-
-    document.getElementById('btn-pause-quit').addEventListener('click', () => {
-        document.getElementById('pause-modal').classList.remove('active');
+    safeAddListener('btn-pause-quit', 'click', () => {
+        const pm = document.getElementById('pause-modal');
+        if (pm) pm.classList.remove('active');
         quitToMenu();
     });
-
-    document.getElementById('btn-quit').addEventListener('click', () => {
-        quitToMenu();
-    });
+    safeAddListener('btn-quit', 'click', () => quitToMenu());
 
     // --- 게임오버 제어 ---
-    document.getElementById('btn-restart').addEventListener('click', () => {
-        document.getElementById('gameover-modal').classList.remove('active');
+    safeAddListener('btn-restart', 'click', () => {
+        const gom = document.getElementById('gameover-modal');
+        if (gom) gom.classList.remove('active');
         initGame(currentMode);
     });
 
-    document.getElementById('btn-gameover-quit').addEventListener('click', () => {
-        document.getElementById('gameover-modal').classList.remove('active');
+    safeAddListener('btn-gameover-quit', 'click', () => {
+        const gom = document.getElementById('gameover-modal');
+        if (gom) gom.classList.remove('active');
         quitToMenu();
     });
 
-    document.getElementById('btn-save-score').addEventListener('click', () => {
+    safeAddListener('btn-save-score', 'click', () => {
         const nameInput = document.getElementById('player-name-input');
-        const name = nameInput.value.trim() || 'AAA';
+        const name = nameInput ? (nameInput.value.trim() || 'AAA') : 'AAA';
         saveScore(currentMode, name, score1P);
         
-        // 버튼 비활성화하여 여러 번 클릭 방지
-        document.getElementById('highscore-form').classList.add('hidden');
+        const hf = document.getElementById('highscore-form');
+        if (hf) hf.classList.add('hidden');
         
-        // 저장 알림 피드백 후 리더보드 모달 보이기
         renderLeaderboard(currentMode);
-        document.getElementById('leaderboard-modal').classList.add('active');
+        const lbM = document.getElementById('leaderboard-modal');
+        if (lbM) lbM.classList.add('active');
     });
 });
 
