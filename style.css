@@ -2635,4 +2635,48 @@ body {
     box-shadow: 0 0 10px rgba(37, 99, 235, 0.2);
 }
 
+/* Single-Line Text & Professional Layout Alignment Rules */
+.navbar-container * {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+}
+
+.nav-right-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+}
+
+.nav-simple-link, .nav-action-btn, .btn-dark-pill, .logo-text {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: auto !important;
+    line-height: 1 !important;
+}
+
+/* Game Modal State Switching Rules */
+#main-menu {
+    display: none;
+}
+#main-menu.active {
+    display: block !important;
+}
+
+#game-screen {
+    display: none;
+}
+#game-screen.active {
+    display: block !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
 

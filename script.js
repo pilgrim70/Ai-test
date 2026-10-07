@@ -844,7 +844,11 @@ function openGameModal(gameId) {
     switch (gameId) {
         case 'tetris':
             openModal('modal-game-tetris');
-            showToast('🧩 테트리스 프로 엔진이 활성화되었습니다. 모드를 선택하세요!');
+            const mm = document.getElementById('main-menu');
+            const gs = document.getElementById('game-screen');
+            if (mm) { mm.classList.add('active'); mm.style.display = 'block'; }
+            if (gs) { gs.classList.remove('active'); gs.style.display = 'none'; }
+            showToast('🧩 테트리스 프로 엔진이 활성화되었습니다. 난이도 모드를 선택하세요!');
             break;
         case 'galaga':
             openModal('modal-game-galaga');
@@ -908,6 +912,16 @@ function initGalagaGame() {
     }
     
     document.getElementById('galaga-overlay').style.display = 'flex';
+
+    // Mouse movement & click shooting for Galaga
+    canvas.onmousemove = (e) => {
+        if (!galagaRunning) return;
+        const rect = canvas.getBoundingClientRect();
+        galagaPlayer.x = Math.max(10, Math.min(550, e.clientX - rect.left - 20));
+    };
+    canvas.onclick = () => {
+        if (galagaRunning) galagaShoot();
+    };
 }
 
 function startGalagaGame() {
@@ -940,11 +954,11 @@ function startGalagaGame() {
     galagaLoop();
 }
 
-function galagaMoveLeft() { galagaPlayer.x = Math.max(10, galagaPlayer.x - 20); }
-function galagaMoveRight() { galagaPlayer.x = Math.min(550, galagaPlayer.x + 20); }
+function galagaMoveLeft() { galagaPlayer.x = Math.max(10, galagaPlayer.x - 25); }
+function galagaMoveRight() { galagaPlayer.x = Math.min(550, galagaPlayer.x + 25); }
 function galagaShoot() {
     if (!galagaRunning) return;
-    galagaBullets.push({ x: galagaPlayer.x + 18, y: galagaPlayer.y, speed: 10 });
+    galagaBullets.push({ x: galagaPlayer.x + 18, y: galagaPlayer.y, speed: 12 });
 }
 
 window.addEventListener('keydown', (e) => {
@@ -990,7 +1004,7 @@ function galagaLoop() {
     galagaEnemies.forEach(e => {
         if (!e.alive) return;
         aliveCount++;
-        e.x += e.dir * 0.8;
+        e.x += e.dir * 1.2;
         if (e.x > 540 || e.x < 20) e.dir *= -1;
 
         // Draw Alien Bug
@@ -1013,7 +1027,7 @@ function galagaLoop() {
 
     if (aliveCount === 0) {
         galagaRunning = false;
-        showToast('🎉 축하합니다! 갤러그 스테이지를 클리어했습니다!');
+        showToast('🎉 축하합니다! 갤러그 적을 모두 소탕했습니다!');
         document.getElementById('galaga-overlay').style.display = 'flex';
         return;
     }
@@ -1061,7 +1075,7 @@ function initGomokuGame() {
             }
             gomokuCurrentTurn = 2;
             document.getElementById('gomoku-turn').innerHTML = '⚪ 백돌 (AI 수읽기 중...)';
-            setTimeout(playGomokuAI, 400);
+            setTimeout(playGomokuAI, 350);
         }
     };
 }
@@ -1133,20 +1147,45 @@ function checkGomokuWin(r, c, p) {
 function playGomokuAI() {
     if (gomokuGameOver) return;
 
-    // AI Logic: Find empty spot near stones
-    let emptySpots = [];
-    for (let r = 0; r < 15; r++) {
-        for (let c = 0; c < 15; c++) {
+    let targetR = -1, targetC = -1;
+
+    // AI Check for winning move or blocking player
+    for (let r = 0; r < 15 && targetR === -1; r++) {
+        for (let c = 0; c < 15 && targetR === -1; c++) {
             if (gomokuBoard[r][c] === 0) {
-                emptySpots.push({ r, c });
+                gomokuBoard[r][c] = 2;
+                if (checkGomokuWin(r, c, 2)) { targetR = r; targetC = c; }
+                gomokuBoard[r][c] = 0;
             }
         }
     }
 
-    if (emptySpots.length > 0) {
-        const spot = emptySpots[Math.floor(Math.random() * emptySpots.length)];
-        placeGomokuStone(spot.r, spot.c, 2);
-        if (checkGomokuWin(spot.r, spot.c, 2)) {
+    for (let r = 0; r < 15 && targetR === -1; r++) {
+        for (let c = 0; c < 15 && targetR === -1; c++) {
+            if (gomokuBoard[r][c] === 0) {
+                gomokuBoard[r][c] = 1;
+                if (checkGomokuWin(r, c, 1)) { targetR = r; targetC = c; }
+                gomokuBoard[r][c] = 0;
+            }
+        }
+    }
+
+    if (targetR === -1) {
+        let emptySpots = [];
+        for (let r = 0; r < 15; r++) {
+            for (let c = 0; c < 15; c++) {
+                if (gomokuBoard[r][c] === 0) emptySpots.push({ r, c });
+            }
+        }
+        if (emptySpots.length > 0) {
+            const spot = emptySpots[Math.floor(Math.random() * emptySpots.length)];
+            targetR = spot.r; targetC = spot.c;
+        }
+    }
+
+    if (targetR !== -1 && targetC !== -1) {
+        placeGomokuStone(targetR, targetC, 2);
+        if (checkGomokuWin(targetR, targetC, 2)) {
             gomokuGameOver = true;
             document.getElementById('gomoku-status').textContent = '🤖 백돌(AI)의 승리입니다.';
             return;
@@ -1161,12 +1200,55 @@ function playGomokuAI() {
    20. Playable Janggi (장기) Engine
    ========================================================================== */
 let janggiCtx;
+let janggiPieces = [];
+let selectedJanggiIndex = -1;
+
 function initJanggiGame() {
     const canvas = document.getElementById('janggi-canvas');
     if (!canvas) return;
     janggiCtx = canvas.getContext('2d');
+    selectedJanggiIndex = -1;
+
+    // Initialize 9x10 Board Pieces
+    janggiPieces = [
+        // 漢 Side (Blue / Top)
+        { r: 0, c: 0, t: '車', side: 'han' }, { r: 0, c: 1, t: '馬', side: 'han' }, { r: 0, c: 2, t: '象', side: 'han' }, { r: 0, c: 3, t: '士', side: 'han' }, { r: 0, c: 5, t: '士', side: 'han' }, { r: 0, c: 6, t: '象', side: 'han' }, { r: 0, c: 7, t: '馬', side: 'han' }, { r: 0, c: 8, t: '車', side: 'han' },
+        { r: 1, c: 4, t: '漢', side: 'han' },
+        { r: 2, c: 1, t: '包', side: 'han' }, { r: 2, c: 7, t: '包', side: 'han' },
+        { r: 3, c: 0, t: '卒', side: 'han' }, { r: 3, c: 2, t: '卒', side: 'han' }, { r: 3, c: 4, t: '卒', side: 'han' }, { r: 3, c: 6, t: '卒', side: 'han' }, { r: 3, c: 8, t: '卒', side: 'han' },
+
+        // 楚 Side (Red / Bottom)
+        { r: 9, c: 0, t: '車', side: 'cho' }, { r: 9, c: 1, t: '馬', side: 'cho' }, { r: 9, c: 2, t: '象', side: 'cho' }, { r: 9, c: 3, t: '士', side: 'cho' }, { r: 9, c: 5, t: '士', side: 'cho' }, { r: 9, c: 6, t: '象', side: 'cho' }, { r: 9, c: 7, t: '馬', side: 'cho' }, { r: 9, c: 8, t: '車', side: 'cho' },
+        { r: 8, c: 4, t: '楚', side: 'cho' },
+        { r: 7, c: 1, t: '包', side: 'cho' }, { r: 7, c: 7, t: '包', side: 'cho' },
+        { r: 6, c: 0, t: '兵', side: 'cho' }, { r: 6, c: 2, t: '兵', side: 'cho' }, { r: 6, c: 4, t: '兵', side: 'cho' }, { r: 6, c: 6, t: '兵', side: 'cho' }, { r: 6, c: 8, t: '兵', side: 'cho' }
+    ];
 
     drawJanggiBoard();
+
+    canvas.onclick = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const col = Math.round((x - 30) / 50);
+        const row = Math.round((y - 25) / 50);
+
+        if (col >= 0 && col < 9 && row >= 0 && row < 10) {
+            const clickedIdx = janggiPieces.findIndex(p => p.r === row && p.c === col);
+            if (clickedIdx !== -1) {
+                selectedJanggiIndex = clickedIdx;
+                document.getElementById('janggi-status').textContent = `'${janggiPieces[clickedIdx].t}' 기물이 선택되었습니다. 이동할 위치를 클릭하세요.`;
+                drawJanggiBoard();
+            } else if (selectedJanggiIndex !== -1) {
+                janggiPieces[selectedJanggiIndex].r = row;
+                janggiPieces[selectedJanggiIndex].c = col;
+                document.getElementById('janggi-status').textContent = `'${janggiPieces[selectedJanggiIndex].t}' 기물이 (${row}, ${col}) 위치로 이동했습니다.`;
+                selectedJanggiIndex = -1;
+                drawJanggiBoard();
+                showToast('⚔️ 장기 기물이 이동되었습니다!');
+            }
+        }
+    };
 }
 
 function drawJanggiBoard() {
@@ -1190,28 +1272,26 @@ function drawJanggiBoard() {
         janggiCtx.stroke();
     }
 
-    // Draw Sample Pieces
-    drawJanggiPiece(230, 75, '漢', '#1e3a8a');
-    drawJanggiPiece(230, 425, '楚', '#dc2626');
-    drawJanggiPiece(30, 25, '車', '#1e3a8a');
-    drawJanggiPiece(430, 25, '車', '#1e3a8a');
-    drawJanggiPiece(30, 475, '車', '#dc2626');
-    drawJanggiPiece(430, 475, '車', '#dc2626');
-}
+    // Draw Pieces
+    janggiPieces.forEach((p, idx) => {
+        const x = 30 + p.c * 50;
+        const y = 25 + p.r * 50;
+        const isSelected = (idx === selectedJanggiIndex);
 
-function drawJanggiPiece(x, y, text, color) {
-    janggiCtx.fillStyle = '#fef3c7';
-    janggiCtx.beginPath();
-    janggiCtx.arc(x, y, 18, 0, Math.PI * 2);
-    janggiCtx.fill();
-    janggiCtx.strokeStyle = '#78350f';
-    janggiCtx.stroke();
+        janggiCtx.fillStyle = isSelected ? '#fef08a' : '#fef3c7';
+        janggiCtx.beginPath();
+        janggiCtx.arc(x, y, 19, 0, Math.PI * 2);
+        janggiCtx.fill();
+        janggiCtx.strokeStyle = isSelected ? '#ef4444' : '#78350f';
+        janggiCtx.lineWidth = isSelected ? 3 : 1.5;
+        janggiCtx.stroke();
 
-    janggiCtx.fillStyle = color;
-    janggiCtx.font = 'bold 16px sans-serif';
-    janggiCtx.textAlign = 'center';
-    janggiCtx.textBaseline = 'middle';
-    janggiCtx.fillText(text, x, y);
+        janggiCtx.fillStyle = (p.side === 'han') ? '#1e3a8a' : '#dc2626';
+        janggiCtx.font = 'bold 16px sans-serif';
+        janggiCtx.textAlign = 'center';
+        janggiCtx.textBaseline = 'middle';
+        janggiCtx.fillText(p.t, x, y);
+    });
 }
 
 /* ==========================================================================

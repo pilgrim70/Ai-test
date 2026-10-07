@@ -986,11 +986,39 @@ function initGame(mode) {
         document.getElementById('training-banner').classList.add('hidden');
     }
 
+    // Canvas context safety check
+    if (!canvas1P) {
+        canvas1P = document.getElementById('canvas-board-1p');
+        if (canvas1P) ctx1P = canvas1P.getContext('2d');
+    }
+    if (!canvasHold1P) {
+        canvasHold1P = document.getElementById('canvas-hold-1p');
+        if (canvasHold1P) ctxHold1P = canvasHold1P.getContext('2d');
+    }
+    if (!canvasNext1P) {
+        canvasNext1P = document.getElementById('canvas-next-1p');
+        if (canvasNext1P) ctxNext1P = canvasNext1P.getContext('2d');
+    }
+    if (!canvas2P) {
+        canvas2P = document.getElementById('canvas-board-2p');
+        if (canvas2P) ctx2P = canvas2P.getContext('2d');
+    }
+    if (!canvasHold2P) {
+        canvasHold2P = document.getElementById('canvas-hold-2p');
+        if (canvasHold2P) ctxHold2P = canvasHold2P.getContext('2d');
+    }
+    if (!canvasNext2P) {
+        canvasNext2P = document.getElementById('canvas-next-2p');
+        if (canvasNext2P) ctxNext2P = canvasNext2P.getContext('2d');
+    }
+
     updateUI();
     
     // 화면 전환
-    document.getElementById('main-menu').classList.remove('active');
-    document.getElementById('game-screen').classList.add('active');
+    const mm = document.getElementById('main-menu');
+    const gs = document.getElementById('game-screen');
+    if (mm) { mm.classList.remove('active'); mm.style.display = 'none'; }
+    if (gs) { gs.classList.add('active'); gs.style.display = 'block'; }
     
     // 타이머 및 사운드 시작
     startGameInterval();
@@ -998,13 +1026,13 @@ function initGame(mode) {
 
     // 렌더링
     renderBoard(1);
-    drawPreviewMino(ctxHold1P, canvasHold1P, holdMino1P);
-    drawPreviewMino(ctxNext1P, canvasNext1P, nextMinos1P[0]);
+    if (ctxHold1P && canvasHold1P) drawPreviewMino(ctxHold1P, canvasHold1P, holdMino1P);
+    if (ctxNext1P && canvasNext1P) drawPreviewMino(ctxNext1P, canvasNext1P, nextMinos1P[0]);
 
     if (mode === 'multi') {
         renderBoard(2);
-        drawPreviewMino(ctxHold2P, canvasHold2P, holdMino2P);
-        drawPreviewMino(ctxNext2P, canvasNext2P, nextMinos2P[0]);
+        if (ctxHold2P && canvasHold2P) drawPreviewMino(ctxHold2P, canvasHold2P, holdMino2P);
+        if (ctxNext2P && canvasNext2P) drawPreviewMino(ctxNext2P, canvasNext2P, nextMinos2P[0]);
     }
 }
 
@@ -1346,6 +1374,8 @@ function quitToMenu() {
     if (gameInterval) clearInterval(gameInterval);
     if (hardModeTimer) clearInterval(hardModeTimer);
     
-    document.getElementById('game-screen').classList.remove('active');
-    document.getElementById('main-menu').classList.add('active');
+    const gs = document.getElementById('game-screen');
+    const mm = document.getElementById('main-menu');
+    if (gs) { gs.classList.remove('active'); gs.style.display = 'none'; }
+    if (mm) { mm.classList.add('active'); mm.style.display = 'block'; }
 }
