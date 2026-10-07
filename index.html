@@ -25,122 +25,202 @@
         <nav class="navbar glass-nav">
             <div class="logo">
                 <div class="logo-icon">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <i class="fa-solid fa-gamepad"></i>
                 </div>
-                <span class="logo-text">GraceClip <span class="logo-highlight">AI</span></span>
+                <span class="logo-text">AI WORLD <span class="logo-highlight">MAKER</span></span>
             </div>
             
             <div class="nav-right-group">
-                <a href="#pricing" class="nav-simple-link">요금제</a>
-                <a href="#testimonials" class="nav-simple-link">블로그</a>
+                <a href="#studio" class="nav-simple-link">AI Studio</a>
+                <a href="#games" class="nav-simple-link active">모두의 게임</a>
+                <a href="#extra" class="nav-simple-link">추가패널</a>
+                <a href="#store" class="nav-simple-link">스토어</a>
                 <button class="btn btn-ghost" id="theme-toggle" aria-label="다크/라이트 모드 전환">
-                    <i class="fa-solid fa-moon"></i>
+                    <i class="fa-solid fa-sun"></i>
                 </button>
-                <button class="btn btn-dark-pill nav-start-btn" onclick="scrollToSection('hero-input-box')">시작하기</button>
+                <button class="btn btn-primary" style="background: linear-gradient(135deg, #f97316, #ef4444); border: none; padding: 6px 14px; border-radius: 8px; color: white; font-weight: 600; font-size: 13px;">🎁 Happy Day 구경</button>
+                <button class="btn btn-dark-pill" style="background: #171D2C; border: 1px solid #263147; padding: 6px 12px; border-radius: 8px; color: #cbd5e1; font-size: 13px;">🔑 API</button>
+                <button class="btn btn-dark-pill" style="background: #171D2C; border: 1px solid #263147; padding: 6px 12px; border-radius: 8px; color: #cbd5e1; font-size: 13px;">👤 마이페이지</button>
+                <button class="btn btn-dark-pill" style="background: #171D2C; border: 1px solid #263147; padding: 6px 12px; border-radius: 8px; color: #cbd5e1; font-size: 13px;">↪ 로그아웃</button>
+                <button class="btn btn-primary" style="background: linear-gradient(135deg, #4f46e5, #9333ea); border: none; padding: 6px 14px; border-radius: 8px; color: white; font-weight: 600; font-size: 13px;">👑 구독계정</button>
             </div>
         </nav>
     </header>
 
     <!-- Main Content -->
-    <main>
-        <!-- Hero Section (Exactly Styled Like Reference Screenshot) -->
-        <section class="hero-section">
-            <div class="container hero-container">
-                
-                <!-- Main Catchy Title -->
-                <h1 class="hero-title-main">
-                    예배 영상 하나로, <span class="highlight-blue-text">한 주 사역 자료 & 1분 쇼츠 끝</span>
-                </h1>
+    <main style="background: #0B0E17; color: #E2E8F0; min-h: 100vh; padding-bottom: 80px;">
+        <div style="max-width: 1140px; margin: 0 auto; padding: 24px 20px;">
+            
+            <!-- Back to Home Link -->
+            <div style="margin-bottom: 24px;">
+                <a href="#" style="color: #64748B; text-decoration: none; font-size: 13px; display: inline-flex; items-center; gap: 4px;">
+                    <i class="fa-solid fa-arrow-left"></i> 홈으로
+                </a>
+            </div>
 
-                <!-- Subtitle Chips -->
-                <p class="hero-tags-sub">
-                    쇼츠 비디오 · 카드뉴스 · QT · 소그룹 나눔지 · 설교요약 · PPT
-                </p>
-                <p class="hero-time-sub">3분이면 전부 완성</p>
-
-                <!-- Primary Upload Button (Matching Reference Image Blue Glow Button) -->
-                <div class="hero-cta-wrapper">
-                    <button class="btn btn-hero-blue" onclick="scrollToSection('hero-input-box')">
-                        <span>이번 주 예배 영상 올려보기</span>
-                    </button>
-                    <p class="hero-trust-text">
-                        <strong class="highlight-blue-count">12,400명</strong>의 목회자가 함께하고 있습니다
+            {/* Hero Title Section */}
+            <div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 36px;">
+                <div style="width: 56px; height: 56px; background: linear-gradient(180deg, #1E293B, #0F172A); border: 1px solid #2E3C54; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #38BDF8; flex-shrink: 0; box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <div>
+                    <h1 style="font-size: 28px; font-weight: 800; color: #FFFFFF; margin: 0 0 8px 0; letter-spacing: -0.5px;">
+                        모두의 게임
+                    </h1>
+                    <p style="font-size: 13px; color: #8A99AD; margin: 0; leading-height: 1.6; max-width: 800px;">
+                        6개 테마 · GitHub 오픈소스 명작 + 즉시 플레이 HTML5 게임. 이제 <strong style="color: #FFFFFF; font-weight: 700;">허브 안에서 바로 실행</strong>됩니다 — 별도 로그인·재구독 없음. 구독 멤버십이면 광고·시간제한 없이 무제한.
                     </p>
                 </div>
-
-                <!-- Real User Testimonial Cards (Exactly matching screenshot middle 3 quotes) -->
-                <div class="hero-quotes-grid">
-                    <div class="quote-card glass-card">
-                        <p class="quote-body">"더 필요한 게 생각이 안 날 정도로 엄청나게 대단합니다. 시간을 엄청 절약할 수 있을 것 같습니다!"</p>
-                        <span class="quote-author">황 목사님</span>
-                    </div>
-                    <div class="quote-card glass-card">
-                        <p class="quote-body">"감탄 100입니다. 설교, 쇼츠, 사역자료 정말 딱 필요한 것을 만났네요. 군더더기 없이 깔끔하게 이루어진 부분도 너무 좋습니다."</p>
-                        <span class="quote-author">미니** 님</span>
-                    </div>
-                    <div class="quote-card glass-card">
-                        <p class="quote-body">"예배 풀영상에서 AI가 알아서 설교 핵심 1분 쇼츠와 소그룹 나눔지를 만드는데, 제가 만들었던 나눔지보다 훨씬 뛰어납니다."</p>
-                        <span class="quote-author">김 목사님</span>
-                    </div>
-                </div>
-
-                <!-- Input / Upload Card Box -->
-                <div class="hero-input-box glass-card" id="hero-input-box">
-                    <div class="input-tabs">
-                        <button class="tab-btn active" data-target="tab-youtube">
-                            <i class="fa-brands fa-youtube red-icon"></i> 유튜브 링크 입력
-                        </button>
-                        <button class="tab-btn" data-target="tab-file">
-                            <i class="fa-solid fa-cloud-arrow-up blue-icon"></i> 예배 영상 파일 업로드
-                        </button>
-                    </div>
-
-                    <div class="tab-content active" id="tab-youtube">
-                        <div class="url-input-wrapper">
-                            <i class="fa-solid fa-link input-icon"></i>
-                            <input type="text" id="youtube-url-input" placeholder="https://www.youtube.com/watch?v=예배풀영상주소" value="https://www.youtube.com/watch?v=K392_GraceSermon2026">
-                            <button class="btn btn-primary btn-lg start-ai-btn" id="start-ai-youtube">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                                <span>AI 설교 감지 & 쇼츠 생성</span>
-                            </button>
-                        </div>
-                        <div class="sample-demo-bar">
-                            <span class="demo-label"><i class="fa-solid fa-bolt"></i> 바로 체험하기:</span>
-                            <button class="demo-chip" onclick="loadSampleVideo('pastor_lee')">
-                                🎬 2026 신년 대예배 (1시간 40분)
-                            </button>
-                            <button class="demo-chip" onclick="loadSampleVideo('pastor_kim')">
-                                🔥 금요 기도회 찬양 & 설교 (2시간)
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="tab-content" id="tab-file">
-                        <div class="file-dropzone" id="dropzone">
-                            <div class="dropzone-icon">
-                                <i class="fa-solid fa-file-video"></i>
-                            </div>
-                            <div class="dropzone-text">
-                                <h3>예배 영상 파일(.mp4, .mov, .mkv)을 이곳에 드래그하세요</h3>
-                                <p>최대 4K 화질 및 10GB 파일 지원 | 자동 음성 분석 및 고화질 처리</p>
-                            </div>
-                            <button class="btn btn-secondary btn-file-select" onclick="triggerFileSelect()">
-                                파일 선택하기
-                            </button>
-                            <input type="file" id="file-input" accept="video/*" style="display:none;">
-                        </div>
-                    </div>
-
-                    <div class="feature-pills">
-                        <span><i class="fa-solid fa-check"></i> 찬양/광고 자동 분리</span>
-                        <span><i class="fa-solid fa-check"></i> 9:16 목사님 자동 구도 추적</span>
-                        <span><i class="fa-solid fa-check"></i> 성경/신학 용어 전문 한글 자막</span>
-                        <span><i class="fa-solid fa-check"></i> 카드뉴스 & 나눔지 패키지</span>
-                    </div>
-                </div>
-
             </div>
-        </section>
+
+            <!-- Section 1: 테마 선택 -->
+            <section style="margin-bottom: 36px;">
+                <h2 style="font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">테마 선택</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px;">
+                    
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 18px;">🕹️</span>
+                                <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">아케이드</span>
+                            </div>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">2048 · 팩맨 · 테트리스 · 브레이크아웃 · 퐁.</p>
+                    </div>
+
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 18px;">🧩</span>
+                                <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">퍼즐</span>
+                            </div>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">지뢰찾기 · 라이프 게임 · 슬라이드 · 메모리.</p>
+                    </div>
+
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 18px;">♟️</span>
+                                <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">보드·카드</span>
+                            </div>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">체스 · 솔리테어 · 체커 · 오목.</p>
+                    </div>
+
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 18px;">🚀</span>
+                                <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">액션·슈팅</span>
+                            </div>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">아스테로이드 · 스네이크 · 갤러그 · 인베이더.</p>
+                    </div>
+
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 18px;">🏰</span>
+                                <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">전략·시물</span>
+                            </div>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(168, 85, 247, 0.15); color: #A855F7; border: 1px solid rgba(168, 85, 247, 0.3);">BETA</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">타워디펜스 · 시물 · 영작 링크.</p>
+                    </div>
+
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 18px;">🍬</span>
+                                <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">캐주얼</span>
+                            </div>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">플래피 · 공룡 · 사이먼 · 메모리 매치.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Section 2: NATAS 추천 게임 -->
+            <section style="margin-bottom: 36px;">
+                <h2 style="font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">NATAS 추천 게임</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px;">
+                    
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">테트리스 프로</span>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">7-bag · SRS 회전 · 홀드 · 고스트. NATAS 자작 프로 엔진.</p>
+                    </div>
+
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">갤러그 (Galaga)</span>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">자작 HTML5 클론 · 즉시 플레이 · 모바일 지원.</p>
+                    </div>
+
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">FG 테트리스</span>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">Easy · Hard · Training · Multi 4모드 + BGM.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Section 3: 허브 내장 게임 -->
+            <section style="margin-bottom: 36px;">
+                <h2 style="font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">허브 내장 게임</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px;">
+                    
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">오목 (Gomoku)</span>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">AI 상대 5단계 난이도.</p>
+                    </div>
+
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">장기 (Janggi)</span>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">2인 대국 · 정확한 룰 · 합법수 표시.</p>
+                    </div>
+
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">슬라이드 퍼즐</span>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">15퍼즐 · 3x3~5x5 · 이동수/타임어택.</p>
+                    </div>
+
+                    <div class="game-hub-card" style="background: #121724; border: 1px solid #1E2638; border-radius: 12px; padding: 18px; transition: all 0.2s cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 15px; font-weight: 700; color: #FFFFFF;">플래피 짭새</span>
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; background: rgba(168, 85, 247, 0.15); color: #A855F7; border: 1px solid rgba(168, 85, 247, 0.3);">BETA</span>
+                        </div>
+                        <p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.5;">원터치 플래피 파랑새 클론 게임.</p>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
 
         <!-- Interactive AI Studio Showcase (Core Shorts Generator) -->
         <section class="studio-section" id="studio">
