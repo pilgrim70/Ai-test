@@ -192,6 +192,7 @@ const sampleData = {
 let currentDataset = sampleData.pastor_lee;
 let currentHighlightIdx = 0;
 let isPlaying = false;
+let currentShortsSpeed = 1.0;
 
 /* 2. Theme Toggle */
 function initThemeToggle() {
@@ -482,6 +483,15 @@ function selectHighlight(idx) {
             if (ytPlayer) {
                 ytPlayer.src = `https://www.youtube.com/embed/${currentDataset.videoId}?autoplay=1&enablejsapi=1&start=${startSec}&end=${startSec + 60}`;
                 ytPlayer.style.display = 'block';
+                setTimeout(() => {
+                    if (ytPlayer.contentWindow) {
+                        ytPlayer.contentWindow.postMessage(JSON.stringify({
+                            event: 'command',
+                            func: 'setPlaybackRate',
+                            args: [currentShortsSpeed]
+                        }), '*');
+                    }
+                }, 400);
             }
             if (videoPlayer) videoPlayer.style.display = 'none';
             if (imgLayer) imgLayer.style.display = 'none';
@@ -492,6 +502,7 @@ function selectHighlight(idx) {
             if (ytPlayer) ytPlayer.style.display = 'none';
             if (imgLayer) imgLayer.style.display = 'none';
             videoPlayer.style.display = 'block';
+            videoPlayer.playbackRate = currentShortsSpeed;
 
             if (videoPlayer.duration && !isNaN(videoPlayer.duration)) {
                 const targetTime = Math.min(startSec, Math.max(0, videoPlayer.duration - 1));
@@ -500,6 +511,7 @@ function selectHighlight(idx) {
                 videoPlayer.currentTime = 0;
             }
             videoPlayer.play().then(() => {
+                videoPlayer.playbackRate = currentShortsSpeed;
                 isPlaying = true;
                 const icon = document.getElementById('phone-play-icon');
                 if (icon) icon.className = 'fa-solid fa-pause';
@@ -2109,20 +2121,158 @@ function setAspectRatio(ratio) {
     showToast(`📐 화면 비율이 '${ratio}'(으)로 변경되었습니다.`);
 }
 
+function setShortsPlaybackSpeed(rate) {
+    currentShortsSpeed = parseFloat(rate);
+
+    // Update Speed Badge Text
+    const badge = document.getElementById('speed-badge');
+    if (badge) {
+        badge.textContent = `${rate}x 배속`;
+    }
+
+    // Update Speed Chips Buttons UI
+    document.querySelectorAll('.speed-selector-grid .speed-chip').forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.background = 'rgba(30, 41, 59, 0.6)';
+        btn.style.borderColor = '#334155';
+        btn.style.color = '#cbd5e1';
+        btn.style.fontWeight = '700';
+    });
+
+    const activeBtn = document.getElementById(`speed-btn-${rate.toFixed(1)}`) || document.getElementById(`speed-btn-${rate}`);
+    if (activeBtn) {
+        activeBtn.classList.add('active');
+        activeBtn.style.background = '#2563eb';
+        activeBtn.style.borderColor = '#60a5fa';
+        activeBtn.style.color = '#ffffff';
+        activeBtn.style.fontWeight = '800';
+    }
+
+    // Apply speed to HTML5 Video player
+    const videoPlayer = document.getElementById('uploaded-video-player');
+    if (videoPlayer) {
+        videoPlayer.playbackRate = currentShortsSpeed;
+    }
+
+    // Apply speed to YouTube iframe player
+    const ytPlayer = document.getElementById('youtube-iframe-player');
+    if (ytPlayer && ytPlayer.contentWindow) {
+        ytPlayer.contentWindow.postMessage(JSON.stringify({
+            event: 'command',
+            func: 'setPlaybackRate',
+            args: [currentShortsSpeed]
+        }), '*');
+    }
+
+    showToast(`⚡ 쇼츠 말소리 빠르기가 ${rate}x 배속으로 설정되었습니다.`);
+}
+
 function updateTrimmerTime() {
+    const startHr = parseInt(document.getElementById('trim-start-hr')?.value || 0);
     const startMin = parseInt(document.getElementById('trim-start-min')?.value || 0);
     const startSec = parseInt(document.getElementById('trim-start-sec')?.value || 0);
+    
+    const endHr = parseInt(document.getElementById('trim-end-hr')?.value || 0);
     const endMin = parseInt(document.getElementById('trim-end-min')?.value || 0);
     const endSec = parseInt(document.getElementById('trim-end-sec')?.value || 0);
 
-    const totalStartSec = startMin * 60 + startSec;
-    const totalEndSec = endMin * 60 + endSec;
+    const totalStartSec = startHr * 3600 + startMin * 60 + startSec;
+    const totalEndSec = endHr * 3600 + endMin * 60 + endSec;
     const diff = Math.max(0, totalEndSec - totalStartSec);
 
     const badge = document.getElementById('trimmer-duration-badge');
     if (badge) {
         badge.textContent = `총 ${diff}초 (${diff <= 60 ? '1분 컷' : '롱폼 컷'})`;
     }
+}
+
+function applyCustomTimeTrim() {
+    const startHr = parseInt(document.getElementById('trim-start-hr')?.value || 0);
+    const startMin = parseInt(document.getElementById('trim-start-min')?.value || 0);
+    const startSec = parseInt(document.getElementById('trim-start-sec')?.value || 0);
+    
+    const endHr = parseInt(document.getElementById('trim-end-hr')?.value || 0);
+    const endMin = parseInt(document.getElementById('trim-end-min')?.value || 0);
+    const endSec = parseInt(document.getElementById('trim-end-sec')?.value || 0);
+
+    const totalStartSec = startHr * 3600 + startMin * 60 + startSec;
+    const totalEndSec = endHr * 3600 + endMin * 60 + endSec;
+    const diffSec = Math.max(1, totalEndSec - totalStartSec);
+
+    const formatTime = (h, m, s) => {
+        if (h > 0) return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    };
+
+    const startStr = formatTime(startHr, startMin, startSec);
+    const endStr = formatTime(endHr, endMin, endSec);
+
+    if (currentDataset && currentDataset.highlights && currentDataset.highlights[currentHighlightIdx]) {
+        currentDataset.highlights[currentHighlightIdx].time = `${startStr} ~ ${endStr} (${diffSec}초)`;
+        renderHighlightCards();
+        selectHighlight(currentHighlightIdx);
+    }
+
+    updateTrimmerTime();
+    showToast(`✂️ 선택한 구간 (${startStr} ~ ${endStr})이 적용되었습니다.`);
+}
+
+function processCustomTimeShorts() {
+    const startHr = parseInt(document.getElementById('hero-start-hr')?.value || 0);
+    const startMin = parseInt(document.getElementById('hero-start-min')?.value || 0);
+    const startSec = parseInt(document.getElementById('hero-start-sec')?.value || 0);
+    
+    const endHr = parseInt(document.getElementById('hero-end-hr')?.value || 0);
+    const endMin = parseInt(document.getElementById('hero-end-min')?.value || 1);
+    const endSec = parseInt(document.getElementById('hero-end-sec')?.value || 0);
+
+    const totalStartSec = startHr * 3600 + startMin * 60 + startSec;
+    const totalEndSec = endHr * 3600 + endMin * 60 + endSec;
+    const diffSec = Math.max(5, totalEndSec - totalStartSec);
+
+    const formatTime = (h, m, s) => {
+        if (h > 0) return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    };
+
+    const startStr = formatTime(startHr, startMin, startSec);
+    const endStr = formatTime(endHr, endMin, endSec);
+
+    const ytInput = document.getElementById('youtube-url-input');
+    let url = ytInput ? ytInput.value.trim() : '';
+    if (!url) {
+        url = 'https://youtube.com/live/XM7PrnvFSHw?feature=share';
+        if (ytInput) ytInput.value = url;
+    }
+
+    generate10ShortsFromYouTube(url);
+
+    // Override Highlight #1 with custom selected time range
+    if (currentDataset && currentDataset.highlights && currentDataset.highlights[0]) {
+        currentDataset.highlights[0].title = `"직접 선택한 ${startStr}~${endStr} 설교 핵심 쇼츠"`;
+        currentDataset.highlights[0].time = `${startStr} ~ ${endStr} (${diffSec}초)`;
+    }
+
+    // Sync Trimmer inputs
+    const trimStartHr = document.getElementById('trim-start-hr');
+    const trimStartMin = document.getElementById('trim-start-min');
+    const trimStartSec = document.getElementById('trim-start-sec');
+    const trimEndHr = document.getElementById('trim-end-hr');
+    const trimEndMin = document.getElementById('trim-end-min');
+    const trimEndSec = document.getElementById('trim-end-sec');
+
+    if (trimStartHr) trimStartHr.value = startHr;
+    if (trimStartMin) trimStartMin.value = startMin;
+    if (trimStartSec) trimStartSec.value = startSec;
+    if (trimEndHr) trimEndHr.value = endHr;
+    if (trimEndMin) trimEndMin.value = endMin;
+    if (trimEndSec) trimEndSec.value = endSec;
+
+    renderHighlightCards();
+    selectHighlight(0);
+    scrollToSection('studio');
+
+    showToast(`✂️ 선택한 시간 구간 (${startStr} ~ ${endStr})으로 1분 은혜 쇼츠가 생성되었습니다!`);
 }
 
 function changeFontFamily(font) {
