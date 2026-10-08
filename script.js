@@ -19,6 +19,8 @@ const sampleData = {
         videoId: "XM7PrnvFSHw",
         highlights: [
             {
+                line1: "두려움을 이기는",
+                line2: "담대한 믿음의 3가지 원리",
                 title: `"두려움을 이기는 담대한 믿음의 3가지 원리"`,
                 quote: `"인생의 폭풍이 불어올 때 우리가 바라보아야 할 것은 파도가 아니라 바로 예수 그리스도의 말씀입니다!"`,
                 ref: "📖 마태복음 14:29-31",
@@ -27,6 +29,8 @@ const sampleData = {
                 viral: "🔥 조회수 예측 99점"
             },
             {
+                line1: "고난 속에서도",
+                line2: "감사해야 하는 진짜 이유",
                 title: `"고난 속에서도 감사해야 하는 진짜 이유"`,
                 quote: `"하나님의 거절은 더 큰 축복을 위한 거룩한 기다림입니다. 오늘 당신의 기도는 결코 땅에 떨어지지 않습니다."`,
                 ref: "📖 데살로니가전서 5:16-18",
@@ -35,6 +39,8 @@ const sampleData = {
                 viral: "✨ 은혜/결단 강추"
             },
             {
+                line1: "말씀으로 하루를 시작할 때",
+                line2: "일어나는 기적",
                 title: `"말씀으로 하루를 시작할 때 일어나는 기적"`,
                 quote: `"아침의 첫 10분을 하나님께 드릴 때, 당신의 하루 24시간이 하나님의 능력 안에 머물게 됩니다."`,
                 ref: "📖 시편 5:3",
@@ -43,6 +49,8 @@ const sampleData = {
                 viral: "📱 청년부 공유 추천"
             },
             {
+                line1: "막힌 기도의 문을",
+                line2: "열어젖히는 턴어라운드",
                 title: `"막힌 기도의 문을 열어젖히는 턴어라운드"`,
                 quote: `"내 힘으로 안 될 때가 바로 하나님의 역사가 시작되는 시간입니다. 멈추지 말고 부르짖으십시오!"`,
                 ref: "📖 예레미야 33:3",
@@ -51,6 +59,8 @@ const sampleData = {
                 viral: "🔥 AI 추출 98점"
             },
             {
+                line1: "상처받은 마음을",
+                line2: "치유하시는 주님의 손길",
                 title: `"상처받은 마음을 치유하시는 주님의 손길"`,
                 quote: `"사람은 날 버려도 주님은 결코 나를 포기하지 않으십니다. 십자가의 사랑을 기억하십시오."`,
                 ref: "📖 이사야 41:10",
@@ -59,6 +69,8 @@ const sampleData = {
                 viral: "✨ 영적회복 추천"
             },
             {
+                line1: "새 일을 행하시는",
+                line2: "하나님을 바라보라",
                 title: `"새 일을 행하시는 하나님을 바라보라"`,
                 quote: `"광야에 길을 내시고 사막에 강을 내시는 주님의 기적이 당신의 가문과 삶에 임합니다!"`,
                 ref: "📖 이사야 43:19",
@@ -67,6 +79,8 @@ const sampleData = {
                 viral: "📱 청년/학생 강추"
             },
             {
+                line1: "영적 전쟁에서 승리하는",
+                line2: "말씀 선포의 능력",
                 title: `"영적 전쟁에서 승리하는 말씀 선포의 능력"`,
                 quote: `"악한 영의 어둠은 오직 하나님의 살아있는 말씀 선포 앞에서 즉시 무너져 내립니다!"`,
                 ref: "📖 에베소서 6:17",
@@ -75,6 +89,8 @@ const sampleData = {
                 viral: "🔥 AI 추출 96점"
             },
             {
+                line1: "가정을 축복으로 만드는",
+                line2: "거룩한 눈물의 기도",
                 title: `"가정을 축복으로 만드는 거룩한 기도"`,
                 quote: `"부모의 눈물 어린 기도는 자녀의 평생을 지키는 하나님의 거룩한 울타리가 됩니다."`,
                 ref: "📖 잠언 22:6",
@@ -83,6 +99,8 @@ const sampleData = {
                 viral: "✨ 가정예배 강추"
             },
             {
+                line1: "포기하지 않는 믿음이",
+                line2: "가져오는 반전",
                 title: `"포기하지 않는 믿음이 가져오는 반전"`,
                 quote: `"낙심하지 마십시오. 가장 어두운 밤이 지나면 반드시 하나님의 찬란한 아침이 밝아옵니다."`,
                 ref: "📖 갈라디아서 6:9",
@@ -91,6 +109,8 @@ const sampleData = {
                 viral: "📱 SNS 공유 폭발"
             },
             {
+                line1: "주님의 진정한 평강이",
+                line2: "임하는 거룩한 결단",
                 title: `"주님의 평강이 임하는 거룩한 결단"`,
                 quote: `"세상이 줄 수 없는 진정한 평안이 오늘 이 자리에서 주님을 고백하는 당신의 심령에 임합니다."`,
                 ref: "📖 요한복음 14:27",
@@ -106,62 +126,79 @@ const sampleData = {
         videoId: "2z8T-a53lJ0",
         highlights: [
             {
-                title: `"막힌 기도의 문을 열어젖히는 턴어라운드"`,
-                quote: `"내 힘으로 안 될 때가 바로 하나님의 역사가 시작되는 시간입니다. 멈추지 말고 부르짖으십시오!"`,
-                ref: "📖 예레미야 33:3",
-                time: "15:10 ~ 16:10 (60초)",
-                tag: "#기도 #성령 #회복",
-                viral: "🔥 조회수 예측 98점"
+                line1: "교회에 온 당신",
+                line2: "흥왕케 하는 자",
+                title: `"교회에 온 당신 흥왕케 하는 자"`,
+                quote: `"느헤미야처럼 교회와 사람을 세우는 '흥왕케 하는 자'로 살아가자는 메시지를 전하는 설교 도입부입니다."`,
+                ref: "📖 느헤미야 2:17",
+                time: "10:00 ~ 13:00 (3분)",
+                tag: "#직접지정",
+                viral: "🔥 AI 추출 99점",
+                isCustom: true
             },
             {
-                title: `"상처받은 마음을 치유하시는 주님의 손길"`,
-                quote: `"사람은 날 버려도 주님은 결코 나를 포기하지 않으십니다. 십자가의 사랑을 기억하십시오."`,
-                ref: "📖 이사야 41:10",
-                time: "24:00 ~ 24:55 (55초)",
-                tag: "#치유 #사랑 #위로",
+                line1: "그 사람 오면",
+                line2: "분위기가 달라진다",
+                title: `"그 사람 오면 분위기가 달라진다"`,
+                quote: `"등장만 해도 분위기를 환하게 만들고 낙심한 사람에게 용기와 위로를 주는 사람이 있다는 대비 설명."`,
+                ref: "📖 사도행전 11:24",
+                time: "01:48 ~ 02:24 (36초)",
+                tag: "#위로 #분위기",
                 viral: "✨ 은혜/결단 강추"
             },
             {
-                title: `"새 일을 행하시는 하나님을 바라보라"`,
-                quote: `"광야에 길을 내시고 사막에 강을 내시는 주님의 기적이 당신의 가문과 삶에 임합니다!"`,
-                ref: "📖 이사야 43:19",
-                time: "33:30 ~ 34:28 (58초)",
-                tag: "#비전 #새해 #소망",
-                viral: "📱 청년부 공유 추천"
+                line1: "그 사람 오면",
+                line2: "슬그머니 자리를 뜬다",
+                title: `"그 사람 오면 슬그머니 자리를 뜬다"`,
+                quote: `"만날 때마다 지적하고 가르치려는 사람 곁을 사람들은 떠나고 싶어 한다는 경고."`,
+                ref: "📖 잠언 15:1",
+                time: "03:56 ~ 04:46 (50초)",
+                tag: "#경고 #관계",
+                viral: "📱 교훈 공유 추천"
             },
             {
-                title: `"성령의 불길로 일어서는 영적 회복"`,
-                quote: `"어두운 심령에 성령의 거룩한 불길이 타오를 때 모든 슬픔과 걱정이 소멸됩니다."`,
-                ref: "📖 사도행전 2:1-4",
-                time: "42:15 ~ 43:12 (57초)",
-                tag: "#성령 #불길 #회복",
-                viral: "🔥 AI 추출 99점"
+                line1: "제목은 단 한마디",
+                line2: "흥왕케 하는 자",
+                title: `"제목은 단 한마디 흥왕케 하는 자"`,
+                quote: `"오늘 말씀의 핵심 제목 '흥왕케 하는 자'를 힘있게 선포하는 장면."`,
+                ref: "📖 사도행전 19:20",
+                time: "11:16 ~ 12:07 (51초)",
+                tag: "#선포 #핵심제목",
+                viral: "🔥 AI 추출 98점"
             },
             {
-                title: `"찬양 중에 거하시는 거룩하신 하나님"`,
-                quote: `"온 맘 다해 찬양할 때 어둠의 결박이 풀리고 천국의 기쁨이 이곳에 넘쳐납니다."`,
-                ref: "📖 시편 22:3",
-                time: "51:00 ~ 51:58 (58초)",
-                tag: "#찬양 #기쁨 #은혜",
-                viral: "✨ 영적감동 강추"
+                line1: "나는 괜찮은 사람?",
+                line2: "판단은 내가 안 한다",
+                title: `"나는 괜찮은 사람? 판단은 내가 안 한다"`,
+                quote: `"자신이 좋은 사람이라 생각해도 그 판단은 자신이 아닌 상대방이 내린다는 통찰."`,
+                ref: "📖 고린도전서 4:4",
+                time: "02:24 ~ 03:56 (1분 32초)",
+                tag: "#겸손 #통찰",
+                viral: "✨ 영적회복 추천"
             },
             {
-                title: `"너는 두려워하지 말라 내가 너를 구속하였고"`,
-                quote: `"내가 너를 지명하여 불렀나니 너는 내 것이라! 너의 모든 발걸음을 주님이 지키십니다."`,
-                ref: "📖 이사야 43:1",
-                time: "1:02:10 ~ 1:03:08 (58초)",
-                tag: "#구원 #약속 #소망",
-                viral: "📱 SNS 공유 추천"
+                line1: "목사님 말씀 아니다",
+                line2: "하나님이 하신 말씀이다",
+                title: `"목사님 말씀 아니다 하나님이 하신 말씀이다"`,
+                quote: `"사람을 통해 전해진 말씀도 결국 하나님이 나에게 하신 말씀으로 받아들여야 한다는 가르침."`,
+                ref: "📖 데살로니가전서 2:13",
+                time: "17:41 ~ 19:11 (1분 30초)",
+                tag: "#말씀 #하나님",
+                viral: "📱 청년/학생 강추"
             },
             {
-                title: `"너희는 마음에 근심하지 말라 하나님을 믿으라"`,
-                quote: `"세상의 어떤 풍파도 주님의 손 안에 있음을 고백하며 안심하십시오."`,
-                ref: "📖 요한복음 14:1",
-                time: "1:15:20 ~ 1:16:18 (58초)",
-                tag: "#평안 #믿음 #위로",
-                viral: "🔥 AI 추출 97점"
+                line1: "얼어붙게 하는 사람 vs",
+                line2: "살아나게 하는 사람",
+                title: `"얼어붙게 하는 사람 vs 살아나게 하는 사람"`,
+                quote: `"나로 인해 주위의 사람이 살아나는가 아니면 주눅 들고 얼어붙는가를 점검하라는 질문."`,
+                ref: "📖 로마서 14:19",
+                time: "09:20 ~ 11:48 (2분 28초)",
+                tag: "#점검 #영적영향력",
+                viral: "🔥 AI 추출 96점"
             },
             {
+                line1: "은밀한 골방에서",
+                line2: "보시는 하나님",
                 title: `"너는 기도할 때에 네 골방에 들어와"`,
                 quote: `"은밀한 중에 보시는 너의 아버지께서 반드시 기쁨의 응답으로 갚아주시리라."`,
                 ref: "📖 마태복음 6:6",
@@ -170,6 +207,8 @@ const sampleData = {
                 viral: "✨ 은혜 기도회 추천"
             },
             {
+                line1: "여호와는 나의 목자",
+                line2: "내게 부족함 없으리로다",
                 title: `"여호와는 나의 목자시니 내게 부족함이 없으리로다"`,
                 quote: `"푸른 풀밭과 쉴 만한 물가로 인도하시는 주님 따라 오늘도 담대히 걸어갑니다."`,
                 ref: "📖 시편 23:1-3",
@@ -178,6 +217,8 @@ const sampleData = {
                 viral: "📱 묵상 숏폼 강추"
             },
             {
+                line1: "나의 힘이신 여호와여",
+                line2: "내가 주를 사랑하나이다",
                 title: `"나의 힘이신 여호와여 내가 주를 사랑하나이다"`,
                 quote: `"주님은 나의 반석이시요 나의 요새시요 나를 건지시는 이시니 담대히 찬양합니다."`,
                 ref: "📖 시편 18:1",
@@ -261,71 +302,90 @@ function generate10ShortsFromYouTube(url) {
         videoId: videoId,
         highlights: [
             {
-                title: `"두려움을 이기는 담대한 믿음의 3가지 원리"`,
-                quote: `"인생의 폭풍이 불어올 때 우리가 바라보아야 할 것은 파도가 아니라 바로 예수 그리스도의 말씀입니다!"`,
-                ref: "📖 마태복음 14:29-31",
-                time: "12:15 ~ 13:13 (58초)",
-                tag: "#믿음 #승리 #은혜",
-                viral: "🔥 조회수 예측 99점"
+                line1: "교회에 온 당신",
+                line2: "흥왕케 하는 자",
+                title: `"교회에 온 당신 흥왕케 하는 자"`,
+                quote: `"느헤미야처럼 교회와 사람을 세우는 '흥왕케 하는 자'로 살아가자는 메시지를 전하는 설교 도입부입니다."`,
+                ref: "📖 느헤미야 2:17",
+                time: "10:00 ~ 13:00 (3분)",
+                tag: "#직접지정",
+                viral: "🔥 AI 추출 99점",
+                isCustom: true
             },
             {
-                title: `"고난 속에서도 감사해야 하는 진짜 이유"`,
-                quote: `"하나님의 거절은 더 큰 축복을 위한 거룩한 기다림입니다. 오늘 당신의 기도는 결코 땅에 떨어지지 않습니다."`,
-                ref: "📖 데살로니가전서 5:16-18",
-                time: "21:05 ~ 22:03 (58초)",
-                tag: "#감사 #기도 #위로",
+                line1: "그 사람 오면",
+                line2: "분위기가 달라진다",
+                title: `"그 사람 오면 분위기가 달라진다"`,
+                quote: `"등장만 해도 분위기를 환하게 만들고 낙심한 사람에게 용기와 위로를 주는 사람이 있다는 대비 설명."`,
+                ref: "📖 사도행전 11:24",
+                time: "01:48 ~ 02:24 (36초)",
+                tag: "#위로 #분위기",
                 viral: "✨ 은혜/결단 강추"
             },
             {
-                title: `"말씀으로 하루를 시작할 때 일어나는 기적"`,
-                quote: `"아침의 첫 10분을 하나님께 드릴 때, 당신의 하루 24시간이 하나님의 능력 안에 머물게 됩니다."`,
-                ref: "📖 시편 5:3",
-                time: "30:40 ~ 31:38 (58초)",
-                tag: "#QT #아침기도 #청년",
-                viral: "📱 청년부 공유 추천"
+                line1: "그 사람 오면",
+                line2: "슬그머니 자리를 뜬다",
+                title: `"그 사람 오면 슬그머니 자리를 뜬다"`,
+                quote: `"만날 때마다 지적하고 가르치려는 사람 곁을 사람들은 떠나고 싶어 한다는 경고."`,
+                ref: "📖 잠언 15:1",
+                time: "03:56 ~ 04:46 (50초)",
+                tag: "#경고 #관계",
+                viral: "📱 교훈 공유 추천"
             },
             {
-                title: `"막힌 기도의 문을 열어젖히는 턴어라운드"`,
-                quote: `"내 힘으로 안 될 때가 바로 하나님의 역사가 시작되는 시간입니다. 멈추지 말고 부르짖으십시오!"`,
-                ref: "📖 예레미야 33:3",
-                time: "42:10 ~ 43:08 (58초)",
-                tag: "#기도 #성령 #회복",
+                line1: "제목은 단 한마디",
+                line2: "흥왕케 하는 자",
+                title: `"제목은 단 한마디 흥왕케 하는 자"`,
+                quote: `"오늘 말씀의 핵심 제목 '흥왕케 하는 자'를 힘있게 선포하는 장면."`,
+                ref: "📖 사도행전 19:20",
+                time: "11:16 ~ 12:07 (51초)",
+                tag: "#선포 #핵심제목",
                 viral: "🔥 AI 추출 98점"
             },
             {
-                title: `"상처받은 마음을 치유하시는 주님의 손길"`,
-                quote: `"사람은 날 버려도 주님은 결코 나를 포기하지 않으십니다. 십자가의 사랑을 기억하십시오."`,
-                ref: "📖 이사야 41:10",
-                time: "53:20 ~ 54:18 (58초)",
-                tag: "#치유 #사랑 #위로",
+                line1: "나는 괜찮은 사람?",
+                line2: "판단은 내가 안 한다",
+                title: `"나는 괜찮은 사람? 판단은 내가 안 한다"`,
+                quote: `"자신이 좋은 사람이라 생각해도 그 판단은 자신이 아닌 상대방이 내린다는 통찰."`,
+                ref: "📖 고린도전서 4:4",
+                time: "02:24 ~ 03:56 (1분 32초)",
+                tag: "#겸손 #통찰",
                 viral: "✨ 영적회복 추천"
             },
             {
-                title: `"새 일을 행하시는 하나님을 바라보라"`,
-                quote: `"광야에 길을 내시고 사막에 강을 내시는 주님의 기적이 당신의 가문과 삶에 임합니다!"`,
-                ref: "📖 이사야 43:19",
-                time: "1:04:15 ~ 1:05:13 (58초)",
-                tag: "#비전 #새해 #소망",
+                line1: "목사님 말씀 아니다",
+                line2: "하나님이 하신 말씀이다",
+                title: `"목사님 말씀 아니다 하나님이 하신 말씀이다"`,
+                quote: `"사람을 통해 전해진 말씀도 결국 하나님이 나에게 하신 말씀으로 받아들여야 한다는 가르침."`,
+                ref: "📖 데살로니가전서 2:13",
+                time: "17:41 ~ 19:11 (1분 30초)",
+                tag: "#말씀 #하나님",
                 viral: "📱 청년/학생 강추"
             },
             {
-                title: `"영적 전쟁에서 승리하는 말씀 선포의 능력"`,
-                quote: `"악한 영의 어둠은 오직 하나님의 살아있는 말씀 선포 앞에서 즉시 무너져 내립니다!"`,
-                ref: "📖 에베소서 6:17",
-                time: "1:15:30 ~ 1:16:28 (58초)",
-                tag: "#영적전쟁 #능력 #승리",
+                line1: "얼어붙게 하는 사람 vs",
+                line2: "살아나게 하는 사람",
+                title: `"얼어붙게 하는 사람 vs 살아나게 하는 사람"`,
+                quote: `"나로 인해 주위의 사람이 살아나는가 아니면 주눅 들고 얼어붙는가를 점검하라는 질문."`,
+                ref: "📖 로마서 14:19",
+                time: "09:20 ~ 11:48 (2분 28초)",
+                tag: "#점검 #영적영향력",
                 viral: "🔥 AI 추출 96점"
             },
             {
-                title: `"가정을 축복으로 만드는 거룩한 기도"`,
-                quote: `"부모의 눈물 어린 기도는 자녀의 평생을 지키는 하나님의 거룩한 울타리가 됩니다."`,
-                ref: "📖 잠언 22:6",
+                line1: "두려움을 이기는",
+                line2: "담대한 믿음 선포",
+                title: `"두려움을 이기는 담대한 믿음 선포"`,
+                quote: `"인생의 폭풍이 불어올 때 우리가 바라보아야 할 것은 파도가 아니라 예수 그리스도의 말씀입니다."`,
+                ref: "📖 마태복음 14:29",
                 time: "1:26:40 ~ 1:27:38 (58초)",
                 tag: "#가정 #축복 #기도",
                 viral: "✨ 가정예배 강추"
             },
             {
-                title: `"포기하지 않는 믿음이 가져오는 반전"`,
+                line1: "포기하지 않는 믿음이",
+                line2: "가져오는 반전의 역사",
+                title: `"포기하지 않는 믿음이 가져오는 반전의 역사"`,
                 quote: `"낙심하지 마십시오. 가장 어두운 밤이 지나면 반드시 하나님의 찬란한 아침이 밝아옵니다."`,
                 ref: "📖 갈라디아서 6:9",
                 time: "1:37:10 ~ 1:38:08 (58초)",
@@ -333,6 +393,8 @@ function generate10ShortsFromYouTube(url) {
                 viral: "📱 SNS 공유 폭발"
             },
             {
+                line1: "주님의 진정한 평강이",
+                line2: "임하는 거룩한 결단",
                 title: `"주님의 평강이 임하는 거룩한 결단"`,
                 quote: `"세상이 줄 수 없는 진정한 평안이 오늘 이 자리에서 주님을 고백하는 당신의 심령에 임합니다."`,
                 ref: "📖 요한복음 14:27",
@@ -357,7 +419,7 @@ function generate10ShortsFromYouTube(url) {
     const imgLayer = document.getElementById('preview-img-layer');
 
     if (ytPlayer) {
-        ytPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&start=735`;
+        ytPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&start=600`;
         ytPlayer.style.display = 'block';
         if (videoPlayer) videoPlayer.style.display = 'none';
         if (imgLayer) imgLayer.style.display = 'none';
@@ -374,32 +436,89 @@ function renderHighlightCards() {
     if (!currentDataset || !currentDataset.highlights) return;
 
     if (container) {
-        container.innerHTML = currentDataset.highlights.map((item, idx) => `
-            <div class="hl-card ${idx === currentHighlightIdx ? 'active' : ''}" onclick="selectHighlight(${idx})" id="hl-card-${idx}">
-                <div class="hl-badge ${idx === 0 ? 'viral' : idx % 2 === 1 ? 'grace' : 'youth'}">${item.viral || '🔥 AI 추출 98점'}</div>
-                <div class="hl-info">
-                    <h4 class="hl-title">${item.title}</h4>
-                    <p class="hl-quote">${item.quote}</p>
-                    <div class="hl-meta">
-                        <span><i class="fa-regular fa-clock"></i> ${item.time}</span>
-                        <span class="hl-tag">${item.tag}</span>
+        container.innerHTML = currentDataset.highlights.map((item, idx) => {
+            const isSelected = (idx === currentHighlightIdx);
+            const line1 = item.line1 || (item.title ? item.title.replace(/"/g, '').split(' ')[0] + ' ' + (item.title.replace(/"/g, '').split(' ')[1] || '') : '설교 하이라이트');
+            const line2 = item.line2 || (item.title ? item.title.replace(/"/g, '').split(' ').slice(2).join(' ') || item.title.replace(/"/g, '') : '핵심 은혜 선포');
+            const timeRange = item.timeRange || (item.time.includes('(') ? item.time.split('(')[0].trim() : item.time);
+            const duration = item.duration || (item.time.includes('(') ? item.time.split('(')[1].replace(')', '').trim() : '1분');
+
+            return `
+                <div class="seolgyo-card ${isSelected ? 'active' : ''}" onclick="selectHighlight(${idx})" id="hl-card-${idx}">
+                    <!-- Top Right Blue Check Circle -->
+                    <div class="card-check-icon">
+                        <i class="${isSelected ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle'}"></i>
+                    </div>
+
+                    <!-- Black 9:16 Vertical Phone Screen Mockup -->
+                    <div class="card-screen-mockup">
+                        <div class="mockup-text-line1" id="hl-line1-preview-${idx}">${line1}</div>
+                        <div class="mockup-text-line2" id="hl-line2-preview-${idx}">${line2}</div>
+                    </div>
+
+                    <!-- Time Header & Duration Badges -->
+                    <div class="card-time-row">
+                        <span class="card-time-range">${timeRange}</span>
+                        <span class="card-dur-badge">${duration}</span>
+                        ${item.isCustom ? `<span class="card-type-badge">직접 지정</span>` : ''}
+                    </div>
+
+                    <!-- Description -->
+                    <p class="card-desc-text">${item.quote || item.title}</p>
+
+                    <!-- Preview Text Button -->
+                    <button class="card-preview-btn" onclick="event.stopPropagation(); selectHighlight(${idx});">
+                        <i class="fa-solid fa-play"></i> 미리보기
+                    </button>
+
+                    <!-- Editable Title Inputs (Direct Editable Fields) -->
+                    <div class="card-edit-section" onclick="event.stopPropagation();">
+                        <span class="card-edit-label">제목 (직접 수정 가능)</span>
+                        <input type="text" class="card-input-box" value="${line1}" 
+                               oninput="updateHighlightTitle(${idx}, 'line1', this.value)" 
+                               placeholder="상단 제목 입력">
+                        <input type="text" class="card-input-box yellow-highlight" value="${line2}" 
+                               oninput="updateHighlightTitle(${idx}, 'line2', this.value)" 
+                               placeholder="강조 제목(노란색) 입력">
                     </div>
                 </div>
-                <div class="hl-action">
-                    <button class="btn-play-mini"><i class="fa-solid fa-play"></i></button>
-                </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
     if (modalContainer) {
         modalContainer.innerHTML = currentDataset.highlights.map((item, idx) => `
             <div class="modal-hl-card ${idx === currentHighlightIdx ? 'active' : ''}" onclick="selectModalHighlight(${idx})" style="background: ${idx === currentHighlightIdx ? 'rgba(30, 41, 59, 0.9)' : 'rgba(30, 41, 59, 0.4)'}; border: 1px solid ${idx === currentHighlightIdx ? '#38bdf8' : '#334155'}; border-radius: 10px; padding: 10px; cursor: pointer; transition: all 0.2s;">
                 <span style="font-size: 10px; background: rgba(59, 130, 246, 0.25); color: #38bdf8; padding: 2px 6px; border-radius: 4px; font-weight: 800;">${item.viral || '🔥 98점'}</span>
-                <h5 style="font-size: 12px; font-weight: 700; color: #fff; margin: 4px 0 2px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.title.replace(/"/g, '')}</h5>
+                <h5 style="font-size: 12px; font-weight: 700; color: #fff; margin: 4px 0 2px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${(item.line1 ? item.line1 + ' ' + item.line2 : item.title).replace(/"/g, '')}</h5>
                 <p style="font-size: 11px; color: #94a3b8; margin: 0;">${item.time}</p>
             </div>
         `).join('');
+    }
+}
+
+function updateHighlightTitle(idx, field, value) {
+    if (!currentDataset || !currentDataset.highlights || !currentDataset.highlights[idx]) return;
+    
+    currentDataset.highlights[idx][field] = value;
+    
+    // Update card mockup text
+    const previewEl = document.getElementById(`hl-${field}-preview-${idx}`);
+    if (previewEl) {
+        previewEl.textContent = value;
+    }
+    
+    const item = currentDataset.highlights[idx];
+    item.title = `"${item.line1 || ''} ${item.line2 || ''}"`;
+    
+    // If active card, update live 9:16 simulator subtitle in real time
+    if (idx === currentHighlightIdx) {
+        const subText = document.getElementById('sub-text-box');
+        if (subText) {
+            const l1 = item.line1 || '';
+            const l2 = item.line2 || '';
+            subText.innerHTML = `${l1}<br><span class="highlight-word">${l2}</span>`;
+        }
     }
 }
 
@@ -442,10 +561,16 @@ function selectHighlight(idx) {
     if (!currentDataset || !currentDataset.highlights || !currentDataset.highlights[idx]) return;
     currentHighlightIdx = idx;
 
-    const cards = document.querySelectorAll('.hl-card');
+    const cards = document.querySelectorAll('.seolgyo-card');
     cards.forEach((c, i) => {
-        if (i === idx) c.classList.add('active');
-        else c.classList.remove('active');
+        const icon = c.querySelector('.card-check-icon i');
+        if (i === idx) {
+            c.classList.add('active');
+            if (icon) icon.className = 'fa-solid fa-circle-check';
+        } else {
+            c.classList.remove('active');
+            if (icon) icon.className = 'fa-regular fa-circle';
+        }
     });
 
     const modalCards = document.querySelectorAll('.modal-hl-card');
@@ -465,12 +590,16 @@ function selectHighlight(idx) {
     if (currentItem) {
         const subRef = document.getElementById('sub-bible-ref');
         const subText = document.getElementById('sub-text-box');
-        if (subRef) subRef.textContent = currentItem.ref;
+        if (subRef) subRef.textContent = currentItem.ref || '📖 설교 하이라이트';
         if (subText) {
-            subText.innerHTML = currentItem.quote.replace(
-                /(예수|믿음|하나님|기도|기적|성령|치유|십자가|은혜|복|감사|축복|말씀|찬양)/g,
-                '<span class="highlight-word">$1</span>'
-            );
+            if (currentItem.line1 || currentItem.line2) {
+                subText.innerHTML = `${currentItem.line1 || ''}<br><span class="highlight-word">${currentItem.line2 || ''}</span>`;
+            } else {
+                subText.innerHTML = currentItem.quote.replace(
+                    /(예수|믿음|하나님|기도|기적|성령|치유|십자가|은혜|복|감사|축복|말씀|찬양)/g,
+                    '<span class="highlight-word">$1</span>'
+                );
+            }
         }
 
         const startSec = parseTimestampToSeconds(currentItem.time);
@@ -1109,6 +1238,31 @@ function updateHighlightsForUploadedVideo(fileName, durationSec) {
         "📱 SNS 공유 폭발", "✨ 은혜 결단 마무리"
     ];
 
+    const line1s = [
+        "교회에 온 당신",
+        "그 사람 오면",
+        "그 사람 오면",
+        "제목은 단 한마디",
+        "나는 괜찮은 사람?",
+        "목사님 말씀 아니다",
+        "얼어붙게 하는 사람 vs",
+        "두려움을 이기는",
+        "포기하지 않는 믿음이",
+        "주님의 진정한 평강이"
+    ];
+    const line2s = [
+        "흥왕케 하는 자",
+        "분위기가 달라진다",
+        "슬그머니 자리를 뜬다",
+        "흥왕케 하는 자",
+        "판단은 내가 안 한다",
+        "하나님이 하신 말씀이다",
+        "살아나게 하는 사람",
+        "담대한 믿음 선포",
+        "가져오는 반전의 역사",
+        "임하는 거룩한 결단"
+    ];
+
     const highlights = [];
     for (let i = 0; i < 10; i++) {
         const start = Math.floor(i * step);
@@ -1117,6 +1271,8 @@ function updateHighlightsForUploadedVideo(fileName, durationSec) {
         const endStr = formatSecToMinSec(end);
         const clipLen = Math.max(5, end - start);
         highlights.push({
+            line1: line1s[i],
+            line2: line2s[i],
             title: titles[i],
             quote: quotes[i],
             ref: refs[i],
@@ -2458,12 +2614,15 @@ function addCustomClipToShorts() {
     const diffSec = Math.max(5, endSec - startSec);
 
     const newClip = {
+        line1: `직접 지정 구간 (${startVal}~${endVal})`,
+        line2: "은혜의 말씀 선포",
         title: `"직접 추가한 ${startVal}~${endVal} 은혜 설교 구간"`,
         quote: `"하나님이 주신 은혜의 말씀과 결단이 심령 속에 기억되는 거룩한 시간입니다!"`,
         ref: "📖 사용자 추가 구간",
         time: `${startVal} ~ ${endVal} (${diffSec}초)`,
         tag: "#직접추가 #설교쇼츠 #은혜",
-        viral: "✨ 사용자 지정 컷"
+        viral: "✨ 사용자 지정 컷",
+        isCustom: true
     };
 
     if (!currentDataset) {
