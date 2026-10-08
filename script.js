@@ -129,7 +129,165 @@ function initTabs() {
     }
 }
 
-/* 4. Load Sample Video Preset */
+/* 4. YouTube URL Parser & 10 AI Shorts Clip Generator */
+function extractYouTubeId(url) {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|live\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+}
+
+function generate10ShortsFromYouTube(url) {
+    const videoId = extractYouTubeId(url) || 'XM7PrnvFSHw';
+    
+    sampleData.youtube = {
+        title: `YouTube_LIVE_예배분석_${videoId}.mp4`,
+        length: "1시간 52분 (AI 1분 쇼츠 10개 추출)",
+        videoId: videoId,
+        highlights: [
+            {
+                title: `"두려움을 이기는 담대한 믿음의 3가지 원리"`,
+                quote: `"인생의 폭풍이 불어올 때 우리가 바라보아야 할 것은 파도가 아니라 바로 예수 그리스도의 말씀입니다!"`,
+                ref: "📖 마태복음 14:29-31",
+                time: "12:15 ~ 13:13 (58초)",
+                tag: "#믿음 #승리 #은혜",
+                viral: "🔥 조회수 예측 99점"
+            },
+            {
+                title: `"고난 속에서도 감사해야 하는 진짜 이유"`,
+                quote: `"하나님의 거절은 더 큰 축복을 위한 거룩한 기다림입니다. 오늘 당신의 기도는 결코 땅에 떨어지지 않습니다."`,
+                ref: "📖 데살로니가전서 5:16-18",
+                time: "21:05 ~ 22:03 (58초)",
+                tag: "#감사 #기도 #위로",
+                viral: "✨ 은혜/결단 강추"
+            },
+            {
+                title: `"말씀으로 하루를 시작할 때 일어나는 기적"`,
+                quote: `"아침의 첫 10분을 하나님께 드릴 때, 당신의 하루 24시간이 하나님의 능력 안에 머물게 됩니다."`,
+                ref: "📖 시편 5:3",
+                time: "30:40 ~ 31:38 (58초)",
+                tag: "#QT #아침기도 #청년",
+                viral: "📱 청년부 공유 추천"
+            },
+            {
+                title: `"막힌 기도의 문을 열어젖히는 턴어라운드"`,
+                quote: `"내 힘으로 안 될 때가 바로 하나님의 역사가 시작되는 시간입니다. 멈추지 말고 부르짖으십시오!"`,
+                ref: "📖 예레미야 33:3",
+                time: "42:10 ~ 43:08 (58초)",
+                tag: "#기도 #성령 #회복",
+                viral: "🔥 AI 추출 98점"
+            },
+            {
+                title: `"상처받은 마음을 치유하시는 주님의 손길"`,
+                quote: `"사람은 날 버려도 주님은 결코 나를 포기하지 않으십니다. 십자가의 사랑을 기억하십시오."`,
+                ref: "📖 이사야 41:10",
+                time: "53:20 ~ 54:18 (58초)",
+                tag: "#치유 #사랑 #위로",
+                viral: "✨ 영적회복 추천"
+            },
+            {
+                title: `"새 일을 행하시는 하나님을 바라보라"`,
+                quote: `"광야에 길을 내시고 사막에 강을 내시는 주님의 기적이 당신의 가문과 삶에 임합니다!"`,
+                ref: "📖 이사야 43:19",
+                time: "1:04:15 ~ 1:05:13 (58초)",
+                tag: "#비전 #새해 #소망",
+                viral: "📱 청년/학생 강추"
+            },
+            {
+                title: `"영적 전쟁에서 승리하는 말씀 선포의 능력"`,
+                quote: `"악한 영의 어둠은 오직 하나님의 살아있는 말씀 선포 앞에서 즉시 무너져 내립니다!"`,
+                ref: "📖 에베소서 6:17",
+                time: "1:15:30 ~ 1:16:28 (58초)",
+                tag: "#영적전쟁 #능력 #승리",
+                viral: "🔥 AI 추출 96점"
+            },
+            {
+                title: `"가정을 축복으로 만드는 거룩한 기도"`,
+                quote: `"부모의 눈물 어린 기도는 자녀의 평생을 지키는 하나님의 거룩한 울타리가 됩니다."`,
+                ref: "📖 잠언 22:6",
+                time: "1:26:40 ~ 1:27:38 (58초)",
+                tag: "#가정 #축복 #기도",
+                viral: "✨ 가정예배 강추"
+            },
+            {
+                title: `"포기하지 않는 믿음이 가져오는 반전"`,
+                quote: `"낙심하지 마십시오. 가장 어두운 밤이 지나면 반드시 하나님의 찬란한 아침이 밝아옵니다."`,
+                ref: "📖 갈라디아서 6:9",
+                time: "1:37:10 ~ 1:38:08 (58초)",
+                tag: "#반전 #소망 #은혜",
+                viral: "📱 SNS 공유 폭발"
+            },
+            {
+                title: `"주님의 평강이 임하는 거룩한 결단"`,
+                quote: `"세상이 줄 수 없는 진정한 평안이 오늘 이 자리에서 주님을 고백하는 당신의 심령에 임합니다."`,
+                ref: "📖 요한복음 14:27",
+                time: "1:48:00 ~ 1:48:58 (58초)",
+                tag: "#평강 #결단 #축도",
+                viral: "✨ 은혜 결단 마무리"
+            }
+        ]
+    };
+
+    currentDataset = sampleData.youtube;
+    currentHighlightIdx = 0;
+
+    const projTitle = document.getElementById('current-project-title');
+    const aiStatus = document.getElementById('ai-status-text');
+    if (projTitle) projTitle.textContent = `Project: ${currentDataset.title}`;
+    if (aiStatus) aiStatus.textContent = `AI 설교 구간 탐지 완료 (전체 영상 1시간 52분 중 1분 쇼츠 10개 추출)`;
+
+    // Display YouTube iframe player in phone simulator
+    const ytPlayer = document.getElementById('youtube-iframe-player');
+    const videoPlayer = document.getElementById('uploaded-video-player');
+    const imgLayer = document.getElementById('preview-img-layer');
+
+    if (ytPlayer) {
+        ytPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&start=735`;
+        ytPlayer.style.display = 'block';
+        if (videoPlayer) videoPlayer.style.display = 'none';
+        if (imgLayer) imgLayer.style.display = 'none';
+    }
+
+    renderHighlightCards();
+    selectHighlight(0);
+}
+
+function renderHighlightCards() {
+    const container = document.getElementById('highlight-cards-list');
+    const modalContainer = document.getElementById('modal-hl-cards-list');
+    
+    if (!currentDataset || !currentDataset.highlights) return;
+
+    if (container) {
+        container.innerHTML = currentDataset.highlights.map((item, idx) => `
+            <div class="hl-card ${idx === currentHighlightIdx ? 'active' : ''}" onclick="selectHighlight(${idx})" id="hl-card-${idx}">
+                <div class="hl-badge ${idx === 0 ? 'viral' : idx % 2 === 1 ? 'grace' : 'youth'}">${item.viral || '🔥 AI 추출 98점'}</div>
+                <div class="hl-info">
+                    <h4 class="hl-title">${item.title}</h4>
+                    <p class="hl-quote">${item.quote}</p>
+                    <div class="hl-meta">
+                        <span><i class="fa-regular fa-clock"></i> ${item.time}</span>
+                        <span class="hl-tag">${item.tag}</span>
+                    </div>
+                </div>
+                <div class="hl-action">
+                    <button class="btn-play-mini"><i class="fa-solid fa-play"></i></button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    if (modalContainer) {
+        modalContainer.innerHTML = currentDataset.highlights.map((item, idx) => `
+            <div class="modal-hl-card ${idx === currentHighlightIdx ? 'active' : ''}" onclick="selectModalHighlight(${idx})" style="background: ${idx === currentHighlightIdx ? 'rgba(30, 41, 59, 0.9)' : 'rgba(30, 41, 59, 0.4)'}; border: 1px solid ${idx === currentHighlightIdx ? '#38bdf8' : '#334155'}; border-radius: 10px; padding: 10px; cursor: pointer; transition: all 0.2s;">
+                <span style="font-size: 10px; background: rgba(59, 130, 246, 0.25); color: #38bdf8; padding: 2px 6px; border-radius: 4px; font-weight: 800;">${item.viral || '🔥 98점'}</span>
+                <h5 style="font-size: 12px; font-weight: 700; color: #fff; margin: 4px 0 2px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.title.replace(/"/g, '')}</h5>
+                <p style="font-size: 11px; color: #94a3b8; margin: 0;">${item.time}</p>
+            </div>
+        `).join('');
+    }
+}
+
 function loadSampleVideo(key) {
     if (!sampleData[key]) return;
     currentDataset = sampleData[key];
@@ -140,32 +298,14 @@ function loadSampleVideo(key) {
     if (projTitle) projTitle.textContent = `Project: ${currentDataset.title}`;
     if (aiStatus) aiStatus.textContent = `AI 설교 구간 추출 완료 (${currentDataset.length})`;
 
-    // Re-render highlight cards
-    const cards = document.querySelectorAll('.hl-card');
-    cards.forEach((card, idx) => {
-        const item = currentDataset.highlights[idx];
-        if (item) {
-            const badge = card.querySelector('.hl-badge');
-            const title = card.querySelector('.hl-title');
-            const quote = card.querySelector('.hl-quote');
-            const metaTime = card.querySelector('.hl-meta span:first-child');
-            const tag = card.querySelector('.hl-tag');
-
-            if (badge) badge.textContent = item.viral;
-            if (title) title.textContent = item.title;
-            if (quote) quote.textContent = item.quote;
-            if (metaTime) metaTime.innerHTML = `<i class="fa-regular fa-clock"></i> ${item.time}`;
-            if (tag) tag.textContent = item.tag;
-        }
-    });
-
+    renderHighlightCards();
     selectHighlight(0);
     scrollToSection('studio');
     showToast(`🎬 ${currentDataset.title} 샘플 데이터가 로드되었습니다.`);
 }
 
-/* 5. Highlight Card Selection */
 function initStudioHighlights() {
+    renderHighlightCards();
     selectHighlight(0);
 }
 
@@ -1651,20 +1791,25 @@ function processShortsCreation() {
     const ytInput = document.getElementById('youtube-url-input');
     const url = ytInput ? ytInput.value.trim() : '';
     
-    showToast('⚡ AI 설교 구간 자동 탐지 Engine 가동 중...');
-    
-    const projTitle = document.getElementById('current-project-title');
-    if (projTitle && url) {
-        projTitle.textContent = `Project: ${url.replace('https://www.youtube.com/watch?v=', '')}_설교분석.mp4`;
+    if (!url) {
+        showToast('유튜브 링크를 입력해주세요!', 'warning');
+        return;
     }
+
+    showToast('⚡ AI가 영상 전체에서 설교 핵심 1분 쇼츠 10개를 생성하는 중입니다...');
+    
+    generate10ShortsFromYouTube(url);
 
     setTimeout(() => {
         scrollToSection('studio');
-        showToast('✨ 무제한 1분 은혜 쇼츠 생성이 완료되었습니다! 원하는 스타일로 편집하세요.');
-    }, 800);
+        showToast('🎉 AI 진단 완료! 영상 전체에서 10개의 1분 은혜 쇼츠가 자동 생성되었습니다.');
+    }, 700);
 }
 
 function processModalShortsCreation() {
+    const modalYt = document.getElementById('modal-yt-url');
+    const url = modalYt ? modalYt.value.trim() : 'https://youtube.com/live/XM7PrnvFSHw?feature=share';
+
     const scanBar = document.getElementById('modal-scan-bar');
     const scanStatus = document.getElementById('modal-scan-status');
     const scanTitle = document.getElementById('modal-scan-title');
@@ -1674,14 +1819,16 @@ function processModalShortsCreation() {
     
     setTimeout(() => {
         if (scanBar) scanBar.style.width = '60%';
-        if (scanTitle) scanTitle.textContent = '설교 오디오 분석 & 9:16 얼굴 트래킹 중... (60%)';
+        if (scanTitle) scanTitle.textContent = '설교 오디오 분석 & 10개 1분 쇼츠 컷팅 중... (60%)';
     }, 300);
 
     setTimeout(() => {
         if (scanBar) scanBar.style.width = '100%';
         if (scanTitle) scanTitle.textContent = 'AI 설교 구간 추출 완료! (100%)';
-        if (scanStatus) scanStatus.textContent = '✅ 설교 구간 34분 18초 추출 완료 · 🔥 무제한 4K HD 1분 쇼츠가 준비되었습니다.';
-        showToast('🎉 무제한 쇼츠 생성이 준비되었습니다!');
+        if (scanStatus) scanStatus.textContent = '✅ 영상 전체 분석 완료 · 🔥 1분 쇼츠 10개가 자동 생성되었습니다.';
+        
+        generate10ShortsFromYouTube(url);
+        showToast('🎉 10개의 1분 은혜 쇼츠 생성이 완료되었습니다!');
     }, 700);
 }
 
