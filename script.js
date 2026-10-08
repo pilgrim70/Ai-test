@@ -2299,4 +2299,129 @@ function updateChurchBadge(val) {
     }
 }
 
+function setVisualTemplate(tplName) {
+    const cards = document.querySelectorAll('.template-card-grid .tpl-card');
+    cards.forEach(card => {
+        card.classList.remove('active');
+        card.style.borderColor = '#334155';
+        card.style.background = 'rgba(15, 23, 42, 0.6)';
+        card.style.boxShadow = 'none';
+        const titleSpan = card.querySelector('span:last-child');
+        if (titleSpan) {
+            titleSpan.style.color = '#cbd5e1';
+            titleSpan.style.fontWeight = '600';
+        }
+    });
+
+    const activeCard = document.getElementById(`tpl-card-${tplName}`);
+    if (activeCard) {
+        activeCard.classList.add('active');
+        activeCard.style.borderColor = '#2563eb';
+        activeCard.style.background = 'rgba(15, 23, 42, 0.9)';
+        activeCard.style.boxShadow = '0 0 12px rgba(37, 99, 235, 0.4)';
+        const titleSpan = activeCard.querySelector('span:last-child');
+        if (titleSpan) {
+            titleSpan.style.color = '#38bdf8';
+            titleSpan.style.fontWeight = '700';
+        }
+    }
+
+    const subBox = document.getElementById('sub-text-box');
+    const phoneScreen = document.getElementById('phone-screen');
+
+    if (tplName === 'basic') {
+        if (subBox) subBox.className = 'sub-text-box style-neon';
+        if (phoneScreen) phoneScreen.style.background = '#0f172a';
+    } else if (tplName === 'gradient') {
+        if (subBox) subBox.className = 'sub-text-box style-modern';
+        if (phoneScreen) phoneScreen.style.background = 'linear-gradient(180deg, #1e1b4b, #311b92)';
+    } else if (tplName === 'accent') {
+        if (subBox) subBox.className = 'sub-text-box style-box';
+        if (phoneScreen) phoneScreen.style.background = '#0284c7';
+    } else if (tplName === 'light') {
+        if (subBox) subBox.className = 'sub-text-box style-classic';
+        if (phoneScreen) phoneScreen.style.background = '#f8fafc';
+    } else if (tplName === 'cover') {
+        if (subBox) subBox.className = 'sub-text-box style-neon';
+        if (phoneScreen) phoneScreen.style.background = 'linear-gradient(135deg, #0f172a, #334155)';
+    }
+
+    showToast(`🎨 '${tplName}' 템플릿 스타일이 적용되었습니다.`);
+}
+
+function switchChurchInfoTab(tab) {
+    const nameBtn = document.getElementById('tab-church-name-btn');
+    const logoBtn = document.getElementById('tab-church-logo-btn');
+    const namePanel = document.getElementById('church-info-name-panel');
+    const logoPanel = document.getElementById('church-info-logo-panel');
+    const nameBadge = document.getElementById('shorts-church-badge');
+    const logoWrapper = document.getElementById('shorts-logo-wrapper');
+
+    if (tab === 'name') {
+        if (nameBtn) {
+            nameBtn.className = 'btn-church-tab active';
+            nameBtn.style.background = '#2563eb';
+            nameBtn.style.borderColor = '#60a5fa';
+            nameBtn.style.color = '#ffffff';
+            nameBtn.style.fontWeight = '700';
+        }
+        if (logoBtn) {
+            logoBtn.className = 'btn-church-tab';
+            logoBtn.style.background = 'rgba(15, 23, 42, 0.6)';
+            logoBtn.style.borderColor = '#334155';
+            logoBtn.style.color = '#94a3b8';
+            logoBtn.style.fontWeight = '600';
+        }
+        if (namePanel) namePanel.style.display = 'block';
+        if (logoPanel) logoPanel.style.display = 'none';
+        if (nameBadge) nameBadge.style.display = 'block';
+        if (logoWrapper) logoWrapper.style.display = 'none';
+    } else {
+        if (logoBtn) {
+            logoBtn.className = 'btn-church-tab active';
+            logoBtn.style.background = '#2563eb';
+            logoBtn.style.borderColor = '#60a5fa';
+            logoBtn.style.color = '#ffffff';
+            logoBtn.style.fontWeight = '700';
+        }
+        if (nameBtn) {
+            nameBtn.className = 'btn-church-tab';
+            nameBtn.style.background = 'rgba(15, 23, 42, 0.6)';
+            nameBtn.style.borderColor = '#334155';
+            nameBtn.style.color = '#94a3b8';
+            nameBtn.style.fontWeight = '600';
+        }
+        if (logoPanel) logoPanel.style.display = 'block';
+        if (namePanel) namePanel.style.display = 'none';
+        if (logoWrapper) logoWrapper.style.display = 'block';
+    }
+}
+
+function updateChurchLogoText(val) {
+    const badge = document.getElementById('shorts-church-badge');
+    if (badge) {
+        badge.innerHTML = `<i class="fa-solid fa-church"></i> ${val || '복의근원 관유중앙교회'}`;
+    }
+}
+
+function handleChurchLogoUpload(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const logoImg = document.getElementById('shorts-church-logo-img');
+        const logoWrapper = document.getElementById('shorts-logo-wrapper');
+        if (logoImg) logoImg.src = e.target.result;
+        if (logoWrapper) logoWrapper.style.display = 'block';
+        showToast('🖼️ 교회 로고 이미지가 영상에 등록되었습니다.');
+    };
+    reader.readAsDataURL(file);
+}
+
+function updateShortsDescription(val) {
+    const descText = document.getElementById('shorts-desc-text');
+    if (descText) {
+        descText.textContent = val.trim() || '[복의근원 관유중앙교회] 두려움을 이기는 담대한 믿음 · 파도 대신 예수 그리스도를 바라보라';
+    }
+}
+
 
