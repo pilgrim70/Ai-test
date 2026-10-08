@@ -16,12 +16,13 @@ const sampleData = {
     pastor_lee: {
         title: "2026_신년대예배_두려움을이기는믿음.mp4",
         length: "1시간 40분 (설교: 38분)",
+        videoId: "XM7PrnvFSHw",
         highlights: [
             {
                 title: `"두려움을 이기는 담대한 믿음의 3가지 원리"`,
                 quote: `"인생의 폭풍이 불어올 때 우리가 바라보아야 할 것은 파도가 아니라 바로 예수 그리스도의 말씀입니다!"`,
                 ref: "📖 마태복음 14:29-31",
-                time: "32:14 ~ 33:12 (58초)",
+                time: "12:15 ~ 13:13 (58초)",
                 tag: "#믿음 #승리 #은혜",
                 viral: "🔥 조회수 예측 99점"
             },
@@ -29,7 +30,7 @@ const sampleData = {
                 title: `"고난 속에서도 감사해야 하는 진짜 이유"`,
                 quote: `"하나님의 거절은 더 큰 축복을 위한 거룩한 기다림입니다. 오늘 당신의 기도는 결코 땅에 떨어지지 않습니다."`,
                 ref: "📖 데살로니가전서 5:16-18",
-                time: "41:05 ~ 42:01 (56초)",
+                time: "21:05 ~ 22:03 (58초)",
                 tag: "#감사 #기도 #위로",
                 viral: "✨ 은혜/결단 강추"
             },
@@ -37,21 +38,78 @@ const sampleData = {
                 title: `"말씀으로 하루를 시작할 때 일어나는 기적"`,
                 quote: `"아침의 첫 10분을 하나님께 드릴 때, 당신의 하루 24시간이 하나님의 능력 안에 머물게 됩니다."`,
                 ref: "📖 시편 5:3",
-                time: "48:50 ~ 49:50 (60초)",
+                time: "30:40 ~ 31:38 (58초)",
                 tag: "#QT #아침기도 #청년",
                 viral: "📱 청년부 공유 추천"
+            },
+            {
+                title: `"막힌 기도의 문을 열어젖히는 턴어라운드"`,
+                quote: `"내 힘으로 안 될 때가 바로 하나님의 역사가 시작되는 시간입니다. 멈추지 말고 부르짖으십시오!"`,
+                ref: "📖 예레미야 33:3",
+                time: "42:10 ~ 43:08 (58초)",
+                tag: "#기도 #성령 #회복",
+                viral: "🔥 AI 추출 98점"
+            },
+            {
+                title: `"상처받은 마음을 치유하시는 주님의 손길"`,
+                quote: `"사람은 날 버려도 주님은 결코 나를 포기하지 않으십니다. 십자가의 사랑을 기억하십시오."`,
+                ref: "📖 이사야 41:10",
+                time: "53:20 ~ 54:18 (58초)",
+                tag: "#치유 #사랑 #위로",
+                viral: "✨ 영적회복 추천"
+            },
+            {
+                title: `"새 일을 행하시는 하나님을 바라보라"`,
+                quote: `"광야에 길을 내시고 사막에 강을 내시는 주님의 기적이 당신의 가문과 삶에 임합니다!"`,
+                ref: "📖 이사야 43:19",
+                time: "1:04:15 ~ 1:05:13 (58초)",
+                tag: "#비전 #새해 #소망",
+                viral: "📱 청년/학생 강추"
+            },
+            {
+                title: `"영적 전쟁에서 승리하는 말씀 선포의 능력"`,
+                quote: `"악한 영의 어둠은 오직 하나님의 살아있는 말씀 선포 앞에서 즉시 무너져 내립니다!"`,
+                ref: "📖 에베소서 6:17",
+                time: "1:15:30 ~ 1:16:28 (58초)",
+                tag: "#영적전쟁 #능력 #승리",
+                viral: "🔥 AI 추출 96점"
+            },
+            {
+                title: `"가정을 축복으로 만드는 거룩한 기도"`,
+                quote: `"부모의 눈물 어린 기도는 자녀의 평생을 지키는 하나님의 거룩한 울타리가 됩니다."`,
+                ref: "📖 잠언 22:6",
+                time: "1:26:40 ~ 1:27:38 (58초)",
+                tag: "#가정 #축복 #기도",
+                viral: "✨ 가정예배 강추"
+            },
+            {
+                title: `"포기하지 않는 믿음이 가져오는 반전"`,
+                quote: `"낙심하지 마십시오. 가장 어두운 밤이 지나면 반드시 하나님의 찬란한 아침이 밝아옵니다."`,
+                ref: "📖 갈라디아서 6:9",
+                time: "1:37:10 ~ 1:38:08 (58초)",
+                tag: "#반전 #소망 #은혜",
+                viral: "📱 SNS 공유 폭발"
+            },
+            {
+                title: `"주님의 평강이 임하는 거룩한 결단"`,
+                quote: `"세상이 줄 수 없는 진정한 평안이 오늘 이 자리에서 주님을 고백하는 당신의 심령에 임합니다."`,
+                ref: "📖 요한복음 14:27",
+                time: "1:48:00 ~ 1:48:58 (58초)",
+                tag: "#평강 #결단 #축도",
+                viral: "✨ 은혜 결단 마무리"
             }
         ]
     },
     pastor_kim: {
         title: "2026_금요기도회_성령의능력과회복.mp4",
         length: "2시간 05분 (설교: 45분)",
+        videoId: "2z8T-a53lJ0",
         highlights: [
             {
                 title: `"막힌 기도의 문을 열어젖히는 턴어라운드"`,
                 quote: `"내 힘으로 안 될 때가 바로 하나님의 역사가 시작되는 시간입니다. 멈추지 말고 부르짖으십시오!"`,
                 ref: "📖 예레미야 33:3",
-                time: "55:10 ~ 56:10 (60초)",
+                time: "15:10 ~ 16:10 (60초)",
                 tag: "#기도 #성령 #회복",
                 viral: "🔥 조회수 예측 98점"
             },
@@ -59,7 +117,7 @@ const sampleData = {
                 title: `"상처받은 마음을 치유하시는 주님의 손길"`,
                 quote: `"사람은 날 버려도 주님은 결코 나를 포기하지 않으십니다. 십자가의 사랑을 기억하십시오."`,
                 ref: "📖 이사야 41:10",
-                time: "1:12:00 ~ 1:12:55 (55초)",
+                time: "24:00 ~ 24:55 (55초)",
                 tag: "#치유 #사랑 #위로",
                 viral: "✨ 은혜/결단 강추"
             },
@@ -67,9 +125,65 @@ const sampleData = {
                 title: `"새 일을 행하시는 하나님을 바라보라"`,
                 quote: `"광야에 길을 내시고 사막에 강을 내시는 주님의 기적이 당신의 가문과 삶에 임합니다!"`,
                 ref: "📖 이사야 43:19",
-                time: "1:25:30 ~ 1:26:28 (58초)",
+                time: "33:30 ~ 34:28 (58초)",
                 tag: "#비전 #새해 #소망",
                 viral: "📱 청년부 공유 추천"
+            },
+            {
+                title: `"성령의 불길로 일어서는 영적 회복"`,
+                quote: `"어두운 심령에 성령의 거룩한 불길이 타오를 때 모든 슬픔과 걱정이 소멸됩니다."`,
+                ref: "📖 사도행전 2:1-4",
+                time: "42:15 ~ 43:12 (57초)",
+                tag: "#성령 #불길 #회복",
+                viral: "🔥 AI 추출 99점"
+            },
+            {
+                title: `"찬양 중에 거하시는 거룩하신 하나님"`,
+                quote: `"온 맘 다해 찬양할 때 어둠의 결박이 풀리고 천국의 기쁨이 이곳에 넘쳐납니다."`,
+                ref: "📖 시편 22:3",
+                time: "51:00 ~ 51:58 (58초)",
+                tag: "#찬양 #기쁨 #은혜",
+                viral: "✨ 영적감동 강추"
+            },
+            {
+                title: `"너는 두려워하지 말라 내가 너를 구속하였고"`,
+                quote: `"내가 너를 지명하여 불렀나니 너는 내 것이라! 너의 모든 발걸음을 주님이 지키십니다."`,
+                ref: "📖 이사야 43:1",
+                time: "1:02:10 ~ 1:03:08 (58초)",
+                tag: "#구원 #약속 #소망",
+                viral: "📱 SNS 공유 추천"
+            },
+            {
+                title: `"너희는 마음에 근심하지 말라 하나님을 믿으라"`,
+                quote: `"세상의 어떤 풍파도 주님의 손 안에 있음을 고백하며 안심하십시오."`,
+                ref: "📖 요한복음 14:1",
+                time: "1:15:20 ~ 1:16:18 (58초)",
+                tag: "#평안 #믿음 #위로",
+                viral: "🔥 AI 추출 97점"
+            },
+            {
+                title: `"너는 기도할 때에 네 골방에 들어와"`,
+                quote: `"은밀한 중에 보시는 너의 아버지께서 반드시 기쁨의 응답으로 갚아주시리라."`,
+                ref: "📖 마태복음 6:6",
+                time: "1:28:40 ~ 1:29:38 (58초)",
+                tag: "#골방기도 #응답 #은혜",
+                viral: "✨ 은혜 기도회 추천"
+            },
+            {
+                title: `"여호와는 나의 목자시니 내게 부족함이 없으리로다"`,
+                quote: `"푸른 풀밭과 쉴 만한 물가로 인도하시는 주님 따라 오늘도 담대히 걸어갑니다."`,
+                ref: "📖 시편 23:1-3",
+                time: "1:39:10 ~ 1:40:08 (58초)",
+                tag: "#목자 #인도 #감사",
+                viral: "📱 묵상 숏폼 강추"
+            },
+            {
+                title: `"나의 힘이신 여호와여 내가 주를 사랑하나이다"`,
+                quote: `"주님은 나의 반석이시요 나의 요새시요 나를 건지시는 이시니 담대히 찬양합니다."`,
+                ref: "📖 시편 18:1",
+                time: "1:50:00 ~ 1:50:58 (58초)",
+                tag: "#사랑 #고백 #축도",
+                viral: "✨ 금요기도회 피날레"
             }
         ]
     }
@@ -309,12 +423,41 @@ function initStudioHighlights() {
     selectHighlight(0);
 }
 
+function parseTimestampToSeconds(timeStr) {
+    if (!timeStr) return 0;
+    const firstPart = timeStr.split('~')[0].trim();
+    const parts = firstPart.split(':').map(p => parseInt(p.trim(), 10));
+    if (parts.length === 3) {
+        return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    } else if (parts.length === 2) {
+        return parts[0] * 60 + parts[1];
+    } else if (parts.length === 1 && !isNaN(parts[0])) {
+        return parts[0];
+    }
+    return 0;
+}
+
 function selectHighlight(idx) {
+    if (!currentDataset || !currentDataset.highlights || !currentDataset.highlights[idx]) return;
     currentHighlightIdx = idx;
+
     const cards = document.querySelectorAll('.hl-card');
     cards.forEach((c, i) => {
         if (i === idx) c.classList.add('active');
         else c.classList.remove('active');
+    });
+
+    const modalCards = document.querySelectorAll('.modal-hl-card');
+    modalCards.forEach((c, i) => {
+        if (i === idx) {
+            c.classList.add('active');
+            c.style.borderColor = '#38bdf8';
+            c.style.background = 'rgba(30, 41, 59, 0.9)';
+        } else {
+            c.classList.remove('active');
+            c.style.borderColor = '#334155';
+            c.style.background = 'rgba(30, 41, 59, 0.4)';
+        }
     });
 
     const currentItem = currentDataset.highlights[idx];
@@ -324,27 +467,45 @@ function selectHighlight(idx) {
         if (subRef) subRef.textContent = currentItem.ref;
         if (subText) {
             subText.innerHTML = currentItem.quote.replace(
-                /(예수|믿음|하나님|기도|기적|성령|치유|십자가)/g,
+                /(예수|믿음|하나님|기도|기적|성령|치유|십자가|은혜|복|감사|축복|말씀|찬양)/g,
                 '<span class="highlight-word">$1</span>'
             );
         }
 
-        // Seek video player to clip timestamp
+        const startSec = parseTimestampToSeconds(currentItem.time);
+
         const videoPlayer = document.getElementById('uploaded-video-player');
-        if (videoPlayer && videoPlayer.src && currentItem.time) {
-            const timeMatch = currentItem.time.match(/(\d+):(\d+)/);
-            if (timeMatch) {
-                const startSec = parseInt(timeMatch[1]) * 60 + parseInt(timeMatch[2]);
-                if (videoPlayer.duration && startSec < videoPlayer.duration) {
-                    videoPlayer.currentTime = startSec;
-                } else {
-                    videoPlayer.currentTime = 0;
-                }
-                videoPlayer.play().catch(() => {});
+        const ytPlayer = document.getElementById('youtube-iframe-player');
+        const imgLayer = document.getElementById('preview-img-layer');
+
+        if (currentDataset.videoId) {
+            if (ytPlayer) {
+                ytPlayer.src = `https://www.youtube.com/embed/${currentDataset.videoId}?autoplay=1&enablejsapi=1&start=${startSec}&end=${startSec + 60}`;
+                ytPlayer.style.display = 'block';
+            }
+            if (videoPlayer) videoPlayer.style.display = 'none';
+            if (imgLayer) imgLayer.style.display = 'none';
+            isPlaying = true;
+            const icon = document.getElementById('phone-play-icon');
+            if (icon) icon.className = 'fa-solid fa-pause';
+        } else if (videoPlayer && videoPlayer.src) {
+            if (ytPlayer) ytPlayer.style.display = 'none';
+            if (imgLayer) imgLayer.style.display = 'none';
+            videoPlayer.style.display = 'block';
+
+            if (videoPlayer.duration && !isNaN(videoPlayer.duration)) {
+                const targetTime = Math.min(startSec, Math.max(0, videoPlayer.duration - 1));
+                videoPlayer.currentTime = targetTime;
+            } else {
+                videoPlayer.currentTime = 0;
+            }
+            videoPlayer.play().then(() => {
                 isPlaying = true;
                 const icon = document.getElementById('phone-play-icon');
                 if (icon) icon.className = 'fa-solid fa-pause';
-            }
+            }).catch(() => {
+                isPlaying = false;
+            });
         }
     }
 }
@@ -377,21 +538,28 @@ function toggleShortsPlay() {
     const eqBars = document.querySelectorAll('.audio-equalizer span');
     const imgLayer = document.getElementById('preview-img-layer');
     const videoPlayer = document.getElementById('uploaded-video-player');
+    const ytPlayer = document.getElementById('youtube-iframe-player');
 
     if (isPlaying) {
         if (icon) icon.className = 'fa-solid fa-pause';
         eqBars.forEach(bar => bar.style.animationPlayState = 'running');
         if (imgLayer) imgLayer.style.transform = 'scale(1.05)';
-        if (videoPlayer && videoPlayer.src) {
+
+        if (videoPlayer && videoPlayer.style.display !== 'none' && videoPlayer.src) {
             videoPlayer.play().catch(() => {});
+        } else if (ytPlayer && ytPlayer.style.display !== 'none' && ytPlayer.contentWindow) {
+            ytPlayer.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
         }
-        showToast('▶️ 1분 은혜 쇼츠 미리보기 재생 중...');
+        showToast('▶️ 1분 은혜 쇼츠 재생 중...');
     } else {
         if (icon) icon.className = 'fa-solid fa-play';
         eqBars.forEach(bar => bar.style.animationPlayState = 'paused');
         if (imgLayer) imgLayer.style.transform = 'scale(1)';
-        if (videoPlayer && videoPlayer.src) {
+
+        if (videoPlayer && videoPlayer.style.display !== 'none' && videoPlayer.src) {
             videoPlayer.pause();
+        } else if (ytPlayer && ytPlayer.style.display !== 'none' && ytPlayer.contentWindow) {
+            ytPlayer.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
         }
         showToast('⏸️ 일시 정지');
     }
@@ -813,6 +981,9 @@ function handleFileUpload(file) {
     }
 
     // Set Video Source & Load Metadata
+    const ytPlayer = document.getElementById('youtube-iframe-player');
+    if (ytPlayer) ytPlayer.style.display = 'none';
+
     if (videoPlayer) {
         videoPlayer.src = objectUrl;
         videoPlayer.style.display = 'block';
@@ -845,6 +1016,9 @@ function handleFileUpload(file) {
                 updateTrimmerTime();
             }
 
+            // Update AI Highlight Dataset for Uploaded Video using actual video duration
+            updateHighlightsForUploadedVideo(file.name, videoPlayer.duration);
+
             // Play the uploaded video
             videoPlayer.play().then(() => {
                 isPlaying = true;
@@ -859,8 +1033,8 @@ function handleFileUpload(file) {
         };
     }
 
-    // Update AI Highlight Dataset for Uploaded Video
-    updateHighlightsForUploadedVideo(file.name);
+    // Initial trigger with default fallback
+    updateHighlightsForUploadedVideo(file.name, 600);
 
     setTimeout(() => {
         scrollToSection('studio');
@@ -868,42 +1042,94 @@ function handleFileUpload(file) {
     }, 600);
 }
 
-function updateHighlightsForUploadedVideo(fileName) {
+function formatSecToMinSec(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+function updateHighlightsForUploadedVideo(fileName, durationSec) {
     const cleanName = fileName.replace(/\.[^/.]+$/, "");
+    const dur = Math.max(30, Math.floor(durationSec || 600));
+    const step = dur > 60 ? (dur - 30) / 9 : dur / 10;
+
+    const titles = [
+        `"${cleanName} 핵심 명장면 쇼츠"`,
+        `"${cleanName} 결단과 감사의 순간"`,
+        `"${cleanName} 두려움을 이기는 담대한 믿음"`,
+        `"${cleanName} 막힌 기도의 문을 열어젖히는 능력"`,
+        `"${cleanName} 상처받은 마음을 치유하시는 주님"`,
+        `"${cleanName} 광야에 길을 내하시는 하나님의 기적"`,
+        `"${cleanName} 영적 전쟁에서 승리하는 말씀 선포"`,
+        `"${cleanName} 가정을 축복으로 만드는 거룩한 기도"`,
+        `"${cleanName} 포기하지 않는 믿음이 가져오는 반전"`,
+        `"${cleanName} 주님의 평강이 임하는 거룩한 결단"`
+    ];
+
+    const quotes = [
+        `"오늘 우리가 함께 듣는 이 말씀이 삶의 모든 어려움을 이겨낼 거룩한 능력이 될 것입니다!"`,
+        `"하나님의 은혜는 결코 우연이 아닙니다. 지금 기도하는 당신에게 주님의 위로가 임합니다."`,
+        `"인생의 폭풍이 불어올 때 우리가 바라보아야 할 것은 파도가 아니라 바로 예수 그리스도의 말씀입니다!"`,
+        `"내 힘으로 안 될 때가 바로 하나님의 역사가 시작되는 시간입니다. 멈추지 말고 부르짖으십시오!"`,
+        `"사람은 날 버려도 주님은 결코 나를 포기하지 않으십니다. 십자가의 사랑을 기억하십시오."`,
+        `"광야에 길을 내시고 사막에 강을 내시는 주님의 기적이 당신의 가문과 삶에 임합니다!"`,
+        `"악한 영의 어둠은 오직 하나님의 살아있는 말씀 선포 앞에서 즉시 무너져 내립니다!"`,
+        `"부모의 눈물 어린 기도는 자녀의 평생을 지키는 하나님의 거룩한 울타리가 됩니다."`,
+        `"낙심하지 마십시오. 가장 어두운 밤이 지나면 반드시 하나님의 찬란한 아침이 밝아옵니다."`,
+        `"세상이 줄 수 없는 진정한 평안이 오늘 이 자리에서 주님을 고백하는 당신의 심령에 임합니다."`
+    ];
+
+    const refs = [
+        "📖 설교 하이라이트 #1", "📖 설교 하이라이트 #2", "📖 마태복음 14:29", "📖 예레미야 33:3",
+        "📖 이사야 41:10", "📖 이사야 43:19", "📖 에베소서 6:17", "📖 잠언 22:6",
+        "📖 갈라디아서 6:9", "📖 요한복음 14:27"
+    ];
+
+    const tags = [
+        "#말씀 #은혜 #쇼츠", "#감사 #기도 #위로", "#믿음 #승리 #은혜", "#기도 #성령 #회복",
+        "#치유 #사랑 #위로", "#비전 #새해 #소망", "#영적전쟁 #능력 #승리", "#가정 #축복 #기도",
+        "#반전 #소망 #은혜", "#평강 #결단 #축도"
+    ];
+
+    const virals = [
+        "🔥 AI 추출 99점", "✨ 은혜/결단 강추", "🔥 조회수 예측 98점", "📱 청년부 공유 추천",
+        "✨ 영적회복 추천", "📱 청년/학생 강추", "🔥 AI 추출 96점", "✨ 가정예배 강추",
+        "📱 SNS 공유 폭발", "✨ 은혜 결단 마무리"
+    ];
+
+    const highlights = [];
+    for (let i = 0; i < 10; i++) {
+        const start = Math.floor(i * step);
+        const end = Math.min(dur, start + Math.min(60, Math.floor(dur / 5)));
+        const startStr = formatSecToMinSec(start);
+        const endStr = formatSecToMinSec(end);
+        const clipLen = Math.max(5, end - start);
+        highlights.push({
+            title: titles[i],
+            quote: quotes[i],
+            ref: refs[i],
+            time: `${startStr} ~ ${endStr} (${clipLen}초)`,
+            tag: tags[i],
+            viral: virals[i]
+        });
+    }
+
     sampleData.uploaded = {
         title: fileName,
-        length: "업로드 동영상",
-        highlights: [
-            {
-                title: `"${cleanName} 핵심 명장면 쇼츠"`,
-                quote: `"오늘 우리가 함께 듣는 이 말씀이 삶의 모든 어려움을 이겨낼 거룩한 능력이 될 것입니다!"`,
-                ref: "📖 설교 하이라이트 #1",
-                time: "00:00 ~ 01:00 (60초)",
-                tag: "#말씀 #은혜 #쇼츠",
-                viral: "🔥 AI 추출 99점"
-            },
-            {
-                title: `"${cleanName} 결단과 감사의 순간"`,
-                quote: `"하나님의 은혜는 결코 우연이 아닙니다. 지금 기도하는 당신에게 주님의 위로가 임합니다."`,
-                ref: "📖 설교 하이라이트 #2",
-                time: "01:15 ~ 02:10 (55초)",
-                tag: "#감사 #기도 #위로",
-                viral: "✨ 은혜/결단 강추"
-            },
-            {
-                title: `"${cleanName} 청년부 공유 추천 컷"`,
-                quote: `"작은 순종으로 시작할 때 하나님의 놀라운 기적이 인생 전체를 바꾸어 놓습니다."`,
-                ref: "📖 설교 하이라이트 #3",
-                time: "03:20 ~ 04:18 (58초)",
-                tag: "#비전 #순종 #청년",
-                viral: "📱 청년부 공유 추천"
-            }
-        ]
+        length: `업로드 동영상 (${Math.floor(dur / 60)}분 ${dur % 60}초)`,
+        highlights: highlights
     };
 
-    if (typeof loadSampleVideo === 'function') {
-        loadSampleVideo('uploaded');
-    }
+    currentDataset = sampleData.uploaded;
+    currentHighlightIdx = 0;
+
+    const projTitle = document.getElementById('current-project-title');
+    const aiStatus = document.getElementById('ai-status-text');
+    if (projTitle) projTitle.textContent = `Project: ${fileName}`;
+    if (aiStatus) aiStatus.textContent = `AI 설교 구간 탐지 완료 (동영상 ${Math.floor(dur / 60)}분 중 1분 쇼츠 10개 추출)`;
+
+    renderHighlightCards();
+    selectHighlight(0);
 }
 
 function scrollToSection(id) {
@@ -1789,21 +2015,21 @@ function openShortsMakerModal(customUrl) {
 
 function processShortsCreation() {
     const ytInput = document.getElementById('youtube-url-input');
-    const url = ytInput ? ytInput.value.trim() : '';
+    let url = ytInput ? ytInput.value.trim() : '';
     
     if (!url) {
-        showToast('유튜브 링크를 입력해주세요!', 'warning');
-        return;
+        url = 'https://youtube.com/live/XM7PrnvFSHw?feature=share';
+        if (ytInput) ytInput.value = url;
     }
 
-    showToast('⚡ AI가 영상 전체에서 설교 핵심 1분 쇼츠 10개를 생성하는 중입니다...');
+    showToast('⚡ AI가 영상 전체에서 설교 핵심 1분 쇼츠 10개를 추출하는 중입니다...');
     
     generate10ShortsFromYouTube(url);
 
     setTimeout(() => {
         scrollToSection('studio');
-        showToast('🎉 AI 진단 완료! 영상 전체에서 10개의 1분 은혜 쇼츠가 자동 생성되었습니다.');
-    }, 700);
+        showToast('🎉 AI 추출 완료! 영상 전체에서 10개의 1분 은혜 쇼츠가 자동 생성되었습니다. 원하시는 쇼츠를 클릭하여 감상하세요.');
+    }, 600);
 }
 
 function processModalShortsCreation() {
