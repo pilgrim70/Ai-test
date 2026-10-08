@@ -470,7 +470,7 @@ const pptSlides = [
         title: "두려움을 이기는 담대한 믿음",
         body: `"풍랑을 보지 말고 물 위를 걸어오시는 예수 그리스도를 바라보라"`,
         ref: "마태복음 14:22~33",
-        hdr: "은혜샘교회 주일 설교 (Slide 1/5)"
+        hdr: "복의근원 관유중앙교회 주일 설교 (Slide 1/5)"
     },
     {
         title: "대지 1. 시선을 어디에 두는가?",
@@ -992,7 +992,7 @@ function openTopBarModal(type) {
                         <div style="width: 50px; height: 50px; background: #2563eb; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;">목</div>
                         <div>
                             <h4 style="margin: 0; font-size: 16px; color: #0f172a;">이성훈 목사님</h4>
-                            <span style="font-size: 12px; color: #64748b;">선한목자교회 미디어팀 · Pro 멤버십 사용 중</span>
+                            <span style="font-size: 12px; color: #64748b;">복의근원 관유중앙교회 미디어팀 · Pro 멤버십 사용 중</span>
                         </div>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
@@ -1919,7 +1919,7 @@ function updateBgmVolume(val) {
 function updateChurchBadge(val) {
     const badge = document.getElementById('shorts-church-badge');
     if (badge) {
-        badge.innerHTML = `<i class="fa-solid fa-church"></i> ${val || '미디어팀'}`;
+        badge.innerHTML = `<i class="fa-solid fa-church"></i> ${val || '복의근원 관유중앙교회 미디어팀'}`;
     }
 }
 
