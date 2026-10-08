@@ -188,6 +188,24 @@ function selectHighlight(idx) {
                 '<span class="highlight-word">$1</span>'
             );
         }
+
+        // Seek video player to clip timestamp
+        const videoPlayer = document.getElementById('uploaded-video-player');
+        if (videoPlayer && videoPlayer.src && currentItem.time) {
+            const timeMatch = currentItem.time.match(/(\d+):(\d+)/);
+            if (timeMatch) {
+                const startSec = parseInt(timeMatch[1]) * 60 + parseInt(timeMatch[2]);
+                if (videoPlayer.duration && startSec < videoPlayer.duration) {
+                    videoPlayer.currentTime = startSec;
+                } else {
+                    videoPlayer.currentTime = 0;
+                }
+                videoPlayer.play().catch(() => {});
+                isPlaying = true;
+                const icon = document.getElementById('phone-play-icon');
+                if (icon) icon.className = 'fa-solid fa-pause';
+            }
+        }
     }
 }
 
@@ -218,16 +236,23 @@ function toggleShortsPlay() {
     const icon = document.getElementById('phone-play-icon');
     const eqBars = document.querySelectorAll('.audio-equalizer span');
     const imgLayer = document.getElementById('preview-img-layer');
+    const videoPlayer = document.getElementById('uploaded-video-player');
 
     if (isPlaying) {
         if (icon) icon.className = 'fa-solid fa-pause';
         eqBars.forEach(bar => bar.style.animationPlayState = 'running');
         if (imgLayer) imgLayer.style.transform = 'scale(1.05)';
+        if (videoPlayer && videoPlayer.src) {
+            videoPlayer.play().catch(() => {});
+        }
         showToast('▶️ 1분 은혜 쇼츠 미리보기 재생 중...');
     } else {
         if (icon) icon.className = 'fa-solid fa-play';
         eqBars.forEach(bar => bar.style.animationPlayState = 'paused');
         if (imgLayer) imgLayer.style.transform = 'scale(1)';
+        if (videoPlayer && videoPlayer.src) {
+            videoPlayer.pause();
+        }
         showToast('⏸️ 일시 정지');
     }
 }
@@ -608,13 +633,137 @@ function triggerFileSelect() {
 }
 
 function handleFileUpload(file) {
-    showToast(`📂 파일 '${file.name}' 업로드 분석 중...`);
+    if (!file) return;
+
+    // Check video file extension or MIME type
+    const isVideo = file.type.startsWith('video/') || /\.(mp4|mov|mkv|webm|avi|m4v)$/i.test(file.name);
+    if (!isVideo) {
+        showToast('⚠️ 올바른 동영상 파일(MP4, MOV, MKV, WebM)을 선택해주세요.', 'warning');
+        return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    const videoPlayer = document.getElementById('uploaded-video-player');
+    const imgLayer = document.getElementById('preview-img-layer');
+    const projTitle = document.getElementById('current-project-title');
+    const aiStatus = document.getElementById('ai-status-text');
+    const dropzoneBox = document.getElementById('dropzone');
+
+    showToast(`📂 동영상 파일 '${file.name}' 업로드 분석 중...`);
+
+    if (projTitle) projTitle.textContent = `Project: ${file.name}`;
+    
+    // Update Dropzone Visual Status
+    if (dropzoneBox) {
+        const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+        dropzoneBox.style.borderColor = '#10b981';
+        dropzoneBox.style.background = 'rgba(16, 185, 129, 0.1)';
+        dropzoneBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 32px; color: #10b981; margin-bottom: 8px;"></i>
+            <div style="font-weight: 800; font-size: 14px; color: #10b981; margin-bottom: 4px;">✅ 업로드 완료: ${file.name} (${sizeMb} MB)</div>
+            <div style="font-size: 12px; color: #94a3b8;">AI가 설교 구간을 탐지하고 1분 쇼츠를 준비했습니다. 다른 파일로 변경하려면 클릭하세요.</div>
+            <input type="file" id="file-input" accept="video/*" style="display: none;">
+        `;
+        const newFileInput = document.getElementById('file-input');
+        if (newFileInput) {
+            newFileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) handleFileUpload(e.target.files[0]);
+            });
+        }
+    }
+
+    // Set Video Source & Load Metadata
+    if (videoPlayer) {
+        videoPlayer.src = objectUrl;
+        videoPlayer.style.display = 'block';
+        if (imgLayer) imgLayer.style.display = 'none';
+
+        videoPlayer.onloadedmetadata = () => {
+            const durationSec = Math.floor(videoPlayer.duration || 60);
+            const mins = Math.floor(durationSec / 60);
+            const secs = durationSec % 60;
+            const durationStr = `${mins}분 ${secs}초`;
+
+            if (aiStatus) {
+                aiStatus.textContent = `AI 설교 구간 추출 완료 (업로드 영상 길이: ${durationStr})`;
+            }
+
+            // Update Trimmer default start and end times
+            const trimStartMin = document.getElementById('trim-start-min');
+            const trimStartSec = document.getElementById('trim-start-sec');
+            const trimEndMin = document.getElementById('trim-end-min');
+            const trimEndSec = document.getElementById('trim-end-sec');
+
+            if (trimStartMin) trimStartMin.value = 0;
+            if (trimStartSec) trimStartSec.value = 0;
+            
+            const endOffsetSec = Math.min(60, durationSec);
+            if (trimEndMin) trimEndMin.value = Math.floor(endOffsetSec / 60);
+            if (trimEndSec) trimEndSec.value = endOffsetSec % 60;
+
+            if (typeof updateTrimmerTime === 'function') {
+                updateTrimmerTime();
+            }
+
+            // Play the uploaded video
+            videoPlayer.play().then(() => {
+                isPlaying = true;
+                const icon = document.getElementById('phone-play-icon');
+                if (icon) icon.className = 'fa-solid fa-pause';
+                const eqBars = document.querySelectorAll('.audio-equalizer span');
+                eqBars.forEach(bar => bar.style.animationPlayState = 'running');
+            }).catch(() => {
+                // Autoplay policy fallback
+                isPlaying = false;
+            });
+        };
+    }
+
+    // Update AI Highlight Dataset for Uploaded Video
+    updateHighlightsForUploadedVideo(file.name);
+
     setTimeout(() => {
-        const projTitle = document.getElementById('current-project-title');
-        if (projTitle) projTitle.textContent = `Project: ${file.name}`;
         scrollToSection('studio');
-        showToast('✨ AI 설교 구간 탐지 및 1분 쇼츠 생성이 완료되었습니다!');
-    }, 1200);
+        showToast('✨ 업로드된 MP4 동영상으로 1분 은혜 쇼츠 생성이 완료되었습니다!');
+    }, 600);
+}
+
+function updateHighlightsForUploadedVideo(fileName) {
+    const cleanName = fileName.replace(/\.[^/.]+$/, "");
+    sampleData.uploaded = {
+        title: fileName,
+        length: "업로드 동영상",
+        highlights: [
+            {
+                title: `"${cleanName} 핵심 명장면 쇼츠"`,
+                quote: `"오늘 우리가 함께 듣는 이 말씀이 삶의 모든 어려움을 이겨낼 거룩한 능력이 될 것입니다!"`,
+                ref: "📖 설교 하이라이트 #1",
+                time: "00:00 ~ 01:00 (60초)",
+                tag: "#말씀 #은혜 #쇼츠",
+                viral: "🔥 AI 추출 99점"
+            },
+            {
+                title: `"${cleanName} 결단과 감사의 순간"`,
+                quote: `"하나님의 은혜는 결코 우연이 아닙니다. 지금 기도하는 당신에게 주님의 위로가 임합니다."`,
+                ref: "📖 설교 하이라이트 #2",
+                time: "01:15 ~ 02:10 (55초)",
+                tag: "#감사 #기도 #위로",
+                viral: "✨ 은혜/결단 강추"
+            },
+            {
+                title: `"${cleanName} 청년부 공유 추천 컷"`,
+                quote: `"작은 순종으로 시작할 때 하나님의 놀라운 기적이 인생 전체를 바꾸어 놓습니다."`,
+                ref: "📖 설교 하이라이트 #3",
+                time: "03:20 ~ 04:18 (58초)",
+                tag: "#비전 #순종 #청년",
+                viral: "📱 청년부 공유 추천"
+            }
+        ]
+    };
+
+    if (typeof loadSampleVideo === 'function') {
+        loadSampleVideo('uploaded');
+    }
 }
 
 function scrollToSection(id) {
