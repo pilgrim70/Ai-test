@@ -2424,4 +2424,73 @@ function updateShortsDescription(val) {
     }
 }
 
+function previewAddClip() {
+    const startVal = document.getElementById('add-clip-start-input')?.value.trim() || '00:00';
+    const endVal = document.getElementById('add-clip-end-input')?.value.trim() || '01:30';
+
+    const startSec = parseTimestampToSeconds(startVal);
+
+    const videoPlayer = document.getElementById('uploaded-video-player');
+    const ytPlayer = document.getElementById('youtube-iframe-player');
+
+    if (currentDataset && currentDataset.videoId && ytPlayer) {
+        ytPlayer.src = `https://www.youtube.com/embed/${currentDataset.videoId}?autoplay=1&enablejsapi=1&start=${startSec}&end=${startSec + 90}`;
+        ytPlayer.style.display = 'block';
+        if (videoPlayer) videoPlayer.style.display = 'none';
+        isPlaying = true;
+    } else if (videoPlayer && videoPlayer.src) {
+        if (ytPlayer) ytPlayer.style.display = 'none';
+        videoPlayer.style.display = 'block';
+        videoPlayer.currentTime = startSec;
+        videoPlayer.play().catch(() => {});
+        isPlaying = true;
+    }
+
+    showToast(`▶️ 지정 구간 (${startVal} ~ ${endVal}) 미리보기 재생 중...`);
+}
+
+function addCustomClipToShorts() {
+    const startVal = document.getElementById('add-clip-start-input')?.value.trim() || '00:00';
+    const endVal = document.getElementById('add-clip-end-input')?.value.trim() || '01:30';
+
+    const startSec = parseTimestampToSeconds(startVal);
+    const endSec = parseTimestampToSeconds(endVal);
+    const diffSec = Math.max(5, endSec - startSec);
+
+    const newClip = {
+        title: `"직접 추가한 ${startVal}~${endVal} 은혜 설교 구간"`,
+        quote: `"하나님이 주신 은혜의 말씀과 결단이 심령 속에 기억되는 거룩한 시간입니다!"`,
+        ref: "📖 사용자 추가 구간",
+        time: `${startVal} ~ ${endVal} (${diffSec}초)`,
+        tag: "#직접추가 #설교쇼츠 #은혜",
+        viral: "✨ 사용자 지정 컷"
+    };
+
+    if (!currentDataset) {
+        currentDataset = sampleData.pastor_lee;
+    }
+
+    if (!currentDataset.highlights) {
+        currentDataset.highlights = [];
+    }
+
+    currentDataset.highlights.unshift(newClip);
+
+    renderHighlightCards();
+    selectHighlight(0);
+
+    // Sync Trimmer inputs
+    const trimStartMin = document.getElementById('trim-start-min');
+    const trimStartSec = document.getElementById('trim-start-sec');
+    const trimEndMin = document.getElementById('trim-end-min');
+    const trimEndSec = document.getElementById('trim-end-sec');
+
+    if (trimStartMin) trimStartMin.value = Math.floor(startSec / 60);
+    if (trimStartSec) trimStartSec.value = startSec % 60;
+    if (trimEndMin) trimEndMin.value = Math.floor(endSec / 60);
+    if (trimEndSec) trimEndSec.value = endSec % 60;
+
+    showToast(`🎉 [${startVal} ~ ${endVal}] 구간이 쇼츠 목록 첫 번째에 추가되었습니다!`);
+}
+
 
