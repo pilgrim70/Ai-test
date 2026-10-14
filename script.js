@@ -829,18 +829,32 @@ function selectHighlight(idx) {
 
     const currentItem = currentDataset.highlights[idx];
     if (currentItem) {
+        // 1. Update Top 2-Line Hook Title (Seolgyo AI Standard)
+        const hook1 = document.getElementById('seolgyo-hook-line-1');
+        const hook2 = document.getElementById('seolgyo-hook-line-2');
+        const hookInput1 = document.getElementById('hook-title-line1');
+        const hookInput2 = document.getElementById('hook-title-line2');
+
+        const l1 = currentItem.line1 || "교회는 유람선인가";
+        const l2 = currentItem.line2 || "구조선인가";
+
+        if (hook1) hook1.textContent = l1;
+        if (hook2) hook2.textContent = l2;
+        if (hookInput1) hookInput1.value = l1;
+        if (hookInput2) hookInput2.value = l2;
+
+        // 2. Update Scripture Reference & Subtitle
         const subRef = document.getElementById('sub-bible-ref');
         const subText = document.getElementById('sub-text-box');
         if (subRef) subRef.textContent = currentItem.ref || '📖 설교 하이라이트';
         if (subText) {
-            if (currentItem.line1 || currentItem.line2) {
-                subText.innerHTML = `${currentItem.line1 || ''}<br><span class="highlight-word">${currentItem.line2 || ''}</span>`;
-            } else {
-                subText.innerHTML = currentItem.quote.replace(
-                    /(예수|믿음|하나님|기도|기적|성령|치유|십자가|은혜|복|감사|축복|말씀|찬양)/g,
-                    '<span class="highlight-word">$1</span>'
-                );
-            }
+            subText.textContent = currentItem.quote.replace(/^"|"$/g, '');
+        }
+
+        // 3. Update Description
+        const descBox = document.getElementById('shorts-desc-text');
+        if (descBox) {
+            descBox.textContent = `[복의근원 관유중앙교회] ${currentItem.title.replace(/^"|"$/g, '')} · ${currentItem.tag}`;
         }
 
         const startSec = parseTimestampToSeconds(currentItem.time);
@@ -1268,8 +1282,8 @@ function downloadDoc(type) {
 }
 
 function copyQtText() {
-    const text = `[주간 QT 5일치 모음]\n월요일: 마 14:22-25 밤사경의 오심\n화요일: 마 14:26-27 안심하라 나니\n수요일: 마 14:28-29 배 밖으로 발 내딛기\n목요일: 마 14:30-31 즉시 내민 손\n금요일: 마 14:32-33 잔잔해진 바다`;
-    copyTextToClipboard(text, '📱 카톡 공유용 5일치 QT 텍스트가 복사되었습니다!');
+    const text = `[주간 QT 6일치 모음]\n월요일: 마 14:22-25 밤사경의 오심\n화요일: 마 14:26-27 안심하라 나니\n수요일: 마 14:28-29 배 밖으로 발 내딛기\n목요일: 마 14:30-31 즉시 내민 손\n금요일: 마 14:32-33 잔잔해진 바다\n토요일: 마 14:33 참으로 하나님의 아들이로소이다`;
+    copyTextToClipboard(text, '📱 카톡 공유용 6일치 QT 텍스트가 복사되었습니다!');
 }
 
 function downloadQtPdf() {
@@ -2795,6 +2809,16 @@ function updateChurchBadge(val) {
     }
 }
 
+function updateHookTitles() {
+    const input1 = document.getElementById('hook-title-line1');
+    const input2 = document.getElementById('hook-title-line2');
+    const hook1 = document.getElementById('seolgyo-hook-line-1');
+    const hook2 = document.getElementById('seolgyo-hook-line-2');
+
+    if (input1 && hook1) hook1.textContent = input1.value || "교회는 유람선인가";
+    if (input2 && hook2) hook2.textContent = input2.value || "구조선인가";
+}
+
 function setVisualTemplate(tplName) {
     const cards = document.querySelectorAll('.template-card-grid .tpl-card');
     cards.forEach(card => {
@@ -2813,36 +2837,52 @@ function setVisualTemplate(tplName) {
     if (activeCard) {
         activeCard.classList.add('active');
         activeCard.style.borderColor = '#2563eb';
-        activeCard.style.background = 'rgba(15, 23, 42, 0.9)';
-        activeCard.style.boxShadow = '0 0 12px rgba(37, 99, 235, 0.4)';
+        activeCard.style.background = 'rgba(15, 23, 42, 0.95)';
+        activeCard.style.boxShadow = '0 0 12px rgba(37, 99, 235, 0.5)';
         const titleSpan = activeCard.querySelector('span:last-child');
         if (titleSpan) {
             titleSpan.style.color = '#38bdf8';
-            titleSpan.style.fontWeight = '700';
+            titleSpan.style.fontWeight = '800';
         }
     }
 
     const subBox = document.getElementById('sub-text-box');
     const phoneScreen = document.getElementById('phone-screen');
+    const hookTitleBox = document.getElementById('seolgyo-hook-title-box');
+    const videoWrapper = document.getElementById('seolgyo-video-wrapper');
 
-    if (tplName === 'basic') {
-        if (subBox) subBox.className = 'sub-text-box style-neon';
-        if (phoneScreen) phoneScreen.style.background = '#0f172a';
-    } else if (tplName === 'gradient') {
-        if (subBox) subBox.className = 'sub-text-box style-modern';
-        if (phoneScreen) phoneScreen.style.background = 'linear-gradient(180deg, #1e1b4b, #311b92)';
-    } else if (tplName === 'accent') {
-        if (subBox) subBox.className = 'sub-text-box style-box';
-        if (phoneScreen) phoneScreen.style.background = '#0284c7';
-    } else if (tplName === 'light') {
-        if (subBox) subBox.className = 'sub-text-box style-classic';
-        if (phoneScreen) phoneScreen.style.background = '#f8fafc';
-    } else if (tplName === 'cover') {
-        if (subBox) subBox.className = 'sub-text-box style-neon';
-        if (phoneScreen) phoneScreen.style.background = 'linear-gradient(135deg, #0f172a, #334155)';
+    if (tplName === 'seolgyo') {
+        if (phoneScreen) {
+            phoneScreen.className = 'phone-screen template-seolgyo';
+            phoneScreen.style.background = '#000000';
+        }
+        if (hookTitleBox) hookTitleBox.style.display = 'block';
+        if (subBox) subBox.className = 'seolgyo-sub-line sub-text-box style-neon';
+        showToast("🎨 Seolgyo AI 표준형 템플릿(상단 훅 제목 + 16:9 가로 비디오)이 적용되었습니다.");
+    } else {
+        if (phoneScreen) {
+            phoneScreen.className = 'phone-screen';
+        }
+        if (hookTitleBox) hookTitleBox.style.display = 'none';
+
+        if (tplName === 'basic') {
+            if (subBox) subBox.className = 'sub-text-box style-neon';
+            if (phoneScreen) phoneScreen.style.background = '#0f172a';
+            showToast("🎨 풀스크린 네온 템플릿이 적용되었습니다.");
+        } else if (tplName === 'gradient') {
+            if (subBox) subBox.className = 'sub-text-box style-modern';
+            if (phoneScreen) phoneScreen.style.background = 'linear-gradient(180deg, #1e1b4b, #311b92)';
+            showToast("🎨 시네마틱 그라데이션 템플릿이 적용되었습니다.");
+        } else if (tplName === 'accent') {
+            if (subBox) subBox.className = 'sub-text-box style-box';
+            if (phoneScreen) phoneScreen.style.background = '#0284c7';
+            showToast("🎨 로열 블루 강조 템플릿이 적용되었습니다.");
+        } else if (tplName === 'light') {
+            if (subBox) subBox.className = 'sub-text-box style-classic';
+            if (phoneScreen) phoneScreen.style.background = '#f8fafc';
+            showToast("🎨 깔끔한 라이트 템플릿이 적용되었습니다.");
+        }
     }
-
-    showToast(`🎨 '${tplName}' 템플릿 스타일이 적용되었습니다.`);
 }
 
 function updateChurchBadgeText(val) {
@@ -2984,5 +3024,268 @@ function addCustomClipToShorts() {
 
     showToast(`🎉 [${startVal} ~ ${endVal}] 구간이 쇼츠 목록 첫 번째에 추가되었습니다!`);
 }
+
+/* ==========================================================================
+   15. Seolgyo AI Interactive 6-Slide CardNews Carousel Engine
+   ========================================================================== */
+let currentCnSlide = 0;
+const totalCnSlides = 6;
+
+function updateCardNewsView() {
+    for (let i = 0; i < totalCnSlides; i++) {
+        const slide = document.getElementById(`cn-slide-${i}`);
+        if (slide) {
+            if (i === currentCnSlide) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        }
+    }
+
+    const counter = document.getElementById('cn-slide-counter');
+    if (counter) counter.textContent = `${currentCnSlide + 1} / ${totalCnSlides} 슬라이드`;
+
+    const prevBtn = document.getElementById('cn-prev-btn');
+    const nextBtn = document.getElementById('cn-next-btn');
+    if (prevBtn) prevBtn.disabled = (currentCnSlide === 0);
+    if (nextBtn) nextBtn.disabled = (currentCnSlide === totalCnSlides - 1);
+
+    const dots = document.querySelectorAll('#cn-dots-container .cn-dot');
+    dots.forEach((dot, idx) => {
+        dot.style.background = (idx === currentCnSlide) ? '#38bdf8' : '#334155';
+    });
+}
+
+function nextCardNewsSlide() {
+    if (currentCnSlide < totalCnSlides - 1) {
+        currentCnSlide++;
+        updateCardNewsView();
+    }
+}
+
+function prevCardNewsSlide() {
+    if (currentCnSlide > 0) {
+        currentCnSlide--;
+        updateCardNewsView();
+    }
+}
+
+/* ==========================================================================
+   16. Seolgyo AI Signature Feature: Sermon Outline Generator Engine
+   ========================================================================== */
+const sermonOutlinesData = {
+    '빌립보서 4:6-7': {
+        ref: '빌립보서 4:6-7',
+        title: '염려의 자리에 기도를 채우는 평강 (빌립보서 4:6-7)',
+        context: '빌립보 교회는 바울과 오랜 신뢰 관계를 유지하며 여러 차례 그의 사역을 경제적으로 지원했고, 에바브로디도를 통해 바울에게 헌금을 보낸 것이 본서 집필의 직접적인 계기가 되었습니다. 당시 교회 내부에서는 유오디아와 순두게 사이의 갈등으로 대표되는 분열의 조짐이 있었으며, 외부적으로는 율법주의적 가르침을 전하는 이들의 위협도 존재했습니다.',
+        words: `<strong>'염려하다(μεριμνάω, 메림나오)'</strong>는 마음이 여러 갈래로 찢어지는 상태를 의미합니다. 세상의 근심이 우리의 생각을 분열시킬 때, 바울은 마음을 하나님께로 온전히 모으는 기도를 처방합니다.<br><strong>'지키시리라(φρουρέω, 프루레오)'</strong>는 군사 용어로, 적군의 공격으로부터 성채를 방어하기 위해 파수꾼을 배치하는 삼엄한 경계를 의미합니다.`,
+        commentary: '칼빈(John Calvin)은 본 구절에 대해 "우리가 염려에 사로잡히는 것은 하나님의 섭리를 전적으로 신뢰하지 못하기 때문이다. 성도가 감사의 기도를 올릴 때, 하나님의 평강은 사탄의 의심을 막아내는 철벽의 방패가 된다"고 주석합니다.',
+        intro: '사랑하는 성도 여러분, 인생의 중턱을 지나는 우리에게 가장 무거운 짐은 보이지 않는 미래에 대한 염려입니다. 바울 사도는 로마의 차가운 감옥에 갇힌 처지였음에도 불구하고 빌립보 성도들을 향해 참된 평안의 비결을 선포하고 있습니다.',
+        p1Title: '염려를 기도의 제목으로 바꾸십시오',
+        p1Desc: '바울은 우리에게 아무것도 염려하지 말라고 단호하게 권면합니다. 성경은 그 흩어진 마음을 모아 모든 일에 기도로 바꾸라고 말씀합니다.',
+        p1Apply: '💡 구체적 삶의 적용: 걱정하는 자녀나 배우자에게 "우리 마음의 짐을 하나님께 먼저 맡기고 함께 기도해보자"라고 따뜻하게 말해 보십시오.',
+        p2Title: '감사의 태도로 구체적으로 구하십시오',
+        p2Desc: '성도의 기도는 단순한 요구를 넘어 감사라는 신앙의 고백을 동반해야 합니다. 감사는 하나님이 이미 우리 삶에 행하신 선한 일들을 기억하며 그분의 주권을 인정하는 행위이기 때문입니다.',
+        p2Apply: '💡 구체적 삶의 적용: 소그룹 식구들과 이번 주에 경험한 작은 감사 제목 세 가지를 단체 대화방에서 공유하며 서로의 기도를 격려하십시오.',
+        p3Title: '하나님의 평강이 마음을 보호하십니다',
+        p3Desc: '진실한 기도의 결과로 주어지는 것은 즉각적인 환경의 변화가 아니라 하나님의 평강입니다. 여기서 지킨다는 표현은 성벽을 파수하는 군사가 삼엄한 경계를 서는 군사적 상태를 묘사합니다.',
+        p3Apply: '💡 구체적 삶의 적용: 나를 힘들게 하는 사람을 대할 때 내 감정이 앞서지 않도록 마음의 문 앞에 하나님의 평강을 파수꾼으로 세우는 훈련을 하십시오.',
+        conclusion: '염려는 우리 마음을 나누지만 기도는 우리 마음을 하나님께 고정시킵니다. 감사가 섞인 기도를 드릴 때 인간의 지각을 초월하는 하나님의 평강이 우리의 성벽이 되어 주실 것입니다. 오늘 이 시간, 우리의 모든 무거운 짐을 주님의 보좌 앞에 내려놓기를 결단합니다.'
+    },
+    '마태복음 14:22-33': {
+        ref: '마태복음 14:22-33',
+        title: '풍랑을 딛고 물 위를 걷는 믿음 (마태복음 14:22-33)',
+        context: '오병이어의 기적 직후 군중들이 예수를 억지로 임금 삼으려 하자 예수님은 제자들을 배에 태워 건너편으로 보내시고 홀로 기도하러 산에 가셨습니다. 밤사경(새벽 3~6시)에 제자들은 역풍과 거센 파도로 심한 고난을 겪고 있었습니다.',
+        words: `<strong>'밤사경(τετάρτῃ φυλακῇ, 테타르테 퓔라케)'</strong>은 밤의 가장 어둡고 탈진한 마지막 경점을 뜻합니다. 인간의 한계 끝에 주님이 찾아오십니다.<br><strong>'물 위를 걸어(περιπατῶν ἐπὶ τὴν θάλασσαν)'</strong>는 혼돈과 사망의 세력인 바다를 짓밟고 다스리시는 하나님의 신적 통치권을 상징합니다.`,
+        commentary: '매튜 헨리(Matthew Henry)는 "배 안은 안전해 보이나 제자들을 성숙시키지 못했다. 주님은 베드로를 물 위로 부르심으로 보이는 환경을 초월하는 믿음의 능력을 가르치셨다"고 설명합니다.',
+        intro: '인생이라는 바다를 항해할 때 누구나 예기치 못한 역풍을 만납니다. 그러나 고난의 깊은 밤, 주님은 결코 우리를 버려두지 않으시고 풍랑을 딛고 찾아오십니다.',
+        p1Title: '두려움의 밤, 주님의 음성을 분별하십시오',
+        p1Desc: '유령이라 두려워 외치는 제자들에게 주님은 "안심하라 나니 두려워하지 말라"고 즉시 말씀하십니다.',
+        p1Apply: '💡 구체적 삶의 적용: 세상의 불안한 뉴스보다 성경 말씀을 먼저 묵상하며 하루를 시작하십시오.',
+        p2Title: '안전지대를 떠나 순종의 첫 발을 내딛으십시오',
+        p2Desc: '배 안에 안주하지 않고 말씀에 순종하여 물 위로 뛰어내린 베드로만이 기적의 걸음을 걸었습니다.',
+        p2Apply: '💡 구체적 삶의 적용: 오랫동안 미루어 두었던 전도 대상자나 용서해야 할 이웃에게 먼저 연락해 보십시오.',
+        p3Title: '침몰의 위기에서 즉시 주를 부르짖으십시오',
+        p3Desc: '파도를 보고 빠져들 때 "주여 나를 구원하소서" 부르짖자 주님은 즉시 손을 내밀어 붙잡아 주셨습니다.',
+        p3Apply: '💡 구체적 삶의 적용: 영적 침체나 낙심이 찾아올 때 자책하지 말고 즉시 기도의 골방으로 나아가십시오.',
+        conclusion: '예수님이 배에 오르시자 바람이 그치고 큰 평안이 임했습니다. 주님을 내 인생의 배에 모셔들일 때 참된 구원과 찬양이 터져나옵니다.'
+    },
+    '로마서 8:28': {
+        ref: '로마서 8:28',
+        title: '모든 것을 합력하여 선을 이루시는 하나님 (로마서 8:28)',
+        context: '로마 제국의 극심한 박해와 고난 속에 있는 성도들에게 사도 바울이 성령의 탄식과 구원의 확신을 선포하는 본문입니다.',
+        words: `<strong>'합력하여(συνεργεῖ, 쉬네르게이)'</strong>는 조화롭게 일한다는 뜻의 시너지(Synergy) 어원으로, 모든 사건이 하나님의 거룩한 뜻 안에서 맞물려 돌아감을 의미합니다.`,
+        commentary: '어거스틴(Augustine)은 "하나님은 악과 고난조차도 성도의 유익과 영적 성장을 위해 거룩한 도구로 바꾸어 사용하신다"고 주해합니다.',
+        intro: '우리가 겪는 모든 아픔과 실패가 과연 의미가 있을까요? 성경은 단호하게 하나님의 손길 아래 버려지는 고난은 없다고 약속합니다.',
+        p1Title: '하나님을 사랑하는 자를 향한 거룩한 섭리',
+        p1Desc: '성도의 삶은 우연이나 운명의 장난이 아니라 신실하신 하나님의 주권적 섭리 안에 있습니다.',
+        p1Apply: '💡 구체적 삶의 적용: 이해할 수 없는 시험 속에서도 하나님의 선하심을 의심하지 않는 신뢰를 고백하십시오.',
+        p2Title: '그의 뜻대로 부르심을 입은 자의 특권',
+        p2Desc: '창세 전에 그리스도 안에서 선택받은 자녀들에게 주어지는 영원한 안전보장입니다.',
+        p2Apply: '💡 구체적 삶의 적용: 구원의 감격을 매일 묵상하며 성도의 정체성을 회복하십시오.',
+        p3Title: '최종적인 선, 그리스도를 닮아가는 영화',
+        p3Desc: '여기서 선이란 단순한 세상적 번영이 아니라 예수 그리스도의 거룩한 형상을 본받는 것입니다.',
+        p3Apply: '💡 구체적 삶의 적용: 고난을 원망거리로 삼지 말고 나의 모난 성품을 다듬는 기회로 삼으십시오.',
+        conclusion: '하나님은 한 조각의 퍼즐도 헛되이 버리지 않으십니다. 모든 것을 합력하여 영광스러운 선을 이루실 하나님을 찬양합니다.'
+    },
+    '시편 23:1-6': {
+        ref: '시편 23:1-6',
+        title: '부족함이 없는 목자의 인도하심 (시편 23:1-6)',
+        context: '다윗이 사울과 압살롬의 추격을 받으며 숱한 사망의 음침한 골짜기를 지나면서도 경험했던 하나님의 철저한 목자적 보호와 공급을 노래한 시편입니다.',
+        words: `<strong>'여호와 로이(יְהוָה רֹעִי)'</strong>는 주님은 나의 목자시라는 뜻으로, 절대적인 보호와 친밀한 보살핌을 나타냅니다.`,
+        commentary: '스펄전(C.H. Spurgeon)은 "양은 길을 찾는 지혜도, 맹수를 이길 힘도 없다. 양의 유일한 자랑은 선한 목자를 소유한 것이다"라고 찬탄합니다.',
+        intro: '결핍과 불안의 시대, 우리는 무엇으로 만족을 누립니까? 다윗은 고백합니다. 여호와가 나의 목자이시니 내게 부족함이 없으리로다.',
+        p1Title: '푸른 풀밭과 쉴 만한 물가로 인도하심',
+        p1Desc: '목자는 양들에게 가장 좋은 영의 양식과 쉼을 허락하십니다.',
+        p1Apply: '💡 구체적 삶의 적용: 영적 탈진이 오기 전 말씀과 기도로 영혼을 소생시키는 안식의 시간을 가지십시오.',
+        p2Title: '사망의 음침한 골짜기에서도 함께하시는 주',
+        p2Desc: '주의 지팡이와 막대기가 나를 안위하사 맹수의 공격으로부터 나를 지키십니다.',
+        p2Apply: '💡 구체적 삶의 적용: 두려움의 자리에 주님이 함께 서 계심을 선포하십시오.',
+        p3Title: '내 잔이 넘치는 영원한 축복',
+        p3Desc: '원수의 목전에서 상을 베푸시고 머리에 기름을 바르시는 풍성한 은혜입니다.',
+        p3Apply: '💡 구체적 삶의 적용: 받은 은혜를 헤아리며 이웃과 풍성히 나누는 삶을 사십시오.',
+        conclusion: '내 평생에 선하심과 인자하심이 반드시 나를 따르리니 내가 여호와의 집에 영원히 거하리로다.'
+    }
+};
+
+let currentOutlineRef = '빌립보서 4:6-7';
+let isOutlineExpanded = false;
+
+function setOutlineScripture(ref) {
+    const input = document.getElementById('outline-scripture-input');
+    if (input) input.value = ref;
+
+    const chips = document.querySelectorAll('.outline-tag-btn');
+    chips.forEach(chip => {
+        if (chip.textContent.trim() === ref) {
+            chip.classList.add('active');
+        } else {
+            chip.classList.remove('active');
+        }
+    });
+
+    generateSermonOutline();
+}
+
+function generateSermonOutline() {
+    const input = document.getElementById('outline-scripture-input');
+    const scripture = input ? input.value.trim() : '빌립보서 4:6-7';
+
+    let data = sermonOutlinesData[scripture];
+    if (!data) {
+        // Fallback for custom user input
+        data = {
+            ref: scripture,
+            title: `말씀의 능력으로 세상을 이기는 믿음 (${scripture})`,
+            context: `${scripture} 본문은 하나님께서 자기 백성들에게 언약의 신실하심을 증거하시며 시대적 위기 속에서도 하나님을 전심으로 신뢰할 것을 촉구하는 말씀입니다.`,
+            words: `<strong>'믿음(πίστις, 피스티스)'</strong>은 하나님의 성품과 약속에 대한 확고한 신뢰를 바탕으로 한 전인격적인 의탁을 의미합니다.`,
+            commentary: `복음주의 주석에 따르면 "${scripture}의 중심 사상은 성도가 세상의 풍조에 흔들리지 않고 영원하신 말씀의 반석 위에 설 때 참된 승리가 보장된다는 것입니다."`,
+            intro: `사랑하는 성도 여러분, 오늘 우리는 ${scripture} 말씀을 통해 우리 삶을 향하신 하나님의 거룩한 뜻과 위로를 발견하고자 합니다.`,
+            p1Title: '말씀의 권위 앞에 겸손히 순종하십시오',
+            p1Desc: '인간의 지혜나 경험보다 앞서 하나님의 말씀에 귀를 기울일 때 영적 분별력이 회복됩니다.',
+            p1Apply: '💡 구체적 삶의 적용: 중요한 결정을 내리기 전 말씀 묵상과 기도의 시간을 최우선으로 가지십시오.',
+            p2Title: '두려움을 넘어 약속의 신실함을 붙드십시오',
+            p2Desc: '환경은 변할지라도 하나님의 약속은 천지가 없어지기 전에 일점일획도 결코 없어지지 않습니다.',
+            p2Apply: '💡 구체적 삶의 적용: 나를 불안하게 만드는 생각들을 말씀 암송으로 물리치십시오.',
+            p3Title: '세상 속에서 증인의 삶을 결단하십시오',
+            p3Desc: '우리가 받은 은혜는 교회 안에만 머물지 않고 세상 속에서 빛과 소금의 열매로 나타나야 합니다.',
+            p3Apply: '💡 구체적 삶의 적용: 이번 주 만나는 사람들에게 그리스도의 사랑과 따뜻한 격려를 전하십시오.',
+            conclusion: '말씀을 붙드는 자는 결코 흔들리지 않습니다. 주님의 말씀 안에서 승리하는 모든 성도님들이 되시기를 축복합니다.'
+        };
+    }
+
+    currentOutlineRef = data.ref;
+
+    // Update DOM
+    const badge = document.getElementById('outline-ref-badge');
+    const mainTitle = document.getElementById('outline-main-title');
+    const contextBox = document.getElementById('outline-context');
+    const wordsBox = document.getElementById('outline-original-words');
+    const commentaryBox = document.getElementById('outline-commentary');
+    const introBox = document.getElementById('outline-intro');
+    const p1T = document.getElementById('outline-p1-title');
+    const p1D = document.getElementById('outline-p1-desc');
+    const p1A = document.getElementById('outline-p1-apply');
+    const p2T = document.getElementById('outline-p2-title');
+    const p2D = document.getElementById('outline-p2-desc');
+    const p2A = document.getElementById('outline-p2-apply');
+    const p3T = document.getElementById('outline-p3-title');
+    const p3D = document.getElementById('outline-p3-desc');
+    const p3A = document.getElementById('outline-p3-apply');
+    const conclusionBox = document.getElementById('outline-conclusion');
+
+    if (badge) badge.textContent = data.ref;
+    if (mainTitle) mainTitle.textContent = data.title;
+    if (contextBox) contextBox.textContent = data.context;
+    if (wordsBox) wordsBox.innerHTML = data.words;
+    if (commentaryBox) commentaryBox.textContent = data.commentary;
+    if (introBox) introBox.textContent = data.intro;
+    if (p1T) p1T.textContent = data.p1Title;
+    if (p1D) p1D.textContent = data.p1Desc;
+    if (p1A) p1A.innerHTML = `<strong>💡 구체적 삶의 적용:</strong> ${data.p1Apply.replace(/^💡 구체적 삶의 적용:\s*/, '')}`;
+    if (p2T) p2T.textContent = data.p2Title;
+    if (p2D) p2D.textContent = data.p2Desc;
+    if (p2A) p2A.innerHTML = `<strong>💡 구체적 삶의 적용:</strong> ${data.p2Apply.replace(/^💡 구체적 삶의 적용:\s*/, '')}`;
+    if (p3T) p3T.textContent = data.p3Title;
+    if (p3D) p3D.textContent = data.p3Desc;
+    if (p3A) p3A.innerHTML = `<strong>💡 구체적 삶의 적용:</strong> ${data.p3Apply.replace(/^💡 구체적 삶의 적용:\s*/, '')}`;
+    if (conclusionBox) conclusionBox.textContent = data.conclusion;
+
+    showToast(`✨ [${data.ref}] 주석 근거 설교 개요가 성공적으로 생성되었습니다!`);
+}
+
+function toggleOutlineMore() {
+    isOutlineExpanded = !isOutlineExpanded;
+    const bodyContent = document.getElementById('outline-body-content');
+    const fadeOverlay = document.getElementById('outline-fade-overlay');
+    const btn = document.getElementById('outline-more-btn');
+    const icon = document.getElementById('outline-more-icon');
+
+    if (bodyContent && btn) {
+        if (isOutlineExpanded) {
+            bodyContent.style.maxHeight = 'none';
+            if (fadeOverlay) fadeOverlay.style.display = 'none';
+            btn.innerHTML = `<span>접기</span> <i class="fa-solid fa-chevron-up" id="outline-more-icon"></i>`;
+        } else {
+            bodyContent.style.maxHeight = '480px';
+            if (fadeOverlay) fadeOverlay.style.display = 'block';
+            btn.innerHTML = `<span>더보기</span> <i class="fa-solid fa-chevron-down" id="outline-more-icon"></i>`;
+        }
+    }
+}
+
+function copyOutlineText() {
+    const mainTitle = document.getElementById('outline-main-title')?.textContent || '';
+    const context = document.getElementById('outline-context')?.textContent || '';
+    const words = document.getElementById('outline-original-words')?.innerText || '';
+    const commentary = document.getElementById('outline-commentary')?.textContent || '';
+    const intro = document.getElementById('outline-intro')?.textContent || '';
+    const p1 = `${document.getElementById('outline-p1-title')?.textContent || ''}\n${document.getElementById('outline-p1-desc')?.textContent || ''}\n${document.getElementById('outline-p1-apply')?.textContent || ''}`;
+    const p2 = `${document.getElementById('outline-p2-title')?.textContent || ''}\n${document.getElementById('outline-p2-desc')?.textContent || ''}\n${document.getElementById('outline-p2-apply')?.textContent || ''}`;
+    const p3 = `${document.getElementById('outline-p3-title')?.textContent || ''}\n${document.getElementById('outline-p3-desc')?.textContent || ''}\n${document.getElementById('outline-p3-apply')?.textContent || ''}`;
+    const conclusion = document.getElementById('outline-conclusion')?.textContent || '';
+
+    const fullText = `[설교 개요서]\n${mainTitle}\n\n1. 말씀 배경:\n${context}\n\n2. 핵심 원어 주해:\n${words}\n\n3. 주석 근거:\n${commentary}\n\n4. 서론:\n${intro}\n\n5. 대지 및 삶의 적용:\n- 대지 1: ${p1}\n\n- 대지 2: ${p2}\n\n- 대지 3: ${p3}\n\n6. 결론:\n${conclusion}`;
+
+    copyTextToClipboard(fullText, '📋 설교 개요 전문이 클립보드에 복사되었습니다! (카톡/단톡방 붙여넣기 가능)');
+}
+
+function downloadOutlineDoc() {
+    const mainTitle = document.getElementById('outline-main-title')?.textContent || '설교개요';
+    const text = document.getElementById('outline-display-card')?.innerText || '';
+    downloadFile(`GraceClip_설교개요_${currentOutlineRef.replace(/[:\s]/g, '_')}.docx`, text);
+}
+
+function downloadSummaryDoc() {
+    const text = document.querySelector('#tab-summary .pane-paper-view')?.innerText || '설교 요약 내용';
+    downloadFile(`GraceClip_설교요약_우리마음을지켜줍니다.docx`, text);
+}
+
+function triggerShortsExport() {
+    showToast('✨ 1080p HD 쇼츠 비디오 렌더링 및 다운로드가 시작되었습니다!');
+    downloadFile('GraceClip_관유중앙교회_1분은혜쇼츠.mp4', 'MP4_VIDEO_STREAM_DATA');
+}
+
 
 

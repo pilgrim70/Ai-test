@@ -32,7 +32,9 @@
             
             <div class="nav-right-group" style="display: inline-flex; align-items: center; gap: 12px; flex-wrap: nowrap; white-space: nowrap; flex-shrink: 0;">
                 <a href="#hero-input-box" class="nav-simple-link active" style="white-space: nowrap; word-break: keep-all; flex-shrink: 0;">1분 쇼츠 메이커</a>
-                <a href="#package" class="nav-simple-link" style="white-space: nowrap; word-break: keep-all; flex-shrink: 0;">사역 자동화 패키지</a>
+                <a href="#shorts-process" class="nav-simple-link" style="white-space: nowrap; word-break: keep-all; flex-shrink: 0;">쇼츠 프로세스</a>
+                <a href="#package" class="nav-simple-link" style="white-space: nowrap; word-break: keep-all; flex-shrink: 0;">사역 자료 11종</a>
+                <a href="#sermon-outline" class="nav-simple-link" style="white-space: nowrap; word-break: keep-all; flex-shrink: 0;">설교 개요</a>
                 <a href="#pricing" class="nav-simple-link" style="white-space: nowrap; word-break: keep-all; flex-shrink: 0;">요금제</a>
                 <button class="btn btn-ghost" id="theme-toggle" aria-label="다크/라이트 모드 전환" style="white-space: nowrap; flex-shrink: 0;">
                     <i class="fa-solid fa-sun"></i>
@@ -166,6 +168,120 @@
                     </div>
                 </div>
 
+                <!-- Seolgyo AI Core Process Section: 원고가 없어도, 유튜브 링크 하나로 쇼츠 -->
+                <section class="shorts-process-section" id="shorts-process" style="margin: 40px auto 50px auto; max-width: 1100px; padding: 0 10px;">
+                    <div class="section-header center" style="margin-bottom: 32px;">
+                        <div class="section-tag"><i class="fa-brands fa-youtube" style="color: #ef4444;"></i> ONE-CLICK YOUTUBE TO SHORTS</div>
+                        <h2 class="section-title" style="font-size: 32px; font-weight: 800; color: #ffffff; margin-bottom: 12px; letter-spacing: -0.02em;">
+                            원고가 없어도, <span class="gradient-text">유튜브 링크 하나로 쇼츠</span>
+                        </h2>
+                        <p class="section-subtitle" style="font-size: 15px; color: #94a3b8; max-width: 640px; margin: 0 auto; line-height: 1.6;">
+                            설교 영상 링크를 넣으면 은혜되는 구간을 찾아 쇼츠로 만들고, 제목과 자막까지 달아줍니다. 인스타·유튜브에 바로 올리시면 됩니다.
+                        </p>
+                    </div>
+
+                    <!-- 3-Step Process Flow Cards (Matches Seolgyo AI exact layout) -->
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                        
+                        <!-- Step 1 Card: 유튜브 링크 붙여넣기 -->
+                        <div class="process-card glass-card" style="flex: 1; min-width: 280px; max-width: 320px; background: rgba(15, 23, 42, 0.85); border: 1.5px solid #334155; border-radius: 20px; padding: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.3); transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                                <span style="font-size: 15px; font-weight: 800; color: #f8fafc;">① 유튜브 링크 붙여넣기</span>
+                                <span style="font-size: 11px; background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 2px 8px; border-radius: 6px; font-weight: 700;">1단계</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px; background: #0b1120; border: 1px solid #334155; padding: 12px 14px; border-radius: 12px; margin-bottom: 14px;">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="#ef4444" style="flex-shrink: 0;"><path d="M23 12s0-3.8-.5-5.6c-.3-1-1-1.8-2-2C18.7 4 12 4 12 4s-6.7 0-8.5.4c-1 .2-1.7 1-2 2C1 8.2 1 12 1 12s0 3.8.5 5.6c.3 1 1 1.8 2 2C5.3 20 12 20 12 20s6.7 0 8.5-.4c1-.2 1.7-1 2-2 .5-1.8.5-5.6.5-5.6zM10 15.5v-7l6 3.5-6 3.5z"></path></svg>
+                                <span style="font-size: 12px; color: #94a3b8; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">youtube.com/watch?v=fB-uX_pZZvs</span>
+                            </div>
+                            <p style="font-size: 13px; color: #cbd5e1; line-height: 1.6; margin: 0 0 16px 0;">
+                                찬양·광고가 섞인 1~2시간 예배 전체 영상도 <strong style="color: #38bdf8;">설교 부분만 정확하게</strong> 찾아냅니다.
+                            </p>
+                            <button onclick="loadSampleVideo('gwanyu')" style="width: 100%; background: rgba(56, 189, 248, 0.12); border: 1px solid #38bdf8; color: #38bdf8; font-weight: 700; font-size: 12px; padding: 8px 0; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                                ⚡ 관유중앙교회 링크 자동 입력
+                            </button>
+                        </div>
+
+                        <!-- Arrow 1 -->
+                        <div style="color: #38bdf8; font-size: 24px; font-weight: 900; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-arrow-right" style="display: block;"></i>
+                        </div>
+
+                        <!-- Step 2 Card: 자동 편집 -->
+                        <div class="process-card glass-card" style="flex: 1; min-width: 280px; max-width: 320px; background: rgba(15, 23, 42, 0.85); border: 1.5px solid #334155; border-radius: 20px; padding: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.3); transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                                <span style="font-size: 15px; font-weight: 800; color: #f8fafc;">② 자동 편집</span>
+                                <span style="font-size: 11px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 2px 8px; border-radius: 6px; font-weight: 700;">2단계</span>
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0 0 16px 0; display: flex; flex-direction: column; gap: 10px;">
+                                <li style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #e2e8f0; background: rgba(30, 41, 59, 0.6); padding: 8px 12px; border-radius: 8px; border-left: 3px solid #10b981;">
+                                    <span style="color: #10b981; font-weight: 900;">✓</span> 은혜되는 1분 구간 10개 찾기
+                                </li>
+                                <li style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #e2e8f0; background: rgba(30, 41, 59, 0.6); padding: 8px 12px; border-radius: 8px; border-left: 3px solid #38bdf8;">
+                                    <span style="color: #38bdf8; font-weight: 900;">✓</span> 시선을 끄는 2줄 훅 제목 달기
+                                </li>
+                                <li style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #e2e8f0; background: rgba(30, 41, 59, 0.6); padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f59e0b;">
+                                    <span style="color: #f59e0b; font-weight: 900;">✓</span> 실시간 한글 말소리 자막 달기
+                                </li>
+                            </ul>
+                            <div style="font-size: 12px; color: #64748b; text-align: center;">
+                                목소리 감정선 피크 분석으로 가장 감동적인 순간 자동 선별
+                            </div>
+                        </div>
+
+                        <!-- Arrow 2 -->
+                        <div style="color: #38bdf8; font-size: 24px; font-weight: 900; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-arrow-right" style="display: block;"></i>
+                        </div>
+
+                        <!-- Step 3 Card: 완성 9:16 쇼츠 예시 -->
+                        <div class="process-card glass-card" style="flex: 1; min-width: 280px; max-width: 320px; background: rgba(15, 23, 42, 0.85); border: 1.5px solid #334155; border-radius: 20px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.3); text-align: center; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                                <span style="font-size: 15px; font-weight: 800; color: #f8fafc;">③ 완성</span>
+                                <span style="font-size: 11px; background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 6px; font-weight: 700;">3단계 완성</span>
+                            </div>
+                            
+                            <!-- Mini 9:16 Shorts Simulator (Matches Seolgyo AI Reference Screenshot) -->
+                            <div style="width: 170px; height: 260px; margin: 0 auto; background: #000000; border: 4px solid #1e293b; border-radius: 20px; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.6); display: flex; flex-direction: column; justify-content: space-between; padding: 8px 6px;">
+                                <!-- Upper: Bold 2-Line Hook Title -->
+                                <div style="margin-top: 10px; text-align: center;">
+                                    <div style="font-size: 12px; font-weight: 900; color: #ffffff; line-height: 1.2;">교회는 유람선인가</div>
+                                    <div style="font-size: 13px; font-weight: 900; color: #ffeb3b; line-height: 1.2;">구조선인가</div>
+                                </div>
+
+                                <!-- Middle: 16:9 Video Box Preview -->
+                                <div style="width: 100%; aspect-ratio: 16/9; background: #0f172a; border-radius: 4px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.8);">
+                                    <img src="assets/hero_preview.jpg" alt="설교 쇼츠 예시" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.25);"></div>
+                                    <div style="position: absolute; width: 28px; height: 28px; background: rgba(37,99,235,0.85); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">
+                                        <i class="fa-solid fa-play"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Lower: 1-Line Streaming Subtitle & Church Logo -->
+                                <div style="margin-bottom: 8px; text-align: center;">
+                                    <div style="font-size: 10px; font-weight: 700; color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.9); margin-bottom: 4px;">
+                                        "파도 대신 예수를 바라보라"
+                                    </div>
+                                    <div style="display: inline-flex; align-items: center; background: rgba(255,255,255,0.95); padding: 2px 6px; border-radius: 4px;">
+                                        <img src="assets/gwanyu_logo.jpg" alt="로고" style="height: 12px; max-width: 70px; object-fit: contain;">
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="font-size: 11px; color: #64748b; margin: 10px 0 0 0;">
+                                실제로 만든 쇼츠 예시입니다. 클릭 시 즉시 편집 가능합니다.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- CTA Button to Studio -->
+                    <div style="text-align: center; margin-top: 28px;">
+                        <button onclick="scrollToSection('studio-workspace')" style="background: linear-gradient(135deg, #2563eb, #1d4ed8); border: 1px solid #60a5fa; color: #ffffff; font-weight: 800; font-size: 15px; padding: 12px 32px; border-radius: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(37,99,235,0.4); transition: all 0.2s;">
+                            <span>유튜브 링크로 쇼츠 만들기</span> <i class="fa-solid fa-arrow-down"></i>
+                        </button>
+                    </div>
+                </section>
+
                 <div class="section-header center">
                     <div class="section-tag"><i class="fa-solid fa-sliders"></i> LIVE INTERACTIVE STUDIO</div>
                     <h2 class="section-title">스스로 찾아내는 <span class="gradient-text">AI 설교 감지 & 1분 쇼츠 메이커</span></h2>
@@ -286,67 +402,67 @@
                                 <div class="phone-frame">
                                     <div class="phone-notch"></div>
                                     
-                                    <!-- Video Layer Simulator -->
-                                    <div class="phone-screen" id="phone-screen">
-                                        <!-- Video overlay & pastor preview -->
-                                        <div class="video-overlay-bg" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                                            <img src="assets/hero_preview.jpg" alt="목사님 설교 쇼츠 프리뷰" id="preview-img-layer" class="preview-img">
-                                            <video id="uploaded-video-player" class="preview-img" style="display: none; object-fit: cover; width: 100%; height: 100%; position: absolute; inset: 0;" playsinline loop muted></video>
-                                            <iframe id="youtube-iframe-player" class="preview-img" style="display: none; width: 100%; height: 100%; border: none; position: absolute; inset: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                            <div class="video-vignette"></div>
-                                        </div>
-
-                                        <!-- Top Header Vignette (Soft shadow to mask YouTube header and highlight church name) -->
-                                        <div style="position: absolute; top: 0; left: 0; right: 0; height: 60px; background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 65%, transparent 100%); z-index: 24; pointer-events: none;"></div>
-
-                                        <!-- Dynamic Subtitle Overlay (Middle-low safe zone, non-overlapping) -->
-                                        <div class="subtitle-overlay" id="subtitle-overlay" style="position: absolute; bottom: 136px; left: 12px; right: 12px; text-align: center; z-index: 20; pointer-events: none;">
-                                            <div class="sub-bible-ref" id="sub-bible-ref">📖 마태복음 14:29-31</div>
-                                            <div class="sub-text-box style-neon" id="sub-text-box">
-                                                "인생의 폭풍이 불어올 때<br>
-                                                <span class="highlight-word">파도 대신 예수를 바라보라!</span>"
-                                            </div>
-                                        </div>
-
-                                        <!-- Top: Church Name Badge (Upper area, crisp and clean) -->
-                                        <div class="shorts-church-badge" id="shorts-church-badge" style="position: absolute; top: 14px; left: 12px; z-index: 26; font-size: 11px; font-weight: 700; color: #ffffff; background: rgba(15, 23, 42, 0.96); padding: 5px 12px; border-radius: 20px; backdrop-filter: blur(8px); border: 1px solid rgba(56, 189, 248, 0.6); box-shadow: 0 4px 12px rgba(0,0,0,0.8); display: inline-flex; align-items: center; gap: 6px; pointer-events: none;">
+                                    <!-- Video Layer Simulator (Default Seolgyo AI Layout: Top Hook Title + Center 16:9 Video + Bottom Subtitle) -->
+                                    <div class="phone-screen template-seolgyo" id="phone-screen">
+                                        
+                                        <!-- Top Header: Church Name Badge (Upper area, crisp and clean) -->
+                                        <div class="shorts-church-badge" id="shorts-church-badge" style="position: absolute; top: 12px; left: 12px; z-index: 30; font-size: 11px; font-weight: 700; color: #ffffff; background: rgba(15, 23, 42, 0.95); padding: 4px 10px; border-radius: 20px; backdrop-filter: blur(8px); border: 1px solid rgba(56, 189, 248, 0.5); box-shadow: 0 4px 12px rgba(0,0,0,0.8); display: inline-flex; align-items: center; gap: 6px; pointer-events: none;">
                                             <i class="fa-solid fa-church" style="color: #38bdf8;"></i>
                                             <span id="church-badge-text">복의근원 관유중앙교회</span>
                                         </div>
 
-                                        <!-- Bottom: Church Logo Badge Card (Lower area, 8px above description, 34px below subtitle) -->
-                                        <div class="shorts-logo-wrapper" id="shorts-logo-wrapper" style="position: absolute; bottom: 74px; left: 12px; z-index: 22; display: inline-flex; align-items: center;">
-                                            <div class="shorts-logo-card" style="background: #ffffff; padding: 3px 8px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.6); border: 1px solid rgba(255, 255, 255, 0.95); display: flex; align-items: center; justify-content: center;">
-                                                <img id="shorts-church-logo-img" src="assets/gwanyu_logo.jpg" alt="관유중앙교회 로고" style="height: 20px; max-width: 108px; object-fit: contain; display: block;">
-                                            </div>
-                                        </div>
-
-                                        <!-- Bottom: Shorts Video Description & Caption Overlay -->
-                                        <div class="shorts-desc-badge" id="shorts-desc-badge" style="position: absolute; bottom: 8px; left: 12px; right: 54px; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(8px); padding: 6px 10px; border-radius: 8px; font-size: 11px; color: #f8fafc; border-left: 3px solid #38bdf8; z-index: 20; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); pointer-events: none;">
-                                            <span style="font-size: 10px; color: #38bdf8; font-weight: 800; display: flex; align-items: center; gap: 4px;">
-                                                <i class="fa-solid fa-pen-to-square"></i> 설교 요약 및 설명
-                                            </span>
-                                            <p id="shorts-desc-text" style="margin: 0; font-size: 11px; color: #e2e8f0; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                                                [복의근원 관유중앙교회] 두려움을 이기는 담대한 믿음 · 파도 대신 예수 그리스도를 바라보라
-                                            </p>
-                                        </div>
-
-                                        <!-- Simulated Sound Equilizer -->
-                                        <div class="audio-equalizer" style="position: absolute; top: 16px; right: 12px; z-index: 26;">
+                                        <!-- Sound Equalizer -->
+                                        <div class="audio-equalizer" style="position: absolute; top: 14px; right: 12px; z-index: 30;">
                                             <span></span><span></span><span></span><span></span><span></span>
                                         </div>
 
-                                        <!-- Interactive Play Button Overlay -->
-                                        <button class="phone-play-btn" id="phone-play-btn" onclick="toggleShortsPlay()">
-                                            <i class="fa-solid fa-play" id="phone-play-icon"></i>
-                                        </button>
+                                        <!-- 1. Seolgyo AI Signature Top 2-Line Hook Title -->
+                                        <div class="seolgyo-hook-title-box" id="seolgyo-hook-title-box">
+                                            <div class="hook-line-1" id="seolgyo-hook-line-1">교회는 유람선인가</div>
+                                            <div class="hook-line-2" id="seolgyo-hook-line-2">구조선인가</div>
+                                        </div>
+
+                                        <!-- 2. Seolgyo AI Center 16:9 Video Container -->
+                                        <div class="seolgyo-video-wrapper" id="seolgyo-video-wrapper">
+                                            <img src="assets/hero_preview.jpg" alt="목사님 설교 쇼츠 프리뷰" id="preview-img-layer" class="preview-img">
+                                            <video id="uploaded-video-player" class="preview-img" style="display: none; object-fit: cover; width: 100%; height: 100%; position: absolute; inset: 0;" playsinline loop muted></video>
+                                            <iframe id="youtube-iframe-player" class="preview-img" style="display: none; width: 100%; height: 100%; border: none; position: absolute; inset: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                            
+                                            <!-- Center Play Icon Overlay -->
+                                            <button class="phone-play-btn" id="phone-play-btn" onclick="toggleShortsPlay()" style="position: absolute; width: 44px; height: 44px; background: rgba(37, 99, 235, 0.9); border-radius: 50%; border: 2px solid #ffffff; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.6); z-index: 10;">
+                                                <i class="fa-solid fa-play" id="phone-play-icon"></i>
+                                            </button>
+                                        </div>
+
+                                        <!-- 3. Seolgyo AI Bottom Subtitle & Logo Group -->
+                                        <div class="seolgyo-bottom-group" id="seolgyo-bottom-group">
+                                            <div class="sub-bible-ref" id="sub-bible-ref" style="font-size: 10px; font-weight: 700; color: #38bdf8; margin-bottom: 2px;">📖 마태복음 4:19</div>
+                                            <div class="seolgyo-sub-line sub-text-box style-neon" id="sub-text-box">
+                                                "교회는 유람선이 아닙니다. 영혼을 살리는 구조선입니다."
+                                            </div>
+
+                                            <!-- Bottom Church Logo Badge (Separate safe zone, never overlapping!) -->
+                                            <div class="shorts-logo-wrapper" id="shorts-logo-wrapper" style="margin-top: 6px; display: inline-flex; align-items: center; justify-content: center;">
+                                                <div class="shorts-logo-card" style="background: #ffffff; padding: 3px 8px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.6); border: 1px solid rgba(255, 255, 255, 0.95); display: flex; align-items: center; justify-content: center;">
+                                                    <img id="shorts-church-logo-img" src="assets/gwanyu_logo.jpg" alt="관유중앙교회 로고" style="height: 18px; max-width: 100px; object-fit: contain; display: block;">
+                                                </div>
+                                            </div>
+
+                                            <!-- Bottom Description text -->
+                                            <div class="shorts-desc-badge" id="shorts-desc-badge" style="width: 100%; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); padding: 5px 8px; border-radius: 6px; font-size: 10px; color: #cbd5e1; border-left: 2px solid #38bdf8; margin-top: 4px; pointer-events: none; text-align: left;">
+                                                <p id="shorts-desc-text" style="margin: 0; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">
+                                                    [복의근원 관유중앙교회] 주일예배 · 구조선의 청사진
+                                                </p>
+                                            </div>
+                                        </div>
 
                                         <!-- Floating Action Icons (TikTok/Reels UI) -->
-                                        <div class="phone-sidebar-actions" style="position: absolute; right: 8px; bottom: 45px; z-index: 22; display: flex; flex-direction: column; gap: 12px; color: white;">
-                                            <div class="action-btn"><i class="fa-solid fa-heart"></i> <span>2.4k</span></div>
-                                            <div class="action-btn"><i class="fa-solid fa-comment-dots"></i> <span>184</span></div>
-                                            <div class="action-btn"><i class="fa-solid fa-share-nodes"></i> <span>공유</span></div>
+                                        <div class="phone-sidebar-actions" style="position: absolute; right: 8px; bottom: 85px; z-index: 22; display: flex; flex-direction: column; gap: 10px; color: white;">
+                                            <div class="action-btn"><i class="fa-solid fa-heart" style="color: #ef4444;"></i> <span style="font-size: 9px;">3.8k</span></div>
+                                            <div class="action-btn"><i class="fa-solid fa-comment-dots"></i> <span style="font-size: 9px;">290</span></div>
+                                            <div class="action-btn"><i class="fa-solid fa-share-nodes"></i> <span style="font-size: 9px;">공유</span></div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -358,59 +474,81 @@
                                     <span style="font-size: 11px; background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 6px; font-weight: 800;">무제한 FREE</span>
                                 </h4>
                                 
-                                <!-- 1. Visual Template Cards (Seolgyo AI Style) -->
+                                <!-- 1. Visual Template Cards (Seolgyo AI Standard + Custom Styles) -->
                                 <div style="margin-bottom: 20px;">
                                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
                                         <label style="font-size: 13px; font-weight: 700; color: #f8fafc;">🎨 템플릿 (스타일) 예시 선택</label>
                                         <span style="font-size: 11px; color: #94a3b8;">클릭하여 스타일 바로 적용</span>
                                     </div>
                                     <div class="template-card-grid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;">
-                                        <!-- Card 1: 기본 -->
-                                        <div class="tpl-card active" id="tpl-card-basic" onclick="setVisualTemplate('basic')" style="background: rgba(15, 23, 42, 0.9); border: 2px solid #2563eb; border-radius: 8px; padding: 6px 4px; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);">
-                                            <div style="aspect-ratio: 9/16; background: #0f172a; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px; margin-bottom: 4px; border: 1px solid #334155; position: relative; overflow: hidden;">
-                                                <span style="font-size: 7px; background: #eab308; color: #000; font-weight: 800; padding: 1px 2px; border-radius: 2px; margin-bottom: 2px;">하나님의 이끌심</span>
-                                                <span style="font-size: 6px; color: #fff;">하나님이 이끄십니다</span>
+                                        <!-- Card 1: 설교AI 표준형 (Seolgyo AI) -->
+                                        <div class="tpl-card active" id="tpl-card-seolgyo" onclick="setVisualTemplate('seolgyo')" style="background: rgba(15, 23, 42, 0.95); border: 2px solid #2563eb; border-radius: 8px; padding: 6px 4px; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);">
+                                            <div style="aspect-ratio: 9/16; background: #000000; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 4px; margin-bottom: 4px; border: 1px solid #334155; position: relative; overflow: hidden;">
+                                                <div style="font-size: 6px; font-weight: 900; color: #fff; line-height: 1;">진짜 영성이<br><span style="color:#facc15">간절함인 이유</span></div>
+                                                <div style="width: 90%; height: 18px; background: #1e293b; border-radius: 2px; border: 1px solid #475569;"></div>
+                                                <div style="font-size: 5px; color: #fff; background: rgba(255,255,255,0.2); padding: 1px 2px; border-radius: 2px;">자막 표시</div>
                                             </div>
-                                            <span style="font-size: 11px; font-weight: 700; color: #38bdf8; display: block;">기본</span>
+                                            <span style="font-size: 10px; font-weight: 700; color: #38bdf8; display: block;">설교AI 표준형</span>
                                         </div>
 
-                                        <!-- Card 2: 그라데이션 -->
+                                        <!-- Card 2: 풀스크린 네온 (기본) -->
+                                        <div class="tpl-card" id="tpl-card-basic" onclick="setVisualTemplate('basic')" style="background: rgba(15, 23, 42, 0.6); border: 1px solid #334155; border-radius: 8px; padding: 6px 4px; text-align: center; cursor: pointer; transition: all 0.2s;">
+                                            <div style="aspect-ratio: 9/16; background: #0f172a; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px; margin-bottom: 4px; border: 1px solid #334155; position: relative; overflow: hidden;">
+                                                <span style="font-size: 7px; background: #eab308; color: #000; font-weight: 800; padding: 1px 2px; border-radius: 2px; margin-bottom: 2px;">하나님의 이끄심</span>
+                                                <span style="font-size: 6px; color: #fff;">하나님이 이끄십니다</span>
+                                            </div>
+                                            <span style="font-size: 10px; font-weight: 600; color: #cbd5e1; display: block;">풀스크린</span>
+                                        </div>
+
+                                        <!-- Card 3: 그라데이션 -->
                                         <div class="tpl-card" id="tpl-card-gradient" onclick="setVisualTemplate('gradient')" style="background: rgba(15, 23, 42, 0.6); border: 1px solid #334155; border-radius: 8px; padding: 6px 4px; text-align: center; cursor: pointer; transition: all 0.2s;">
                                             <div style="aspect-ratio: 9/16; background: linear-gradient(180deg, #1e1b4b, #311b92); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px; margin-bottom: 4px; border: 1px solid #334155; position: relative; overflow: hidden;">
-                                                <span style="font-size: 7px; color: #f472b6; font-weight: 800; margin-bottom: 2px;">하나님의 이끌심</span>
+                                                <span style="font-size: 7px; color: #f472b6; font-weight: 800; margin-bottom: 2px;">하나님의 이끄심</span>
                                                 <span style="font-size: 6px; color: #e0e7ff;">하나님이 이끄십니다</span>
                                             </div>
-                                            <span style="font-size: 11px; font-weight: 600; color: #cbd5e1; display: block;">그라데이션</span>
+                                            <span style="font-size: 10px; font-weight: 600; color: #cbd5e1; display: block;">그라데이션</span>
                                         </div>
 
-                                        <!-- Card 3: 강조 -->
+                                        <!-- Card 4: 강조 -->
                                         <div class="tpl-card" id="tpl-card-accent" onclick="setVisualTemplate('accent')" style="background: rgba(15, 23, 42, 0.6); border: 1px solid #334155; border-radius: 8px; padding: 6px 4px; text-align: center; cursor: pointer; transition: all 0.2s;">
                                             <div style="aspect-ratio: 9/16; background: #0284c7; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px; margin-bottom: 4px; border: 1px solid #334155; position: relative; overflow: hidden;">
-                                                <span style="font-size: 7px; background: #000; color: #facc15; font-weight: 800; padding: 1px 2px; border-radius: 2px; margin-bottom: 2px;">하나님의 이끌심</span>
+                                                <span style="font-size: 7px; background: #000; color: #facc15; font-weight: 800; padding: 1px 2px; border-radius: 2px; margin-bottom: 2px;">하나님의 이끄심</span>
                                                 <span style="font-size: 6px; color: #fff;">하나님이 이끄십니다</span>
                                             </div>
-                                            <span style="font-size: 11px; font-weight: 600; color: #cbd5e1; display: block;">강조</span>
+                                            <span style="font-size: 10px; font-weight: 600; color: #cbd5e1; display: block;">강조</span>
                                         </div>
 
-                                        <!-- Card 4: 라이트 -->
+                                        <!-- Card 5: 라이트 -->
                                         <div class="tpl-card" id="tpl-card-light" onclick="setVisualTemplate('light')" style="background: rgba(15, 23, 42, 0.6); border: 1px solid #334155; border-radius: 8px; padding: 6px 4px; text-align: center; cursor: pointer; transition: all 0.2s;">
                                             <div style="aspect-ratio: 9/16; background: #f8fafc; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px; margin-bottom: 4px; border: 1px solid #e2e8f0; position: relative; overflow: hidden;">
-                                                <span style="font-size: 7px; color: #1e3a8a; font-weight: 800; margin-bottom: 2px;">하나님의 이끌심</span>
+                                                <span style="font-size: 7px; color: #1e3a8a; font-weight: 800; margin-bottom: 2px;">하나님의 이끄심</span>
                                                 <span style="font-size: 6px; color: #334155;">하나님이 이끄십니다</span>
                                             </div>
-                                            <span style="font-size: 11px; font-weight: 600; color: #cbd5e1; display: block;">라이트</span>
-                                        </div>
-
-                                        <!-- Card 5: 커버 -->
-                                        <div class="tpl-card" id="tpl-card-cover" onclick="setVisualTemplate('cover')" style="background: rgba(15, 23, 42, 0.6); border: 1px solid #334155; border-radius: 8px; padding: 6px 4px; text-align: center; cursor: pointer; transition: all 0.2s;">
-                                            <div style="aspect-ratio: 9/16; background: linear-gradient(135deg, #0f172a, #334155); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px; margin-bottom: 4px; border: 1px solid #334155; position: relative; overflow: hidden;">
-                                                <span style="font-size: 7px; color: #38bdf8; font-weight: 800; margin-bottom: 2px;">하나님의 이끌심</span>
-                                                <span style="font-size: 6px; color: #cbd5e1;">하나님이 이끄십니다</span>
-                                            </div>
-                                            <span style="font-size: 11px; font-weight: 600; color: #cbd5e1; display: block;">커버</span>
+                                            <span style="font-size: 10px; font-weight: 600; color: #cbd5e1; display: block;">라이트</span>
                                         </div>
                                     </div>
-                                    <div style="font-size: 11px; color: #64748b; margin-top: 6px;">완성 후 화면을 확대·축소할 수 있어요.</div>
+                                    <div style="font-size: 11px; color: #64748b; margin-top: 6px;">설교AI 표준형은 상단 2줄 훅 제목과 16:9 가로 설교 비디오가 깔끔하게 정렬됩니다.</div>
+                                </div>
+
+                                <!-- 1-B. Seolgyo AI Hook Title Inputs -->
+                                <div style="margin-bottom: 20px; background: rgba(30, 41, 59, 0.5); padding: 14px; border-radius: 12px; border: 1px solid #334155;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                        <label style="font-size: 13px; font-weight: 700; color: #facc15; display: flex; align-items: center; gap: 6px;">
+                                            <i class="fa-solid fa-heading"></i> 🎬 쇼츠 상단 2줄 훅 제목 설정
+                                        </label>
+                                        <span style="font-size: 10px; background: rgba(250, 204, 21, 0.2); color: #facc15; padding: 2px 8px; border-radius: 4px; font-weight: 700;">실시간 반영</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                                        <div>
+                                            <span style="font-size: 11px; color: #94a3b8; font-weight: 600; margin-bottom: 3px; display: block;">1행 (상단 흰색 제목):</span>
+                                            <input type="text" id="hook-title-line1" value="교회는 유람선인가" placeholder="예: 진짜 영성이" style="width: 100%; background: #0b1120; border: 1px solid #334155; color: #ffffff; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 800; outline: none;" oninput="updateHookTitles()">
+                                        </div>
+                                        <div>
+                                            <span style="font-size: 11px; color: #facc15; font-weight: 600; margin-bottom: 3px; display: block;">2행 (하단 노란색 강조 제목):</span>
+                                            <input type="text" id="hook-title-line2" value="구조선인가" placeholder="예: 간절함인 이유" style="width: 100%; background: #0b1120; border: 1px solid #eab308; color: #facc15; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 900; outline: none;" oninput="updateHookTitles()">
+                                        </div>
+                                    </div>
+                                    <div style="font-size: 11px; color: #64748b; margin-top: 6px;">추출된 10개의 하이라이트를 클릭하면 훅 제목도 자동으로 맞춰집니다.</div>
                                 </div>
 
                                 <!-- 2. Church Info (Top Church Name & Bottom Church Logo) -->
@@ -633,7 +771,7 @@
                                 </button>
                                 <button class="side-nav-item" data-tab="tab-qt">
                                     <i class="fa-solid fa-book-bible"></i>
-                                    <span>QT 5일치</span>
+                                    <span>QT 6일치</span>
                                 </button>
                                 <button class="side-nav-item" data-tab="tab-cardnews">
                                     <i class="fa-solid fa-images"></i>
@@ -753,12 +891,12 @@
                                 </div>
                             </div>
 
-                            <!-- Tab 3: QT 5일치 (QT 5 Days) -->
+                            <!-- Tab 3: QT 6일치 (QT 6 Days) -->
                             <div class="content-tab-pane" id="tab-qt">
                                 <div class="pane-header">
                                     <div class="pane-title-group">
-                                        <span class="pane-badge purple">QT 5일치</span>
-                                        <h2>주간 성도 묵상집 (월~금)</h2>
+                                        <span class="pane-badge purple">QT 6일치</span>
+                                        <h2>주간 성도 묵상집 (월~토)</h2>
                                     </div>
                                     <div class="pane-btn-group">
                                         <button class="btn btn-dark-sm" onclick="copyQtText()"><i class="fa-solid fa-comment-dots"></i> 카톡 전송용 복사</button>
@@ -791,42 +929,154 @@
                                         <h4>잔잔해진 바다 (마 14:32-33)</h4>
                                         <p>예수께서 배에 오르시매 바람이 그치고 참된 평안이 임합니다.</p>
                                     </div>
+                                    <div class="qt-card-item">
+                                        <div class="qt-day-badge">토요일</div>
+                                        <h4>참으로 하나님의 아들이로소이다 (마 14:33)</h4>
+                                        <p>고난의 파도를 지나온 성도가 드리는 가장 순전한 예배와 신앙고백.</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Tab 4: 카드뉴스 (Card News) -->
+                            <!-- Tab 4: 카드뉴스 (Card News - Interactive 6-Slide Carousel like Seolgyo AI) -->
                             <div class="content-tab-pane" id="tab-cardnews">
                                 <div class="pane-header">
                                     <div class="pane-title-group">
-                                        <span class="pane-badge green">카드뉴스</span>
-                                        <h2>인스타그램 & 카톡 공유용 5장 카드뉴스</h2>
+                                        <span class="pane-badge green">카드뉴스 (총 6장)</span>
+                                        <h2>인스타그램 & 카톡 공유용 6장 카드뉴스</h2>
                                     </div>
                                     <div class="pane-btn-group">
                                         <button class="btn btn-dark-sm" onclick="copyCardNewsText()"><i class="fa-solid fa-copy"></i> 캡션 복사</button>
                                         <button class="btn btn-lightgreen-sm" onclick="downloadCardNews()"><i class="fa-solid fa-file-archive"></i> 이미지 전체 다운로드 (.zip)</button>
                                     </div>
                                 </div>
-                                <div class="cardnews-grid">
-                                    <div class="cn-slide slide-1">
-                                        <div class="cn-header">복의근원 관유중앙교회 주일 설교 요약</div>
-                                        <h3 class="cn-title">두려움을 이기는<br><span class="cn-highlight">담대한 믿음</span></h3>
-                                        <p class="cn-sub">성경본문: 마태복음 14:22~33</p>
-                                        <div class="cn-footer">Swipe ➔</div>
+
+                                <!-- Seolgyo AI Original Style Interactive 6-Slide Carousel -->
+                                <div class="cardnews-interactive-viewer">
+                                    <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 12px;">
+                                        <!-- Previous Button -->
+                                        <button class="cn-nav-arrow-btn" id="cn-prev-btn" onclick="prevCardNewsSlide()" aria-label="이전 슬라이드">
+                                            <i class="fa-solid fa-chevron-left"></i>
+                                        </button>
+
+                                        <!-- Slide Viewport -->
+                                        <div class="cn-slide-viewport" id="cn-slide-viewport">
+                                            <!-- Slide 1: Cover -->
+                                            <div class="cn-slide-item active" id="cn-slide-0" style="background: linear-gradient(135deg, #090d16, #1e293b); text-align: center; justify-content: center;">
+                                                <div style="border: 1px solid rgba(56, 189, 248, 0.4); padding: 4px 12px; border-radius: 20px; font-size: 11px; color: #38bdf8; display: inline-block; margin-bottom: 24px; font-weight: 700;">
+                                                    복의근원 관유중앙교회 주일설교
+                                                </div>
+                                                <h3 style="font-size: 26px; font-weight: 900; color: #ffffff; line-height: 1.3; margin: 0 0 16px 0; word-break: keep-all;">
+                                                    두려움을 이기는<br><span style="color: #38bdf8;">담대한 믿음</span>
+                                                </h3>
+                                                <p style="font-size: 13px; color: #94a3b8; line-height: 1.6; margin: 0 0 24px 0; word-break: keep-all;">
+                                                    인생의 거친 풍랑 속에서도 시선을 주님께 고정할 때 평안이 임합니다.
+                                                </p>
+                                                <div style="font-size: 12px; font-weight: 700; color: #facc15; background: rgba(250, 204, 21, 0.1); padding: 6px 14px; border-radius: 8px; border: 1px solid rgba(250, 204, 21, 0.3); display: inline-block;">
+                                                    「 마태복음 14:22~33 」
+                                                </div>
+                                            </div>
+
+                                            <!-- Slide 2: Point 1 -->
+                                            <div class="cn-slide-item" id="cn-slide-1" style="background: #0f172a; text-align: left;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                    <span style="font-size: 28px; font-weight: 900; color: #38bdf8;">01</span>
+                                                    <span style="font-size: 11px; color: #64748b; font-weight: 700;">시선 집중</span>
+                                                </div>
+                                                <div>
+                                                    <h4 style="font-size: 20px; font-weight: 800; color: #ffffff; margin: 0 0 12px 0;">바람 대신 예수를 바라보라</h4>
+                                                    <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.8; margin: 0;">
+                                                        베드로가 물 위를 걷다가 파도를 보았을 때 두려워 가라앉았습니다. 환경의 위협에 시선을 빼앗기지 말고 믿음의 주요 온전케 하시는 예수님을 끝까지 응시하십시오.
+                                                    </p>
+                                                </div>
+                                                <div style="font-size: 11px; color: #94a3b8; border-top: 1px solid #1e293b; padding-top: 10px;">
+                                                    📖 히브리서 12:2
+                                                </div>
+                                            </div>
+
+                                            <!-- Slide 3: Point 2 -->
+                                            <div class="cn-slide-item" id="cn-slide-2" style="background: #0f172a; text-align: left;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                    <span style="font-size: 28px; font-weight: 900; color: #10b981;">02</span>
+                                                    <span style="font-size: 11px; color: #64748b; font-weight: 700;">용기 있는 순종</span>
+                                                </div>
+                                                <div>
+                                                    <h4 style="font-size: 20px; font-weight: 800; color: #ffffff; margin: 0 0 12px 0;">배 밖으로 발을 내딛으라</h4>
+                                                    <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.8; margin: 0;">
+                                                        배 안은 인간적으로 안전해 보이지만, 배 밖으로 순종의 첫 발을 내딛는 자만이 물 위를 걷는 하나님의 기적을 체험합니다. 머뭇거리지 말고 결단하십시오.
+                                                    </p>
+                                                </div>
+                                                <div style="font-size: 11px; color: #94a3b8; border-top: 1px solid #1e293b; padding-top: 10px;">
+                                                    📖 마태복음 14:29
+                                                </div>
+                                            </div>
+
+                                            <!-- Slide 4: Point 3 -->
+                                            <div class="cn-slide-item" id="cn-slide-3" style="background: #0f172a; text-align: left;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                    <span style="font-size: 28px; font-weight: 900; color: #f59e0b;">03</span>
+                                                    <span style="font-size: 11px; color: #64748b; font-weight: 700;">즉각적인 간구</span>
+                                                </div>
+                                                <div>
+                                                    <h4 style="font-size: 20px; font-weight: 800; color: #ffffff; margin: 0 0 12px 0;">'주여 구원하소서' 부르짖으라</h4>
+                                                    <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.8; margin: 0;">
+                                                        의심으로 가라앉는 절체절명의 순간에도 예수님께 손을 뻗으면, 주님은 즉시 손을 내밀어 붙잡아 주십니다. 그분의 은혜는 결코 지체되지 않습니다.
+                                                    </p>
+                                                </div>
+                                                <div style="font-size: 11px; color: #94a3b8; border-top: 1px solid #1e293b; padding-top: 10px;">
+                                                    📖 마태복음 14:31
+                                                </div>
+                                            </div>
+
+                                            <!-- Slide 5: Action / Life Application -->
+                                            <div class="cn-slide-item" id="cn-slide-4" style="background: #0f172a; text-align: left;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                    <span style="font-size: 28px; font-weight: 900; color: #a855f7;">04</span>
+                                                    <span style="font-size: 11px; color: #64748b; font-weight: 700;">삶의 적용</span>
+                                                </div>
+                                                <div>
+                                                    <h4 style="font-size: 20px; font-weight: 800; color: #ffffff; margin: 0 0 12px 0;">이번 주 실천 가이드</h4>
+                                                    <div style="background: rgba(168, 85, 247, 0.1); border-left: 3px solid #a855f7; padding: 10px 12px; border-radius: 4px; font-size: 13px; color: #f3e8ff; line-height: 1.6; margin-bottom: 10px;">
+                                                        1. 걱정이 밀려올 때마다 염려 대신 1분 감사기도 드리기
+                                                    </div>
+                                                    <div style="background: rgba(56, 189, 248, 0.1); border-left: 3px solid #38bdf8; padding: 10px 12px; border-radius: 4px; font-size: 13px; color: #e0f2fe; line-height: 1.6;">
+                                                        2. 소그룹 단톡방에 이번 주 감사한 제목 3가지 나누기
+                                                    </div>
+                                                </div>
+                                                <div style="font-size: 11px; color: #94a3b8; border-top: 1px solid #1e293b; padding-top: 10px;">
+                                                    실천이 따르는 참된 신앙
+                                                </div>
+                                            </div>
+
+                                            <!-- Slide 6: Outro / Church Invitation -->
+                                            <div class="cn-slide-item" id="cn-slide-5" style="background: linear-gradient(135deg, #1e1b4b, #0f172a); text-align: center; justify-content: center;">
+                                                <img src="assets/gwanyu_logo.jpg" alt="관유중앙교회" style="height: 32px; max-width: 150px; object-fit: contain; margin: 0 auto 16px auto; background: white; padding: 4px 10px; border-radius: 6px;">
+                                                <h4 style="font-size: 18px; font-weight: 800; color: #ffffff; margin: 0 0 8px 0;">복의근원 관유중앙교회</h4>
+                                                <p style="font-size: 12.5px; color: #94a3b8; line-height: 1.7; margin: 0 0 16px 0;">
+                                                    말씀과 은혜가 넘치는 주일예배에<br>당신을 기쁨으로 초대합니다.
+                                                </p>
+                                                <div style="font-size: 11px; color: #38bdf8; font-weight: 700;">
+                                                    주일 1부 09:00 | 2부 11:00 | 청년부 13:30
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Next Button -->
+                                        <button class="cn-nav-arrow-btn" id="cn-next-btn" onclick="nextCardNewsSlide()" aria-label="다음 슬라이드">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                        </button>
                                     </div>
-                                    <div class="cn-slide slide-2">
-                                        <span class="cn-num">01</span>
-                                        <h4>시선을 바꾸십시오</h4>
-                                        <p>"몰아치는 풍랑을 볼 때 두려움이 생기지만, 풍랑 위를 걸어오시는 예수님을 볼 때 믿음이 생깁니다."</p>
-                                    </div>
-                                    <div class="cn-slide slide-3">
-                                        <span class="cn-num">02</span>
-                                        <h4>순종의 발을 내딛으십시오</h4>
-                                        <p>"배 안은 안전해 보이지만, 배 밖으로 발을 내딛는 사람만이 물 위를 걷는 기적을 경험합니다."</p>
-                                    </div>
-                                    <div class="cn-slide slide-4">
-                                        <span class="cn-num">03</span>
-                                        <h4>즉시 주를 부르짖으십시오</h4>
-                                        <p>"의심으로 빠져들어갈 때 '주여 나를 구원하소서' 외치면, 주님은 즉시 손을 내밀어 잡으십니다."</p>
+
+                                    <!-- Slide Counter & Dots Indicator -->
+                                    <div style="text-align: center; margin-top: 6px;">
+                                        <span id="cn-slide-counter" style="font-size: 13px; font-weight: 700; color: #38bdf8;">1 / 6 슬라이드</span>
+                                        <div style="display: flex; gap: 6px; justify-content: center; margin-top: 6px;" id="cn-dots-container">
+                                            <span class="cn-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; display: inline-block;"></span>
+                                            <span class="cn-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #334155; display: inline-block;"></span>
+                                            <span class="cn-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #334155; display: inline-block;"></span>
+                                            <span class="cn-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #334155; display: inline-block;"></span>
+                                            <span class="cn-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #334155; display: inline-block;"></span>
+                                            <span class="cn-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #334155; display: inline-block;"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -862,6 +1112,176 @@
                         </div>
                     </div>
 
+        </section>
+
+        <!-- Seolgyo AI Signature Feature: 설교를 준비할 때는 개요부터 (Sermon Outline Generator) -->
+        <section class="sermon-outline-section" id="sermon-outline">
+            <div class="container" style="max-width: 960px;">
+                <div class="section-header center" style="margin-bottom: 32px;">
+                    <div class="section-tag"><i class="fa-solid fa-pen-nib" style="color: #38bdf8;"></i> SERMON OUTLINE GENERATOR</div>
+                    <h2 class="section-title" style="font-size: 32px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em;">
+                        설교를 준비할 때는 <span class="gradient-text">개요부터</span>
+                    </h2>
+                    <p class="section-subtitle" style="font-size: 15px; color: #94a3b8; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                        본문만 넣으면 검증된 주석을 근거로 설교 뼈대를 제안합니다. 무엇을 전할지는 목사님이 정하십니다.
+                    </p>
+                </div>
+
+                <!-- Input & Scripture Selection Box -->
+                <div class="glass-card" style="background: rgba(15, 23, 42, 0.9); border: 1.5px solid #334155; border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.4);">
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                            <label style="font-size: 14px; font-weight: 800; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-bible" style="color: #38bdf8;"></i> 이번 주 설교 성경 본문 입력
+                            </label>
+                            <!-- Quick Scripture Tag Chips -->
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                <button type="button" class="outline-tag-btn active" onclick="setOutlineScripture('빌립보서 4:6-7')">빌립보서 4:6-7</button>
+                                <button type="button" class="outline-tag-btn" onclick="setOutlineScripture('마태복음 14:22-33')">마태복음 14:22-33</button>
+                                <button type="button" class="outline-tag-btn" onclick="setOutlineScripture('로마서 8:28')">로마서 8:28</button>
+                                <button type="button" class="outline-tag-btn" onclick="setOutlineScripture('시편 23:1-6')">시편 23:1-6</button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="outline-scripture-input" value="빌립보서 4:6-7" placeholder="예: 빌립보서 4:6-7, 요한복음 3:16" style="flex: 1; background: #0b1120; border: 1.5px solid #334155; color: #ffffff; padding: 12px 16px; border-radius: 10px; font-size: 15px; font-weight: 700; outline: none;">
+                            <button type="button" onclick="generateSermonOutline()" style="background: linear-gradient(135deg, #2563eb, #1d4ed8); border: 1px solid #60a5fa; color: white; padding: 12px 24px; border-radius: 10px; font-weight: 800; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); white-space: nowrap;">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> 개요 생성하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generated Outline Result Box (Accordion & Full View) -->
+                <div class="outline-box-card" id="outline-display-card">
+                    <!-- Outline Header Toolbar -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #1e293b;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 800;">
+                                ✎ 설교 개요서
+                            </span>
+                            <span id="outline-ref-badge" style="font-size: 14px; font-weight: 800; color: #e2e8f0;">빌립보서 4:6-7</span>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="copyOutlineText()" style="background: #1e293b; border: 1px solid #475569; color: #cbd5e1; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                                <i class="fa-solid fa-copy"></i> 전체 복사
+                            </button>
+                            <button onclick="downloadOutlineDoc()" style="background: rgba(37, 99, 235, 0.2); border: 1px solid #3b82f6; color: #60a5fa; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                                <i class="fa-solid fa-download"></i> 워드 다운로드 (.docx)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Outline Title -->
+                    <h3 id="outline-main-title" style="font-size: 22px; font-weight: 900; color: #ffffff; margin-bottom: 24px; letter-spacing: -0.02em;">
+                        염려의 자리에 기도를 채우는 평강 (빌립보서 4:6-7)
+                    </h3>
+
+                    <!-- Outline Body Container (Collapsible) -->
+                    <div id="outline-body-content" style="position: relative; max-height: 480px; overflow: hidden; transition: max-height 0.4s ease;">
+                        
+                        <!-- 1. 말씀 배경 -->
+                        <div class="outline-section-label">
+                            <span class="bar"></span>
+                            <span>말씀 배경</span>
+                        </div>
+                        <div class="outline-content-text" id="outline-context">
+                            빌립보 교회는 바울과 오랜 신뢰 관계를 유지하며 여러 차례 그의 사역을 경제적으로 지원했고, 에바브로디도를 통해 바울에게 헌금을 보낸 것이 본서 집필의 직접적인 계기가 되었습니다. 당시 교회 내부에서는 유오디아와 순두게 사이의 갈등으로 대표되는 분열의 조짐이 있었으며, 외부적으로는 율법주의적 가르침을 전하는 이들의 위협도 존재했습니다.
+                        </div>
+
+                        <!-- 2. 핵심 원어 -->
+                        <div class="outline-section-label">
+                            <span class="bar"></span>
+                            <span>핵심 원어 (헬라어 주해)</span>
+                        </div>
+                        <div class="outline-content-text" id="outline-original-words">
+                            <strong>'염려하다(μεριμνάω, 메림나오)'</strong>는 마음이 여러 갈래로 찢어지는 상태를 의미합니다. 세상의 근심이 우리의 생각을 분열시킬 때, 바울은 마음을 하나님께로 온전히 모으는 기도를 처방합니다.<br>
+                            <strong>'지키시리라(φρουρέω, 프루레오)'</strong>는 군사 용어로, 적군의 공격으로부터 성채를 방어하기 위해 파수꾼을 배치하는 삼엄한 경계를 의미합니다.
+                        </div>
+
+                        <!-- 3. 주석 근거 -->
+                        <div class="outline-section-label">
+                            <span class="bar"></span>
+                            <span>주석 근거</span>
+                        </div>
+                        <div class="outline-content-text" id="outline-commentary">
+                            칼빈(John Calvin)은 본 구절에 대해 "우리가 염려에 사로잡히는 것은 하나님의 섭리를 전적으로 신뢰하지 못하기 때문이다. 성도가 감사의 기도를 올릴 때, 하나님의 평강은 사탄의 의심을 막아내는 철벽의 방패가 된다"고 주석합니다.
+                        </div>
+
+                        <!-- 4. 서론 -->
+                        <div class="outline-section-label">
+                            <span class="bar"></span>
+                            <span>서론 (도입)</span>
+                        </div>
+                        <div class="outline-content-text" id="outline-intro">
+                            사랑하는 성도 여러분, 인생의 중턱을 지나는 우리에게 가장 무거운 짐은 보이지 않는 미래에 대한 염려입니다. 바울 사도는 로마의 차가운 감옥에 갇힌 처지였음에도 불구하고 빌립보 성도들을 향해 참된 평안의 비결을 선포하고 있습니다.
+                        </div>
+
+                        <!-- 5. 본론 대지 1, 2, 3 -->
+                        <div class="outline-section-label">
+                            <span class="bar"></span>
+                            <span>본론 대지 및 삶의 적용</span>
+                        </div>
+
+                        <!-- Point 1 -->
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <span class="outline-badge-circle">1</span>
+                                <strong style="font-size: 16px; color: #ffffff;" id="outline-p1-title">염려를 기도의 제목으로 바꾸십시오</strong>
+                            </div>
+                            <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.7; margin: 0 0 6px 34px;" id="outline-p1-desc">
+                                바울은 우리에게 아무것도 염려하지 말라고 단호하게 권면합니다. 성경은 그 흩어진 마음을 모아 모든 일에 기도로 바꾸라고 말씀합니다.
+                            </p>
+                            <div class="outline-apply-box" style="margin-left: 34px;" id="outline-p1-apply">
+                                <strong>💡 구체적 삶의 적용:</strong> 걱정하는 자녀나 배우자에게 "우리 마음의 짐을 하나님께 먼저 맡기고 함께 기도해보자"라고 따뜻하게 말해 보십시오.
+                            </div>
+                        </div>
+
+                        <!-- Point 2 -->
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <span class="outline-badge-circle">2</span>
+                                <strong style="font-size: 16px; color: #ffffff;" id="outline-p2-title">감사의 태도로 구체적으로 구하십시오</strong>
+                            </div>
+                            <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.7; margin: 0 0 6px 34px;" id="outline-p2-desc">
+                                성도의 기도는 단순한 요구를 넘어 감사라는 신앙의 고백을 동반해야 합니다. 감사는 하나님이 이미 우리 삶에 행하신 선한 일들을 기억하며 그분의 주권을 인정하는 행위이기 때문입니다.
+                            </p>
+                            <div class="outline-apply-box" style="margin-left: 34px;" id="outline-p2-apply">
+                                <strong>💡 구체적 삶의 적용:</strong> 소그룹 식구들과 이번 주에 경험한 작은 감사 제목 세 가지를 단체 대화방에서 공유하며 서로의 기도를 격려하십시오.
+                            </div>
+                        </div>
+
+                        <!-- Point 3 -->
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <span class="outline-badge-circle">3</span>
+                                <strong style="font-size: 16px; color: #ffffff;" id="outline-p3-title">하나님의 평강이 마음을 보호하십니다</strong>
+                            </div>
+                            <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.7; margin: 0 0 6px 34px;" id="outline-p3-desc">
+                                진실한 기도의 결과로 주어지는 것은 즉각적인 환경의 변화가 아니라 하나님의 평강입니다. 여기서 지킨다는 표현은 성벽을 파수하는 군사가 삼엄한 경계를 서는 군사적 상태를 묘사합니다.
+                            </p>
+                            <div class="outline-apply-box" style="margin-left: 34px;" id="outline-p3-apply">
+                                <strong>💡 구체적 삶의 적용:</strong> 나를 힘들게 하는 사람을 대할 때 내 감정이 앞서지 않도록 마음의 문 앞에 하나님의 평강을 파수꾼으로 세우는 훈련을 하십시오.
+                            </div>
+                        </div>
+
+                        <!-- 6. 결론 -->
+                        <div class="outline-section-label">
+                            <span class="bar"></span>
+                            <span>결론 및 결단의 기도</span>
+                        </div>
+                        <div class="outline-content-text" id="outline-conclusion">
+                            염려는 우리 마음을 나누지만 기도는 우리 마음을 하나님께 고정시킵니다. 감사가 섞인 기도를 드릴 때 인간의 지각을 초월하는 하나님의 평강이 우리의 성벽이 되어 주실 것입니다. 오늘 이 시간, 우리의 모든 무거운 짐을 주님의 보좌 앞에 내려놓기를 결단합니다.
+                        </div>
+
+                        <!-- Bottom Fade Gradient Overlay -->
+                        <div id="outline-fade-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(180deg, transparent 0%, #0f172a 90%); pointer-events: none;"></div>
+                    </div>
+
+                    <!-- Expand/Collapse Button (Matching Seolgyo AI) -->
+                    <button id="outline-more-btn" onclick="toggleOutlineMore()" style="width: 100%; margin-top: 16px; background: #1e293b; border: 1px solid #334155; color: #38bdf8; font-weight: 800; font-size: 13px; padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;">
+                        <span>더보기</span> <i class="fa-solid fa-chevron-down" id="outline-more-icon"></i>
+                    </button>
                 </div>
             </div>
         </section>
