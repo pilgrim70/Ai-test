@@ -13,6 +13,113 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* 1. Sample Video Datasets */
 const sampleData = {
+    gwanyu: {
+        title: "26-10-11 관유중앙교회 주일예배 - 구조선의 청사진.mp4",
+        length: "52분 04초 (AI 1분 은혜 쇼츠 10개 추출)",
+        videoId: "fB-uX_pZZvs",
+        highlights: [
+            {
+                line1: "교회는 유람선인가",
+                line2: "구조선인가",
+                title: `"교회는 유람선인가 구조선인가"`,
+                quote: `"교회는 편안히 먹고 즐기는 유람선이 아닙니다. 바다에 빠져 죽어가는 영혼을 건져내는 긴박한 구조선입니다."`,
+                ref: "📖 마태복음 4:19",
+                time: "01:10 ~ 02:10 (1분)",
+                tag: "#구조선 #교회의본질 #사명",
+                viral: "🔥 AI 추출 100점 (초특급 추천)"
+            },
+            {
+                line1: "구조선의 청사진",
+                line2: "예수님이 세우신 설계도",
+                title: `"구조선의 청사진 예수님이 세우신 설계도"`,
+                quote: `"주님이 이 땅에 세우신 교회의 원래 설계도는 바로 죽어가는 영혼을 살려내는 구조선의 청사진이었습니다."`,
+                ref: "📖 마태복음 16:18",
+                time: "05:40 ~ 06:40 (1분)",
+                tag: "#설계도 #교회 #예수님",
+                viral: "✨ 은혜/도전 강추 (99점)"
+            },
+            {
+                line1: "바다에 빠진 자를 보라",
+                line2: "우리를 부르신 긴급한 이유",
+                title: `"바다에 빠진 자를 보라 우리를 부르신 긴급한 이유"`,
+                quote: `"파도에 휩쓸려 허우적거리는 사람을 보고도 그냥 지나칠 수 있습니까? 하나님이 우리를 먼저 구원하신 이유는 건져내라는 것입니다."`,
+                ref: "📖 디모데전서 2:4",
+                time: "11:15 ~ 12:15 (1분)",
+                tag: "#영혼구원 #긴급사명 #전도",
+                viral: "📱 SNS 공유 폭발 (98점)"
+            },
+            {
+                line1: "함장이신 주님의 명령",
+                line2: "바다로 닻을 올리라",
+                title: `"함장이신 주님의 명령 바다로 닻을 올리라"`,
+                quote: `"배의 선장, 함장이신 예수 그리스도의 지휘 아래 전 대원이 한마음으로 거친 파도를 향해 생명줄을 던져야 합니다."`,
+                ref: "📖 요한복음 14:15",
+                time: "16:30 ~ 17:30 (1분)",
+                tag: "#함장 #예수님 #순종",
+                viral: "🔥 결단 강추 (99점)"
+            },
+            {
+                line1: "풍랑 이는 세상 바다",
+                line2: "영혼의 닻 예수 그리스도",
+                title: `"풍랑 이는 세상 바다 영혼의 닻 예수 그리스도"`,
+                quote: `"세상의 어떤 거센 풍랑도, 깊은 절망의 파도도 예수 그리스도라는 견고한 닻을 내린 영혼은 결코 침몰하지 않습니다."`,
+                ref: "📖 히브리서 6:19",
+                time: "22:15 ~ 23:15 (1분)",
+                tag: "#믿음의닻 #위로 #소망",
+                viral: "✨ 영적회복 추천 (98점)"
+            },
+            {
+                line1: "한 영혼을 향한 눈물",
+                line2: "구조대원의 거룩한 심장",
+                title: `"한 영혼을 향한 눈물 구조대원의 거룩한 심장"`,
+                quote: `"잃어버린 한 마리 양, 바다 속으로 가라앉는 단 한 사람을 위해 자신의 생명을 던지는 예수 그리스도의 심장이 오늘 우리 안에 있습니까?"`,
+                ref: "📖 누가복음 15:7",
+                time: "27:50 ~ 28:50 (1분)",
+                tag: "#한영혼 #목자의심정 #눈물",
+                viral: "🔥 AI 추출 99점"
+            },
+            {
+                line1: "안전지대에 머물지 말라",
+                line2: "일어나 거친 파도로",
+                title: `"안전지대에 머물지 말라 일어나 거친 파도로"`,
+                quote: `"항구 안에 묶여있는 배는 안전하지만, 그것은 배의 목적이 아닙니다. 구조선은 파도가 가장 높은 곳으로 출항해야 합니다."`,
+                ref: "📖 이사야 6:8",
+                time: "33:40 ~ 34:40 (1분)",
+                tag: "#출항 #도전 #안전지대탈출",
+                viral: "📱 청년/헌신 강추 (97점)"
+            },
+            {
+                line1: "어둠을 밝히는 등대",
+                line2: "생명의 빛을 비추라",
+                title: `"어둠을 밝히는 등대 생명의 빛을 비추라"`,
+                quote: `"칠흑 같은 밤바다에서 길을 잃은 자들에게 유일한 희망은 빛입니다. 교회가 빛을 발할 때 수많은 영혼이 살아 돌아옵니다."`,
+                ref: "📖 마태복음 5:14",
+                time: "39:20 ~ 40:20 (1분)",
+                tag: "#세상의빛 #등대 #생명",
+                viral: "✨ 은혜 선포 (98점)"
+            },
+            {
+                line1: "골든타임을 놓치지 말라",
+                line2: "지금이 바로 은혜의 때",
+                title: `"골든타임을 놓치지 말라 지금이 바로 은혜의 때"`,
+                quote: `"구조에는 골든타임이 있습니다. 내일로 미룰 수 없습니다. 오늘 주님이 기회를 주셨을 때 손을 내밀어야 합니다."`,
+                ref: "📖 고린도후서 6:2",
+                time: "45:00 ~ 46:00 (1분)",
+                tag: "#골든타임 #구원의날 #결단",
+                viral: "🔥 결단 박수 (99점)"
+            },
+            {
+                line1: "착하고 충성된 종아",
+                line2: "영원한 생명의 면류관",
+                title: `"착하고 충성된 종아 영원한 생명의 면류관"`,
+                quote: `"구조선의 사명을 끝까지 감당하고 본향 항구에 닿는 날, 주님은 눈물을 닦아주시며 영광의 면류관을 씌워주실 것입니다."`,
+                ref: "📖 디모데후서 4:7-8",
+                time: "50:10 ~ 51:10 (1분)",
+                tag: "#마라나타 #충성 #영원한면류관",
+                viral: "✨ 축도/결단 마무리 (100점)"
+            }
+        ]
+    },
     pastor_lee: {
         title: "2026_신년대예배_두려움을이기는믿음.mp4",
         length: "1시간 40분 (설교: 38분)",
@@ -230,7 +337,7 @@ const sampleData = {
     }
 };
 
-let currentDataset = sampleData.pastor_lee;
+let currentDataset = sampleData.gwanyu;
 let currentHighlightIdx = 0;
 let isPlaying = false;
 let currentShortsSpeed = 1.0;
@@ -266,23 +373,6 @@ function initTabs() {
             if (targetEl) targetEl.classList.add('active');
         });
     });
-
-    const startBtn = document.getElementById('start-ai-youtube');
-    if (startBtn) {
-        startBtn.addEventListener('click', () => {
-            const urlInput = document.getElementById('youtube-url-input');
-            const url = urlInput ? urlInput.value : '';
-            if (!url) {
-                showToast('유튜브 URL을 입력해주세요!', 'warning');
-                return;
-            }
-            showToast('⚡ AI가 예배 풀영상 분석을 시작합니다...');
-            setTimeout(() => {
-                scrollToSection('studio');
-                showToast('✨ AI 설교 구간 탐지 및 1분 쇼츠 생성 완료!');
-            }, 1000);
-        });
-    }
 }
 
 /* 4. YouTube URL Parser & 10 AI Shorts Clip Generator */
@@ -294,116 +384,229 @@ function extractYouTubeId(url) {
 }
 
 function generate10ShortsFromYouTube(url) {
-    const videoId = extractYouTubeId(url) || 'XM7PrnvFSHw';
+    const videoId = extractYouTubeId(url) || 'fB-uX_pZZvs';
     
-    sampleData.youtube = {
-        title: `YouTube_LIVE_예배분석_${videoId}.mp4`,
-        length: "1시간 52분 (AI 1분 쇼츠 10개 추출)",
-        videoId: videoId,
-        highlights: [
-            {
-                line1: "교회에 온 당신",
-                line2: "흥왕케 하는 자",
-                title: `"교회에 온 당신 흥왕케 하는 자"`,
-                quote: `"느헤미야처럼 교회와 사람을 세우는 '흥왕케 하는 자'로 살아가자는 메시지를 전하는 설교 도입부입니다."`,
-                ref: "📖 느헤미야 2:17",
-                time: "10:00 ~ 13:00 (3분)",
-                tag: "#직접지정",
-                viral: "🔥 AI 추출 99점",
-                isCustom: true
-            },
-            {
-                line1: "그 사람 오면",
-                line2: "분위기가 달라진다",
-                title: `"그 사람 오면 분위기가 달라진다"`,
-                quote: `"등장만 해도 분위기를 환하게 만들고 낙심한 사람에게 용기와 위로를 주는 사람이 있다는 대비 설명."`,
-                ref: "📖 사도행전 11:24",
-                time: "01:48 ~ 02:24 (36초)",
-                tag: "#위로 #분위기",
-                viral: "✨ 은혜/결단 강추"
-            },
-            {
-                line1: "그 사람 오면",
-                line2: "슬그머니 자리를 뜬다",
-                title: `"그 사람 오면 슬그머니 자리를 뜬다"`,
-                quote: `"만날 때마다 지적하고 가르치려는 사람 곁을 사람들은 떠나고 싶어 한다는 경고."`,
-                ref: "📖 잠언 15:1",
-                time: "03:56 ~ 04:46 (50초)",
-                tag: "#경고 #관계",
-                viral: "📱 교훈 공유 추천"
-            },
-            {
-                line1: "제목은 단 한마디",
-                line2: "흥왕케 하는 자",
-                title: `"제목은 단 한마디 흥왕케 하는 자"`,
-                quote: `"오늘 말씀의 핵심 제목 '흥왕케 하는 자'를 힘있게 선포하는 장면."`,
-                ref: "📖 사도행전 19:20",
-                time: "11:16 ~ 12:07 (51초)",
-                tag: "#선포 #핵심제목",
-                viral: "🔥 AI 추출 98점"
-            },
-            {
-                line1: "나는 괜찮은 사람?",
-                line2: "판단은 내가 안 한다",
-                title: `"나는 괜찮은 사람? 판단은 내가 안 한다"`,
-                quote: `"자신이 좋은 사람이라 생각해도 그 판단은 자신이 아닌 상대방이 내린다는 통찰."`,
-                ref: "📖 고린도전서 4:4",
-                time: "02:24 ~ 03:56 (1분 32초)",
-                tag: "#겸손 #통찰",
-                viral: "✨ 영적회복 추천"
-            },
-            {
-                line1: "목사님 말씀 아니다",
-                line2: "하나님이 하신 말씀이다",
-                title: `"목사님 말씀 아니다 하나님이 하신 말씀이다"`,
-                quote: `"사람을 통해 전해진 말씀도 결국 하나님이 나에게 하신 말씀으로 받아들여야 한다는 가르침."`,
-                ref: "📖 데살로니가전서 2:13",
-                time: "17:41 ~ 19:11 (1분 30초)",
-                tag: "#말씀 #하나님",
-                viral: "📱 청년/학생 강추"
-            },
-            {
-                line1: "얼어붙게 하는 사람 vs",
-                line2: "살아나게 하는 사람",
-                title: `"얼어붙게 하는 사람 vs 살아나게 하는 사람"`,
-                quote: `"나로 인해 주위의 사람이 살아나는가 아니면 주눅 들고 얼어붙는가를 점검하라는 질문."`,
-                ref: "📖 로마서 14:19",
-                time: "09:20 ~ 11:48 (2분 28초)",
-                tag: "#점검 #영적영향력",
-                viral: "🔥 AI 추출 96점"
-            },
-            {
-                line1: "두려움을 이기는",
-                line2: "담대한 믿음 선포",
-                title: `"두려움을 이기는 담대한 믿음 선포"`,
-                quote: `"인생의 폭풍이 불어올 때 우리가 바라보아야 할 것은 파도가 아니라 예수 그리스도의 말씀입니다."`,
-                ref: "📖 마태복음 14:29",
-                time: "1:26:40 ~ 1:27:38 (58초)",
-                tag: "#가정 #축복 #기도",
-                viral: "✨ 가정예배 강추"
-            },
-            {
-                line1: "포기하지 않는 믿음이",
-                line2: "가져오는 반전의 역사",
-                title: `"포기하지 않는 믿음이 가져오는 반전의 역사"`,
-                quote: `"낙심하지 마십시오. 가장 어두운 밤이 지나면 반드시 하나님의 찬란한 아침이 밝아옵니다."`,
-                ref: "📖 갈라디아서 6:9",
-                time: "1:37:10 ~ 1:38:08 (58초)",
-                tag: "#반전 #소망 #은혜",
-                viral: "📱 SNS 공유 폭발"
-            },
-            {
-                line1: "주님의 진정한 평강이",
-                line2: "임하는 거룩한 결단",
-                title: `"주님의 평강이 임하는 거룩한 결단"`,
-                quote: `"세상이 줄 수 없는 진정한 평안이 오늘 이 자리에서 주님을 고백하는 당신의 심령에 임합니다."`,
-                ref: "📖 요한복음 14:27",
-                time: "1:48:00 ~ 1:48:58 (58초)",
-                tag: "#평강 #결단 #축도",
-                viral: "✨ 은혜 결단 마무리"
-            }
-        ]
-    };
+    // Check if this is the user's specific sermon (관유중앙교회 "구조선의 청사진") or general sermon
+    const isGwanYuChurch = (videoId === 'fB-uX_pZZvs' || (url && url.includes('fB-uX_pZZvs')));
+
+    if (isGwanYuChurch) {
+        sampleData.youtube = {
+            title: `26-10-11 관유중앙교회 주일예배 - 구조선의 청사진.mp4`,
+            length: "52분 04초 (AI 1분 은혜 쇼츠 10개 추출)",
+            videoId: videoId,
+            highlights: [
+                {
+                    line1: "교회는 유람선인가",
+                    line2: "구조선인가",
+                    title: `"교회는 유람선인가 구조선인가"`,
+                    quote: `"교회는 편안히 먹고 즐기는 유람선이 아닙니다. 바다에 빠져 죽어가는 영혼을 건져내는 긴박한 구조선입니다."`,
+                    ref: "📖 마태복음 4:19",
+                    time: "01:10 ~ 02:10 (1분)",
+                    tag: "#구조선 #교회의본질 #사명",
+                    viral: "🔥 AI 추출 100점 (초특급 추천)"
+                },
+                {
+                    line1: "구조선의 청사진",
+                    line2: "예수님이 세우신 설계도",
+                    title: `"구조선의 청사진 예수님이 세우신 설계도"`,
+                    quote: `"주님이 이 땅에 세우신 교회의 원래 설계도는 바로 죽어가는 영혼을 살려내는 구조선의 청사진이었습니다."`,
+                    ref: "📖 마태복음 16:18",
+                    time: "05:40 ~ 06:40 (1분)",
+                    tag: "#설계도 #교회 #예수님",
+                    viral: "✨ 은혜/도전 강추 (99점)"
+                },
+                {
+                    line1: "바다에 빠진 자를 보라",
+                    line2: "우리를 부르신 긴급한 이유",
+                    title: `"바다에 빠진 자를 보라 우리를 부르신 긴급한 이유"`,
+                    quote: `"파도에 휩쓸려 허우적거리는 사람을 보고도 그냥 지나칠 수 있습니까? 하나님이 우리를 먼저 구원하신 이유는 건져내라는 것입니다."`,
+                    ref: "📖 디모데전서 2:4",
+                    time: "11:15 ~ 12:15 (1분)",
+                    tag: "#영혼구원 #긴급사명 #전도",
+                    viral: "📱 SNS 공유 폭발 (98점)"
+                },
+                {
+                    line1: "함장이신 주님의 명령",
+                    line2: "바다로 닻을 올리라",
+                    title: `"함장이신 주님의 명령 바다로 닻을 올리라"`,
+                    quote: `"배의 선장, 함장이신 예수 그리스도의 지휘 아래 전 대원이 한마음으로 거친 파도를 향해 생명줄을 던져야 합니다."`,
+                    ref: "📖 요한복음 14:15",
+                    time: "16:30 ~ 17:30 (1분)",
+                    tag: "#함장 #예수님 #순종",
+                    viral: "🔥 결단 강추 (99점)"
+                },
+                {
+                    line1: "풍랑 이는 세상 바다",
+                    line2: "영혼의 닻 예수 그리스도",
+                    title: `"풍랑 이는 세상 바다 영혼의 닻 예수 그리스도"`,
+                    quote: `"세상의 어떤 거센 풍랑도, 깊은 절망의 파도도 예수 그리스도라는 견고한 닻을 내린 영혼은 결코 침몰하지 않습니다."`,
+                    ref: "📖 히브리서 6:19",
+                    time: "22:15 ~ 23:15 (1분)",
+                    tag: "#믿음의닻 #위로 #소망",
+                    viral: "✨ 영적회복 추천 (98점)"
+                },
+                {
+                    line1: "한 영혼을 향한 눈물",
+                    line2: "구조대원의 거룩한 심장",
+                    title: `"한 영혼을 향한 눈물 구조대원의 거룩한 심장"`,
+                    quote: `"잃어버린 한 마리 양, 바다 속으로 가라앉는 단 한 사람을 위해 자신의 생명을 던지는 예수 그리스도의 심장이 오늘 우리 안에 있습니까?"`,
+                    ref: "📖 누가복음 15:7",
+                    time: "27:50 ~ 28:50 (1분)",
+                    tag: "#한영혼 #목자의심정 #눈물",
+                    viral: "🔥 AI 추출 99점"
+                },
+                {
+                    line1: "안전지대에 머물지 말라",
+                    line2: "일어나 거친 파도로",
+                    title: `"안전지대에 머물지 말라 일어나 거친 파도로"`,
+                    quote: `"항구 안에 묶여있는 배는 안전하지만, 그것은 배의 목적이 아닙니다. 구조선은 파도가 가장 높은 곳으로 출항해야 합니다."`,
+                    ref: "📖 이사야 6:8",
+                    time: "33:40 ~ 34:40 (1분)",
+                    tag: "#출항 #도전 #안전지대탈출",
+                    viral: "📱 청년/헌신 강추 (97점)"
+                },
+                {
+                    line1: "어둠을 밝히는 등대",
+                    line2: "생명의 빛을 비추라",
+                    title: `"어둠을 밝히는 등대 생명의 빛을 비추라"`,
+                    quote: `"칠흑 같은 밤바다에서 길을 잃은 자들에게 유일한 희망은 빛입니다. 교회가 빛을 발할 때 수많은 영혼이 살아 돌아옵니다."`,
+                    ref: "📖 마태복음 5:14",
+                    time: "39:20 ~ 40:20 (1분)",
+                    tag: "#세상의빛 #등대 #생명",
+                    viral: "✨ 은혜 선포 (98점)"
+                },
+                {
+                    line1: "골든타임을 놓치지 말라",
+                    line2: "지금이 바로 은혜의 때",
+                    title: `"골든타임을 놓치지 말라 지금이 바로 은혜의 때"`,
+                    quote: `"구조에는 골든타임이 있습니다. 내일로 미룰 수 없습니다. 오늘 주님이 기회를 주셨을 때 손을 내밀어야 합니다."` ,
+                    ref: "📖 고린도후서 6:2",
+                    time: "45:00 ~ 46:00 (1분)",
+                    tag: "#골든타임 #구원의날 #결단",
+                    viral: "🔥 결단 박수 (99점)"
+                },
+                {
+                    line1: "착하고 충성된 종아",
+                    line2: "영원한 생명의 면류관",
+                    title: `"착하고 충성된 종아 영원한 생명의 면류관"`,
+                    quote: `"구조선의 사명을 끝까지 감당하고 본향 항구에 닿는 날, 주님은 눈물을 닦아주시며 영광의 면류관을 씌워주실 것입니다."`,
+                    ref: "📖 디모데후서 4:7-8",
+                    time: "50:10 ~ 51:10 (1분)",
+                    tag: "#마라나타 #충성 #영원한면류관",
+                    viral: "✨ 축도/결단 마무리 (100점)"
+                }
+            ]
+        };
+    } else {
+        // Universal dynamic 10 shorts for any other YouTube sermon
+        sampleData.youtube = {
+            title: `YouTube_주일예배_설교분석_${videoId}.mp4`,
+            length: "1시간 20분 (AI 1분 쇼츠 10개 추출)",
+            videoId: videoId,
+            highlights: [
+                {
+                    line1: "오늘의 선포",
+                    line2: "하나님의 거룩한 부르심",
+                    title: `"오늘의 선포 하나님의 거룩한 부르심"`,
+                    quote: `"오늘 이 자리에 모인 우리를 향한 하나님의 분명한 뜻과 부르심을 선포하는 설교 도입부입니다."`,
+                    ref: "📖 로마서 8:28",
+                    time: "02:15 ~ 03:15 (1분)",
+                    tag: "#말씀 #도입 #부르심",
+                    viral: "🔥 AI 추출 99점"
+                },
+                {
+                    line1: "두려워하지 말라",
+                    line2: "내가 너와 함께함이라",
+                    title: `"두려워하지 말라 내가 너와 함께함이라"`,
+                    quote: `"어려운 삶의 환경 속에서도 결코 흔들리지 않는 하나님의 영원한 언약과 동행의 약속."`,
+                    ref: "📖 이사야 41:10",
+                    time: "08:30 ~ 09:30 (1분)",
+                    tag: "#위로 #동행 #믿음",
+                    viral: "✨ 은혜/감동 추천 (98점)"
+                },
+                {
+                    line1: "오직 믿음으로",
+                    line2: "세상을 이기는 힘",
+                    title: `"오직 믿음으로 세상을 이기는 힘"`,
+                    quote: `"우리의 눈에 보이는 현실보다 크신 살아계신 하나님을 온전히 신뢰하라는 강력한 권면."`,
+                    ref: "📖 요한일서 5:4",
+                    time: "15:20 ~ 16:20 (1분)",
+                    tag: "#승리 #믿음 #도전",
+                    viral: "📱 SNS 공유 폭발 (99점)"
+                },
+                {
+                    line1: "기도의 능력",
+                    line2: "하늘 문을 여는 열쇠",
+                    title: `"기도의 능력 하늘 문을 여는 열쇠"`,
+                    quote: `"무릎으로 나아갈 때 막힌 담이 무너지고 하나님의 역사가 시작된다는 기도 선포 구간."`,
+                    ref: "📖 야고보서 5:16",
+                    time: "21:45 ~ 22:45 (1분)",
+                    tag: "#기도 #응답 #간구",
+                    viral: "🔥 AI 추출 97점"
+                },
+                {
+                    line1: "십자가의 은혜",
+                    line2: "다시 일어서는 용기",
+                    title: `"십자가의 은혜 다시 일어서는 용기"`,
+                    quote: `"넘어지고 쓰러졌을지라도 예수 그리스도의 보혈의 은혜로 새 힘을 얻으라는 영적 회복 메시지."`,
+                    ref: "📖 갈라디아서 2:20",
+                    time: "28:10 ~ 29:10 (1분)",
+                    tag: "#회복 #십자가 #은혜",
+                    viral: "✨ 영적회복 추천 (99점)"
+                },
+                {
+                    line1: "서로 사랑하라",
+                    line2: "교회 공동체의 심장",
+                    title: `"서로 사랑하라 교회 공동체의 심장"`,
+                    quote: `"지체된 성도들이 서로를 품어주고 상처를 싸매어줄 때 하나님의 나라가 임한다는 가르침."`,
+                    ref: "📖 요한복음 13:34",
+                    time: "34:50 ~ 35:50 (1분)",
+                    tag: "#사랑 #공동체 #화합",
+                    viral: "📱 가정/청년 강추 (98점)"
+                },
+                {
+                    line1: "감사의 기적",
+                    line2: "조건 없는 찬양의 힘",
+                    title: `"감사의 기적 조건 없는 찬양의 힘"`,
+                    quote: `"상황을 뛰어넘어 먼저 감사할 때 기적의 문이 열린다는 성경적 원리 선포."`,
+                    ref: "📖 데살로니가전서 5:18",
+                    time: "41:20 ~ 42:20 (1분)",
+                    tag: "#감사 #찬양 #기적",
+                    viral: "🔥 은혜 선포 (96점)"
+                },
+                {
+                    line1: "선한 싸움을 싸우라",
+                    line2: "타협 없는 거룩한 삶",
+                    title: `"선한 싸움을 싸우라 타협 없는 거룩한 삶"`,
+                    quote: `"세상 풍조에 휩쓸리지 않고 말씀 위에 굳게 서서 빛과 소금으로 살아가자는 결단."`,
+                    ref: "📖 디모데전서 6:12",
+                    time: "48:00 ~ 49:00 (1분)",
+                    tag: "#거룩 #영적전투 #결단",
+                    viral: "✨ 성도 결단 추천 (99점)"
+                },
+                {
+                    line1: "희망의 새 아침",
+                    line2: "반드시 이루실 하나님의 꿈",
+                    title: `"희망의 새 아침 반드시 이루실 하나님의 꿈"`,
+                    quote: `"가장 어두운 밤을 지나고 있는 이들에게 비추시는 하나님의 찬란한 소망의 빛."`,
+                    ref: "📖 예레미야 29:11",
+                    time: "55:30 ~ 56:30 (1분)",
+                    tag: "#소망 #미래 #축복",
+                    viral: "📱 은혜 나눔 강추 (98점)"
+                },
+                {
+                    line1: "평강과 축복으로",
+                    line2: "세상 속으로 파송",
+                    title: `"평강과 축복으로 세상 속으로 파송"`,
+                    quote: `"받은 은혜를 가슴에 품고 한 주간의 삶의 터전으로 나아가는 성도들을 향한 축복 파송 선포."`,
+                    ref: "📖 민수기 6:24-26",
+                    time: "1:02:10 ~ 1:03:10 (1분)",
+                    tag: "#축복 #파송 #축도",
+                    viral: "🔥 최종 결단 마무리 (100점)"
+                }
+            ]
+        };
+    }
 
     currentDataset = sampleData.youtube;
     currentHighlightIdx = 0;
@@ -411,15 +614,23 @@ function generate10ShortsFromYouTube(url) {
     const projTitle = document.getElementById('current-project-title');
     const aiStatus = document.getElementById('ai-status-text');
     if (projTitle) projTitle.textContent = `Project: ${currentDataset.title}`;
-    if (aiStatus) aiStatus.textContent = `AI 설교 구간 탐지 완료 (전체 영상 1시간 52분 중 1분 쇼츠 10개 추출)`;
+    if (aiStatus) aiStatus.textContent = `AI 설교 구간 탐지 완료 (${currentDataset.length})`;
+
+    // Update timeline track bar if available
+    const timelineTitle = document.querySelector('.timeline-title span');
+    if (timelineTitle) {
+        timelineTitle.textContent = `예배 전체 타임라인 오토 스캐닝 (${currentDataset.length.split('(')[0].trim()})`;
+    }
 
     // Display YouTube iframe player in phone simulator
     const ytPlayer = document.getElementById('youtube-iframe-player');
     const videoPlayer = document.getElementById('uploaded-video-player');
     const imgLayer = document.getElementById('preview-img-layer');
 
+    const firstStartSec = parseTimestampToSeconds(currentDataset.highlights[0].time);
+
     if (ytPlayer) {
-        ytPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&start=600`;
+        ytPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&start=${firstStartSec}&end=${firstStartSec + 60}&rel=0`;
         ytPlayer.style.display = 'block';
         if (videoPlayer) videoPlayer.style.display = 'none';
         if (imgLayer) imgLayer.style.display = 'none';
@@ -532,13 +743,43 @@ function loadSampleVideo(key) {
     if (projTitle) projTitle.textContent = `Project: ${currentDataset.title}`;
     if (aiStatus) aiStatus.textContent = `AI 설교 구간 추출 완료 (${currentDataset.length})`;
 
+    if (key === 'gwanyu') {
+        const ytInput = document.getElementById('youtube-url-input');
+        if (ytInput) ytInput.value = 'https://youtube.com/live/fB-uX_pZZvs?feature=share';
+        const successBanner = document.getElementById('ai-result-success-banner');
+        if (successBanner) {
+            successBanner.style.display = 'block';
+            const bTitle = document.getElementById('success-banner-title');
+            const bSub = document.getElementById('success-banner-subtitle');
+            if (bTitle) bTitle.textContent = currentDataset.title.replace('.mp4', '');
+            if (bSub) bSub.textContent = `전체 ${currentDataset.length.split('(')[0].trim()} 영상에서 가장 중요하고 은혜로운 1분 핵심 쇼츠 10개가 준비되었습니다!`;
+        }
+    }
+
     renderHighlightCards();
     selectHighlight(0);
-    scrollToSection('studio');
-    showToast(`🎬 ${currentDataset.title} 샘플 데이터가 로드되었습니다.`);
+    scrollToSection('studio-workspace');
+    showToast(`🎬 ${currentDataset.title.replace('.mp4', '')} 데이터가 로드되었습니다.`);
 }
 
 function initStudioHighlights() {
+    const projTitle = document.getElementById('current-project-title');
+    const aiStatus = document.getElementById('ai-status-text');
+    if (projTitle && currentDataset) projTitle.textContent = `Project: ${currentDataset.title}`;
+    if (aiStatus && currentDataset) aiStatus.textContent = `AI 설교 구간 추출 완료 (${currentDataset.length})`;
+
+    const ytPlayer = document.getElementById('youtube-iframe-player');
+    const videoPlayer = document.getElementById('uploaded-video-player');
+    const imgLayer = document.getElementById('preview-img-layer');
+
+    if (currentDataset && currentDataset.videoId && ytPlayer) {
+        const firstStartSec = parseTimestampToSeconds(currentDataset.highlights[0].time);
+        ytPlayer.src = `https://www.youtube.com/embed/${currentDataset.videoId}?autoplay=1&enablejsapi=1&start=${firstStartSec}&end=${firstStartSec + 60}&rel=0`;
+        ytPlayer.style.display = 'block';
+        if (videoPlayer) videoPlayer.style.display = 'none';
+        if (imgLayer) imgLayer.style.display = 'none';
+    }
+
     renderHighlightCards();
     selectHighlight(0);
 }
@@ -1301,9 +1542,20 @@ function updateHighlightsForUploadedVideo(fileName, durationSec) {
 }
 
 function scrollToSection(id) {
-    const el = document.getElementById(id);
+    let targetId = id;
+    if (targetId === 'studio') {
+        const workspace = document.getElementById('studio-workspace');
+        if (workspace) targetId = 'studio-workspace';
+    }
+    const el = document.getElementById(targetId);
     if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
+        const headerOffset = 80;
+        const elementPosition = el.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+            top: Math.max(0, offsetPosition),
+            behavior: 'smooth'
+        });
     }
 }
 
@@ -2171,10 +2423,10 @@ function openShortsMakerModal(customUrl) {
     const modal = document.getElementById('modal-shorts-creator');
     if (modal) {
         modal.classList.add('active');
-        if (customUrl) {
-            const urlInput = document.getElementById('modal-yt-url');
-            if (urlInput) urlInput.value = customUrl;
-        }
+        const heroYt = document.getElementById('youtube-url-input');
+        const defaultUrl = (heroYt && heroYt.value.trim()) ? heroYt.value.trim() : 'https://youtube.com/live/fB-uX_pZZvs?feature=share';
+        const urlInput = document.getElementById('modal-yt-url');
+        if (urlInput) urlInput.value = customUrl || defaultUrl;
         processModalShortsCreation();
     } else {
         scrollToSection('hero-input-box');
@@ -2185,45 +2437,133 @@ function processShortsCreation() {
     const ytInput = document.getElementById('youtube-url-input');
     let url = ytInput ? ytInput.value.trim() : '';
     
+    // Default to the user's specific live link if empty
     if (!url) {
-        url = 'https://youtube.com/live/XM7PrnvFSHw?feature=share';
+        url = 'https://youtube.com/live/fB-uX_pZZvs?feature=share';
         if (ytInput) ytInput.value = url;
     }
 
-    showToast('⚡ AI가 영상 전체에서 설교 핵심 1분 쇼츠 10개를 추출하는 중입니다...');
-    
-    generate10ShortsFromYouTube(url);
+    const startBtn = document.getElementById('start-ai-youtube');
+    const originalBtnContent = startBtn ? startBtn.innerHTML : '';
+    if (startBtn) {
+        startBtn.disabled = true;
+        startBtn.style.opacity = '0.7';
+        startBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>AI 분석 진행 중...</span>';
+    }
 
+    // Show Progress Box and Hide previous success banner
+    const progressCard = document.getElementById('ai-processing-status-card');
+    const successBanner = document.getElementById('ai-result-success-banner');
+    const pTitle = document.getElementById('ai-process-title');
+    const pBar = document.getElementById('ai-process-bar');
+    const pDesc = document.getElementById('ai-process-desc');
+
+    if (successBanner) successBanner.style.display = 'none';
+    if (progressCard) {
+        progressCard.style.display = 'block';
+        if (pBar) pBar.style.width = '15%';
+        if (pTitle) pTitle.textContent = 'AI 설교 분석 엔진 가동 중... (15%)';
+        if (pDesc) pDesc.textContent = '🎙️ 영상 메타데이터 파싱 및 설교 음성 트랙 추출 중...';
+    }
+
+    showToast('⚡ AI가 설교 영상 전체에서 1분 핵심 쇼츠 10개를 정밀 분석 중입니다...');
+
+    // Progress Step 2 (350ms)
     setTimeout(() => {
-        scrollToSection('studio');
-        showToast('🎉 AI 추출 완료! 영상 전체에서 10개의 1분 은혜 쇼츠가 자동 생성되었습니다. 원하시는 쇼츠를 클릭하여 감상하세요.');
-    }, 600);
+        if (pBar) pBar.style.width = '45%';
+        if (pTitle) pTitle.textContent = 'AI 설교 분석 엔진 가동 중... (45%)';
+        if (pDesc) pDesc.textContent = '📖 설교 본문 자연어 분석 및 핵심 은혜 문맥 스캐닝 중...';
+        const step2 = document.getElementById('step-context');
+        if (step2) step2.style.color = '#38bdf8';
+    }, 350);
+
+    // Progress Step 3 (750ms)
+    setTimeout(() => {
+        if (pBar) pBar.style.width = '80%';
+        if (pTitle) pTitle.textContent = 'AI 설교 분석 엔진 가동 중... (80%)';
+        if (pDesc) pDesc.textContent = '🔥 목소리 감정선 피크 & 성도 반응 기반 10개 핵심 구간 선별 중...';
+        const step3 = document.getElementById('step-peak');
+        if (step3) step3.style.color = '#f59e0b';
+    }, 750);
+
+    // Progress Step 4 - Finish & Render (1200ms)
+    setTimeout(() => {
+        if (pBar) pBar.style.width = '100%';
+        if (pTitle) pTitle.textContent = 'AI 설교 구간 추출 완료! (100%)';
+        if (pDesc) pDesc.textContent = '🎉 9:16 세로 1분 은혜 쇼츠 10개가 완벽하게 생성되었습니다!';
+        const step4 = document.getElementById('step-shorts');
+        if (step4) step4.style.color = '#10b981';
+
+        // Generate the 10 shorts dataset
+        generate10ShortsFromYouTube(url);
+
+        // Restore button
+        if (startBtn) {
+            startBtn.disabled = false;
+            startBtn.style.opacity = '1';
+            startBtn.innerHTML = originalBtnContent || '<i class="fa-solid fa-wand-magic-sparkles"></i> <span>무료로 쇼츠 만들기</span>';
+        }
+
+        // Show Success Banner
+        if (successBanner) {
+            successBanner.style.display = 'block';
+            const bTitle = document.getElementById('success-banner-title');
+            const bSub = document.getElementById('success-banner-subtitle');
+            if (bTitle) bTitle.textContent = currentDataset.title.replace('.mp4', '');
+            if (bSub) bSub.textContent = `전체 ${currentDataset.length.split('(')[0].trim()} 영상에서 가장 중요하고 은혜로운 1분 핵심 쇼츠 10개가 생성되었습니다!`;
+        }
+
+        // Hide progress card after 900ms
+        setTimeout(() => {
+            if (progressCard) progressCard.style.display = 'none';
+        }, 900);
+
+        // Smooth scroll directly to the studio workspace
+        scrollToSection('studio-workspace');
+
+        // Add visual flash effect to workspace
+        const workspace = document.getElementById('studio-workspace');
+        if (workspace) {
+            workspace.style.transition = 'box-shadow 0.5s ease';
+            workspace.style.boxShadow = '0 0 35px rgba(56, 189, 248, 0.6)';
+            setTimeout(() => {
+                workspace.style.boxShadow = '';
+            }, 2500);
+        }
+
+        showToast('🎉 AI 추출 완료! 영상 전체에서 10개의 1분 은혜 쇼츠가 생성되었습니다. 각 쇼츠를 클릭하여 9:16 플레이어로 감상하세요!');
+    }, 1200);
 }
 
 function processModalShortsCreation() {
     const modalYt = document.getElementById('modal-yt-url');
-    const url = modalYt ? modalYt.value.trim() : 'https://youtube.com/live/XM7PrnvFSHw?feature=share';
+    const heroYt = document.getElementById('youtube-url-input');
+    const url = (modalYt && modalYt.value.trim()) ? modalYt.value.trim() : ((heroYt && heroYt.value.trim()) ? heroYt.value.trim() : 'https://youtube.com/live/fB-uX_pZZvs?feature=share');
+    if (modalYt) modalYt.value = url;
+    if (heroYt) heroYt.value = url;
 
     const scanBar = document.getElementById('modal-scan-bar');
     const scanStatus = document.getElementById('modal-scan-status');
     const scanTitle = document.getElementById('modal-scan-title');
     
-    if (scanBar) scanBar.style.width = '10%';
-    if (scanTitle) scanTitle.textContent = 'AI 설교 구간 스캐닝 중... (0%)';
+    if (scanBar) scanBar.style.width = '15%';
+    if (scanTitle) scanTitle.textContent = 'AI 설교 구간 스캐닝 중... (15%)';
+    if (scanStatus) scanStatus.textContent = '🎙️ 영상 메타데이터 파싱 및 설교 음성 트랙 추출 중...';
     
     setTimeout(() => {
-        if (scanBar) scanBar.style.width = '60%';
-        if (scanTitle) scanTitle.textContent = '설교 오디오 분석 & 10개 1분 쇼츠 컷팅 중... (60%)';
-    }, 300);
+        if (scanBar) scanBar.style.width = '55%';
+        if (scanTitle) scanTitle.textContent = '설교 오디오 분석 & 10개 1분 쇼츠 컷팅 중... (55%)';
+        if (scanStatus) scanStatus.textContent = '📖 본문 말씀 감지 및 1분 쇼츠 10개 구간 자동 계산 중...';
+    }, 400);
 
     setTimeout(() => {
         if (scanBar) scanBar.style.width = '100%';
         if (scanTitle) scanTitle.textContent = 'AI 설교 구간 추출 완료! (100%)';
-        if (scanStatus) scanStatus.textContent = '✅ 영상 전체 분석 완료 · 🔥 1분 쇼츠 10개가 자동 생성되었습니다.';
+        if (scanStatus) scanStatus.textContent = `✅ 영상 전체 분석 완료 · 🔥 1분 쇼츠 10개가 자동 생성되었습니다.`;
         
         generate10ShortsFromYouTube(url);
         showToast('🎉 10개의 1분 은혜 쇼츠 생성이 완료되었습니다!');
-    }, 700);
+    }, 900);
 }
 
 function selectModalHighlight(idx) {

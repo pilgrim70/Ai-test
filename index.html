@@ -63,11 +63,56 @@
                     <!-- YouTube Link Input Form -->
                     <div class="url-input-card" style="max-width: 780px; margin: 0 auto 20px auto; background: rgba(15, 23, 42, 0.85); border: 1px solid #334155; border-radius: 16px; padding: 10px 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
                         <i class="fa-brands fa-youtube" style="font-size: 28px; color: #ff0000; margin-left: 8px;"></i>
-                        <input type="text" id="youtube-url-input" placeholder="https://www.youtube.com/watch?v=예배풀영상링크 입력..." style="flex: 1; background: transparent; border: none; color: #ffffff; font-size: 15px; font-weight: 500; outline: none; padding: 10px 6px;">
+                        <input type="text" id="youtube-url-input" value="https://youtube.com/live/fB-uX_pZZvs?feature=share" placeholder="https://www.youtube.com/watch?v=예배풀영상링크 입력..." style="flex: 1; background: transparent; border: none; color: #ffffff; font-size: 15px; font-weight: 500; outline: none; padding: 10px 6px;">
                         <button class="btn btn-primary" id="start-ai-youtube" onclick="processShortsCreation()" style="background: linear-gradient(135deg, #2563eb, #7c3aed); color: #ffffff; font-weight: 700; font-size: 15px; border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; transition: all 0.2s; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);">
                             <i class="fa-solid fa-wand-magic-sparkles"></i>
                             <span>무료로 쇼츠 만들기</span>
                         </button>
+                    </div>
+
+                    <!-- AI Processing Progress Card (Real-time Feedback during Creation) -->
+                    <div id="ai-processing-status-card" style="display: none; max-width: 780px; margin: 0 auto 20px auto; background: rgba(15, 23, 42, 0.95); border: 1.5px solid #38bdf8; border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(56, 189, 248, 0.25); text-align: center;">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px;">
+                            <span class="status-dot green" style="width: 12px; height: 12px; background: #10b981; border-radius: 50%; box-shadow: 0 0 12px #10b981;"></span>
+                            <strong id="ai-process-title" style="color: #38bdf8; font-size: 15px; font-weight: 800;">AI 설교 분석 엔진 가동 중... (0%)</strong>
+                        </div>
+                        <div style="background: #0f172a; border-radius: 10px; height: 10px; width: 100%; overflow: hidden; margin-bottom: 12px; border: 1px solid #334155;">
+                            <div id="ai-process-bar" style="background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899); height: 100%; width: 0%; transition: width 0.3s ease; border-radius: 10px;"></div>
+                        </div>
+                        <p id="ai-process-desc" style="font-size: 13px; color: #cbd5e1; margin: 0 0 12px 0;">
+                            영상 메타데이터 분석 및 고음질 오디오 트랙 추출 중...
+                        </p>
+                        <div id="ai-process-steps" style="display: flex; justify-content: space-around; font-size: 11px; color: #94a3b8; border-top: 1px solid #1e293b; padding-top: 10px; flex-wrap: wrap; gap: 6px;">
+                            <span id="step-audio">🎙️ 1. 오디오 음성인식</span>
+                            <span id="step-context">📖 2. 설교 맥락·성경 감지</span>
+                            <span id="step-peak">🔥 3. 감정선 피크 10개 추출</span>
+                            <span id="step-shorts">📱 4. 1분 쇼츠 10개 렌더링</span>
+                        </div>
+                    </div>
+
+                    <!-- AI Generation Success Banner (Shown when finished) -->
+                    <div id="ai-result-success-banner" style="display: none; max-width: 780px; margin: 0 auto 20px auto; background: linear-gradient(135deg, rgba(30, 58, 138, 0.95), rgba(88, 28, 135, 0.95)); border: 1.5px solid #38bdf8; border-radius: 16px; padding: 20px 24px; box-shadow: 0 12px 36px rgba(37, 99, 235, 0.35);">
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                            <div style="flex: 1; min-width: 260px;">
+                                <div style="display: inline-flex; align-items: center; gap: 6px; background: #10b981; color: #fff; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 12px; margin-bottom: 6px;">
+                                    <i class="fa-solid fa-check"></i> AI 10개 쇼츠 생성 완료
+                                </div>
+                                <h4 id="success-banner-title" style="color: #ffffff; font-size: 17px; font-weight: 800; margin: 0 0 4px 0;">
+                                    26-10-11 관유중앙교회 - 구조선의 청사진
+                                </h4>
+                                <p id="success-banner-subtitle" style="color: #cbd5e1; font-size: 13px; margin: 0;">
+                                    전체 52분 영상에서 가장 감동적인 설교 1분 핵심 10개 영상이 완성되었습니다!
+                                </p>
+                            </div>
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button class="btn btn-primary" onclick="scrollToSection('studio-workspace')" style="background: linear-gradient(135deg, #38bdf8, #6366f1); color: #fff; font-weight: 800; font-size: 14px; padding: 10px 20px; border-radius: 10px; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);">
+                                    <span>10개 쇼츠 즉시 확인하기</span> <i class="fa-solid fa-arrow-down"></i>
+                                </button>
+                                <button class="btn btn-secondary" onclick="openShortsMakerModal()" style="background: rgba(15, 23, 42, 0.8); border: 1px solid #38bdf8; color: #38bdf8; font-weight: 700; font-size: 13px; padding: 10px 16px; border-radius: 10px; cursor: pointer;">
+                                    <i class="fa-solid fa-window-restore"></i> 팝업창으로 보기
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- File Drag & Drop Dropzone Box -->
@@ -109,6 +154,9 @@
                     <!-- Quick Sample Video Presets & Feature Badges -->
                     <div style="display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; text-align: center;">
                         <span style="font-size: 13px; color: #64748b; font-weight: 600;">⚡ 빠른 체험 샘플:</span>
+                        <button class="sample-chip" onclick="loadSampleVideo('gwanyu')" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.4), rgba(124, 58, 237, 0.4)); border: 1px solid #38bdf8; color: #ffffff; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 10px rgba(56, 189, 248, 0.3);">
+                            <i class="fa-solid fa-ship" style="color: #38bdf8;"></i> 관유중앙교회 - 구조선의 청사진 (52분)
+                        </button>
                         <button class="sample-chip" onclick="loadSampleVideo('pastor_lee')" style="background: rgba(30, 41, 59, 0.8); border: 1px solid #475569; color: #cbd5e1; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;">
                             <i class="fa-solid fa-cross" style="color: #38bdf8;"></i> 2026 주일예배 설교 (34분)
                         </button>
@@ -125,7 +173,7 @@
                 </div>
 
                 <!-- Main Studio Workspace Card -->
-                <div class="studio-window glass-card">
+                <div class="studio-window glass-card" id="studio-workspace">
                     <!-- Studio Top Navigation bar -->
                     <div class="studio-topbar">
                         <div class="window-controls">
@@ -1722,6 +1770,6 @@
     </div>
 
     <script src="game.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=20261014_3"></script>
 </body>
 </html>
