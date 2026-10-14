@@ -2845,58 +2845,36 @@ function setVisualTemplate(tplName) {
     showToast(`🎨 '${tplName}' 템플릿 스타일이 적용되었습니다.`);
 }
 
-function switchChurchInfoTab(tab) {
-    const nameBtn = document.getElementById('tab-church-name-btn');
-    const logoBtn = document.getElementById('tab-church-logo-btn');
-    const namePanel = document.getElementById('church-info-name-panel');
-    const logoPanel = document.getElementById('church-info-logo-panel');
-    const nameBadge = document.getElementById('shorts-church-badge');
-    const logoWrapper = document.getElementById('shorts-logo-wrapper');
-
-    if (tab === 'name') {
-        if (nameBtn) {
-            nameBtn.className = 'btn-church-tab active';
-            nameBtn.style.background = '#2563eb';
-            nameBtn.style.borderColor = '#60a5fa';
-            nameBtn.style.color = '#ffffff';
-            nameBtn.style.fontWeight = '700';
-        }
-        if (logoBtn) {
-            logoBtn.className = 'btn-church-tab';
-            logoBtn.style.background = 'rgba(15, 23, 42, 0.6)';
-            logoBtn.style.borderColor = '#334155';
-            logoBtn.style.color = '#94a3b8';
-            logoBtn.style.fontWeight = '600';
-        }
-        if (namePanel) namePanel.style.display = 'block';
-        if (logoPanel) logoPanel.style.display = 'none';
-        if (nameBadge) nameBadge.style.display = 'block';
-        if (logoWrapper) logoWrapper.style.display = 'none';
+function updateChurchBadgeText(val) {
+    const textSpan = document.getElementById('church-badge-text');
+    if (textSpan) {
+        textSpan.textContent = val.trim() || '복의근원 관유중앙교회';
     } else {
-        if (logoBtn) {
-            logoBtn.className = 'btn-church-tab active';
-            logoBtn.style.background = '#2563eb';
-            logoBtn.style.borderColor = '#60a5fa';
-            logoBtn.style.color = '#ffffff';
-            logoBtn.style.fontWeight = '700';
+        const badge = document.getElementById('shorts-church-badge');
+        if (badge) {
+            badge.innerHTML = `<i class="fa-solid fa-church" style="color: #38bdf8;"></i> <span id="church-badge-text">${val.trim() || '복의근원 관유중앙교회'}</span>`;
         }
-        if (nameBtn) {
-            nameBtn.className = 'btn-church-tab';
-            nameBtn.style.background = 'rgba(15, 23, 42, 0.6)';
-            nameBtn.style.borderColor = '#334155';
-            nameBtn.style.color = '#94a3b8';
-            nameBtn.style.fontWeight = '600';
-        }
-        if (logoPanel) logoPanel.style.display = 'block';
-        if (namePanel) namePanel.style.display = 'none';
-        if (logoWrapper) logoWrapper.style.display = 'block';
     }
 }
 
+// Legacy alias
 function updateChurchLogoText(val) {
+    updateChurchBadgeText(val);
+}
+
+function toggleChurchNameVisibility(show) {
     const badge = document.getElementById('shorts-church-badge');
     if (badge) {
-        badge.innerHTML = `<i class="fa-solid fa-church"></i> ${val || '복의근원 관유중앙교회'}`;
+        badge.style.display = show ? 'inline-flex' : 'none';
+        showToast(show ? '⛪ 상단 교회 이름이 활성화되었습니다.' : '상단 교회 이름이 숨김 처리되었습니다.');
+    }
+}
+
+function toggleChurchLogoVisibility(show) {
+    const wrapper = document.getElementById('shorts-logo-wrapper');
+    if (wrapper) {
+        wrapper.style.display = show ? 'inline-flex' : 'none';
+        showToast(show ? '🖼️ 하단 교회 로고가 활성화되었습니다.' : '하단 교회 로고가 숨김 처리되었습니다.');
     }
 }
 
@@ -2904,13 +2882,28 @@ function handleChurchLogoUpload(file) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (e) => {
-        const logoImg = document.getElementById('shorts-church-logo-img');
+        const simImg = document.getElementById('shorts-church-logo-img');
+        const ctlImg = document.getElementById('ctl-preview-logo-img');
         const logoWrapper = document.getElementById('shorts-logo-wrapper');
-        if (logoImg) logoImg.src = e.target.result;
-        if (logoWrapper) logoWrapper.style.display = 'block';
-        showToast('🖼️ 교회 로고 이미지가 영상에 등록되었습니다.');
+        const chkLogo = document.getElementById('chk-church-logo-visibility');
+        
+        if (simImg) simImg.src = e.target.result;
+        if (ctlImg) ctlImg.src = e.target.result;
+        if (logoWrapper) logoWrapper.style.display = 'inline-flex';
+        if (chkLogo) chkLogo.checked = true;
+        
+        showToast('🖼️ 교회 로고 이미지가 영상 하단에 성공적으로 등록되었습니다.');
     };
     reader.readAsDataURL(file);
+}
+
+function switchChurchInfoTab(tab) {
+    // Kept for backward compatibility if called
+    if (tab === 'name') {
+        toggleChurchNameVisibility(true);
+    } else {
+        toggleChurchLogoVisibility(true);
+    }
 }
 
 function updateShortsDescription(val) {

@@ -1251,11 +1251,12 @@ body.dark-theme .card-input-box.yellow-highlight {
 
 .subtitle-overlay {
     position: absolute;
-    bottom: 60px;
+    bottom: 136px;
     left: 12px;
     right: 12px;
     text-align: center;
-    z-index: 10;
+    z-index: 20;
+    pointer-events: none;
 }
 
 .sub-bible-ref {
@@ -1263,10 +1264,11 @@ body.dark-theme .card-input-box.yellow-highlight {
     font-size: 0.65rem;
     font-weight: 700;
     color: #fde047;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     padding: 3px 10px;
     border-radius: 10px;
     margin-bottom: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
 }
 
 .sub-text-box {
@@ -1282,7 +1284,7 @@ body.dark-theme .card-input-box.yellow-highlight {
 
 /* Subtitle Styles */
 .sub-text-box.style-neon {
-    background: rgba(15, 23, 42, 0.85);
+    background: rgba(15, 23, 42, 0.88);
     border: 1px solid #3b82f6;
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
 }
@@ -1310,26 +1312,63 @@ body.dark-theme .card-input-box.yellow-highlight {
     color: #fde047;
 }
 
+/* 1. Top Church Name Badge */
 .shorts-church-badge {
     position: absolute;
-    top: 24px;
-    left: 14px;
-    font-size: 0.65rem;
-    color: white;
-    background: rgba(0,0,0,0.5);
-    padding: 4px 10px;
-    border-radius: 12px;
-    backdrop-filter: blur(4px);
-    z-index: 10;
+    top: 14px;
+    left: 12px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: rgba(15, 23, 42, 0.96);
+    padding: 5px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(56, 189, 248, 0.6);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    z-index: 26;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    pointer-events: none;
+}
+
+/* 2. Bottom Church Logo Card */
+.shorts-logo-wrapper {
+    position: absolute;
+    bottom: 74px;
+    left: 12px;
+    z-index: 22;
+    display: inline-flex;
+    align-items: center;
+}
+
+.shorts-logo-card {
+    background: rgba(255, 255, 255, 0.96);
+    padding: 3px 8px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.shorts-logo-card img {
+    height: 20px;
+    max-width: 108px;
+    object-fit: contain;
+    display: block;
 }
 
 .audio-equalizer {
     position: absolute;
-    top: 26px;
-    right: 14px;
+    top: 16px;
+    right: 12px;
     display: flex;
     gap: 3px;
-    z-index: 10;
+    z-index: 26;
 }
 
 .audio-equalizer span {
@@ -1378,12 +1417,12 @@ body.dark-theme .card-input-box.yellow-highlight {
 .phone-sidebar-actions {
     position: absolute;
     right: 8px;
-    bottom: 60px;
+    bottom: 45px;
     display: flex;
     flex-direction: column;
     gap: 12px;
     color: white;
-    z-index: 10;
+    z-index: 22;
 }
 
 .phone-sidebar-actions .action-btn {

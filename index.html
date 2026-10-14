@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261014_2">
 </head>
 <body class="dark-theme">
 
@@ -296,8 +296,11 @@
                                             <div class="video-vignette"></div>
                                         </div>
 
-                                        <!-- Dynamic Subtitle Overlay -->
-                                        <div class="subtitle-overlay" id="subtitle-overlay">
+                                        <!-- Top Header Vignette (Soft shadow to mask YouTube header and highlight church name) -->
+                                        <div style="position: absolute; top: 0; left: 0; right: 0; height: 60px; background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 65%, transparent 100%); z-index: 24; pointer-events: none;"></div>
+
+                                        <!-- Dynamic Subtitle Overlay (Middle-low safe zone, non-overlapping) -->
+                                        <div class="subtitle-overlay" id="subtitle-overlay" style="position: absolute; bottom: 136px; left: 12px; right: 12px; text-align: center; z-index: 20; pointer-events: none;">
                                             <div class="sub-bible-ref" id="sub-bible-ref">📖 마태복음 14:29-31</div>
                                             <div class="sub-text-box style-neon" id="sub-text-box">
                                                 "인생의 폭풍이 불어올 때<br>
@@ -305,16 +308,21 @@
                                             </div>
                                         </div>
 
-                                        <!-- Shorts Watermark / Church Badge & Logo Overlay -->
-                                        <div class="shorts-church-badge" id="shorts-church-badge">
-                                            <i class="fa-solid fa-church"></i> 복의근원 관유중앙교회 미디어팀
-                                        </div>
-                                        <div id="shorts-logo-wrapper" style="position: absolute; top: 12px; right: 12px; z-index: 14; display: none;">
-                                            <img id="shorts-church-logo-img" alt="교회 로고" style="height: 32px; max-width: 120px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));">
+                                        <!-- Top: Church Name Badge (Upper area, crisp and clean) -->
+                                        <div class="shorts-church-badge" id="shorts-church-badge" style="position: absolute; top: 14px; left: 12px; z-index: 26; font-size: 11px; font-weight: 700; color: #ffffff; background: rgba(15, 23, 42, 0.96); padding: 5px 12px; border-radius: 20px; backdrop-filter: blur(8px); border: 1px solid rgba(56, 189, 248, 0.6); box-shadow: 0 4px 12px rgba(0,0,0,0.8); display: inline-flex; align-items: center; gap: 6px; pointer-events: none;">
+                                            <i class="fa-solid fa-church" style="color: #38bdf8;"></i>
+                                            <span id="church-badge-text">복의근원 관유중앙교회</span>
                                         </div>
 
-                                        <!-- Shorts Video Description & Caption Overlay -->
-                                        <div class="shorts-desc-badge" id="shorts-desc-badge" style="position: absolute; bottom: 12px; left: 12px; right: 50px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px); padding: 8px 10px; border-radius: 8px; font-size: 11px; color: #f8fafc; border-left: 3px solid #38bdf8; z-index: 12; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); pointer-events: none;">
+                                        <!-- Bottom: Church Logo Badge Card (Lower area, 8px above description, 34px below subtitle) -->
+                                        <div class="shorts-logo-wrapper" id="shorts-logo-wrapper" style="position: absolute; bottom: 74px; left: 12px; z-index: 22; display: inline-flex; align-items: center;">
+                                            <div class="shorts-logo-card" style="background: #ffffff; padding: 3px 8px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.6); border: 1px solid rgba(255, 255, 255, 0.95); display: flex; align-items: center; justify-content: center;">
+                                                <img id="shorts-church-logo-img" src="assets/gwanyu_logo.jpg" alt="관유중앙교회 로고" style="height: 20px; max-width: 108px; object-fit: contain; display: block;">
+                                            </div>
+                                        </div>
+
+                                        <!-- Bottom: Shorts Video Description & Caption Overlay -->
+                                        <div class="shorts-desc-badge" id="shorts-desc-badge" style="position: absolute; bottom: 8px; left: 12px; right: 54px; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(8px); padding: 6px 10px; border-radius: 8px; font-size: 11px; color: #f8fafc; border-left: 3px solid #38bdf8; z-index: 20; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); pointer-events: none;">
                                             <span style="font-size: 10px; color: #38bdf8; font-weight: 800; display: flex; align-items: center; gap: 4px;">
                                                 <i class="fa-solid fa-pen-to-square"></i> 설교 요약 및 설명
                                             </span>
@@ -324,7 +332,7 @@
                                         </div>
 
                                         <!-- Simulated Sound Equilizer -->
-                                        <div class="audio-equalizer">
+                                        <div class="audio-equalizer" style="position: absolute; top: 16px; right: 12px; z-index: 26;">
                                             <span></span><span></span><span></span><span></span><span></span>
                                         </div>
 
@@ -334,7 +342,7 @@
                                         </button>
 
                                         <!-- Floating Action Icons (TikTok/Reels UI) -->
-                                        <div class="phone-sidebar-actions">
+                                        <div class="phone-sidebar-actions" style="position: absolute; right: 8px; bottom: 45px; z-index: 22; display: flex; flex-direction: column; gap: 12px; color: white;">
                                             <div class="action-btn"><i class="fa-solid fa-heart"></i> <span>2.4k</span></div>
                                             <div class="action-btn"><i class="fa-solid fa-comment-dots"></i> <span>184</span></div>
                                             <div class="action-btn"><i class="fa-solid fa-share-nodes"></i> <span>공유</span></div>
@@ -405,35 +413,53 @@
                                     <div style="font-size: 11px; color: #64748b; margin-top: 6px;">완성 후 화면을 확대·축소할 수 있어요.</div>
                                 </div>
 
-                                <!-- 2. Church Info (Selectable: Church Name / Logo Upload) -->
+                                <!-- 2. Church Info (Top Church Name & Bottom Church Logo) -->
                                 <div style="margin-bottom: 20px; background: rgba(30, 41, 59, 0.5); padding: 14px; border-radius: 12px; border: 1px solid #334155;">
-                                    <label style="font-size: 13px; font-weight: 700; color: #f8fafc; display: block; margin-bottom: 10px;">⛪ 교회 정보 (선택)</label>
-                                    
-                                    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-                                        <button id="tab-church-name-btn" class="btn-church-tab active" onclick="switchChurchInfoTab('name')" style="flex: 1; background: #2563eb; border: 1px solid #60a5fa; color: #ffffff; padding: 7px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
-                                            교회명
-                                        </button>
-                                        <button id="tab-church-logo-btn" class="btn-church-tab" onclick="switchChurchInfoTab('logo')" style="flex: 1; background: rgba(15, 23, 42, 0.6); border: 1px solid #334155; color: #94a3b8; padding: 7px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
-                                            로고
-                                        </button>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                        <label style="font-size: 13px; font-weight: 700; color: #f8fafc; display: flex; align-items: center; gap: 6px;">
+                                            <i class="fa-solid fa-church" style="color: #38bdf8;"></i> 교회 브랜딩 설정 (상단 이름 / 하단 로고)
+                                        </label>
+                                        <span style="font-size: 10px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 8px; border-radius: 4px; font-weight: 700; border: 1px solid rgba(56, 189, 248, 0.3);">글씨 겹침 방지 적용</span>
                                     </div>
 
-                                    <!-- Panel 1: 교회명 입력 -->
-                                    <div id="church-info-name-panel" style="display: block;">
-                                        <input type="text" id="church-info-name-input" value="복의근원 관유중앙교회" placeholder="예) 사랑교회" style="width: 100%; background: #0f172a; border: 1px solid #334155; color: #ffffff; padding: 9px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; outline: none;" oninput="updateChurchLogoText(this.value)">
+                                    <!-- 2-A: 상단 교회명 설정 -->
+                                    <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 8px; border: 1px solid #334155; margin-bottom: 10px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                            <span style="font-size: 12px; font-weight: 700; color: #e2e8f0; display: flex; align-items: center; gap: 5px;">
+                                                <i class="fa-solid fa-arrow-up" style="color: #38bdf8;"></i> 상단: 교회 이름
+                                            </span>
+                                            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 11px; color: #94a3b8;">
+                                                <input type="checkbox" id="chk-church-name-visibility" checked onchange="toggleChurchNameVisibility(this.checked)" style="accent-color: #2563eb; cursor: pointer;">
+                                                화면 표시
+                                            </label>
+                                        </div>
+                                        <input type="text" id="church-info-name-input" value="복의근원 관유중앙교회" placeholder="교회 이름 입력" style="width: 100%; background: #0b1120; border: 1px solid #334155; color: #ffffff; padding: 8px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; outline: none;" oninput="updateChurchBadgeText(this.value)">
                                     </div>
 
-                                    <!-- Panel 2: 로고 이미지 업로드 -->
-                                    <div id="church-info-logo-panel" style="display: none;">
-                                        <div onclick="document.getElementById('church-logo-file-input').click()" style="border: 2px dashed #38bdf8; background: rgba(56, 189, 248, 0.08); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer;">
-                                            <i class="fa-solid fa-image" style="font-size: 24px; color: #38bdf8; margin-bottom: 4px;"></i>
-                                            <div style="font-size: 12px; font-weight: 700; color: #e2e8f0;">교회 로고 이미지 업로드 (PNG, JPG)</div>
-                                            <div style="font-size: 11px; color: #64748b;">투명 배경 PNG 권장 · 클릭하여 이미지 선택</div>
+                                    <!-- 2-B: 하단 교회 로고 설정 -->
+                                    <div style="background: rgba(15, 23, 42, 0.7); padding: 12px; border-radius: 8px; border: 1px solid #334155;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                            <span style="font-size: 12px; font-weight: 700; color: #e2e8f0; display: flex; align-items: center; gap: 5px;">
+                                                <i class="fa-solid fa-arrow-down" style="color: #38bdf8;"></i> 하단: 교회 로고 (적당한 크기 배치)
+                                            </span>
+                                            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 11px; color: #94a3b8;">
+                                                <input type="checkbox" id="chk-church-logo-visibility" checked onchange="toggleChurchLogoVisibility(this.checked)" style="accent-color: #2563eb; cursor: pointer;">
+                                                화면 표시
+                                            </label>
+                                        </div>
+                                        
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <!-- 현재 등록된 로고 미리보기 -->
+                                            <div id="preview-logo-box" style="background: #ffffff; padding: 4px 10px; border-radius: 6px; border: 1px solid #cbd5e1; display: flex; align-items: center; justify-content: center; min-width: 100px; height: 34px;">
+                                                <img id="ctl-preview-logo-img" src="assets/gwanyu_logo.jpg" alt="교회 로고" style="height: 22px; max-width: 110px; object-fit: contain;">
+                                            </div>
+                                            <button type="button" onclick="document.getElementById('church-logo-file-input').click()" style="flex: 1; background: #2563eb; border: 1px solid #3b82f6; color: white; padding: 7px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s;">
+                                                <i class="fa-solid fa-upload"></i> 로고 변경 / 재등록
+                                            </button>
                                             <input type="file" id="church-logo-file-input" accept="image/*" style="display: none;" onchange="handleChurchLogoUpload(this.files[0])">
                                         </div>
+                                        <div style="font-size: 10px; color: #64748b; margin-top: 6px;">자막 및 설명글과 절대 겹치지 않도록 하단 전용 위치에 안전하게 배치됩니다.</div>
                                     </div>
-
-                                    <div style="font-size: 11px; color: #64748b; margin-top: 8px;">영상 하단에 교회 이름이 표시됩니다.</div>
                                 </div>
 
                                 <!-- 3. Video Description & Caption Input (Textarea) -->
