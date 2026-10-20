@@ -338,6 +338,71 @@
                                 </div>
                             </div>
 
+                            <!-- AI Full Sermon Deep Scanner & Intent-Driven Climax Selector -->
+                            <div class="sermon-deep-scanner-box" id="sermon-deep-scanner-box">
+                                <div class="scanner-header-row">
+                                    <div class="scanner-title-group">
+                                        <h4>
+                                            <i class="fa-solid fa-brain" style="color: #38bdf8;"></i>
+                                            <span>설교 전편 52분 정밀 스캔 & 나의 의도(Intent) 맞춤 추출기</span>
+                                        </h4>
+                                        <p>아무데나 자르지 않고, 설교자가 강조한 클라이맥스와 내가 원하는 의도에 맞춰 [시작-중간-결과] 완결 쇼츠를 찾아냅니다.</p>
+                                    </div>
+                                    <div class="scanner-badge-verified">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <span>서사 완결성 100% 검증</span>
+                                    </div>
+                                </div>
+
+                                <!-- Climax Audio Waveform Heatmap (52 Min Full Scan) -->
+                                <div class="climax-heatmap-container">
+                                    <div class="heatmap-label-row">
+                                        <span>🎙️ 음성 에너지 & 감정 피크 히트맵 (설교자 목소리 고조 분석)</span>
+                                        <span id="scanner-peak-indicator" style="color: #f43f5e; font-weight: 700;">🔥 최고 클라이맥스: 01:10~02:10 (98.5 dB)</span>
+                                    </div>
+                                    <div class="waveform-canvas-bar" id="waveform-canvas-bar">
+                                        <!-- Dynamic wave bars generated via script -->
+                                        <div class="wave-cursor-marker" id="wave-cursor-marker" style="left: 5%;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Intent Filter Selector & Keyword Search -->
+                                <div class="intent-filter-wrapper">
+                                    <div style="font-size: 12px; font-weight: 700; color: #facc15; display: flex; align-items: center; gap: 6px;">
+                                        <i class="fa-solid fa-bullseye"></i> 내가 의도하는 설교 강조 포인트 선택 (원클릭 자동 매칭):
+                                    </div>
+                                    <div class="intent-pills-row" id="intent-pills-row">
+                                        <button class="intent-pill-btn active" onclick="filterShortsByIntent('all', this)">
+                                            <i class="fa-solid fa-fire"></i> 전체 핵심 클라이맥스
+                                        </button>
+                                        <button class="intent-pill-btn" onclick="filterShortsByIntent('essence', this)">
+                                            <i class="fa-solid fa-ship"></i> ⛵ 비유와 본질 (유람선 vs 구조선)
+                                        </button>
+                                        <button class="intent-pill-btn" onclick="filterShortsByIntent('soul', this)">
+                                            <i class="fa-solid fa-heart-crack"></i> 💔 한 영혼의 가치 / 눈물
+                                        </button>
+                                        <button class="intent-pill-btn" onclick="filterShortsByIntent('challenge', this)">
+                                            <i class="fa-solid fa-compass"></i> ⚔️ 안전지대 탈출과 도전
+                                        </button>
+                                        <button class="intent-pill-btn" onclick="filterShortsByIntent('goldentime', this)">
+                                            <i class="fa-solid fa-hourglass-half"></i> ⏳ 골든타임과 긴급성
+                                        </button>
+                                        <button class="intent-pill-btn" onclick="filterShortsByIntent('comfort', this)">
+                                            <i class="fa-solid fa-anchor"></i> 👑 풍랑 속 소망과 영원한 면류관
+                                        </button>
+                                    </div>
+
+                                    <!-- Custom Intent Keyword Input -->
+                                    <div class="intent-search-box">
+                                        <i class="fa-solid fa-magnifying-glass" style="color: #38bdf8; font-size: 13px;"></i>
+                                        <input type="text" id="custom-intent-input" placeholder="내가 전달하고 싶은 핵심 의도 직접 입력 (예: 영혼 구원의 긴박성, 안전지대 탈출, 선장의 명령)..." onkeydown="if(event.key==='Enter') searchCustomIntent()">
+                                        <button class="intent-search-btn" onclick="searchCustomIntent()">
+                                            <i class="fa-solid fa-wand-magic-sparkles"></i> 의도 맞춤 쇼츠 찾기
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Seolgyo AI Style: 쇼츠로 만들 구간 선택 & 원하는 구간 직접 추가 패널 -->
                             <div style="background: rgba(30, 41, 59, 0.75); border: 1px solid #334155; border-radius: 16px; padding: 18px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
@@ -433,7 +498,10 @@
 
                                         <!-- 3. Seolgyo AI Bottom Subtitle Group (Clean and Unobstructed) -->
                                         <div class="seolgyo-bottom-group" id="seolgyo-bottom-group">
-                                            <div class="sub-bible-ref" id="sub-bible-ref" style="font-size: 10px; font-weight: 700; color: #38bdf8; margin-bottom: 2px;">📖 마태복음 4:19</div>
+                                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                                                <div class="sub-bible-ref" id="sub-bible-ref" style="font-size: 10px; font-weight: 700; color: #38bdf8;">📖 마태복음 4:19</div>
+                                                <div id="sub-story-status-tag" class="sub-story-status-tag start">💡 1. 시작 (도입 화두)</div>
+                                            </div>
                                             <div class="seolgyo-sub-line sub-text-box style-neon" id="sub-text-box">
                                                 "교회는 유람선이 아닙니다. 영혼을 살리는 구조선입니다."
                                             </div>
@@ -457,12 +525,79 @@
                                 </div>
                             </div>
 
+                            <!-- 3-Stage Narrative Navigator (Start -> Middle -> End) -->
+                            <div class="shorts-story-navigator" id="shorts-story-navigator">
+                                <button class="story-stage-btn active" id="story-btn-start" onclick="jumpToStoryStage('start')">
+                                    <span class="stage-step-tag">1. 시작 (도입/훅)</span>
+                                    <span class="stage-step-title" id="story-nav-title-start">교회는 유람선인가</span>
+                                    <span class="stage-step-time" id="story-nav-time-start">00:00 ~ 00:15 (15초)</span>
+                                </button>
+                                <div class="story-step-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                                <button class="story-stage-btn" id="story-btn-middle" onclick="jumpToStoryStage('middle')">
+                                    <span class="stage-step-tag">2. 중간 (전개/핵심)</span>
+                                    <span class="stage-step-title" id="story-nav-title-middle">긴박한 구조선</span>
+                                    <span class="stage-step-time" id="story-nav-time-middle">00:15 ~ 00:42 (27초)</span>
+                                </button>
+                                <div class="story-step-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                                <button class="story-stage-btn" id="story-btn-end" onclick="jumpToStoryStage('end')">
+                                    <span class="stage-step-tag">3. 결과 (강조/결단)</span>
+                                    <span class="stage-step-title" id="story-nav-title-end">생명줄을 던지라</span>
+                                    <span class="stage-step-time" id="story-nav-time-end">00:42 ~ 01:00 (18초)</span>
+                                </button>
+                            </div>
+
                             <!-- Shorts Styling & Video Workbench Controls -->
                             <div class="shorts-customizer glass-card" style="margin-top: 16px; padding: 20px; border-radius: 16px; background: rgba(15, 23, 42, 0.7); border: 1px solid #1e293b;">
                                 <h4 style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
                                     <span><i class="fa-solid fa-sliders" style="color: #38bdf8;"></i> 비디오 편집 & 자막 레이아웃</span>
                                     <span style="font-size: 11px; background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 6px; font-weight: 800;">무제한 FREE</span>
                                 </h4>
+
+                                <!-- Smart Jump-Cut & Filler Word Cleaner Card -->
+                                <div class="filler-cutter-card" id="filler-cutter-card">
+                                    <div class="cutter-header-row">
+                                        <div class="cutter-title">
+                                            <i class="fa-solid fa-scissors" style="color: #10b981;"></i>
+                                            <span>AI 스마트 무음 & 필러워드 제거 (Smart Jump-Cut)</span>
+                                        </div>
+                                        <label class="cleaner-toggle-switch" title="음~ 어~ 불필요한 추임새와 무음을 자동 컷편집합니다">
+                                            <input type="checkbox" id="chk-smart-jumpcut" checked onchange="toggleSmartJumpCut(this.checked)">
+                                            <span class="toggle-slider"></span>
+                                            <span style="font-size: 11px; font-weight: 700; color: #10b981;" id="jumpcut-status-text">필터 가동 중</span>
+                                        </label>
+                                    </div>
+                                    <div class="cutter-options-grid">
+                                        <label class="cutter-chk-item">
+                                            <input type="checkbox" id="chk-opt-filler" checked onchange="updateCutOptions()">
+                                            <span>음~/어~ 추임새 삭제</span>
+                                        </label>
+                                        <label class="cutter-chk-item">
+                                            <input type="checkbox" id="chk-opt-repeat" checked onchange="updateCutOptions()">
+                                            <span>습관적 반복어구 컷</span>
+                                        </label>
+                                        <label class="cutter-chk-item">
+                                            <input type="checkbox" id="chk-opt-silence" checked onchange="updateCutOptions()">
+                                            <span>0.4초 무음 공백 삭제</span>
+                                        </label>
+                                    </div>
+                                    <div class="cutter-stats-bar">
+                                        <div class="cutter-stats-item">
+                                            <i class="fa-solid fa-trash-can" style="color: #f43f5e;"></i>
+                                            <span>추임새 제거: <strong id="stat-filler-count">14개</strong></span>
+                                        </div>
+                                        <div class="cutter-stats-item">
+                                            <i class="fa-solid fa-clock-rotate-left" style="color: #38bdf8;"></i>
+                                            <span>호흡 단축: <strong id="stat-time-saved">4.8초 절약</strong></span>
+                                        </div>
+                                        <div class="cutter-stats-item">
+                                            <i class="fa-solid fa-chart-line" style="color: #facc15;"></i>
+                                            <span>전달력: <strong id="stat-clarity-boost">99.8% (+38%)</strong></span>
+                                        </div>
+                                        <button class="btn-compare-script" onclick="openScriptCompareModal()">
+                                            <i class="fa-solid fa-file-lines"></i> 원본 대본 비교
+                                        </button>
+                                    </div>
+                                </div>
                                 
                                 <!-- 1. Visual Template Cards (Seolgyo AI Standard + Custom Styles) -->
                                 <div style="margin-bottom: 20px;">
@@ -2205,7 +2340,78 @@
         </div>
     </div>
 
+    <!-- Script Compare Modal (Raw vs AI Cleaned) -->
+    <div class="modal-backdrop" id="modal-script-compare" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(10px); padding: 20px;">
+        <div class="modal-content glass-card" style="background: #0f172a; border: 1px solid #38bdf8; border-radius: 20px; max-width: 840px; width: 100%; padding: 28px; box-shadow: 0 25px 60px rgba(0,0,0,0.7); max-height: 90vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 14px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; display: flex; align-items: center; justify-content: center; color: #10b981;">
+                        <i class="fa-solid fa-scissors"></i>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 17px; font-weight: 800; color: #fff; margin: 0 0 4px 0;">AI 스마트 무음 & 필러워드 제거 대본 분석</h3>
+                        <p style="font-size: 12px; color: #94a3b8; margin: 0;">음~, 어~, 말더듬, 습관적 반복어구와 불필요한 호흡 공백이 0.1초 단위로 자동 삭제되었습니다.</p>
+                    </div>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('modal-script-compare')" style="background: transparent; border: none; color: #94a3b8; font-size: 20px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Stats Bar -->
+            <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 160px; background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 10px; padding: 10px; text-align: center;">
+                    <span style="font-size: 11px; color: #fda4af; font-weight: 600; display: block;">제거된 추임새/필러</span>
+                    <strong style="font-size: 16px; color: #f43f5e;" id="modal-stat-filler">14개 (음~ 5회, 어~ 6회)</strong>
+                </div>
+                <div style="flex: 1; min-width: 160px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 10px; text-align: center;">
+                    <span style="font-size: 11px; color: #93c5fd; font-weight: 600; display: block;">단축된 호흡/무음</span>
+                    <strong style="font-size: 16px; color: #38bdf8;" id="modal-stat-time">4.8초 단축 (60초 핏)</strong>
+                </div>
+                <div style="flex: 1; min-width: 160px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 10px; text-align: center;">
+                    <span style="font-size: 11px; color: #a7f3d0; font-weight: 600; display: block;">메시지 전달 집중도</span>
+                    <strong style="font-size: 16px; color: #10b981;" id="modal-stat-clarity">99.8% (+38% 향상)</strong>
+                </div>
+            </div>
+
+            <!-- Comparison Two-Column View -->
+            <div class="script-diff-view">
+                <div class="script-diff-col">
+                    <div class="diff-col-title raw">
+                        <i class="fa-solid fa-volume-xmark"></i> 원본 음성 대본 (추임새/반복 포함)
+                    </div>
+                    <div class="diff-content-box" id="modal-raw-script-box">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+                <div class="script-diff-col">
+                    <div class="diff-col-title cleaned">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> AI 정제 대본 (시작-중간-결과 완결형)
+                    </div>
+                    <div class="diff-content-box" id="modal-clean-script-box">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3-Stage Story Breakdown in Modal -->
+            <div style="margin-top: 16px; background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 10px; padding: 12px;">
+                <div style="font-size: 12px; font-weight: 700; color: #facc15; margin-bottom: 8px;">
+                    <i class="fa-solid fa-layer-group"></i> 쇼츠 서사 3단계 검증 결과:
+                </div>
+                <div id="modal-story-breakdown-list" style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #cbd5e1;">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Footer Action Button -->
+            <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="closeModal('modal-script-compare')" style="background: linear-gradient(135deg, #2563eb, #7c3aed); border: none; color: #fff; font-weight: 700; padding: 10px 24px; border-radius: 10px; cursor: pointer;">
+                    확인 및 편집 계속하기
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="game.js"></script>
-    <script src="script.js?v=20261014_3"></script>
+    <script src="script.js?v=20261014_4"></script>
 </body>
 </html>
