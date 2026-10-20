@@ -1294,18 +1294,158 @@ function searchCustomIntent() {
     showToast(`🎯 의도 키워드 '${query}' 매칭 완료! 👉 "${(matched.line1 + ' ' + matched.line2)}"`);
 }
 
-/* 4-D. 3-Stage Story Structure Jump & Progress Navigation */
+/* 4-D. 1-Minute (60s) Shorts Player Engine & 3-Stage Story Navigation */
+const SHORTS_MAX_DURATION = 60.0;
+let shortsElapsedSec = 0.0;
+let shortsTimerInterval = null;
 let currentStoryStage = 'start'; // 'start' | 'middle' | 'end'
 let isSmartJumpCutEnabled = true;
 
-function jumpToStoryStage(stage) {
+// Ensure any highlight item has 3-stage connected narrative story structure
+function ensureItemStory(item) {
+    if (!item) return null;
+    if (!item.story) {
+        const l1 = item.line1 || "오늘 주신 은혜의 말씀";
+        const l2 = item.line2 || "삶의 결단으로 응답하라";
+        const q = item.quote ? item.quote.replace(/"/g, '') : "말씀 앞에 온전히 엎드려 성령의 능력을 구합시다.";
+        item.story = {
+            start: {
+                title: "1. 시작 (도입/화두)",
+                timeStr: "00:00 ~ 00:15 (15초)",
+                secOffset: 0,
+                text: `오늘 우리가 스스로에게 물어야 할 질문이 있습니다: "${l1} ${l2}"!`,
+                key: l1,
+                purpose: "청중의 마음을 집중시키는 도입 화두"
+            },
+            middle: {
+                title: "2. 중간 (전개/핵심)",
+                timeStr: "00:15 ~ 00:42 (27초)",
+                secOffset: 15,
+                text: q,
+                key: l2,
+                purpose: "설교의 가장 강력한 은혜의 핵심 선포"
+            },
+            end: {
+                title: "3. 결과 (강조/결단)",
+                timeStr: "00:42 ~ 01:00 (18초)",
+                secOffset: 42,
+                text: "이 말씀을 붙잡고 오늘 우리의 삶의 현장에서 온전히 순종하며 나아갑시다!",
+                key: "말씀에 순종하는 결단",
+                purpose: "깔끔한 결론과 성도의 믿음의 결단"
+            }
+        };
+    }
+    return item.story;
+}
+
+// 60-Second Shorts Real-Time Timer
+function startShortsTimer() {
+    stopShortsTimer();
+    const tickMs = 100;
+    shortsTimerInterval = setInterval(() => {
+        shortsElapsedSec += (tickMs / 1000) * (currentShortsSpeed || 1.0);
+        if (shortsElapsedSec >= SHORTS_MAX_DURATION) {
+            shortsElapsedSec = SHORTS_MAX_DURATION;
+            updateShortsProgressUI();
+            stopShortsTimer();
+
+            // Finish 1-minute shorts smoothly
+            isPlaying = false;
+            const icon = document.getElementById('phone-play-icon');
+            if (icon) icon.className = 'fa-solid fa-play';
+            const flowPlayIcon = document.getElementById('flow-play-btn-icon');
+            if (flowPlayIcon) flowPlayIcon.className = 'fa-solid fa-play';
+            const eqBars = document.querySelectorAll('.audio-equalizer span');
+            eqBars.forEach(bar => bar.style.animationPlayState = 'paused');
+
+            const ytPlayer = document.getElementById('youtube-iframe-player');
+            if (ytPlayer) sendYtCommand('pauseVideo', []);
+            const videoPlayer = document.getElementById('uploaded-video-player');
+            if (videoPlayer) videoPlayer.pause();
+
+            showToast('🎉 [1분 완결 은혜 쇼츠] 60초 완주 완료! 도입-핵심-결론 서사가 깔끔하게 완성되었습니다.');
+            return;
+        }
+
+        updateShortsProgressUI();
+        checkAutoStageTransition(shortsElapsedSec);
+    }, tickMs);
+}
+
+function stopShortsTimer() {
+    if (shortsTimerInterval) {
+        clearInterval(shortsTimerInterval);
+        shortsTimerInterval = null;
+    }
+}
+
+function resetShortsTimer() {
+    stopShortsTimer();
+    shortsElapsedSec = 0.0;
+    updateShortsProgressUI();
+}
+
+function updateShortsProgressUI() {
+    const fill = document.getElementById('shorts-scrubber-fill');
+    const pct = Math.min(100, Math.max(0, (shortsElapsedSec / SHORTS_MAX_DURATION) * 100));
+    if (fill) fill.style.width = pct.toFixed(1) + '%';
+
+    const timeLabel = document.getElementById('shorts-timer-elapsed');
+    if (timeLabel) {
+        const min = Math.floor(shortsElapsedSec / 60);
+        const sec = Math.floor(shortsElapsedSec % 60);
+        timeLabel.textContent = `0${min}:${sec < 10 ? '0' : ''}${sec}`;
+    }
+}
+
+// Automatically transition between [1. 시작] -> [2. 핵심] -> [3. 결론] without jump glitches
+function checkAutoStageTransition(sec) {
+    let targetStage = 'start';
+    if (sec >= 42.0) {
+        targetStage = 'end';
+    } else if (sec >= 15.0) {
+        targetStage = 'middle';
+    }
+
+    if (targetStage !== currentStoryStage) {
+        jumpToStoryStage(targetStage, false); // false: do not re-seek video; it is flowing continuously!
+    }
+}
+
+// User clicks on the 60s Scrubber Track to seek directly
+function seekShortsProgress(event) {
+    const track = document.getElementById('shorts-scrubber-track');
+    if (!track) return;
+    const rect = track.getBoundingClientRect();
+    const clickX = Math.max(0, Math.min(rect.width, event.clientX - rect.left));
+    const ratio = clickX / rect.width;
+    shortsElapsedSec = ratio * SHORTS_MAX_DURATION;
+
+    let targetStage = 'start';
+    if (shortsElapsedSec >= 42.0) targetStage = 'end';
+    else if (shortsElapsedSec >= 15.0) targetStage = 'middle';
+
+    jumpToStoryStage(targetStage, true);
+    updateShortsProgressUI();
+}
+
+function jumpToStoryStage(stage, seekVideo = true) {
     if (!currentDataset || !currentDataset.highlights || !currentDataset.highlights[currentHighlightIdx]) return;
     const item = currentDataset.highlights[currentHighlightIdx];
+    ensureItemStory(item);
     if (!item.story || !item.story[stage]) return;
 
     currentStoryStage = stage;
 
-    // Update Story Stage Buttons
+    // Sync elapsed time if sought explicitly
+    if (seekVideo) {
+        if (stage === 'start') shortsElapsedSec = 0.0;
+        else if (stage === 'middle') shortsElapsedSec = 15.0;
+        else if (stage === 'end') shortsElapsedSec = 42.0;
+        updateShortsProgressUI();
+    }
+
+    // 1. Update Story Stage Buttons in Navigator
     ['start', 'middle', 'end'].forEach(s => {
         const btn = document.getElementById(`story-btn-${s}`);
         if (btn) {
@@ -1314,7 +1454,15 @@ function jumpToStoryStage(stage) {
         }
     });
 
-    // Update Subtitle Story Tag in Phone Screen
+    // 2. Update Live Stage Badge in 60s Progress Bar
+    const stageBadgeText = document.getElementById('shorts-live-stage-name');
+    if (stageBadgeText) {
+        if (stage === 'start') stageBadgeText.textContent = '1. 도입 (0~15초)';
+        else if (stage === 'middle') stageBadgeText.textContent = '2. 핵심 전개 (15~42초)';
+        else if (stage === 'end') stageBadgeText.textContent = '3. 결론 및 결단 (42~60초)';
+    }
+
+    // 3. Update Subtitle Story Tag in Phone Screen
     const tagEl = document.getElementById('sub-story-status-tag');
     if (tagEl) {
         tagEl.className = `sub-story-status-tag ${stage}`;
@@ -1323,51 +1471,63 @@ function jumpToStoryStage(stage) {
         else if (stage === 'end') tagEl.textContent = '🔥 3. 결과 (결단 강조)';
     }
 
-    // Update Live Subtitle in Phone Simulator
+    // 4. Update Live Subtitle in Phone Simulator
     const subText = document.getElementById('sub-text-box');
     if (subText) {
         const stageData = item.story[stage];
-        const displayText = isSmartJumpCutEnabled ? stageData.text : (item.rawScript.slice(0, 60) + '...');
+        const displayText = isSmartJumpCutEnabled ? stageData.text : (item.rawScript ? item.rawScript.slice(0, 60) + '...' : stageData.text);
         subText.innerHTML = `"${displayText}"<br><span class="highlight-word" style="color: #facc15; font-size: 11px; display: block; margin-top: 3px;">📌 ${stageData.key}</span>`;
     }
 
-    // Jump Video Player Time
-    const baseSec = parseTimestampToSeconds(item.time);
-    const targetSec = baseSec + (item.story[stage].secOffset || 0);
-
-    const videoPlayer = document.getElementById('uploaded-video-player');
-    const ytPlayer = document.getElementById('youtube-iframe-player');
-
-    if (currentDataset.videoId && ytPlayer) {
-        if (ytPlayer.src && ytPlayer.src.includes(currentDataset.videoId)) {
-            sendYtCommand('seekTo', [targetSec, true]);
-            if (!isAudioMuted) {
-                sendYtCommand('unMute', []);
-                sendYtCommand('setVolume', [currentAudioVolume]);
-            }
-            sendYtCommand('playVideo', []);
-        } else {
-            const origin = encodeURIComponent(window.location.origin || 'http://localhost:8080');
-            ytPlayer.src = `https://www.youtube.com/embed/${currentDataset.videoId}?enablejsapi=1&autoplay=1&mute=0&start=${targetSec}&end=${baseSec + 60}&rel=0&origin=${origin}&widget_referrer=${origin}`;
+    // 5. Update Storyboard Flow Card Active Step
+    ['start', 'middle', 'end'].forEach(s => {
+        const flowBox = document.getElementById(`flow-step-${s}`);
+        if (flowBox) {
+            if (s === stage) flowBox.classList.add('active');
+            else flowBox.classList.remove('active');
         }
-    } else if (videoPlayer && videoPlayer.src) {
-        videoPlayer.currentTime = targetSec;
-        videoPlayer.muted = isAudioMuted;
-        videoPlayer.volume = isAudioMuted ? 0 : (currentAudioVolume / 100);
-        videoPlayer.play().catch(() => {});
-    }
+    });
 
-    if (audioSourceMode === 'ai_voice' && isPlaying) {
-        playCurrentStageNarration();
-    }
+    // 6. Jump Underlying Video Player Time if requested
+    if (seekVideo) {
+        const baseSec = parseTimestampToSeconds(item.time);
+        const targetSec = baseSec + (item.story[stage].secOffset || 0);
 
-    showToast(`📍 [${stage === 'start' ? '1. 시작 화두' : stage === 'middle' ? '2. 핵심 전개' : '3. 결단 강조'}] 구간으로 이동했습니다.`);
+        const videoPlayer = document.getElementById('uploaded-video-player');
+        const ytPlayer = document.getElementById('youtube-iframe-player');
+
+        if (currentDataset.videoId && ytPlayer) {
+            if (ytPlayer.src && ytPlayer.src.includes(currentDataset.videoId)) {
+                sendYtCommand('seekTo', [targetSec, true]);
+                if (!isAudioMuted) {
+                    sendYtCommand('unMute', []);
+                    sendYtCommand('setVolume', [currentAudioVolume]);
+                }
+                sendYtCommand('playVideo', []);
+            } else {
+                const origin = encodeURIComponent(window.location.origin || 'http://localhost:8080');
+                ytPlayer.src = `https://www.youtube.com/embed/${currentDataset.videoId}?enablejsapi=1&autoplay=1&mute=0&start=${targetSec}&end=${baseSec + 60}&rel=0&origin=${origin}&widget_referrer=${origin}`;
+            }
+        } else if (videoPlayer && videoPlayer.src) {
+            videoPlayer.currentTime = targetSec;
+            videoPlayer.muted = isAudioMuted;
+            videoPlayer.volume = isAudioMuted ? 0 : (currentAudioVolume / 100);
+            videoPlayer.play().catch(() => {});
+        }
+
+        if (audioSourceMode === 'ai_voice' && isPlaying) {
+            playCurrentStageNarration();
+        }
+
+        showToast(`📍 [${stage === 'start' ? '1. 시작 화두' : stage === 'middle' ? '2. 핵심 전개' : '3. 결단 강조'}] 구간으로 이동했습니다.`);
+    }
 }
 
 function updateStoryNavigatorUI(item) {
-    if (!item || !item.story) return;
-
+    if (!item) return;
+    ensureItemStory(item);
     const s = item.story;
+
     const tStart = document.getElementById('story-nav-title-start');
     const tMiddle = document.getElementById('story-nav-title-middle');
     const tEnd = document.getElementById('story-nav-title-end');
@@ -1380,9 +1540,77 @@ function updateStoryNavigatorUI(item) {
     if (tMiddle) tMiddle.textContent = s.middle.key || '핵심 비유 전개';
     if (tEnd) tEnd.textContent = s.end.key || '결단 강조 마침';
 
-    if (timeStart) timeStart.textContent = s.start.timeStr || '00:00 ~ 00:15';
-    if (timeMiddle) timeMiddle.textContent = s.middle.timeStr || '00:15 ~ 00:42';
-    if (timeEnd) timeEnd.textContent = s.end.timeStr || '00:42 ~ 01:00';
+    if (timeStart) timeStart.textContent = s.start.timeStr || '00:00 ~ 00:15 (15초)';
+    if (timeMiddle) timeMiddle.textContent = s.middle.timeStr || '00:15 ~ 00:42 (27초)';
+    if (timeEnd) timeEnd.textContent = s.end.timeStr || '00:42 ~ 01:00 (18초)';
+
+    updateStoryFlowSummaryUI(item);
+}
+
+function updateStoryFlowSummaryUI(item) {
+    if (!item) return;
+    ensureItemStory(item);
+    const s = item.story;
+
+    const flowTitle = document.getElementById('flow-title');
+    if (flowTitle) {
+        flowTitle.textContent = `1분 은혜 쇼츠 완성 스토리보드: ${item.line1 || ''} ${item.line2 || ''}`;
+    }
+
+    const keyStart = document.getElementById('flow-key-start');
+    const textStart = document.getElementById('flow-text-start');
+    const timeStart = document.getElementById('flow-time-start');
+
+    const keyMiddle = document.getElementById('flow-key-middle');
+    const textMiddle = document.getElementById('flow-text-middle');
+    const timeMiddle = document.getElementById('flow-time-middle');
+
+    const keyEnd = document.getElementById('flow-key-end');
+    const textEnd = document.getElementById('flow-text-end');
+    const timeEnd = document.getElementById('flow-time-end');
+
+    if (keyStart) keyStart.textContent = s.start.key;
+    if (textStart) textStart.textContent = `"${s.start.text}"`;
+    if (timeStart) timeStart.textContent = s.start.timeStr || '00:00 ~ 00:15 (15초)';
+
+    if (keyMiddle) keyMiddle.textContent = s.middle.key;
+    if (textMiddle) textMiddle.textContent = `"${s.middle.text}"`;
+    if (timeMiddle) timeMiddle.textContent = s.middle.timeStr || '00:15 ~ 00:42 (27초)';
+
+    if (keyEnd) keyEnd.textContent = s.end.key;
+    if (textEnd) textEnd.textContent = `"${s.end.text}"`;
+    if (timeEnd) timeEnd.textContent = s.end.timeStr || '00:42 ~ 01:00 (18초)';
+}
+
+// Instant 1-Minute Shorts Producer & Auto-Player
+function produceAndPlay1MinShorts(idx) {
+    selectHighlight(idx);
+    resetShortsTimer();
+    jumpToStoryStage('start', true);
+
+    if (!isPlaying) {
+        toggleShortsPlay();
+    } else {
+        startShortsTimer();
+    }
+
+    showToast(`🎬 [1분 완결 쇼츠 #${idx + 1}] 제작 완료! (도입 ➔ 핵심 ➔ 결론 서사 연결)`);
+
+    const phone = document.getElementById('shorts-phone-container');
+    if (phone) {
+        phone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+function replay1MinShortsFromStart() {
+    resetShortsTimer();
+    jumpToStoryStage('start', true);
+    if (!isPlaying) {
+        toggleShortsPlay();
+    } else {
+        startShortsTimer();
+    }
+    showToast('🔄 1분 완결 쇼츠를 처음(00:00)부터 다시 재생합니다.');
 }
 
 /* 4-E. Smart Jump-Cut & Filler Word Cleaner Handlers */
@@ -1542,9 +1770,9 @@ function renderHighlightCards() {
                         <span>AI 정제: 추임새 ${fillerCount}개 삭제 · ${timeSaved} 단축 (완벽 1분 핏)</span>
                     </div>
 
-                    <!-- Preview Text Button -->
-                    <button class="card-preview-btn" onclick="event.stopPropagation(); selectHighlight(${idx});">
-                        <i class="fa-solid fa-play"></i> 3단 스토리 재생
+                    <!-- 1-Minute Completed Shorts Instant Production & Play Button -->
+                    <button class="card-produce-shorts-btn" onclick="event.stopPropagation(); produceAndPlay1MinShorts(${idx});">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> 🎬 1분 완결 쇼츠 바로 제작 & 재생 (60초)
                     </button>
 
                     <!-- Editable Title Inputs (Direct Editable Fields) -->
@@ -1711,9 +1939,10 @@ function selectHighlight(idx) {
         updateJumpCutStatsUI(currentItem);
         updateWaveMarker(currentItem);
 
-        // 4. Set Initial Story Stage (Start: Hook)
+        // 4. Set Initial Story Stage (Start: Hook) & Reset 60s Shorts Timer
         currentStoryStage = 'start';
-        jumpToStoryStage('start');
+        resetShortsTimer();
+        jumpToStoryStage('start', false);
 
         // 5. Update Description
         const descBox = document.getElementById('shorts-desc-text');
@@ -1755,8 +1984,14 @@ function selectHighlight(idx) {
             isPlaying = true;
             const icon = document.getElementById('phone-play-icon');
             if (icon) icon.className = 'fa-solid fa-pause';
+            const flowIcon = document.getElementById('flow-play-btn-icon');
+            if (flowIcon) flowIcon.className = 'fa-solid fa-pause';
+            const btnFlowPlay = document.getElementById('btn-flow-play');
+            if (btnFlowPlay) btnFlowPlay.innerHTML = '<i class="fa-solid fa-pause" id="flow-play-btn-icon"></i> 1분 쇼츠 일시정지';
             const eqBars = document.querySelectorAll('.audio-equalizer span');
             eqBars.forEach(bar => bar.style.animationPlayState = 'running');
+
+            startShortsTimer();
 
             if (audioSourceMode === 'ai_voice') {
                 playCurrentStageNarration();
@@ -1780,8 +2015,14 @@ function selectHighlight(idx) {
                 isPlaying = true;
                 const icon = document.getElementById('phone-play-icon');
                 if (icon) icon.className = 'fa-solid fa-pause';
+                const flowIcon = document.getElementById('flow-play-btn-icon');
+                if (flowIcon) flowIcon.className = 'fa-solid fa-pause';
+                const btnFlowPlay = document.getElementById('btn-flow-play');
+                if (btnFlowPlay) btnFlowPlay.innerHTML = '<i class="fa-solid fa-pause" id="flow-play-btn-icon"></i> 1분 쇼츠 일시정지';
                 const eqBars = document.querySelectorAll('.audio-equalizer span');
                 eqBars.forEach(bar => bar.style.animationPlayState = 'running');
+
+                startShortsTimer();
             }).catch(() => {
                 isPlaying = false;
             });
@@ -1818,6 +2059,8 @@ function initPlaySimulation() {
 function toggleShortsPlay() {
     isPlaying = !isPlaying;
     const icon = document.getElementById('phone-play-icon');
+    const flowIcon = document.getElementById('flow-play-btn-icon');
+    const btnFlowPlay = document.getElementById('btn-flow-play');
     const eqBars = document.querySelectorAll('.audio-equalizer span');
     const imgLayer = document.getElementById('preview-img-layer');
     const videoPlayer = document.getElementById('uploaded-video-player');
@@ -1825,6 +2068,8 @@ function toggleShortsPlay() {
 
     if (isPlaying) {
         if (icon) icon.className = 'fa-solid fa-pause';
+        if (flowIcon) flowIcon.className = 'fa-solid fa-pause';
+        if (btnFlowPlay) btnFlowPlay.innerHTML = '<i class="fa-solid fa-pause" id="flow-play-btn-icon"></i> 1분 쇼츠 일시정지';
         eqBars.forEach(bar => bar.style.animationPlayState = 'running');
 
         // Always hide static image overlay when playing so active video is visible
@@ -1843,13 +2088,18 @@ function toggleShortsPlay() {
             }
         }
 
+        // Start 60s shorts timer
+        startShortsTimer();
+
         if (audioSourceMode === 'ai_voice') {
             playCurrentStageNarration();
         }
 
-        showToast('▶️ 1분 은혜 쇼츠 재생 중 (사운드 ON)');
+        showToast('▶️ 1분 완결 쇼츠 재생 시작 (60초 카운트다운)');
     } else {
         if (icon) icon.className = 'fa-solid fa-play';
+        if (flowIcon) flowIcon.className = 'fa-solid fa-play';
+        if (btnFlowPlay) btnFlowPlay.innerHTML = '<i class="fa-solid fa-play" id="flow-play-btn-icon"></i> 1분 쇼츠 재생';
         eqBars.forEach(bar => bar.style.animationPlayState = 'paused');
 
         if (videoPlayer && videoPlayer.src) {
@@ -1858,8 +2108,11 @@ function toggleShortsPlay() {
         if (ytPlayer) {
             sendYtCommand('pauseVideo', []);
         }
+
+        // Stop 60s shorts timer
+        stopShortsTimer();
         stopAiVoiceNarration();
-        showToast('⏸️ 일시 정지');
+        showToast('⏸️ 1분 쇼츠 일시 정지');
     }
 }
 

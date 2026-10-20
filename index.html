@@ -508,6 +508,33 @@
                                             </button>
                                         </div>
 
+                                        <!-- 1-Minute Shorts Dedicated 60s Progress Bar with 3-Stage Chapters -->
+                                        <div class="shorts-progress-bar-wrap" id="shorts-progress-bar-wrap" style="width: 100%; margin: 6px 0; z-index: 25; padding: 0 2px;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; font-size: 10px; font-weight: 800;">
+                                                <div style="display: flex; align-items: center; gap: 4px; color: #38bdf8;">
+                                                    <i class="fa-solid fa-circle-play" style="font-size: 9px;"></i>
+                                                    <span id="shorts-timer-elapsed" style="font-family: monospace; font-size: 11px; font-weight: 800;">00:00</span>
+                                                    <span style="color: #64748b; font-weight: 600;">/</span>
+                                                    <span style="color: #94a3b8; font-family: monospace;">01:00</span>
+                                                </div>
+                                                <div id="shorts-live-stage-badge" style="background: rgba(37, 99, 235, 0.4); border: 1px solid #38bdf8; color: #ffffff; padding: 2px 7px; border-radius: 10px; font-size: 9px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                                                    <span class="pulse-stage-dot" style="width: 5px; height: 5px; background: #38bdf8; border-radius: 50%; display: inline-block;"></span>
+                                                    <span id="shorts-live-stage-name">1. 도입 (0~15초)</span>
+                                                </div>
+                                                <div style="color: #facc15; font-size: 9px; font-weight: 800; background: rgba(250, 204, 21, 0.15); border: 1px solid rgba(250, 204, 21, 0.3); padding: 1px 6px; border-radius: 4px;">
+                                                    60초 완결 쇼츠
+                                                </div>
+                                            </div>
+                                            <!-- Interactive Scrubber Track -->
+                                            <div class="shorts-scrubber-track" id="shorts-scrubber-track" onclick="seekShortsProgress(event)" style="width: 100%; height: 6px; background: rgba(30, 41, 59, 0.9); border-radius: 4px; position: relative; cursor: pointer; overflow: hidden; border: 1px solid rgba(255,255,255,0.15);">
+                                                <!-- 3 Chapter Separator Marks -->
+                                                <div style="position: absolute; left: 25%; top: 0; bottom: 0; width: 1.5px; background: rgba(255,255,255,0.5); z-index: 2;" title="15초: 핵심 전개 시작"></div>
+                                                <div style="position: absolute; left: 70%; top: 0; bottom: 0; width: 1.5px; background: rgba(255,255,255,0.5); z-index: 2;" title="42초: 결론/결단 시작"></div>
+                                                <!-- Fill Bar -->
+                                                <div id="shorts-scrubber-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, #38bdf8, #818cf8, #facc15); border-radius: 4px; transition: width 0.1s linear;"></div>
+                                            </div>
+                                        </div>
+
                                         <!-- 3. Seolgyo AI Bottom Subtitle Group (Clean and Unobstructed) -->
                                         <div class="seolgyo-bottom-group" id="seolgyo-bottom-group">
                                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
@@ -556,6 +583,89 @@
                                     <span class="stage-step-title" id="story-nav-title-end">생명줄을 던지라</span>
                                     <span class="stage-step-time" id="story-nav-time-end">00:42 ~ 01:00 (18초)</span>
                                 </button>
+                            </div>
+
+                            <!-- 1-Minute Shorts Dedicated Connected Sermon Flow Storyboard -->
+                            <div class="shorts-flow-summary-card" id="shorts-flow-summary-card">
+                                <div class="flow-card-header">
+                                    <div class="flow-header-left">
+                                        <span class="flow-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> 1분 완결 설교 서사 구조</span>
+                                        <h4 class="flow-title" id="flow-title">1분 은혜 쇼츠 완성 스토리보드</h4>
+                                    </div>
+                                    <div class="flow-header-right">
+                                        <span class="flow-duration-pill"><i class="fa-solid fa-clock"></i> 60초 완결 (00:00~01:00)</span>
+                                        <button class="flow-replay-btn" onclick="replay1MinShortsFromStart()" title="처음부터 60초 다시 재생">
+                                            <i class="fa-solid fa-rotate-left"></i> 60초 처음부터 재생
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="flow-steps-grid">
+                                    <!-- Step 1: 시작 (0~15s) -->
+                                    <div class="flow-step-box active" id="flow-step-start" onclick="jumpToStoryStage('start')">
+                                        <div class="flow-step-top">
+                                            <span class="step-num-pill start">1. 시작 (도입 화두)</span>
+                                            <span class="step-time" id="flow-time-start">00:00 ~ 00:15 (15초)</span>
+                                        </div>
+                                        <div class="flow-step-headline" id="flow-key-start">교회는 유람선인가</div>
+                                        <p class="flow-step-snippet" id="flow-text-start">"오늘 우리가 스스로에게 물어야 합니다. 교회는 과연 무엇을 위해 모인 곳입니까? 편안히 먹고 즐기는 유람선입니까?"</p>
+                                        <div class="flow-step-footer">
+                                            <span class="flow-role-tag">🎯 청중 몰입 화두 던지기</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Connector Arrow -->
+                                    <div class="flow-step-connector">
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </div>
+
+                                    <!-- Step 2: 중간 (15~42s) -->
+                                    <div class="flow-step-box" id="flow-step-middle" onclick="jumpToStoryStage('middle')">
+                                        <div class="flow-step-top">
+                                            <span class="step-num-pill middle">2. 핵심 (은혜 전개)</span>
+                                            <span class="step-time" id="flow-time-middle">00:15 ~ 00:42 (27초)</span>
+                                        </div>
+                                        <div class="flow-step-headline" id="flow-key-middle">영혼을 건지는 긴박한 구조선</div>
+                                        <p class="flow-step-snippet" id="flow-text-middle">"예수님이 세우신 교회는 결코 유람선이 아닙니다! 지금 이 순간에도 깊은 바다에 빠져 죽어가는 영혼을 건져내는 긴박한 구조선입니다."</p>
+                                        <div class="flow-step-footer">
+                                            <span class="flow-role-tag">📖 설교 핵심 말씀 & 비유 전개</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Connector Arrow -->
+                                    <div class="flow-step-connector">
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </div>
+
+                                    <!-- Step 3: 결과 (42~60s) -->
+                                    <div class="flow-step-box" id="flow-step-end" onclick="jumpToStoryStage('end')">
+                                        <div class="flow-step-top">
+                                            <span class="step-num-pill end">3. 결과 (결단 강조)</span>
+                                            <span class="step-time" id="flow-time-end">00:42 ~ 01:00 (18초)</span>
+                                        </div>
+                                        <div class="flow-step-headline" id="flow-key-end">생명의 밧줄을 던지라</div>
+                                        <p class="flow-step-snippet" id="flow-text-end">"편안한 자리에 머물지 말고, 죽어가는 영혼들을 향해 생명의 밧줄을 던지십시오! 주님의 구조선으로 다시 일어납시다!"</p>
+                                        <div class="flow-step-footer">
+                                            <span class="flow-role-tag">🔥 성도의 결단 & 깔끔한 결론 마침</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bottom Action Ribbon -->
+                                <div class="flow-action-ribbon">
+                                    <div class="flow-ribbon-info">
+                                        <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>
+                                        <span>50분 장편 설교에서 <b>불필요한 호흡/잡음 14개 완전 정제</b> 및 <b>60초 완결 서사</b>로 매끄럽게 연결되었습니다.</span>
+                                    </div>
+                                    <div class="flow-ribbon-actions">
+                                        <button class="btn-flow-play" id="btn-flow-play" onclick="toggleShortsPlay()">
+                                            <i class="fa-solid fa-play" id="flow-play-btn-icon"></i> 1분 쇼츠 재생
+                                        </button>
+                                        <button class="btn-flow-export" onclick="triggerShortsExport()">
+                                            <i class="fa-solid fa-download"></i> 1분 쇼츠 MP4 내보내기
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Shorts Styling & Video Workbench Controls -->

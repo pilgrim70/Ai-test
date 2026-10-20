@@ -3869,3 +3869,331 @@ body.dark-theme .card-input-box.yellow-highlight {
     background: rgba(51, 65, 85, 0.8) !important;
     color: #f8fafc !important;
 }
+
+/* ==========================================================================
+   1-Minute (60s) Shorts Progress Scrubber & Connected Sermon Flow Card
+   ========================================================================== */
+.pulse-stage-dot {
+    animation: pulseDot 1.2s infinite;
+}
+
+@keyframes pulseDot {
+    0%, 100% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+        box-shadow: 0 0 6px #38bdf8;
+    }
+}
+
+.shorts-scrubber-track {
+    transition: height 0.15s ease, box-shadow 0.15s ease;
+}
+
+.shorts-scrubber-track:hover {
+    height: 9px !important;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+}
+
+.shorts-flow-summary-card {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin: 14px 0 16px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.flow-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.flow-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.flow-badge {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.2));
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.flow-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+}
+
+.flow-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.flow-duration-pill {
+    background: rgba(250, 204, 21, 0.15);
+    border: 1px solid rgba(250, 204, 21, 0.4);
+    color: #facc15;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.flow-replay-btn {
+    background: rgba(51, 65, 85, 0.8);
+    border: 1px solid #475569;
+    color: #e2e8f0;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.flow-replay-btn:hover {
+    background: rgba(56, 189, 248, 0.2);
+    border-color: #38bdf8;
+    color: #ffffff;
+}
+
+.flow-steps-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: stretch;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+@media (max-width: 768px) {
+    .flow-steps-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .flow-step-connector {
+        transform: rotate(90deg);
+        margin: 2px auto;
+    }
+}
+
+.flow-step-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.flow-step-box {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.flow-step-box:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: #38bdf8;
+    transform: translateY(-2px);
+}
+
+.flow-step-box.active {
+    background: linear-gradient(180deg, rgba(37, 99, 235, 0.25), rgba(30, 41, 59, 0.9));
+    border: 1.5px solid #38bdf8;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+}
+
+.flow-step-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 4px;
+}
+
+.step-num-pill {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 6px;
+}
+
+.step-num-pill.start {
+    background: rgba(56, 189, 248, 0.2);
+    color: #38bdf8;
+}
+
+.step-num-pill.middle {
+    background: rgba(168, 85, 247, 0.2);
+    color: #c084fc;
+}
+
+.step-num-pill.end {
+    background: rgba(250, 204, 21, 0.2);
+    color: #facc15;
+}
+
+.step-time {
+    font-size: 10px;
+    color: #94a3b8;
+    font-family: monospace;
+    font-weight: 600;
+}
+
+.flow-step-headline {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 6px;
+    line-height: 1.3;
+}
+
+.flow-step-snippet {
+    font-size: 11px;
+    color: #cbd5e1;
+    line-height: 1.45;
+    margin: 0 0 8px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.flow-step-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 6px;
+}
+
+.flow-role-tag {
+    font-size: 10px;
+    font-weight: 700;
+    color: #94a3b8;
+}
+
+.flow-step-box.active .flow-role-tag {
+    color: #38bdf8;
+}
+
+.flow-action-ribbon {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.flow-ribbon-info {
+    font-size: 11px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.flow-ribbon-info b {
+    color: #e2e8f0;
+}
+
+.flow-ribbon-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-flow-play {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-flow-play:hover {
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.btn-flow-export {
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-flow-export:hover {
+    background: rgba(56, 189, 248, 0.15);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Card Produce 1-Min Shorts Button */
+.card-produce-shorts-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    transition: all 0.2s ease;
+}
+
+.card-produce-shorts-btn:hover {
+    background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+    transform: translateY(-1.5px);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.5);
+    border-color: #38bdf8;
+}
+
