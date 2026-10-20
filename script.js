@@ -751,6 +751,218 @@ let currentDataset = sampleData.gwanyu;
 let currentHighlightIdx = 0;
 let isPlaying = false;
 let currentShortsSpeed = 1.0;
+let isAudioMuted = false;
+let currentAudioVolume = 100;
+let audioSourceMode = 'original'; // 'original' or 'ai_voice'
+let ytPlayerInstance = null;
+let isYtApiReady = false;
+let currentSpeechUtterance = null;
+
+/* ==========================================================================
+   YouTube IFrame API & Sound Engine
+   ========================================================================== */
+window.onYouTubeIframeAPIReady = function() {
+    isYtApiReady = true;
+    try {
+        ytPlayerInstance = new YT.Player('youtube-iframe-player', {
+            events: {
+                onReady: onYtPlayerReady,
+                onStateChange: onYtPlayerStateChange
+            }
+        });
+    } catch (e) {
+        console.warn('YouTube IFrame API initialization caught:', e);
+    }
+};
+
+function onYtPlayerReady(event) {
+    if (!isAudioMuted) {
+        try {
+            event.target.unMute();
+            event.target.setVolume(currentAudioVolume);
+        } catch (e) {}
+    }
+}
+
+function onYtPlayerStateChange(event) {
+    if (!window.YT) return;
+    const icon = document.getElementById('phone-play-icon');
+    const eqBars = document.querySelectorAll('.audio-equalizer span');
+    if (event.data === YT.PlayerState.PLAYING) {
+        isPlaying = true;
+        if (icon) icon.className = 'fa-solid fa-pause';
+        eqBars.forEach(bar => bar.style.animationPlayState = 'running');
+        if (!isAudioMuted && ytPlayerInstance) {
+            try {
+                ytPlayerInstance.unMute();
+                ytPlayerInstance.setVolume(currentAudioVolume);
+            } catch (e) {}
+        }
+    } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+        isPlaying = false;
+        if (icon) icon.className = 'fa-solid fa-play';
+        eqBars.forEach(bar => bar.style.animationPlayState = 'paused');
+    }
+}
+
+function sendYtCommand(func, args = []) {
+    if (ytPlayerInstance && typeof ytPlayerInstance[func] === 'function') {
+        try {
+            ytPlayerInstance[func](...args);
+            return;
+        } catch (e) {
+            console.warn('ytPlayerInstance error, falling back to postMessage:', e);
+        }
+    }
+    const ytPlayer = document.getElementById('youtube-iframe-player');
+    if (ytPlayer && ytPlayer.contentWindow) {
+        ytPlayer.contentWindow.postMessage(JSON.stringify({
+            event: 'command',
+            func: func,
+            args: Array.isArray(args) ? args : [args]
+        }), '*');
+    }
+}
+
+function toggleShortsAudioMute() {
+    isAudioMuted = !isAudioMuted;
+    applyAudioState();
+    showToast(isAudioMuted ? '🔇 음소거되었습니다.' : `🔊 소리가 켜졌습니다 (${currentAudioVolume}%).`);
+}
+
+function unmuteAllAudio() {
+    isAudioMuted = false;
+    if (currentAudioVolume === 0) currentAudioVolume = 100;
+    applyAudioState();
+    showToast('🔊 소리가 켜졌습니다 (볼륨 100%).');
+}
+
+function setShortsVolume(val) {
+    currentAudioVolume = parseInt(val, 10);
+    isAudioMuted = (currentAudioVolume === 0);
+    applyAudioState();
+}
+
+function applyAudioState() {
+    const soundIcon = document.getElementById('shorts-sound-icon');
+    const soundText = document.getElementById('shorts-sound-text');
+    const soundToggleBtn = document.getElementById('shorts-sound-toggle-btn');
+    const audioBadge = document.getElementById('audio-status-badge');
+    const volumeSlider = document.getElementById('shorts-volume-slider');
+    const volumeLabel = document.getElementById('shorts-volume-label');
+    const unmuteHint = document.getElementById('sound-unmute-hint');
+    const videoPlayer = document.getElementById('uploaded-video-player');
+
+    if (volumeSlider) volumeSlider.value = currentAudioVolume;
+    if (volumeLabel) volumeLabel.textContent = `${currentAudioVolume}%`;
+
+    if (isAudioMuted) {
+        if (soundIcon) soundIcon.className = 'fa-solid fa-volume-xmark';
+        if (soundText) soundText.textContent = '음소거됨';
+        if (soundToggleBtn) soundToggleBtn.classList.add('muted');
+        if (audioBadge) {
+            audioBadge.textContent = '음소거됨 (Muted)';
+            audioBadge.style.background = '#f43f5e';
+        }
+        if (unmuteHint) unmuteHint.style.display = 'flex';
+
+        if (videoPlayer) videoPlayer.muted = true;
+        sendYtCommand('mute', []);
+        stopAiVoiceNarration();
+    } else {
+        if (soundIcon) soundIcon.className = currentAudioVolume > 50 ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-low';
+        if (soundText) soundText.textContent = `소리 ${currentAudioVolume}%`;
+        if (soundToggleBtn) soundToggleBtn.classList.remove('muted');
+        if (audioBadge) {
+            audioBadge.textContent = `사운드 ON (${currentAudioVolume}%)`;
+            audioBadge.style.background = '#10b981';
+        }
+        if (unmuteHint) unmuteHint.style.display = 'none';
+
+        if (videoPlayer) {
+            videoPlayer.muted = false;
+            videoPlayer.volume = currentAudioVolume / 100;
+        }
+        sendYtCommand('unMute', []);
+        sendYtCommand('setVolume', [currentAudioVolume]);
+
+        if (audioSourceMode === 'ai_voice' && isPlaying) {
+            playCurrentStageNarration();
+        }
+    }
+}
+
+function setAudioSourceMode(mode) {
+    audioSourceMode = mode;
+    document.querySelectorAll('.audio-src-btn').forEach(b => b.classList.remove('active'));
+    const activeBtn = document.getElementById(`audio-src-${mode}`);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    if (mode === 'ai_voice') {
+        sendYtCommand('setVolume', [20]); // Low ambient backing track
+        showToast('🎙️ AI 목사님 음성 더빙 낭독 모드가 활성화되었습니다.');
+        if (isPlaying) playCurrentStageNarration();
+    } else {
+        stopAiVoiceNarration();
+        sendYtCommand('unMute', []);
+        sendYtCommand('setVolume', [currentAudioVolume]);
+        showToast('🔊 원본 유튜브 설교 사운드 모드로 전환되었습니다.');
+    }
+}
+
+function playCurrentStageNarration() {
+    if (!currentDataset || !currentDataset.highlights || !currentDataset.highlights[currentHighlightIdx]) return;
+    const item = currentDataset.highlights[currentHighlightIdx];
+    if (!item || !item.story || !item.story[currentStoryStage]) return;
+
+    const text = isSmartJumpCutEnabled ? item.story[currentStoryStage].text : item.rawScript;
+    speakSermonNarration(text);
+}
+
+function speakSermonNarration(text) {
+    if (!('speechSynthesis' in window)) return;
+    try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ko-KR';
+        utterance.rate = currentShortsSpeed * 0.94;
+        utterance.pitch = 0.96;
+        utterance.volume = isAudioMuted ? 0 : (currentAudioVolume / 100);
+
+        const voices = window.speechSynthesis.getVoices();
+        const koVoice = voices.find(v => v.lang.includes('ko') || v.lang.includes('KR'));
+        if (koVoice) utterance.voice = koVoice;
+
+        currentSpeechUtterance = utterance;
+        window.speechSynthesis.speak(utterance);
+    } catch (e) {
+        console.warn('SpeechSynthesis error:', e);
+    }
+}
+
+function stopAiVoiceNarration() {
+    if ('speechSynthesis' in window) {
+        try {
+            window.speechSynthesis.cancel();
+        } catch (e) {}
+    }
+}
+
+function testShortsSound() {
+    unmuteAllAudio();
+    if (audioSourceMode === 'ai_voice') {
+        speakSermonNarration('오늘 우리가 스스로에게 물어야 합니다. 교회는 과연 무엇을 위해 모인 곳입니까? 편안히 먹고 즐기는 유람선입니까?');
+        showToast('🎙️ AI 목사님 음성 설교 낭독 테스트 중...');
+    } else {
+        sendYtCommand('unMute', []);
+        sendYtCommand('setVolume', [100]);
+        sendYtCommand('playVideo', []);
+        isPlaying = true;
+        const icon = document.getElementById('phone-play-icon');
+        if (icon) icon.className = 'fa-solid fa-pause';
+        showToast('🔊 원본 설교 사운드 100% 재생 테스트 중...');
+    }
+}
 
 /* 2. Theme Toggle */
 function initThemeToggle() {
@@ -1127,10 +1339,26 @@ function jumpToStoryStage(stage) {
     const ytPlayer = document.getElementById('youtube-iframe-player');
 
     if (currentDataset.videoId && ytPlayer) {
-        ytPlayer.src = `https://www.youtube.com/embed/${currentDataset.videoId}?autoplay=1&enablejsapi=1&start=${targetSec}&end=${baseSec + 60}&rel=0`;
+        if (ytPlayer.src && ytPlayer.src.includes(currentDataset.videoId)) {
+            sendYtCommand('seekTo', [targetSec, true]);
+            if (!isAudioMuted) {
+                sendYtCommand('unMute', []);
+                sendYtCommand('setVolume', [currentAudioVolume]);
+            }
+            sendYtCommand('playVideo', []);
+        } else {
+            const origin = encodeURIComponent(window.location.origin || 'http://localhost:8080');
+            ytPlayer.src = `https://www.youtube.com/embed/${currentDataset.videoId}?enablejsapi=1&autoplay=1&mute=0&start=${targetSec}&end=${baseSec + 60}&rel=0&origin=${origin}&widget_referrer=${origin}`;
+        }
     } else if (videoPlayer && videoPlayer.src) {
         videoPlayer.currentTime = targetSec;
+        videoPlayer.muted = isAudioMuted;
+        videoPlayer.volume = isAudioMuted ? 0 : (currentAudioVolume / 100);
         videoPlayer.play().catch(() => {});
+    }
+
+    if (audioSourceMode === 'ai_voice' && isPlaying) {
+        playCurrentStageNarration();
     }
 
     showToast(`📍 [${stage === 'start' ? '1. 시작 화두' : stage === 'middle' ? '2. 핵심 전개' : '3. 결단 강조'}] 구간으로 이동했습니다.`);
@@ -1376,6 +1604,9 @@ function loadSampleVideo(key) {
     currentDataset = sampleData[key];
     currentHighlightIdx = 0;
 
+    // Unmute audio on user gesture
+    unmuteAllAudio();
+
     const projTitle = document.getElementById('current-project-title');
     const aiStatus = document.getElementById('ai-status-text');
     if (projTitle) projTitle.textContent = `Project: ${currentDataset.title}`;
@@ -1497,29 +1728,46 @@ function selectHighlight(idx) {
         const imgLayer = document.getElementById('preview-img-layer');
 
         if (currentDataset.videoId) {
+            const origin = encodeURIComponent(window.location.origin || 'http://localhost:8080');
+            const targetSrc = `https://www.youtube.com/embed/${currentDataset.videoId}?enablejsapi=1&autoplay=1&mute=0&start=${startSec}&end=${startSec + 60}&rel=0&origin=${origin}&widget_referrer=${origin}`;
             if (ytPlayer) {
-                ytPlayer.src = `https://www.youtube.com/embed/${currentDataset.videoId}?autoplay=1&enablejsapi=1&start=${startSec}&end=${startSec + 60}&rel=0`;
+                if (ytPlayer.src && ytPlayer.src.includes(currentDataset.videoId)) {
+                    sendYtCommand('seekTo', [startSec, true]);
+                    if (!isAudioMuted) {
+                        sendYtCommand('unMute', []);
+                        sendYtCommand('setVolume', [currentAudioVolume]);
+                    }
+                    sendYtCommand('playVideo', []);
+                } else {
+                    ytPlayer.src = targetSrc;
+                }
                 ytPlayer.style.display = 'block';
                 setTimeout(() => {
-                    if (ytPlayer.contentWindow) {
-                        ytPlayer.contentWindow.postMessage(JSON.stringify({
-                            event: 'command',
-                            func: 'setPlaybackRate',
-                            args: [currentShortsSpeed]
-                        }), '*');
+                    if (!isAudioMuted) {
+                        sendYtCommand('unMute', []);
+                        sendYtCommand('setVolume', [currentAudioVolume]);
                     }
-                }, 400);
+                    sendYtCommand('setPlaybackRate', [currentShortsSpeed]);
+                }, 500);
             }
             if (videoPlayer) videoPlayer.style.display = 'none';
             if (imgLayer) imgLayer.style.display = 'none';
             isPlaying = true;
             const icon = document.getElementById('phone-play-icon');
             if (icon) icon.className = 'fa-solid fa-pause';
+            const eqBars = document.querySelectorAll('.audio-equalizer span');
+            eqBars.forEach(bar => bar.style.animationPlayState = 'running');
+
+            if (audioSourceMode === 'ai_voice') {
+                playCurrentStageNarration();
+            }
         } else if (videoPlayer && videoPlayer.src) {
             if (ytPlayer) ytPlayer.style.display = 'none';
             if (imgLayer) imgLayer.style.display = 'none';
             videoPlayer.style.display = 'block';
             videoPlayer.playbackRate = currentShortsSpeed;
+            videoPlayer.muted = isAudioMuted;
+            videoPlayer.volume = isAudioMuted ? 0 : (currentAudioVolume / 100);
 
             if (videoPlayer.duration && !isNaN(videoPlayer.duration)) {
                 const targetTime = Math.min(startSec, Math.max(0, videoPlayer.duration - 1));
@@ -1532,9 +1780,15 @@ function selectHighlight(idx) {
                 isPlaying = true;
                 const icon = document.getElementById('phone-play-icon');
                 if (icon) icon.className = 'fa-solid fa-pause';
+                const eqBars = document.querySelectorAll('.audio-equalizer span');
+                eqBars.forEach(bar => bar.style.animationPlayState = 'running');
             }).catch(() => {
                 isPlaying = false;
             });
+
+            if (audioSourceMode === 'ai_voice') {
+                playCurrentStageNarration();
+            }
         }
     }
 }
@@ -1572,24 +1826,39 @@ function toggleShortsPlay() {
     if (isPlaying) {
         if (icon) icon.className = 'fa-solid fa-pause';
         eqBars.forEach(bar => bar.style.animationPlayState = 'running');
-        if (imgLayer) imgLayer.style.transform = 'scale(1.05)';
+
+        // Always hide static image overlay when playing so active video is visible
+        if (imgLayer) imgLayer.style.display = 'none';
 
         if (videoPlayer && videoPlayer.style.display !== 'none' && videoPlayer.src) {
-            videoPlayer.play().catch(() => {});
-        } else if (ytPlayer && ytPlayer.style.display !== 'none' && ytPlayer.contentWindow) {
-            ytPlayer.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            videoPlayer.muted = isAudioMuted;
+            videoPlayer.volume = isAudioMuted ? 0 : (currentAudioVolume / 100);
+            videoPlayer.play().catch(e => console.warn('Video play error:', e));
+        } else if (ytPlayer) {
+            ytPlayer.style.display = 'block';
+            sendYtCommand('playVideo', []);
+            if (!isAudioMuted) {
+                sendYtCommand('unMute', []);
+                sendYtCommand('setVolume', [currentAudioVolume]);
+            }
         }
-        showToast('▶️ 1분 은혜 쇼츠 재생 중...');
+
+        if (audioSourceMode === 'ai_voice') {
+            playCurrentStageNarration();
+        }
+
+        showToast('▶️ 1분 은혜 쇼츠 재생 중 (사운드 ON)');
     } else {
         if (icon) icon.className = 'fa-solid fa-play';
         eqBars.forEach(bar => bar.style.animationPlayState = 'paused');
-        if (imgLayer) imgLayer.style.transform = 'scale(1)';
 
-        if (videoPlayer && videoPlayer.style.display !== 'none' && videoPlayer.src) {
+        if (videoPlayer && videoPlayer.src) {
             videoPlayer.pause();
-        } else if (ytPlayer && ytPlayer.style.display !== 'none' && ytPlayer.contentWindow) {
-            ytPlayer.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
         }
+        if (ytPlayer) {
+            sendYtCommand('pauseVideo', []);
+        }
+        stopAiVoiceNarration();
         showToast('⏸️ 일시 정지');
     }
 }
@@ -3298,14 +3567,7 @@ function setShortsPlaybackSpeed(rate) {
     }
 
     // Apply speed to YouTube iframe player
-    const ytPlayer = document.getElementById('youtube-iframe-player');
-    if (ytPlayer && ytPlayer.contentWindow) {
-        ytPlayer.contentWindow.postMessage(JSON.stringify({
-            event: 'command',
-            func: 'setPlaybackRate',
-            args: [currentShortsSpeed]
-        }), '*');
-    }
+    sendYtCommand('setPlaybackRate', [currentShortsSpeed]);
 
     showToast(`⚡ 쇼츠 말소리 빠르기가 ${rate}x 배속으로 설정되었습니다.`);
 }

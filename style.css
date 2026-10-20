@@ -3825,8 +3825,47 @@ body.dark-theme .card-input-box.yellow-highlight {
     font-weight: 700;
 }
 
+/* ==========================================================================
+   Shorts Sound & Audio Engine Styles
+   ========================================================================== */
+.shorts-sound-toggle-btn:hover {
+    border-color: #38bdf8 !important;
+    background: rgba(30, 41, 59, 0.98) !important;
+    transform: scale(1.04);
+}
 
+.shorts-sound-toggle-btn.muted {
+    border-color: #f43f5e !important;
+    color: #f43f5e !important;
+}
 
+.sound-unmute-hint {
+    animation: pulseSoundGlow 1.8s infinite;
+}
 
+@keyframes pulseSoundGlow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.9);
+        transform: scale(1.04);
+    }
+}
 
+.audio-src-btn {
+    transition: all 0.2s ease;
+}
 
+.audio-src-btn.active {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.5), rgba(124, 58, 237, 0.5)) !important;
+    border-color: #38bdf8 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+.audio-src-btn:not(.active):hover {
+    background: rgba(51, 65, 85, 0.8) !important;
+    color: #f8fafc !important;
+}
