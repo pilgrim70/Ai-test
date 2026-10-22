@@ -13,6 +13,233 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* 1. Sample Video Datasets */
 const sampleData = {
+    oryun: {
+        title: "오륜교회 주일설교 - 진짜 영성이 간절함인 이유.mp4",
+        length: "48분 30초 (설교 전편 0.1초 정밀 스캔 완료)",
+        videoFile: "assets/seolgyo/shorts-sample.mp4",
+        poster: "assets/seolgyo/shorts-sample-poster.jpg",
+        highlights: [
+            {
+                id: "oryun-0",
+                line1: "진짜 영성이",
+                line2: "간절함인 이유",
+                title: `"진짜 영성이 간절함인 이유"`,
+                ref: "📖 시편 63:1~3",
+                time: "00:00 ~ 01:00 (1분)",
+                tag: "#오륜교회 #진짜영성 #간절함 #기도",
+                viral: "🔥 Seolgyo AI 공식 쇼츠 (100점)",
+                intent: "essence",
+                intentBadge: "🔥 오륜교회 쇼츠",
+                climaxScore: 100,
+                peakDb: "99.2 dB",
+                quote: `"진짜 영성은 바로 하나님을 향한 거룩한 간절함입니다. 세상의 성공이나 직분이 아니라, 주님 없이는 단 한 순간도 살 수 없다는 간절한 엎드림입니다."`,
+                story: {
+                    start: {
+                        title: "1. 시작 (도입/화두)",
+                        timeStr: "00:00 ~ 00:15 (15초)",
+                        secOffset: 0,
+                        text: "많은 성도들이 영성을 이야기하지만, 하나님이 보시는 진짜 영성의 본질은 무엇입니까? 사람의 능력입니까, 직분입니까?",
+                        key: "진짜 영성이란 무엇인가",
+                        purpose: "영성의 본질을 묻는 날카로운 도입 화두"
+                    },
+                    middle: {
+                        title: "2. 중간 (전개/핵심)",
+                        timeStr: "00:15 ~ 00:42 (27초)",
+                        secOffset: 15,
+                        text: "진짜 영성은 바로 하나님을 향한 거룩한 '간절함'입니다! 그 사람이 세상에서 성공했느냐가 아니라, 주님 없이는 단 한 순간도 살 수 없다는 간절함이 있느냐입니다.",
+                        key: "하나님을 향한 거룩한 간절함",
+                        purpose: "오륜교회 담임목사 핵심 메시지 선포"
+                    },
+                    end: {
+                        title: "3. 결과 (강조/결단)",
+                        timeStr: "00:42 ~ 01:00 (18초)",
+                        secOffset: 42,
+                        text: "오늘 나의 심령에 이 거룩한 간절함이 다시 회복되게 하옵소서! 주님의 은혜의 보좌 앞으로 간절히 나아갑시다!",
+                        key: "간절함으로 보좌 앞에 나아가라",
+                        purpose: "마음을 울리는 결단과 마침"
+                    }
+                },
+                rawScript: "어... 많은 사람들이, 음... 영성을 이야기하지만... 진짜 영성이 무엇입니까? 그 사람이... 세상에서 성공하고... 능력이 있는 게 영성이 아니라, 하나님을 향한... 거룩한 간절함이 있느냐는 것입니다. 오늘 이 간절함으로... 주님 앞에 나아갑시다.",
+                cleanedScript: "많은 사람들이 영성을 이야기하지만 진짜 영성은 무엇입니까? 그 사람이 세상에서 성공하고 능력이 있는 게 영성이 아니라, 하나님을 향한 거룩한 간절함이 있느냐는 것입니다. 오늘 이 간절함으로 주님 앞에 나아갑시다.",
+                cutStats: {
+                    fillerRemoved: 12,
+                    fillerTypes: "음~ (4회), 어... (5회), 그... (3회)",
+                    silenceCutSec: "4.2초",
+                    originalLength: "64.2초",
+                    optimizedLength: "60.0초",
+                    clarityBoost: "+42%"
+                }
+            },
+            {
+                id: "oryun-1",
+                line1: "세상의 성공과",
+                line2: "하나님의 영성",
+                title: `"세상의 성공과 하나님의 영성"`,
+                ref: "📖 고린도전서 1:26~29",
+                time: "05:12 ~ 06:12 (1분)",
+                tag: "#오륜교회 #영적승리 #낮아짐",
+                viral: "✨ 영적 도전 강추 (99점)",
+                intent: "challenge",
+                intentBadge: "⚔️ 영적 결단",
+                climaxScore: 99,
+                peakDb: "97.8 dB",
+                quote: `"하나님은 세상의 화려한 스펙을 보시는 분이 아닙니다. 상하고 통회하는 가난한 심령을 가진 자를 찾으십니다."`,
+                story: {
+                    start: {
+                        title: "1. 시작 (도입/화두)",
+                        timeStr: "00:00 ~ 00:15 (15초)",
+                        secOffset: 0,
+                        text: "세상은 끊임없이 더 높이 올라가라고 외치지만, 하나님의 나라는 어디서부터 시작됩니까?",
+                        key: "세상의 기준 vs 하나님의 기준",
+                        purpose: "세상과 다른 하나님의 가치관 제시"
+                    },
+                    middle: {
+                        title: "2. 중간 (전개/핵심)",
+                        timeStr: "00:15 ~ 00:42 (27초)",
+                        secOffset: 15,
+                        text: "하나님은 세상의 미련한 것들을 택하사 지혜 있는 자들을 부끄럽게 하십니다! 내가 아무것도 아님을 고백할 때 하나님의 전능하심이 나타납니다.",
+                        key: "약할 때 곧 강함이라",
+                        purpose: "복음의 역설적 능력 선포"
+                    },
+                    end: {
+                        title: "3. 결과 (강조/결단)",
+                        timeStr: "00:42 ~ 01:00 (18초)",
+                        secOffset: 42,
+                        text: "나의 의와 자랑을 십자가 앞에 내려놓고, 오직 주 예수 그리스도만을 온전히 자랑합시다!",
+                        key: "오직 그리스도만 자랑하라",
+                        purpose: "겸손과 십자가의 결단"
+                    }
+                },
+                cutStats: { fillerRemoved: 10, silenceCutSec: "3.8초", originalLength: "63.8초", optimizedLength: "60.0초", clarityBoost: "+36%" }
+            },
+            {
+                id: "oryun-2",
+                line1: "주님 없이는",
+                line2: "살 수 없습니다",
+                title: `"주님 없이는 살 수 없습니다"`,
+                ref: "📖 요한복음 15:5",
+                time: "12:40 ~ 13:40 (1분)",
+                tag: "#포도나무 #연합 #생명력",
+                viral: "🔥 은혜 감동 100점",
+                intent: "grace",
+                intentBadge: "💧 눈물과 은혜",
+                climaxScore: 100,
+                peakDb: "98.9 dB",
+                quote: `"가지는 나무에 붙어 있기만 하면 됩니다. 내 힘으로 열매를 맺으려 발버둥 치지 말고 주님 안에 온전히 거하십시오."`,
+                story: {
+                    start: {
+                        title: "1. 시작 (도입/화두)",
+                        timeStr: "00:00 ~ 00:15 (15초)",
+                        secOffset: 0,
+                        text: "오늘 여러분의 신앙생활이 지치고 무겁습니까? 왜 그토록 영적 탈진을 겪고 있습니까?",
+                        key: "왜 영적 탈진을 겪는가",
+                        purpose: "성도의 영적 탈진 원인 진단"
+                    },
+                    middle: {
+                        title: "2. 중간 (전개/핵심)",
+                        timeStr: "00:15 ~ 00:42 (27초)",
+                        secOffset: 15,
+                        text: "예수님이 분명히 말씀하셨습니다: '나를 떠나서는 너희가 아무것도 할 수 없음이라!' 가지는 스스로 열매를 맺을 수 없습니다. 포도나무이신 예수께 붙어 있어야 합니다.",
+                        key: "나를 떠나서는 아무것도 할 수 없다",
+                        purpose: "포도나무와 가지의 절대적 연합 선포"
+                    },
+                    end: {
+                        title: "3. 결과 (강조/결단)",
+                        timeStr: "00:42 ~ 01:00 (18초)",
+                        secOffset: 42,
+                        text: "주님 안에 머무십시오! 기도의 줄을 놓지 말고 매 순간 주님과 동행하십시오!",
+                        key: "주 안에 온전히 거하라",
+                        purpose: "동행과 거함의 결단"
+                    }
+                },
+                cutStats: { fillerRemoved: 11, silenceCutSec: "4.0초", originalLength: "64.0초", optimizedLength: "60.0초", clarityBoost: "+39%" }
+            },
+            {
+                id: "oryun-3",
+                line1: "무릎으로 승부하는",
+                line2: "거룩한 성도",
+                title: `"무릎으로 승부하는 거룩한 성도"`,
+                ref: "📖 야고보서 5:16",
+                time: "18:25 ~ 19:25 (1분)",
+                tag: "#기도의능력 #영적전쟁 #무릎",
+                viral: "🔥 영적 무장 98점",
+                intent: "challenge",
+                intentBadge: "⚔️ 영적 결단",
+                climaxScore: 98,
+                peakDb: "97.5 dB",
+                quote: `"인생의 문제는 머리로 푸는 것이 아니라 무릎으로 푸는 것입니다. 기도의 자리로 나아갈 때 하늘의 문이 열립니다."`,
+                story: {
+                    start: {
+                        title: "1. 시작 (도입/화두)",
+                        timeStr: "00:00 ~ 00:15 (15초)",
+                        secOffset: 0,
+                        text: "인생의 큰 장벽을 만났을 때 여러분은 사람을 찾아다닙니까, 아니면 무릎을 꿇습니까?",
+                        key: "사람인가, 기도의 무릎인가",
+                        purpose: "문제 앞에서의 태도 점검"
+                    },
+                    middle: {
+                        title: "2. 중간 (전개/핵심)",
+                        timeStr: "00:15 ~ 00:42 (27초)",
+                        secOffset: 15,
+                        text: "의인의 간구는 역사하는 힘이 큽니다! 엘리야가 간절히 기도했을 때 3년 6개월 동안 닫혔던 하늘 문이 열렸습니다. 하나님은 무릎 꿇는 성도를 통해 일하십니다.",
+                        key: "의인의 간구는 역사하는 힘이 크다",
+                        purpose: "기도의 위대한 역사 증거"
+                    },
+                    end: {
+                        title: "3. 결과 (강조/결단)",
+                        timeStr: "00:42 ~ 01:00 (18초)",
+                        secOffset: 42,
+                        text: "염려할 시간에 무릎을 꿇으십시오! 오늘 기도의 골방에서 승부를 보십시오!",
+                        key: "기도의 골방으로 들어가라",
+                        purpose: "기도의 자리로 초청"
+                    }
+                },
+                cutStats: { fillerRemoved: 13, silenceCutSec: "4.5초", originalLength: "64.5초", optimizedLength: "60.0초", clarityBoost: "+40%" }
+            },
+            {
+                id: "oryun-4",
+                line1: "은혜의 보좌 앞에",
+                line2: "담대히 나아가라",
+                title: `"은혜의 보좌 앞에 담대히 나아가라"`,
+                ref: "📖 히브리서 4:16",
+                time: "24:10 ~ 25:10 (1분)",
+                tag: "#때를따라돕는은혜 #보좌 #예수피",
+                viral: "✨ 보혈의 능력 99점",
+                intent: "grace",
+                intentBadge: "💧 눈물과 은혜",
+                climaxScore: 99,
+                peakDb: "98.4 dB",
+                quote: `"때를 따라 돕는 은혜를 얻기 위하여, 예수 그리스도의 보혈을 힘입어 은혜의 보좌 앞에 담대히 나아가십시오."`,
+                story: {
+                    start: {
+                        title: "1. 시작 (도입/화두)",
+                        timeStr: "00:00 ~ 00:15 (15초)",
+                        secOffset: 0,
+                        text: "죄책감과 부끄러움 때문에 하나님 앞에 나아가기 주저하고 계십니까?",
+                        key: "주저함과 죄책감을 씻으라",
+                        purpose: "연약한 성도의 마음 공감"
+                    },
+                    middle: {
+                        title: "2. 중간 (전개/핵심)",
+                        timeStr: "00:15 ~ 00:42 (27초)",
+                        secOffset: 15,
+                        text: "우리의 대제사장은 우리의 연약함을 동정하지 못하실 이가 아닙니다! 예수 그리스도의 십자가 보혈이 우리를 의롭게 하셨습니다.",
+                        key: "보혈을 의지한 담대함",
+                        purpose: "대제사장 예수님의 긍휼 선포"
+                    },
+                    end: {
+                        title: "3. 결과 (강조/결단)",
+                        timeStr: "00:42 ~ 01:00 (18초)",
+                        secOffset: 42,
+                        text: "지금 있는 모습 그대로 주님께 나아오십시오! 때를 따라 돕는 은혜가 여러분을 기다립니다!",
+                        key: "있는 모습 그대로 나아오라",
+                        purpose: "은혜의 보좌로의 결단"
+                    }
+                },
+                cutStats: { fillerRemoved: 9, silenceCutSec: "3.5초", originalLength: "63.5초", optimizedLength: "60.0초", clarityBoost: "+35%" }
+            }
+        ]
+    },
     gwanyu: {
         title: "26-10-11 관유중앙교회 주일예배 - 구조선의 청사진.mp4",
         length: "52분 04초 (설교 전편 0.1초 정밀 스캔 완료)",
@@ -747,7 +974,7 @@ const sampleData = {
     }
 };
 
-let currentDataset = sampleData.gwanyu;
+let currentDataset = sampleData.oryun || sampleData.gwanyu;
 let currentHighlightIdx = 0;
 let isPlaying = false;
 let currentShortsSpeed = 1.0;
@@ -1840,7 +2067,18 @@ function loadSampleVideo(key) {
     if (projTitle) projTitle.textContent = `Project: ${currentDataset.title}`;
     if (aiStatus) aiStatus.textContent = `AI 설교 구간 추출 완료 (${currentDataset.length})`;
 
-    if (key === 'gwanyu') {
+    if (key === 'oryun') {
+        const ytInput = document.getElementById('youtube-url-input');
+        if (ytInput) ytInput.value = 'https://www.youtube.com/watch?v=oryun_prayer_shorts';
+        const successBanner = document.getElementById('ai-result-success-banner');
+        if (successBanner) {
+            successBanner.style.display = 'block';
+            const bTitle = document.getElementById('success-banner-title');
+            const bSub = document.getElementById('success-banner-subtitle');
+            if (bTitle) bTitle.textContent = currentDataset.title.replace('.mp4', '');
+            if (bSub) bSub.textContent = `오륜교회 담임목사 설교에서 1분 핵심 쇼츠 5편이 즉시 준비되었습니다! (Seolgyo AI 오리지널)`;
+        }
+    } else if (key === 'gwanyu') {
         const ytInput = document.getElementById('youtube-url-input');
         if (ytInput) ytInput.value = 'https://youtube.com/live/fB-uX_pZZvs?feature=share';
         const successBanner = document.getElementById('ai-result-success-banner');
@@ -1922,8 +2160,8 @@ function selectHighlight(idx) {
         const hookInput1 = document.getElementById('hook-title-line1');
         const hookInput2 = document.getElementById('hook-title-line2');
 
-        const l1 = currentItem.line1 || "교회는 유람선인가";
-        const l2 = currentItem.line2 || "구조선인가";
+        const l1 = currentItem.line1 || "진짜 영성이";
+        const l2 = currentItem.line2 || "간절함인 이유";
 
         if (hook1) hook1.textContent = l1;
         if (hook2) hook2.textContent = l2;
@@ -1947,7 +2185,8 @@ function selectHighlight(idx) {
         // 5. Update Description
         const descBox = document.getElementById('shorts-desc-text');
         if (descBox) {
-            descBox.textContent = `[복의근원 관유중앙교회] ${currentItem.title.replace(/^"|"$/g, '')} · ${currentItem.tag}`;
+            const churchName = currentDataset.title.includes('오륜교회') ? '오륜교회 주일설교' : '복의근원 관유중앙교회';
+            descBox.textContent = `[${churchName}] ${currentItem.title.replace(/^"|"$/g, '')} · ${currentItem.tag}`;
         }
 
         const startSec = parseTimestampToSeconds(currentItem.time);
@@ -1956,7 +2195,37 @@ function selectHighlight(idx) {
         const ytPlayer = document.getElementById('youtube-iframe-player');
         const imgLayer = document.getElementById('preview-img-layer');
 
-        if (currentDataset.videoId) {
+        if (currentDataset.videoFile) {
+            // Local MP4 Video Asset (e.g., exact Seolgyo AI 오륜교회 pastor shorts)
+            if (ytPlayer) ytPlayer.style.display = 'none';
+            if (imgLayer) imgLayer.style.display = 'none';
+            if (videoPlayer) {
+                videoPlayer.style.display = 'block';
+                videoPlayer.src = currentDataset.videoFile;
+                if (currentDataset.poster) videoPlayer.poster = currentDataset.poster;
+                videoPlayer.playbackRate = currentShortsSpeed;
+                videoPlayer.muted = isAudioMuted;
+                videoPlayer.volume = isAudioMuted ? 0 : (currentAudioVolume / 100);
+                videoPlayer.currentTime = 0;
+                videoPlayer.play().then(() => {
+                    isPlaying = true;
+                    const icon = document.getElementById('phone-play-icon');
+                    if (icon) icon.className = 'fa-solid fa-pause';
+                    const flowIcon = document.getElementById('flow-play-btn-icon');
+                    if (flowIcon) flowIcon.className = 'fa-solid fa-pause';
+                    const btnFlowPlay = document.getElementById('btn-flow-play');
+                    if (btnFlowPlay) btnFlowPlay.innerHTML = '<i class="fa-solid fa-pause" id="flow-play-btn-icon"></i> 1분 쇼츠 일시정지';
+                    const eqBars = document.querySelectorAll('.audio-equalizer span');
+                    eqBars.forEach(bar => bar.style.animationPlayState = 'running');
+                    startShortsTimer();
+                }).catch(e => {
+                    console.log('Video autoplay handled:', e);
+                });
+            }
+            if (audioSourceMode === 'ai_voice') {
+                playCurrentStageNarration();
+            }
+        } else if (currentDataset.videoId) {
             const origin = encodeURIComponent(window.location.origin || 'http://localhost:8080');
             const targetSrc = `https://www.youtube.com/embed/${currentDataset.videoId}?enablejsapi=1&autoplay=1&mute=0&start=${startSec}&end=${startSec + 60}&rel=0&origin=${origin}&widget_referrer=${origin}`;
             if (ytPlayer) {
@@ -2418,12 +2687,12 @@ function downloadSummaryDoc() {
 }
 
 function copyCardNewsText() {
-    const text = `[두려움을 이기는 담대한 믿음]\n본문: 마태복음 14:22~33\n\n01. 시선을 바꾸십시오.\n02. 순종의 발을 내딛으십시오.\n03. 즉시 주를 부르짖으십시오.`;
+    const text = `[염려를 기도로 바꾸라]\n본문: 빌립보서 4:6-7\n\n01. 걱정의 85%는 일어나지 않습니다 (빌 4:6a)\n02. 막연한 걱정을 구체적인 기도로 (빌 4:6b)\n03. 마음의 문을 지키는 파수꾼 (빌 4:7)\n04. 오늘 밤 종이 위에 적어보세요\n\n"주님, 찢겨진 제 마음을 주님께 드립니다. 상황은 그대로일지라도 제 마음을 파수꾼처럼 지키시는 하나님의 평강을 신뢰합니다."`;
     copyTextToClipboard(text, '📋 카드뉴스 캡션 문구가 복사되었습니다!');
 }
 
 function downloadCardNews() {
-    downloadFile('GraceClip_카드뉴스_5장.zip', 'ZIP_DATA');
+    downloadFile('SeolgyoAI_카드뉴스_6장.zip', 'ZIP_DATA');
 }
 
 function copyDocText() {
@@ -2433,11 +2702,11 @@ function copyDocText() {
 
 function downloadDoc(type) {
     const text = document.querySelector('#tab-smallgroup .pane-paper-view').innerText;
-    downloadFile(`GraceClip_소그룹나눔지_${type}.docx`, text);
+    downloadFile(`SeolgyoAI_소그룹나눔지_${type}.docx`, text);
 }
 
 function copyQtText() {
-    const text = `[주간 QT 6일치 모음]\n월요일: 마 14:22-25 밤사경의 오심\n화요일: 마 14:26-27 안심하라 나니\n수요일: 마 14:28-29 배 밖으로 발 내딛기\n목요일: 마 14:30-31 즉시 내민 손\n금요일: 마 14:32-33 잔잔해진 바다\n토요일: 마 14:33 참으로 하나님의 아들이로소이다`;
+    const text = `[주간 성도 묵상집 (월~토) · 빌립보서 4:6-7]\n\nDay 1 (월): 찢긴 마음을 하나로 모으다 (빌 4:6a)\nDay 2 (화): 막연함에서 구체적인 기도로 (빌 4:6b)\nDay 3 (수): 감사로 드리는 신앙 고백 (빌 4:6c)\nDay 4 (목): 마음의 문을 지키는 파수꾼 (빌 4:7a)\nDay 5 (금): 오늘에 집중하는 믿음 (마 6:34)\nDay 6 (토): 시선을 고정할 때 얻는 평강 (사 26:3)`;
     copyTextToClipboard(text, '📱 카톡 공유용 6일치 QT 텍스트가 복사되었습니다!');
 }
 
@@ -2762,18 +3031,18 @@ function openTopBarModal(type) {
 
     switch (type) {
         case 'happyday':
-            titleEl.innerHTML = '<i class="fa-solid fa-gift orange-icon"></i> 🎁 Happy Day 특별 이벤트';
+            titleEl.innerHTML = '<i class="fa-solid fa-gift orange-icon"></i> 🎁 목사님 1인 전용 무제한 라이선스';
             bodyEl.innerHTML = `
                 <div style="text-align: center; padding: 10px;">
                     <div style="font-size: 48px; margin-bottom: 12px;">🎉</div>
-                    <h3 style="font-size: 20px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">신규 회원 100% 당첨 혜택</h3>
-                    <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">GraceClip AI & 모두의 게임 특별 프로모션 쿠폰이 지급되었습니다!</p>
-                    <div style="background: #fff7ed; border: 2px dashed #f97316; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
-                        <span style="font-size: 12px; color: #ea580c; font-weight: 700; display: block; margin-bottom: 4px;">시크릿 쿠폰 코드</span>
-                        <strong style="font-size: 22px; color: #c2410c; letter-spacing: 2px;">HAPPY-DAY-2026-FREE</strong>
+                    <h3 style="font-size: 20px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">1인 전용 100% 영구 무료 개방</h3>
+                    <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">카드 등록 ❌ · 회원가입 ❌ · 유료 결제 ❌ 없이 모든 기능이 평생 무료로 제공됩니다!</p>
+                    <div style="background: #ecfdf5; border: 2px dashed #10b981; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                        <span style="font-size: 12px; color: #059669; font-weight: 700; display: block; margin-bottom: 4px;">라이선스 상태</span>
+                        <strong style="font-size: 22px; color: #047857; letter-spacing: 2px;">PERMANENT-FREE-LICENSE</strong>
                     </div>
-                    <button class="btn btn-primary btn-full" onclick="copyTextToClipboard('HAPPY-DAY-2026-FREE', '🎁 쿠폰 코드가 복사되었습니다! 결제 시 등록하세요.'); closeModal('modal-topbar');">
-                        <i class="fa-solid fa-copy"></i> 쿠폰 코드 복사하기
+                    <button class="btn btn-primary btn-full" onclick="showToast('🎉 목사님 1인 전용 무제한 무료 라이선스가 영구 활성화되어 있습니다!'); closeModal('modal-topbar');">
+                        <i class="fa-solid fa-check"></i> 확인
                     </button>
                 </div>
             `;
@@ -2838,18 +3107,18 @@ function openTopBarModal(type) {
             break;
 
         case 'subscription':
-            titleEl.innerHTML = '<i class="fa-solid fa-crown purple-icon"></i> 👑 Pro 멤버십 구독 플랜';
+            titleEl.innerHTML = '<i class="fa-solid fa-crown purple-icon"></i> 👑 1인 전용 무제한 FREE 라이선스';
             bodyEl.innerHTML = `
                 <div style="padding: 10px;">
-                    <div style="background: linear-gradient(135deg, #4f46e5, #9333ea); color: white; padding: 20px; border-radius: 16px; margin-bottom: 20px;">
-                        <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;">CURRENT PLAN</span>
-                        <h2 style="margin: 4px 0 8px 0; font-size: 24px;">Pro 목회자 패키지</h2>
-                        <p style="margin: 0; font-size: 13px; opacity: 0.9;">무제한 4K 쇼츠 생성 + 미디어 사역 패키지 자동화</p>
+                    <div style="background: linear-gradient(135deg, #059669, #0d9488); color: white; padding: 20px; border-radius: 16px; margin-bottom: 20px;">
+                        <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;">PERMANENT FREE</span>
+                        <h2 style="margin: 4px 0 8px 0; font-size: 24px;">목사님 1인 전용 무제한 플랜</h2>
+                        <p style="margin: 0; font-size: 13px; opacity: 0.9;">카드 등록 ❌ · 회원가입 ❌ · 유료 결제 없이 영구 무료</p>
                     </div>
                     <ul style="list-style: none; padding: 0; margin: 0 0 20px 0; font-size: 13px; color: #334155; display: flex; flex-direction: column; gap: 8px;">
-                        <li><i class="fa-solid fa-check green-icon"></i> 4K/1080p 초고화질 무워터마크 비디오</li>
-                        <li><i class="fa-solid fa-check green-icon"></i> 9:16 목사님 동선 AI 얼굴 오토트래킹</li>
-                        <li><i class="fa-solid fa-check green-icon"></i> 모두의 게임 허브 무제한 플레이 권한</li>
+                        <li><i class="fa-solid fa-check green-icon"></i> 1분 쇼츠 10종 기승전결 무제한 자동 추출</li>
+                        <li><i class="fa-solid fa-check green-icon"></i> 11종 목회자 사역 패키지 즉시 다운로드</li>
+                        <li><i class="fa-solid fa-check green-icon"></i> 카드 등록·회원가입 일체 없이 100% 영구 무료</li>
                     </ul>
                 </div>
             `;
