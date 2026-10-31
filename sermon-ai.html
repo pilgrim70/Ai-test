@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI 사역도구 — 설교 쇼츠·소그룹 나눔·QT·카드뉴스 자동 생성</title>
+  <meta name="description"
+    content="설교 원고 하나로 한 주 사역자료와 설교 쇼츠까지 자동 생성. 소그룹 나눔·QT·카드뉴스·설교 개요를 3분만에 완성하는 목회자 전용 AI 사역도구입니다." />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 40%22><path d=%22M16 0 Q20 10, 32 16 Q20 22, 16 40 Q12 22, 0 16 Q12 10, 16 0Z%22 fill=%22%233182f6%22/></svg>" />
+
+  <!-- Fonts: Pretendard & Noto Serif KR -->
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f6ff',
+              100: '#e0edfe',
+              500: '#3182f6',
+              600: '#1b6de8',
+              700: '#1557bf',
+            },
+            dark: '#191f28',
+            sub: '#4e5968',
+            muted: '#8b95a1',
+            borderLight: '#e5e8eb',
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+            serif: ['Noto Serif KR', 'AppleMyungjo', 'Batang', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
+      color: #191f28;
+      background-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f7f8fa;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Keyframes */
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(49, 130, 246, 0.2);
+      }
+
+      50% {
+        box-shadow: 0 0 35px rgba(49, 130, 246, 0.45);
+      }
+    }
+
+    @keyframes subtitleScroll {
+      0% {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      10% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      90% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+    }
+
+    @keyframes floatSoft {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    .animate-float {
+      animation: floatSoft 4s ease-in-out infinite;
+    }
+
+    .modal-backdrop {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(8px);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen text-[#191f28]">
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="sticky top-0 z-50 border-b border-[#e5e8eb]/70 bg-[#eef4ff]/85 backdrop-blur-xl transition-all">
+    <div class="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-5 sm:h-16 sm:px-6">
+      <a class="flex items-center gap-2 group cursor-pointer" onclick="scrollToTop()">
+        <!-- Blue Diamond Sparkle Logo -->
+        <svg width="20" height="24" viewBox="0 0 32 40" fill="none"
+          class="sm:w-[22px] sm:h-[26px] transition-transform group-hover:scale-105">
+          <path d="M16 0 Q20 10, 32 16 Q20 22, 16 40 Q12 22, 0 16 Q12 10, 16 0Z" fill="#3182f6"></path>
+        </svg>
+        <span class="text-[17px] font-bold tracking-tight text-[#191f28] sm:text-[19px]">AI 사역도구</span>
+      </a>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a class="text-[13px] text-[#6b7684] hover:text-[#191f28] transition-colors sm:text-[14px] cursor-pointer"
+          href="#preview">결과물 보기</a>
+        <a class="text-[13px] text-[#6b7684] hover:text-[#191f28] transition-colors sm:text-[14px] cursor-pointer"
+          href="#shorts">쇼츠 도구</a>
+        <a class="text-[13px] text-[#6b7684] hover:text-[#191f28] transition-colors sm:text-[14px] cursor-pointer"
+          href="#faq">FAQ</a>
+        <button onclick="openAudienceModal('pastor')"
+          class="rounded-xl bg-[#191f28] px-4 py-2 text-[13px] font-semibold text-white transition-all hover:bg-[#333d4b] sm:rounded-xl sm:px-5 sm:py-2.5 sm:text-[14px] shadow-sm hover:shadow">
+          시작하기
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="px-5 pt-8 pb-10 sm:px-6 sm:pt-12 sm:pb-14">
+    <div class="mx-auto max-w-[1200px] text-center">
+      <!-- Main Headline -->
+      <h1 class="mx-auto max-w-[760px] text-[34px] font-extrabold leading-[1.2] tracking-[-0.03em] sm:text-[42px] md:text-[50px] md:leading-[1.16]">
+        설교 원고 하나로, <br class="sm:hidden" />
+        <span class="bg-gradient-to-r from-[#3182f6] via-[#4d97fe] to-[#6fb1fc] bg-clip-text text-transparent">한 주 사역 자료 끝</span>
+      </h1>
+
+      <p class="mx-auto mt-3 max-w-[540px] text-[15px] leading-relaxed text-[#4e5968] sm:mt-5 sm:text-[17px]">
+        카드뉴스 · QT · 소그룹 나눔지 · 설교요약 · 쇼츠<br />
+        <span class="font-semibold text-[#191f28]">3분이면 전부 완성</span>
+      </p>
+
+      <!-- Main CTA Button -->
+      <div class="mt-7 flex justify-center sm:mt-8">
+        <button onclick="scrollToUploadArea()"
+          class="w-full max-w-[320px] rounded-2xl bg-[#3182f6] px-8 py-3.5 text-center text-[15px] font-semibold text-white shadow-[0_4px_16px_rgba(49,130,246,0.4)] transition-all hover:shadow-[0_6px_22px_rgba(49,130,246,0.5)] hover:brightness-105 active:scale-98 sm:w-auto sm:py-4 sm:text-[16px]">
+          이번 주 설교 올려보기
+        </button>
+      </div>
+
+      <!-- Social Proof Counter -->
+      <p class="mt-6 text-[13px] font-medium text-[#4e5968] sm:mt-8 sm:text-[14px]">
+        <span class="font-bold text-[#3182f6]">12,000명</span>의 목회자가 함께하고 있습니다
+      </p>
+
+      <!-- 3 Testimonial Cards -->
+      <div class="mx-auto mt-8 max-w-[760px] sm:mt-10">
+        <p class="mb-4 text-[12px] font-semibold uppercase tracking-wider text-[#6b7684]">실제 사용자 후기</p>
+        <div class="grid gap-3 sm:grid-cols-3">
+          <div class="rounded-xl border border-[#e5e8eb] bg-white/90 p-4 text-left shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+            <p class="text-[13.5px] leading-relaxed text-[#333d4b]">
+              “더 필요한 게 생각이 안 날 정도로 엄청나게 대단합니다. 시간을 엄청 절약할 수 있을 것 같습니다!”
+            </p>
+            <p class="mt-2.5 text-[12px] font-medium text-[#6b7684]">황 목사님</p>
+          </div>
+          <div class="rounded-xl border border-[#e5e8eb] bg-white/90 p-4 text-left shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+            <p class="text-[13.5px] leading-relaxed text-[#333d4b]">
+              “감탄 100점입니다. 설교, 사역자로 정말 딱 필요한 것을 만났네요. 군더더기 없이 깔끔하게 이루어진 부분도 너무 좋습니다.”
+            </p>
+            <p class="mt-2.5 text-[12px] font-medium text-[#6b7684]">미니** 님</p>
+          </div>
+          <div class="rounded-xl border border-[#e5e8eb] bg-white/90 p-4 text-left shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+            <p class="text-[13.5px] leading-relaxed text-[#333d4b]">
+              “제가 했던 설교로 소그룹 나눔지를 만들어서 모임을 진행했는데, 제가 만들었던 나눔지보다 더 많은 것들을 이끌어냅니다.”
+            </p>
+            <p class="mt-2.5 text-[12px] font-medium text-[#6b7684]">김 목사님</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= HERO INTERACTIVE macOS MOCKUP ================= -->
+      <div id="hero-upload-container"
+        class="mx-auto mt-10 max-w-[960px] overflow-hidden rounded-2xl border border-[#e5e8eb] bg-[#f7f8fa] shadow-[0_12px_45px_rgba(0,0,0,0.08)] sm:mt-12 text-left transition-all">
+        
+        <!-- macOS Window Title Bar -->
+        <div class="flex items-center justify-between border-b border-[#e5e8eb] bg-white px-4 py-3">
+          <div class="flex gap-2">
+            <div class="h-3 w-3 rounded-full bg-[#ff5f57] border border-[#e0443e]"></div>
+            <div class="h-3 w-3 rounded-full bg-[#febc2e] border border-[#d89e24]"></div>
+            <div class="h-3 w-3 rounded-full bg-[#28c840] border border-[#1fa733]"></div>
+          </div>
+          <div class="flex items-center gap-1.5 rounded-lg bg-[#f2f4f6] px-4 py-1 text-[12px] font-medium text-[#6b7684]">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            ai-shorts-tool.com
+          </div>
+          <div class="w-12"></div>
+        </div>
+
+        <!-- Inner Content Window -->
+        <div class="p-5 sm:p-7 bg-white">
+          <div class="mb-5">
+            <h3 class="text-[19px] font-extrabold text-[#191f28]">자료 생성</h3>
+            <p class="mt-1 text-[13px] text-[#6b7684]">
+              설교를 업로드하면 카드뉴스, QT, 소그룹 나눔, 쇼츠 등 10종 자료가 자동으로 만들어져요.
+            </p>
+          </div>
+
+          <!-- 3 Interactive Input Option Tabs (Matching Reference Image Exactly) -->
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            
+            <!-- Tab 1: 파일 업로드 -->
+            <button id="tab-btn-file" onclick="selectUploadTab('file')"
+              class="flex flex-col items-start p-4 rounded-xl border border-[#e5e8eb] bg-white hover:border-[#3182f6]/50 transition-all text-left group">
+              <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f0f6ff] text-[#3182f6] mb-3 group-hover:scale-105 transition-transform">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <p class="text-[14px] font-bold text-[#191f28]">파일 업로드</p>
+              <p class="mt-1 text-[12px] leading-relaxed text-[#6b7684]">
+                파일을 드래그하거나 클릭하세요<br />한글, 워드, PDF · 최대 4.5MB
+              </p>
+            </button>
+
+            <!-- Tab 2: 원고 붙여넣기 (Default Active with Blue Ring) -->
+            <button id="tab-btn-paste" onclick="selectUploadTab('paste')"
+              class="flex flex-col items-start p-4 rounded-xl border-2 border-[#3182f6] bg-[#f0f6ff]/40 shadow-sm transition-all text-left">
+              <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#3182f6] text-white mb-3">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+              </div>
+              <div class="flex items-center gap-2">
+                <p class="text-[14px] font-bold text-[#3182f6]">원고 붙여넣기</p>
+                <span class="rounded bg-[#3182f6] px-1.5 py-0.5 text-[10px] font-bold text-white">선택됨</span>
+              </div>
+              <p class="mt-1 text-[12px] leading-relaxed text-[#4e5968]">
+                원고를 복사해서 바로 붙여넣으세요<br />500자 이상 권장
+              </p>
+            </button>
+
+            <!-- Tab 3: 유튜브 링크 -->
+            <button id="tab-btn-yt" onclick="selectUploadTab('yt')"
+              class="flex flex-col items-start p-4 rounded-xl border border-[#e5e8eb] bg-white hover:border-[#3182f6]/50 transition-all text-left group">
+              <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#fef2f2] text-[#ef4444] mb-3 group-hover:scale-105 transition-transform">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
+              </div>
+              <p class="text-[14px] font-bold text-[#191f28]">유튜브 링크</p>
+              <p class="mt-1 text-[12px] leading-relaxed text-[#6b7684]">
+                예배 전체 영상도 설교 부분만 찾아<br />쇼츠와 10종 자료를 만들어요
+              </p>
+            </button>
+
+          </div>
+
+          <!-- TAB CONTENT 1: FILE UPLOAD -->
+          <div id="content-file" class="hidden mt-5">
+            <div class="border-2 border-dashed border-[#cbd5e1] hover:border-[#3182f6] rounded-2xl p-8 text-center bg-[#f8fafc] transition-colors cursor-pointer"
+              onclick="simulateFileUpload()">
+              <input type="file" id="real-file-input" class="hidden" accept=".hwp,.hwpx,.docx,.pdf,.txt" onchange="handleFileSelected(this)" />
+              <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e0edfe] text-[#3182f6] mb-3">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <p class="text-[15px] font-bold text-[#191f28]">설교 원고 파일을 드래그하거나 클릭하여 업로드</p>
+              <p class="mt-1 text-[13px] text-[#6b7684]">한글(HWP, HWPX), 워드(DOCX), PDF, 텍스트(TXT) 지원 (최대 10MB)</p>
+              <div class="mt-4 flex justify-center gap-2">
+                <button onclick="event.stopPropagation(); loadSampleManuscript()"
+                  class="rounded-xl border border-[#cbd5e1] bg-white px-4 py-2 text-[12px] font-semibold text-[#4e5968] hover:bg-[#f1f5f9]">
+                  📄 빌립보서 4:6-7 샘플 원고로 테스트하기
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB CONTENT 2: MANUSCRIPT PASTE (Default View) -->
+          <div id="content-paste" class="mt-5 relative">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[13px] font-bold text-[#333d4b]">설교 원고 붙여넣기</span>
+              <div class="flex items-center gap-2">
+                <button onclick="loadSampleManuscript()" class="text-[12px] font-medium text-[#3182f6] hover:underline">
+                  샘플 원고 채우기
+                </button>
+                <span class="text-[#cbd5e1]">|</span>
+                <button onclick="clearManuscript()" class="text-[12px] font-medium text-[#8b95a1] hover:text-[#191f28]">
+                  지우기
+                </button>
+              </div>
+            </div>
+
+            <!-- Interactive Textarea Container -->
+            <div class="relative rounded-xl border border-[#e5e8eb] bg-[#f8fafc] focus-within:border-[#3182f6] focus-within:ring-2 focus-within:ring-[#3182f6]/20 transition-all p-3.5">
+              <textarea id="manuscript-input" rows="8"
+                class="w-full bg-transparent text-[13.5px] leading-relaxed text-[#333d4b] focus:outline-none resize-none font-sans"
+                placeholder="설교 원고를 여기에 붙여넣으세요... (500자 이상)"
+                oninput="updateCharCount(this)">궁극적으로 무너뜨릴 수 없습니다.
+기도한 후에도 상황이 변하지 않을 수 있습니다. 그러나 하나님은 약속하십니다. 기도하는 자에게 평강을 주겠다고. 그 평강이 당신의 마음을 지킬 것이라고.
+
+■ 결론
+오늘 말씀의 흐름을 다시 따라가 봅시다. 먼저 우리는 염려의 정체를 직시했습니다. 염려는 해결이 아니라 소모입니다. 그다음, 그 염려를 기도로 전환하는 길을 배웠습니다. 구체적으로, 감사함으로 하나님께 아뢰는 것입니다. 그리고 그 결과로 인간의 이해를 뛰어넘는 하나님의 평강이 우리 마음을 지킨다는 약속을 받았습니다.
+
+오늘 집에 돌아가시면 종이 한 장을 꺼내십시오. 지금 가장 마음을 짓누르는 걱정을 적으십시오. 그리고 그것을 기도 제목으로 바꾸어 하나님께 드리십시오. "주님, 이것이 제 걱정입니다. 감사함으로 드립니다." 이 단순한 전환이 오늘 여러분의 삶을 바꿀 수 있습니다.
+
+"아무것도 염려하지 말라"... 이것은 감정을 억누르라는 명령이 아닙니다. 걱정을 그대로 들고 하나님 앞에 나오라는 따뜻한 초대입니다. 오늘 그 초대에 응하시는 여러분이 되시길 축복합니다.</textarea>
+
+              <!-- Bottom Bar inside Textarea (Counter + Generate Button) -->
+              <div class="mt-2 flex items-center justify-between border-t border-[#e5e8eb]/80 pt-2.5">
+                <span id="char-counter" class="text-[12px] tabular-nums font-medium text-[#8b95a1]">
+                  3,548 / 40,000자
+                </span>
+
+                <div class="flex items-center gap-2">
+                  <button onclick="openAudienceModal('manuscript')"
+                    class="flex items-center gap-1.5 rounded-xl bg-[#3182f6] px-5 py-2.5 text-[13.5px] font-bold text-white shadow-[0_4px_12px_rgba(49,130,246,0.35)] transition-all hover:bg-[#1b6de8] hover:shadow-[0_6px_16px_rgba(49,130,246,0.45)] active:scale-95">
+                    <span>생성하기</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating Tooltip Capsule (From Reference Site) -->
+            <div class="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-[#191f28] px-3 py-1 text-[11px] font-medium text-white shadow-sm">
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#3182f6]"></span>
+              원고를 붙여넣으면 소그룹 나눔·QT·카드뉴스·쇼츠 10종이 한 번에 자동 추출됩니다.
+            </div>
+          </div>
+
+          <!-- TAB CONTENT 3: YOUTUBE LINK -->
+          <div id="content-yt" class="hidden mt-5">
+            <div class="rounded-xl border border-[#e5e8eb] bg-[#f8fafc] p-4">
+              <p class="text-[13px] font-bold text-[#191f28] mb-2">유튜브 설교/예배 영상 링크</p>
+              
+              <div class="flex flex-col sm:flex-row gap-2">
+                <div class="relative flex-1">
+                  <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-[#ef4444]">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                  </div>
+                  <input type="text" id="yt-url-input"
+                    class="w-full rounded-xl border border-[#cbd5e1] bg-white py-2.5 pl-10 pr-4 text-[13.5px] text-[#191f28] placeholder-[#94a3b8] focus:border-[#3182f6] focus:outline-none focus:ring-2 focus:ring-[#3182f6]/20 font-mono"
+                    value="https://www.youtube.com/watch?v=bN5gG2kL0yU"
+                    placeholder="https://www.youtube.com/watch?v=..." />
+                </div>
+                <button onclick="openAudienceModal('youtube')"
+                  class="shrink-0 rounded-xl bg-[#3182f6] px-5 py-2.5 text-[13.5px] font-bold text-white shadow-[0_4px_12px_rgba(49,130,246,0.35)] hover:bg-[#1b6de8] transition-all">
+                  쇼츠 & 자료 생성하기
+                </button>
+              </div>
+
+              <!-- Intelligent Sermon Boundary Detection Indicator -->
+              <div class="mt-4 rounded-lg bg-white border border-[#e5e8eb] p-3 text-left">
+                <div class="flex items-center justify-between text-[12px] font-semibold mb-1.5">
+                  <span class="flex items-center gap-1.5 text-[#191f28]">
+                    <span class="inline-block h-2 w-2 rounded-full bg-[#16a34a]"></span>
+                    AI 자동 구간 분리 (찬양·광고 제외)
+                  </span>
+                  <span class="text-[#3182f6]">설교 구간: 03:15 ~ 38:40 (35분 25초)</span>
+                </div>
+                <!-- Mini Timeline Visualizer -->
+                <div class="h-3 w-full bg-[#e2e8f0] rounded-full overflow-hidden flex">
+                  <div class="w-[12%] bg-[#cbd5e1] relative" title="찬양 구간 (제외)"></div>
+                  <div class="w-[70%] bg-gradient-to-r from-[#3182f6] to-[#60a5fa] relative shadow-sm" title="설교 본문 구간 (자동 분석)"></div>
+                  <div class="w-[18%] bg-[#cbd5e1] relative" title="광고 및 축도 (제외)"></div>
+                </div>
+                <div class="flex justify-between text-[11px] text-[#8b95a1] mt-1">
+                  <span>00:00 찬양 (제외)</span>
+                  <span class="font-bold text-[#3182f6]">03:15 설교 시작</span>
+                  <span>38:40 결단 및 축도</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 2: 원고 한 편으로 만든 실제 결과물 ================= -->
+  <section id="preview" class="scroll-mt-14 bg-[#f7f8fa] px-5 py-12 sm:scroll-mt-16 sm:px-6 sm:py-[68px] lg:py-24">
+    <div class="mx-auto max-w-[960px] lg:max-w-[1120px]">
+      <div class="lg:grid lg:grid-cols-[340px_minmax(0,1fr)] lg:items-start lg:gap-14">
+        
+        <!-- Left Side: Tabs -->
+        <div class="lg:sticky lg:top-24">
+          <h2 class="text-center text-[26px] font-extrabold tracking-[-0.02em] break-keep sm:text-[36px] lg:text-left lg:leading-[1.25]">
+            원고 한 편으로 만든 <br class="hidden lg:inline" />실제 결과물
+          </h2>
+          <p class="mx-auto mt-3 max-w-[560px] text-center text-[14px] leading-relaxed text-[#4e5968] break-keep sm:mt-4 sm:text-[16px] lg:mx-0 lg:text-left">
+            빌립보서 4:6-7 “염려를 기도로 바꾸라” 설교 한 편에서 나온 자료입니다. 눌러서 확인해 보세요.
+          </p>
+
+          <!-- 4 Selectable Result Tabs -->
+          <div class="mt-8 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:justify-center sm:overflow-visible lg:flex-col lg:gap-1.5 lg:pb-0">
+            
+            <!-- Tab 1: 카드뉴스 (Active) -->
+            <button id="res-tab-card" onclick="switchResultTab('card')"
+              class="res-tab-btn shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all lg:gap-3 lg:py-3 lg:text-left bg-[#191f28] text-white lg:bg-white lg:text-[#191f28] lg:shadow-[0_2px_12px_rgba(0,0,0,0.06)] lg:ring-1 lg:ring-[#e5e8eb]">
+              <span class="lg:flex lg:h-9 lg:w-9 lg:shrink-0 lg:items-center lg:justify-center lg:rounded-lg lg:bg-[#f2f4f6] lg:text-[17px]">📱</span>
+              <span class="lg:flex lg:flex-col">
+                <span class="lg:text-[15px]">카드뉴스</span>
+                <span class="hidden text-[12.5px] font-normal lg:mt-0.5 lg:block text-[#4e5968]">교회 인스타·단톡방에 올리는 카드</span>
+              </span>
+            </button>
+
+            <!-- Tab 2: QT 6일 -->
+            <button id="res-tab-qt" onclick="switchResultTab('qt')"
+              class="res-tab-btn shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all lg:gap-3 lg:py-3 lg:text-left bg-white text-[#4e5968] hover:text-[#191f28] lg:bg-transparent lg:hover:bg-white/70">
+              <span class="lg:flex lg:h-9 lg:w-9 lg:shrink-0 lg:items-center lg:justify-center lg:rounded-lg lg:bg-[#f2f4f6] lg:text-[17px]">📖</span>
+              <span class="lg:flex lg:flex-col">
+                <span class="lg:text-[15px]">QT 6일</span>
+                <span class="hidden text-[12.5px] font-normal lg:mt-0.5 lg:block text-[#8b95a1]">한 주 동안 이어 가는 묵상</span>
+              </span>
+            </button>
+
+            <!-- Tab 3: 소그룹 나눔 -->
+            <button id="res-tab-group" onclick="switchResultTab('group')"
+              class="res-tab-btn shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all lg:gap-3 lg:py-3 lg:text-left bg-white text-[#4e5968] hover:text-[#191f28] lg:bg-transparent lg:hover:bg-white/70">
+              <span class="lg:flex lg:h-9 lg:w-9 lg:shrink-0 lg:items-center lg:justify-center lg:rounded-lg lg:bg-[#f2f4f6] lg:text-[17px]">👥</span>
+              <span class="lg:flex lg:flex-col">
+                <span class="lg:text-[15px]">소그룹 나눔</span>
+                <span class="hidden text-[12.5px] font-normal lg:mt-0.5 lg:block text-[#8b95a1]">모임에서 나누는 질문</span>
+              </span>
+            </button>
+
+            <!-- Tab 4: 설교 요약 -->
+            <button id="res-tab-summary" onclick="switchResultTab('summary')"
+              class="res-tab-btn shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all lg:gap-3 lg:py-3 lg:text-left bg-white text-[#4e5968] hover:text-[#191f28] lg:bg-transparent lg:hover:bg-white/70">
+              <span class="lg:flex lg:h-9 lg:w-9 lg:shrink-0 lg:items-center lg:justify-center lg:rounded-lg lg:bg-[#f2f4f6] lg:text-[17px]">📝</span>
+              <span class="lg:flex lg:flex-col">
+                <span class="lg:text-[15px]">설교 요약</span>
+                <span class="hidden text-[12.5px] font-normal lg:mt-0.5 lg:block text-[#8b95a1]">주보와 단톡방에 싣는 요약</span>
+              </span>
+            </button>
+
+          </div>
+
+          <button onclick="scrollToUploadArea()"
+            class="mt-8 hidden items-center gap-1.5 rounded-xl bg-[#191f28] px-6 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-[#2d3748] lg:inline-flex">
+            이번 주 설교 올려보기 →
+          </button>
+        </div>
+
+        <!-- Right Side: Interactive Preview Container -->
+        <div class="mt-5 lg:mt-0">
+          <div class="overflow-hidden rounded-2xl border border-[#e5e8eb] bg-white p-6 shadow-[0_2px_12px_rgba(0,0,0,0.04)] sm:p-8">
+            
+            <!-- PANEL 1: 카드뉴스 (Carousel Slider) -->
+            <div id="panel-card" class="res-panel block">
+              <div class="flex items-center justify-between mb-4 sm:mb-6">
+                <div class="flex items-center gap-3">
+                  <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f0f6ff] text-[16px]">📱</span>
+                  <h3 class="text-[15px] font-bold sm:text-[17px]">카드뉴스 (고화질 슬라이드)</h3>
+                </div>
+                <span class="text-[12px] font-medium text-[#3182f6] bg-[#f0f6ff] px-2.5 py-1 rounded-full">인스타·카카오톡 규격 4:5</span>
+              </div>
+
+              <!-- Carousel Component -->
+              <div class="flex items-center justify-center gap-2 sm:gap-4 py-4">
+                <button onclick="slideCardNews(-1)" aria-label="이전 슬라이드"
+                  class="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center bg-[#f2f4f6] hover:bg-[#e5e8eb] transition-colors">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+
+                <!-- 2 Side-by-Side Preview Cards (Matching Seolgyo-AI visual style) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-[560px] w-full">
+                  
+                  <!-- Card Style 1: Nature/Warmth -->
+                  <div class="relative overflow-hidden rounded-2xl shadow-md border border-[#f2f4f6] bg-[#1a202c] text-white aspect-[4/5] flex flex-col justify-between p-6 bg-cover bg-center transition-all hover:scale-102"
+                    id="card-slide-a"
+                    style="background-image: linear-gradient(to bottom, rgba(15,23,42,0.2) 0%, rgba(15,23,42,0.85) 100%), url('https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=800&auto=format&fit=crop');">
+                    <div class="flex justify-between items-start">
+                      <span class="rounded-md bg-white/20 backdrop-blur-md px-2 py-0.5 text-[11px] font-bold tracking-wider uppercase">그림 스타일</span>
+                    </div>
+                    <div>
+                      <p id="slide-verse-a" class="text-[13px] font-semibold tracking-wider text-white/80 mb-1.5 font-serif">빌립보서 4:6-7</p>
+                      <h4 id="slide-title-a" class="text-[22px] font-extrabold leading-tight tracking-tight drop-shadow-md">염려를 기도로<br />바꾸라</h4>
+                    </div>
+                  </div>
+
+                  <!-- Card Style 2: Prayer / Trendy -->
+                  <div class="relative overflow-hidden rounded-2xl shadow-md border border-[#f2f4f6] bg-[#2d3748] text-white aspect-[4/5] flex flex-col justify-between p-6 bg-cover bg-center transition-all hover:scale-102"
+                    id="card-slide-b"
+                    style="background-image: linear-gradient(to bottom, rgba(15,23,42,0.2) 0%, rgba(15,23,42,0.85) 100%), url('https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=800&auto=format&fit=crop');">
+                    <div class="flex justify-between items-start">
+                      <span class="rounded-md bg-[#3182f6]/80 backdrop-blur-md px-2 py-0.5 text-[11px] font-bold tracking-wider uppercase">트렌디 스타일</span>
+                    </div>
+                    <div>
+                      <p id="slide-verse-b" class="text-[13px] font-semibold tracking-wider text-white/80 mb-1.5 font-serif">빌립보서 4:6-7</p>
+                      <h4 id="slide-title-b" class="text-[22px] font-extrabold leading-tight tracking-tight drop-shadow-md">염려는 소모이나,<br />기도는 평강이다</h4>
+                    </div>
+                  </div>
+
+                </div>
+
+                <button onclick="slideCardNews(1)" aria-label="다음 슬라이드"
+                  class="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center bg-[#f2f4f6] hover:bg-[#e5e8eb] transition-colors">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Carousel Counter -->
+              <p id="card-carousel-counter" class="text-center text-[12.5px] font-medium text-[#6b7684] mt-2">
+                1 / 7 슬라이드
+              </p>
+            </div>
+
+            <!-- PANEL 2: QT 6일 (Devotional) -->
+            <div id="panel-qt" class="res-panel hidden">
+              <div class="flex items-center gap-3 mb-5">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f0f6ff] text-[16px]">📖</span>
+                <h3 class="text-[15px] font-bold sm:text-[17px]">한 주 동안 이어가는 QT 6일 묵상지</h3>
+              </div>
+
+              <div class="space-y-3">
+                <div class="rounded-xl border border-[#e5e8eb] bg-[#f8fafc] p-4 text-left">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[12px] font-bold text-[#3182f6]">Day 1 (월) · 빌립보서 4:6a</span>
+                    <span class="text-[11px] text-[#8b95a1]">염려의 본질 직시하기</span>
+                  </div>
+                  <p class="text-[14px] font-bold text-[#191f28]">"아무것도 염려하지 말고"</p>
+                  <p class="mt-1 text-[13px] leading-relaxed text-[#4e5968]">
+                    묵상 질문: 오늘 내 마음을 가장 무겁게 짓누르고 있는 염려의 근원은 무엇입니까? 염려는 문제의 해결책이 아닌 에너지의 소모임을 기억하십시오.
+                  </p>
+                </div>
+
+                <div class="rounded-xl border border-[#e5e8eb] bg-[#f8fafc] p-4 text-left">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[12px] font-bold text-[#3182f6]">Day 2 (화) · 빌립보서 4:6b</span>
+                    <span class="text-[11px] text-[#8b95a1]">기도와 간구의 자리로</span>
+                  </div>
+                  <p class="text-[14px] font-bold text-[#191f28]">"오직 모든 일에 기도와 간구로"</p>
+                  <p class="mt-1 text-[13px] leading-relaxed text-[#4e5968]">
+                    묵상 질문: 혼자 고민하던 문제를 기도의 언어로 바꾸어 주님 앞에 꺼내어 놓았습니까? 작은 염려라도 기도로 맡기는 연습을 하십시오.
+                  </p>
+                </div>
+
+                <div class="rounded-xl border border-[#e5e8eb] bg-[#f8fafc] p-4 text-left">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[12px] font-bold text-[#3182f6]">Day 3 (수) · 빌립보서 4:6c</span>
+                    <span class="text-[11px] text-[#8b95a1]">감사함으로 아뢰라</span>
+                  </div>
+                  <p class="text-[14px] font-bold text-[#191f28]">"너희 구할 것을 감사함으로 하나님께 아뢰라"</p>
+                  <p class="mt-1 text-[13px] leading-relaxed text-[#4e5968]">
+                    묵상 질문: 아직 문제가 해결되지 않은 상황 속에서도 미리 감사할 수 있는 하나님의 선하심은 무엇입니까?
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 3: 소그룹 나눔 (Small Group Discussion) -->
+            <div id="panel-group" class="res-panel hidden">
+              <div class="flex items-center gap-3 mb-5">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f0f6ff] text-[16px]">👥</span>
+                <h3 class="text-[15px] font-bold sm:text-[17px]">구역·소그룹 나눔 질문지</h3>
+              </div>
+
+              <div class="space-y-3.5 text-left">
+                <div class="rounded-xl border border-blue-100 bg-[#f0f6ff] p-4">
+                  <p class="text-[12px] font-bold text-[#3182f6]">1. 마음 열기 (Icebreaker)</p>
+                  <p class="mt-1 text-[14px] font-semibold text-[#191f28]">
+                    이번 한 주간 나를 가장 잠 못 들게 하거나 마음을 쓰이게 만들었던 고민이나 생각은 무엇이었나요?
+                  </p>
+                </div>
+                <div class="rounded-xl border border-[#e5e8eb] bg-[#f8fafc] p-4">
+                  <p class="text-[12px] font-bold text-[#333d4b]">2. 말씀 속으로 (Discovery)</p>
+                  <p class="mt-1 text-[14px] font-semibold text-[#191f28]">
+                    바울은 염려를 멈추는 방법으로 '기도와 간구, 감사'를 제시합니다. 왜 염려가 일어날 때 '감사'가 기도의 열쇠가 될까요?
+                  </p>
+                </div>
+                <div class="rounded-xl border border-[#e5e8eb] bg-[#f8fafc] p-4">
+                  <p class="text-[12px] font-bold text-[#333d4b]">3. 삶 속으로 (Application)</p>
+                  <p class="mt-1 text-[14px] font-semibold text-[#191f28]">
+                    오늘 나눔을 통해 내가 하나님께 맡기고 내 마음에 채워 넣어야 할 '하나님의 평강'은 어떤 영역에 필요합니까?
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 4: 설교 요약 (Executive Summary) -->
+            <div id="panel-summary" class="res-panel hidden">
+              <div class="flex items-center gap-3 mb-5">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f0f6ff] text-[16px]">📝</span>
+                <h3 class="text-[15px] font-bold sm:text-[17px]">주보 및 교구 단톡방용 설교 요약</h3>
+              </div>
+
+              <div class="space-y-4 text-left">
+                <div class="rounded-xl border border-amber-200 bg-amber-50/70 p-4">
+                  <p class="text-[12px] font-bold text-amber-800">중심 명제 (Proposition)</p>
+                  <p class="mt-1 text-[15px] font-bold leading-relaxed text-[#191f28] font-serif">
+                    염려는 문제의 해결이 아닌 에너지의 소모입니다. 성도는 감사함으로 기도를 전환할 때 지각에 뛰어난 하나님의 평강을 누릴 수 있습니다.
+                  </p>
+                </div>
+
+                <div class="space-y-2">
+                  <div class="rounded-lg border border-[#e5e8eb] p-3">
+                    <span class="text-[12px] font-bold text-[#3182f6]">대지 1</span>
+                    <p class="text-[13.5px] font-bold text-[#191f28]">염려의 자리에 기도를 세우십시오 (6절a)</p>
+                    <p class="text-[12.5px] text-[#6b7684]">염려는 상황을 통제하려는 불안입니다. 주권을 하나님께 돌려드리십시오.</p>
+                  </div>
+                  <div class="rounded-lg border border-[#e5e8eb] p-3">
+                    <span class="text-[12px] font-bold text-[#3182f6]">대지 2</span>
+                    <p class="text-[13.5px] font-bold text-[#191f28]">감사함으로 기도의 방향을 전환하십시오 (6절b)</p>
+                    <p class="text-[12.5px] text-[#6b7684]">상황에 매몰되지 않고 이미 베푸신 은혜를 기억할 때 참된 기도가 열립니다.</p>
+                  </div>
+                  <div class="rounded-lg border border-[#e5e8eb] p-3">
+                    <span class="text-[12px] font-bold text-[#3182f6]">대지 3</span>
+                    <p class="text-[13.5px] font-bold text-[#191f28]">하나님의 평강이 마음과 생각을 지킵니다 (7절)</p>
+                    <p class="text-[12.5px] text-[#6b7684]">평강은 상황의 변화 이전에 내면을 안전하게 지키시는 요새가 됩니다.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Footnote Expandable List (Exact from reference) -->
+          <div class="mt-4 px-1 break-keep text-left">
+            <button type="button" onclick="toggleResourceList()"
+              class="flex items-center gap-1.5 text-left text-[13px] font-bold text-[#333d4b] hover:text-[#191f28]">
+              <span>원고 한 편이면 자료 11가지가 나옵니다</span>
+              <svg id="res-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b95a1" stroke-width="2.5" class="transition-transform">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div id="res-detail-list" class="mt-1 text-[12px] leading-[1.8] text-[#6b7684]">
+              <p>설교 요약 · 소그룹 나눔지 · QT 6일치 · 카드뉴스 · 쇼츠 대본 · 설교 PPT · 말씀카드 · 음성으로 듣기 · 소그룹 리더가이드 · 가정예배지 · 설교 점검·제안</p>
+              <p class="mt-0.5 text-[#8b95a1]">소그룹 모임에서 나누고, 단톡방·주보·교회 인스타에 올리고, 예배 화면에 띄웁니다.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 3-Step Workflow Banner (5시간 작업을 단 3분만에) -->
+      <div class="mt-8 border-t border-[#e5e8eb] pt-6 lg:mt-12 lg:flex lg:items-center lg:gap-12 lg:pt-8 text-center lg:text-left">
+        <p class="text-[20px] font-extrabold tracking-[-0.02em] text-[#191f28] lg:shrink-0 lg:text-[24px]">
+          5시간 작업을 단 3분만에
+        </p>
+        <ol class="mt-4 flex items-start justify-center gap-2 lg:mt-0 lg:flex-1 lg:justify-between lg:gap-4">
+          <li class="flex min-w-0 flex-1 flex-col items-center text-center lg:flex-none lg:flex-row lg:items-start lg:gap-3 lg:text-left">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[12px] font-bold text-white bg-[#191f28]">1</span>
+            <span class="mt-1.5 lg:mt-0">
+              <span class="block text-[13.5px] font-bold text-[#191f28]">설교 올리기</span>
+              <span class="mt-0.5 block text-[11.5px] text-[#6b7684]">한글·워드·PDF, 유튜브 링크</span>
+            </span>
+          </li>
+          <li class="mt-1 shrink-0 text-[14px] text-[#cbd5e1]">→</li>
+          <li class="flex min-w-0 flex-1 flex-col items-center text-center lg:flex-none lg:flex-row lg:items-start lg:gap-3 lg:text-left">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[12px] font-bold text-white bg-[#191f28]">2</span>
+            <span class="mt-1.5 lg:mt-0">
+              <span class="block text-[13.5px] font-bold text-[#191f28]">AI 분석</span>
+              <span class="mt-0.5 block text-[11.5px] text-[#6b7684]">구조·핵심 메시지·적용 포인트</span>
+            </span>
+          </li>
+          <li class="mt-1 shrink-0 text-[14px] text-[#cbd5e1]">→</li>
+          <li class="flex min-w-0 flex-1 flex-col items-center text-center lg:flex-none lg:flex-row lg:items-start lg:gap-3 lg:text-left">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[12px] font-bold text-white bg-[#3182f6]">3</span>
+            <span class="mt-1.5 lg:mt-0">
+              <span class="block text-[13.5px] font-bold text-[#191f28]">자료 완성</span>
+              <span class="mt-0.5 block text-[11.5px] text-[#6b7684]">자료 11가지와 쇼츠 한 번에</span>
+            </span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 3: 원고가 없어도, 유튜브 링크 하나로 쇼츠 ================= -->
+  <section id="shorts" class="scroll-mt-14 px-5 py-12 sm:scroll-mt-16 sm:px-6 sm:py-[68px] lg:py-24">
+    <div class="mx-auto max-w-[1120px] lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-center lg:gap-14">
+      
+      <!-- Left: Interactive 9:16 Shorts Phone Mockup -->
+      <div class="flex flex-col items-center rounded-3xl bg-[#f7f8fa] px-6 py-10 sm:px-8 sm:py-12">
+        <div class="relative w-[260px] max-w-full rounded-[30px] border-[7px] border-[#191f28] bg-black aspect-[9/16] shadow-[0_16px_40px_rgba(0,0,0,0.22)] overflow-hidden flex flex-col justify-between">
+          
+          <!-- Pastor Preaching Video Simulation / Dynamic Canvas -->
+          <div class="absolute inset-0 bg-cover bg-center"
+            style="background-image: url('https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=800&auto=format&fit=crop'); filter: brightness(0.65);">
+          </div>
+
+          <!-- Video Ambient Glow / Overlay -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10"></div>
+
+          <!-- Top Video Title Badge -->
+          <div class="relative z-20 p-4 pt-5 text-center">
+            <span class="inline-block rounded-lg bg-[#3182f6] px-2.5 py-1 text-[11px] font-bold text-white tracking-wide shadow-sm">
+              진짜 영성이 간절함인 이유
+            </span>
+          </div>
+
+          <!-- Center Speaker Silhouette & Animated Dynamic Subtitle -->
+          <div class="relative z-20 px-4 text-center my-auto">
+            <div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 mx-auto flex items-center justify-center text-white mb-4 cursor-pointer hover:scale-105 transition-transform"
+              onclick="toggleShortsPlay()">
+              <svg id="shorts-play-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+
+            <!-- Dynamic Animated Subtitle -->
+            <div class="rounded-xl bg-black/65 backdrop-blur-md px-3.5 py-2 border border-white/20">
+              <p id="shorts-live-subtitle" class="text-[15px] font-black tracking-tight text-white drop-shadow-md">
+                "저는 영성을 한마디로 <span class="text-[#60a5fa]">간절함</span>이라고"
+              </p>
+            </div>
+          </div>
+
+          <!-- Bottom Control Bar -->
+          <div class="relative z-20 p-4">
+            <div class="flex items-center justify-between text-[11px] text-white/80 mb-1.5">
+              <span>00:18</span>
+              <span class="text-[#60a5fa] font-bold">감정 고조 하이라이트 컷</span>
+              <span>00:54</span>
+            </div>
+            <div class="h-1.5 w-full bg-white/30 rounded-full overflow-hidden">
+              <div class="h-full bg-[#3182f6] w-[35%] rounded-full animate-pulse"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="mt-3.5 text-center text-[12px] leading-[1.6] text-[#6b7684] break-keep">
+          실제로 만든 쇼츠 예시입니다. 얼굴은 모자이크 처리했습니다.
+        </p>
+      </div>
+
+      <!-- Right: Explanation & CTA -->
+      <div class="mt-8 lg:mt-0 text-left">
+        <h2 class="text-[28px] sm:text-[36px] font-extrabold leading-[1.25] tracking-[-0.02em] break-keep text-[#191f28]">
+          원고가 없어도,<br />유튜브 링크 하나로 쇼츠
+        </h2>
+        <p class="mt-4 text-[15px] sm:text-[16px] leading-relaxed text-[#4e5968] break-keep">
+          설교 영상 링크를 넣으면 은혜되는 구간을 찾아 쇼츠로 만들고, 제목과 자막까지 달아줍니다.
+        </p>
+
+        <!-- 3 Steps -->
+        <ol class="mt-8 space-y-5">
+          <li class="flex gap-4 items-start">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f0f6ff] text-[14px] font-bold text-[#3182f6]">1</span>
+            <div>
+              <p class="text-[15px] font-bold text-[#191f28]">유튜브 링크 붙여넣기</p>
+              <p class="mt-0.5 text-[14px] leading-[1.6] text-[#4e5968] break-keep">
+                찬양·광고가 섞인 예배 전체 영상도 설교 부분만 찾아냅니다.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4 items-start">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f0f6ff] text-[14px] font-bold text-[#3182f6]">2</span>
+            <div>
+              <p class="text-[15px] font-bold text-[#191f28]">자동 편집 (다중 씬 분할 & 감정 고조)</p>
+              <p class="mt-0.5 text-[14px] leading-[1.6] text-[#4e5968] break-keep">
+                은혜되는 구간을 찾고, 여러 장면을 매끄럽게 연결하며 제목과 감정 자막을 답니다.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4 items-start">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f0f6ff] text-[14px] font-bold text-[#3182f6]">3</span>
+            <div>
+              <p class="text-[15px] font-bold text-[#191f28]">완성</p>
+              <p class="mt-0.5 text-[14px] leading-[1.6] text-[#4e5968] break-keep">
+                내려받아 인스타·유튜브 쇼츠에 그대로 올리시면 됩니다.
+              </p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="mt-9 flex flex-wrap items-center gap-4 sm:gap-5">
+          <button onclick="openAudienceModal('youtube')"
+            class="inline-flex items-center gap-1.5 rounded-xl bg-[#191f28] px-6 py-3.5 text-[14px] font-semibold text-white hover:bg-[#2d3748] transition-colors shadow-sm">
+            유튜브 링크로 쇼츠 만들기 →
+          </button>
+          <a class="text-[13.5px] font-semibold text-[#4e5968] underline underline-offset-4 hover:text-[#191f28]"
+            href="#pricing">
+            쇼츠 전용 요금제(월 9,900원부터)
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 4: 설교 준비는 본문 주해부터 ================= -->
+  <section id="exegesis" class="scroll-mt-14 bg-[#f7f8fa] px-5 py-12 sm:scroll-mt-16 sm:px-6 sm:py-[68px] lg:py-24">
+    <div class="mx-auto max-w-[880px] lg:grid lg:max-w-[1120px] lg:grid-cols-[340px_minmax(0,1fr)] lg:items-start lg:gap-14">
+      
+      <!-- Left: Tabs & Intro -->
+      <div class="lg:sticky lg:top-24 text-left">
+        <h2 class="text-center text-[26px] font-extrabold tracking-[-0.02em] break-keep sm:text-[36px] lg:text-left lg:leading-[1.25]">
+          설교 준비는 <br class="hidden lg:inline" />본문 주해부터
+        </h2>
+        <p class="mx-auto mt-3 max-w-[560px] text-center text-[14px] leading-relaxed text-[#4e5968] break-keep sm:mt-4 sm:text-[16px] lg:mx-0 lg:text-left">
+          본문만 적으면 문맥과 배경, 절별 풀이부터 설교 개요까지 정리해 드립니다. 무엇을 전할지는 목사님이 정하십니다.
+        </p>
+
+        <!-- 3 Exegesis Selectable Tabs -->
+        <div class="mt-8 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:justify-center sm:overflow-visible lg:flex-col lg:gap-1.5 lg:pb-0">
+          
+          <button id="exegesis-tab-1" onclick="switchExegesisTab(1)"
+            class="exegesis-tab-btn shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all lg:gap-3 lg:py-3 lg:text-left bg-[#191f28] text-white lg:bg-white lg:text-[#191f28] lg:shadow-[0_2px_12px_rgba(0,0,0,0.06)] lg:ring-1 lg:ring-[#e5e8eb]">
+            <span class="lg:flex lg:h-9 lg:w-9 lg:shrink-0 lg:items-center lg:justify-center lg:rounded-lg lg:bg-[#f2f4f6] lg:text-[17px]">📌</span>
+            <span class="lg:flex lg:flex-col">
+              <span class="lg:text-[15px]">한눈에</span>
+              <span class="hidden text-[12.5px] font-normal lg:mt-0.5 lg:block text-[#4e5968]">중심 명제와 문학 구조</span>
+            </span>
+          </button>
+
+          <button id="exegesis-tab-2" onclick="switchExegesisTab(2)"
+            class="exegesis-tab-btn shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all lg:gap-3 lg:py-3 lg:text-left bg-white text-[#4e5968] hover:text-[#191f28] lg:bg-transparent lg:hover:bg-white/70">
+            <span class="lg:flex lg:h-9 lg:w-9 lg:shrink-0 lg:items-center lg:justify-center lg:rounded-lg lg:bg-[#f2f4f6] lg:text-[17px]">📖</span>
+            <span class="lg:flex lg:flex-col">
+              <span class="lg:text-[15px]">절별 풀이</span>
+              <span class="hidden text-[12.5px] font-normal lg:mt-0.5 lg:block text-[#8b95a1]">원어와 해석이 갈리는 곳까지</span>
+            </span>
+          </button>
+
+          <button id="exegesis-tab-3" onclick="switchExegesisTab(3)"
+            class="exegesis-tab-btn shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all lg:gap-3 lg:py-3 lg:text-left bg-white text-[#4e5968] hover:text-[#191f28] lg:bg-transparent lg:hover:bg-white/70">
+            <span class="lg:flex lg:h-9 lg:w-9 lg:shrink-0 lg:items-center lg:justify-center lg:rounded-lg lg:bg-[#f2f4f6] lg:text-[17px]">✎</span>
+            <span class="lg:flex lg:flex-col">
+              <span class="lg:text-[15px]">설교 개요</span>
+              <span class="hidden text-[12.5px] font-normal lg:mt-0.5 lg:block text-[#8b95a1]">본문에서 뽑은 설교 뼈대</span>
+            </span>
+          </button>
+
+        </div>
+
+        <div class="mt-8 hidden items-center gap-5 lg:flex">
+          <button onclick="openAudienceModal('exegesis')"
+            class="inline-flex items-center gap-1.5 rounded-xl bg-[#191f28] px-6 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-[#2d3748]">
+            본문 주해 해보기 →
+          </button>
+          <a class="text-[13px] font-semibold text-[#4e5968] underline underline-offset-4 hover:text-[#191f28]"
+            href="#preview">
+            설교 개요만 바로 만들기
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Exegesis Content Card -->
+      <div class="mt-5 lg:mt-0">
+        <div class="overflow-hidden rounded-2xl border border-[#e5e8eb] bg-white p-6 text-left shadow-[0_2px_12px_rgba(0,0,0,0.04)] sm:p-8">
+          
+          <h3 class="mt-1 mb-5 text-[20px] font-bold leading-snug text-[#191f28] sm:text-[22px] font-serif">
+            빌립보서 4:6-7 주해
+          </h3>
+
+          <div id="exegesis-scroll-area" class="relative max-h-[440px] overflow-hidden lg:max-h-[560px] transition-all duration-300">
+            <div class="space-y-3">
+              
+              <!-- Yellow Proposition Box -->
+              <div class="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4">
+                <p class="text-[12px] font-bold text-amber-700">중심 명제</p>
+                <p class="mt-1 text-[16px] leading-relaxed text-[#191f28] sm:text-[18px] font-serif">
+                  염려할 만한 형편 속에서도 성도는 감사함으로 모든 필요를 하나님께 아뢰며, 하나님은 그리스도 예수 안에서 그들의 마음과 생각을 평강으로 지켜 주신다.
+                </p>
+              </div>
+
+              <!-- Blue Reason Box -->
+              <div class="rounded-2xl border border-[#e0edfe] bg-[#f0f6ff] px-5 py-3.5">
+                <p class="text-[12px] font-bold text-[#3182f6]">이 말씀이 필요한 이유</p>
+                <p class="mt-0.5 text-[14.5px] leading-relaxed text-[#191f28]">
+                  외부의 압박과 내부의 분열 속에서 불안에 사로잡히기 쉬운 성도의 마음과 생각이 안전하게 지켜져야 한다.
+                </p>
+              </div>
+
+              <!-- Literary Chiasmus Structure -->
+              <div class="pt-2">
+                <div class="rounded-2xl border border-[#e5e8eb] bg-[#f8fafc] p-4">
+                  <h4 class="mb-3 text-[15px] font-bold text-[#191f28]">문학 구조 (교차대구법)</h4>
+                  
+                  <ol class="space-y-1.5">
+                    <li class="flex items-start gap-2.5 rounded-xl border border-[#e5e8eb] bg-white px-3 py-2">
+                      <span class="inline-grid h-6 min-w-[26px] shrink-0 place-items-center rounded-md px-1.5 text-[12px] font-bold text-white bg-[#3182f6]">A</span>
+                      <div class="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                        <span class="shrink-0 text-[13px] font-bold tabular-nums text-[#3182f6]">6a절</span>
+                        <span class="text-[13.5px] text-[#333d4b]">부정 명령: 아무것도 염려하지 말라</span>
+                      </div>
+                    </li>
+                    <li class="flex items-start gap-2.5 rounded-xl border border-[#e5e8eb] bg-white px-3 py-2">
+                      <span class="inline-grid h-6 min-w-[26px] shrink-0 place-items-center rounded-md px-1.5 text-[12px] font-bold text-white bg-[#3182f6]">B</span>
+                      <div class="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                        <span class="shrink-0 text-[13px] font-bold tabular-nums text-[#3182f6]">6b절</span>
+                        <span class="text-[13.5px] text-[#333d4b]">긍정 명령: 모든 일에 기도와 간구로, 감사함으로</span>
+                      </div>
+                    </li>
+                    <li class="flex items-start gap-2.5 rounded-xl border border-[#e5e8eb] bg-white px-3 py-2">
+                      <span class="inline-grid h-6 min-w-[26px] shrink-0 place-items-center rounded-md px-1.5 text-[12px] font-bold text-white bg-[#3182f6]">C</span>
+                      <div class="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                        <span class="shrink-0 text-[13px] font-bold tabular-nums text-[#3182f6]">6c절</span>
+                        <span class="text-[13.5px] text-[#333d4b]">내용: 너희 구할 것을 하나님께 아뢰라</span>
+                      </div>
+                    </li>
+                    <li class="flex items-start gap-2.5 rounded-xl border border-[#e5e8eb] bg-white px-3 py-2">
+                      <span class="inline-grid h-6 min-w-[26px] shrink-0 place-items-center rounded-md px-1.5 text-[12px] font-bold text-white bg-[#3182f6]">A′</span>
+                      <div class="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                        <span class="shrink-0 text-[13px] font-bold tabular-nums text-[#3182f6]">7a절</span>
+                        <span class="text-[13.5px] text-[#333d4b]">결과: 하나님의 평강, 지각에 뛰어남</span>
+                      </div>
+                    </li>
+                    <li class="flex items-start gap-2.5 rounded-xl border border-[#e5e8eb] bg-white px-3 py-2">
+                      <span class="inline-grid h-6 min-w-[26px] shrink-0 place-items-center rounded-md px-1.5 text-[12px] font-bold text-white bg-[#3182f6]">B′</span>
+                      <div class="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                        <span class="shrink-0 text-[13px] font-bold tabular-nums text-[#3182f6]">7b절</span>
+                        <span class="text-[13.5px] text-[#333d4b]">결과: 마음과 생각을 지키심, 그리스도 예수 안에서</span>
+                      </div>
+                    </li>
+                  </ol>
+
+                  <div class="mt-3.5 text-[13.5px] leading-relaxed text-[#6b7684]">
+                    <p class="mb-2">
+                      <span class="mr-2 inline-block rounded-md px-2 py-0.5 text-[11px] font-bold bg-[#e5e8eb] text-[#333d4b]">틀</span>
+                      6절은 부정 명령(염려하지 말라)과 긍정 명령(아뢰라)이 대조를 이루고, 7절은 논리의 흐름("그리하면")으로 약속을 확인합니다.
+                    </p>
+                    <p>
+                      이 구조는 염려하지 말라는 금지가 홀로 서지 않고 반드시 하나님께로 방향을 전환하는 약속과 연결됨을 보여 줍니다.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            
+            <div id="exegesis-gradient" class="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent"></div>
+          </div>
+
+          <!-- Expand Toggle Button -->
+          <button onclick="toggleExegesisExpand()"
+            class="mt-2.5 flex w-full items-center justify-center gap-1 rounded-xl border border-[#e5e8eb] py-2.5 text-[13px] font-medium text-[#3182f6] transition-colors hover:bg-[#f7f8fa]">
+            <span id="exegesis-btn-text">더보기</span>
+            <svg id="exegesis-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 5: 안심하고 맡기실 수 있습니다 ================= -->
+  <section class="bg-[#f7f8fa] px-5 py-12 sm:px-6 sm:py-[68px]">
+    <div class="mx-auto max-w-[1000px] text-center">
+      <h2 class="text-[26px] font-extrabold tracking-[-0.02em] break-keep sm:text-[36px] text-[#191f28]">
+        안심하고 맡기실 수 있습니다
+      </h2>
+
+      <div class="mt-8 grid gap-4 sm:mt-12 sm:grid-cols-3 text-left">
+        
+        <!-- Card 1 -->
+        <div class="rounded-2xl border border-[#e5e8eb] bg-white p-5 sm:p-6 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+          <div class="mb-3.5 flex h-10 w-10 items-center justify-center rounded-xl bg-[#f0f6ff]">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3182f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <p class="text-[15px] font-bold text-[#191f28] break-keep">자료는 목사님 설교에서만 나옵니다</p>
+          <p class="mt-1.5 text-[13px] leading-[1.7] text-[#4e5968] break-keep sm:text-[14px]">
+            나눔지·QT·카드뉴스는 올리신 설교의 메시지를 형태만 바꿉니다. 만들어진 자료는 원래 설교와 다시 대조하는 충실도 검증을 거친 뒤 전달됩니다.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="rounded-2xl border border-[#e5e8eb] bg-white p-5 sm:p-6 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+          <div class="mb-3.5 flex h-10 w-10 items-center justify-center rounded-xl bg-[#f0f6ff]">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3182f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <p class="text-[15px] font-bold text-[#191f28] break-keep">주해와 개요는 근거를 갖춘 제안입니다</p>
+          <p class="mt-1.5 text-[13px] leading-[1.7] text-[#4e5968] break-keep sm:text-[14px]">
+            본문 주해와 설교 개요는 본문과 검증된 주석 자료를 근거로 정리하고, 인용한 성경 구절은 개역개정과 대조합니다. 무엇을 전할지는 목사님이 정하십니다.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="rounded-2xl border border-[#e5e8eb] bg-white p-5 sm:p-6 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+          <div class="mb-3.5 flex h-10 w-10 items-center justify-center rounded-xl bg-[#f0f6ff]">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3182f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <p class="text-[15px] font-bold text-[#191f28] break-keep">원고는 AI 학습에 쓰지 않습니다</p>
+          <p class="mt-1.5 text-[13px] leading-[1.7] text-[#4e5968] break-keep sm:text-[14px]">
+            올리신 원고는 자료를 만드는 데만 쓰이고 외부에 공유되지 않습니다. 암호화해 저장하며, 원고와 자료는 언제든 직접 삭제하실 수 있습니다.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 6: 합리적인 요금제 ================= -->
+  <section id="pricing" class="scroll-mt-14 px-5 py-12 sm:px-6 sm:py-16">
+    <div class="mx-auto max-w-[920px]">
+      <h2 class="text-center text-[24px] sm:text-[32px] font-extrabold text-[#191f28] mb-2 break-keep">
+        합리적인 요금제
+      </h2>
+      <p class="text-center text-[13.5px] sm:text-[15px] text-[#4e5968] mb-6 sm:mb-8 break-keep leading-relaxed">
+        5시간 작업을 3분으로 줄이세요. 모든 요금제에서 모든 기능 사용 가능 · 사용량만 다릅니다
+      </p>
+
+      <!-- Monthly / Annual Toggle Switch -->
+      <div class="mb-6 sm:mb-8 flex justify-center">
+        <div class="inline-flex bg-[#f2f4f6] rounded-full p-1 border border-[#e5e8eb]">
+          <button id="billing-monthly" onclick="toggleBilling('monthly')"
+            class="px-5 sm:px-6 py-2 rounded-full text-[12.5px] sm:text-[13px] font-semibold transition-colors text-[#4e5968] hover:text-[#191f28]">
+            월간 결제
+          </button>
+          <button id="billing-annual" onclick="toggleBilling('annual')"
+            class="px-5 sm:px-6 py-2 rounded-full text-[12.5px] sm:text-[13px] font-semibold transition-colors flex items-center gap-1.5 bg-[#191f28] text-white shadow-sm">
+            연간 결제
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#3182f6] text-white">2개월 무료</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3 Pricing Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        
+        <!-- FREE PLAN -->
+        <div class="rounded-2xl bg-white border border-[#e5e8eb] p-6 flex flex-col text-left shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+          <p class="text-[16px] font-bold text-[#191f28]">Free</p>
+          <p class="text-[12px] text-[#6b7684] mb-4">서비스 가볍게 체험</p>
+          <p class="text-[26px] font-extrabold text-[#191f28] mb-1 leading-none">무료</p>
+          <p class="text-[11px] text-[#6b7684] mb-4">&nbsp;</p>
+
+          <div class="rounded-lg bg-[#f7f8fa] p-3.5 mb-4 space-y-2.5 flex-1">
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">설교 업로드 (자료 생성)</span>
+              <span class="text-[18px] font-extrabold text-[#191f28]">2<span class="text-[12px] font-normal text-[#6b7684] ml-1">편/월</span></span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">설교 개요 생성</span>
+              <span class="text-[18px] font-extrabold text-[#191f28]">5<span class="text-[12px] font-normal text-[#6b7684] ml-1">건/월</span></span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">쇼츠 영상 생성</span>
+              <span class="text-[18px] font-extrabold text-[#191f28]">2<span class="text-[12px] font-normal text-[#6b7684] ml-1">건/월</span></span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">본문 주해</span>
+              <span class="text-[13px] font-semibold text-[#4e5968]">무제한</span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">예화 찾기</span>
+              <span class="text-[13px] font-semibold text-[#4e5968]">하루 10번</span>
+            </div>
+          </div>
+
+          <button onclick="openAudienceModal('free')"
+            class="block w-full rounded-xl bg-[#f2f4f6] text-[#4e5968] text-center py-2.5 text-[13px] font-semibold hover:bg-[#e5e8eb] transition-colors">
+            무료로 시작하기
+          </button>
+        </div>
+
+        <!-- BASIC PLAN (Recommended, Highlighted with Blue Border) -->
+        <div class="rounded-2xl bg-white border-2 border-[#3182f6] p-6 flex flex-col text-left shadow-[0_8px_24px_rgba(49,130,246,0.12)] relative">
+          <span class="absolute -top-3 right-5 bg-[#3182f6] text-white text-[11px] font-bold px-3 py-0.5 rounded-full shadow-sm">
+            가장 인기
+          </span>
+          <p class="text-[16px] font-bold text-[#3182f6]">Basic</p>
+          <p class="text-[12px] text-[#6b7684] mb-4">매주 설교하는 목회자용</p>
+          <p class="text-[26px] font-extrabold text-[#191f28] mb-1 leading-none">
+            <span id="price-basic">₩12,410</span>
+            <span class="text-[12px] font-normal text-[#6b7684]"> / 월</span>
+            <span id="strike-basic" class="ml-1 text-[12px] font-normal text-[#b0b8c1] line-through">₩14,900</span>
+          </p>
+          <p id="note-basic" class="text-[11px] text-[#6b7684] mb-4">1년 ₩149,000 한 번에 결제 · 2개월 무료</p>
+
+          <div class="rounded-lg bg-[#f7f8fa] p-3.5 mb-4 space-y-2.5 flex-1">
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">설교 업로드 (자료 생성)</span>
+              <span class="text-[18px] font-extrabold text-[#191f28]">5<span class="text-[12px] font-normal text-[#6b7684] ml-1">편/월</span></span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">설교 개요 생성</span>
+              <span class="text-[18px] font-extrabold text-[#191f28]">15<span class="text-[12px] font-normal text-[#6b7684] ml-1">건/월</span></span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">쇼츠 영상 생성</span>
+              <span class="text-[18px] font-extrabold text-[#191f28]">5<span class="text-[12px] font-normal text-[#6b7684] ml-1">건/월</span></span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">본문 주해</span>
+              <span class="text-[13px] font-semibold text-[#4e5968]">무제한</span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">예화 찾기</span>
+              <span class="text-[13px] font-semibold text-[#4e5968]">하루 30번</span>
+            </div>
+          </div>
+
+          <button onclick="openAudienceModal('basic')"
+            class="w-full rounded-xl bg-[#3182f6] text-white py-2.5 text-[13px] font-semibold hover:bg-[#1b6de8] transition-colors shadow-sm">
+            구독하기
+          </button>
+        </div>
+
+        <!-- PRO PLAN -->
+        <div class="rounded-2xl bg-white border border-[#e5e8eb] p-6 flex flex-col text-left shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+          <p class="text-[16px] font-bold text-[#191f28]">Pro</p>
+          <p class="text-[12px] text-[#6b7684] mb-4">여러 부서 설교를 맡은 분</p>
+          <p class="text-[26px] font-extrabold text-[#191f28] mb-1 leading-none">
+            <span id="price-pro">₩24,910</span>
+            <span class="text-[12px] font-normal text-[#6b7684]"> / 월</span>
+            <span id="strike-pro" class="ml-1 text-[12px] font-normal text-[#b0b8c1] line-through">₩29,900</span>
+          </p>
+          <p id="note-pro" class="text-[11px] text-[#6b7684] mb-4">1년 ₩299,000 한 번에 결제 · 2개월 무료</p>
+
+          <div class="rounded-lg bg-[#f7f8fa] p-3.5 mb-4 space-y-2.5 flex-1">
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">설교 업로드 (자료 생성)</span>
+              <span class="text-[18px] font-extrabold text-[#191f28]">15<span class="text-[12px] font-normal text-[#6b7684] ml-1">편/월</span></span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">설교 개요 생성</span>
+              <span class="text-[18px] font-extrabold text-[#191f28]">30<span class="text-[12px] font-normal text-[#6b7684] ml-1">건/월</span></span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">쇼츠 영상 생성</span>
+              <span class="text-[18px] font-extrabold text-[#191f28]">15<span class="text-[12px] font-normal text-[#6b7684] ml-1">건/월</span></span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">본문 주해</span>
+              <span class="text-[13px] font-semibold text-[#4e5968]">무제한</span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[13px] text-[#4e5968]">예화 찾기</span>
+              <span class="text-[13px] font-semibold text-[#4e5968]">하루 50번</span>
+            </div>
+          </div>
+
+          <button onclick="openAudienceModal('pro')"
+            class="w-full rounded-xl bg-[#191f28] text-white py-2.5 text-[13px] font-semibold hover:bg-[#2d3748] transition-colors">
+            구독하기
+          </button>
+        </div>
+
+      </div>
+
+      <p class="mb-2 text-center text-[13px] leading-relaxed text-[#4e5968] break-keep sm:text-[14px]">
+        설교 1편만 올리면 소그룹 나눔 · QT · 카드뉴스 · 쇼츠 등 <span class="font-bold text-[#191f28]">한 주 자료가 한 번에</span> 생성됩니다.
+      </p>
+      <p class="mb-3 text-center text-[12.5px] text-[#8b95a1] break-keep">
+        한도를 다 쓰시면 유료 요금제에서 1건씩 추가(달란트, 2,000~2,500원)하실 수 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 7: 자주 묻는 질문 (FAQ) ================= -->
+  <section id="faq" class="scroll-mt-14 bg-[#f7f8fa] px-5 py-12 sm:px-6 sm:py-[68px]">
+    <div class="mx-auto max-w-[720px] text-left">
+      <h2 class="text-center text-[26px] font-extrabold tracking-[-0.02em] sm:text-[36px] text-[#191f28]">
+        자주 묻는 질문
+      </h2>
+
+      <div class="mt-8 space-y-3 sm:mt-12">
+        
+        <!-- Q1 -->
+        <div class="rounded-2xl border border-[#e5e8eb] bg-white transition-all overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+          <button onclick="toggleFaq(this)"
+            class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5">
+            <span class="text-[14.5px] font-bold text-[#191f28] sm:text-[15.5px]">AI가 설교 내용을 임의로 바꾸지는 않나요?</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b95a1" stroke-width="2" class="shrink-0 transition-transform">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-ans hidden px-5 pb-4 text-[13.5px] leading-relaxed text-[#4e5968] sm:px-6 sm:pb-5 sm:text-[14.5px] border-t border-[#f2f4f6] pt-3">
+            AI는 목사님의 신학을 생성하지 않습니다. 이미 전하신 설교의 메시지를 소그룹 나눔, QT, 카드뉴스, 쇼츠 등 다양한 사역 형태로 정제하여 변환하는 것이 핵심 역할입니다. 변환된 모든 자료는 원본 설교에 충실한지 자동 일치도 검증을 거칩니다.
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="rounded-2xl border border-[#e5e8eb] bg-white transition-all overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+          <button onclick="toggleFaq(this)"
+            class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5">
+            <span class="text-[14.5px] font-bold text-[#191f28] sm:text-[15.5px]">한글(HWP) 파일도 올릴 수 있나요?</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b95a1" stroke-width="2" class="shrink-0 transition-transform">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-ans hidden px-5 pb-4 text-[13.5px] leading-relaxed text-[#4e5968] sm:px-6 sm:pb-5 sm:text-[14.5px] border-t border-[#f2f4f6] pt-3">
+            네, 당연합니다! 한글(HWP, HWPX), MS 워드(DOCX), PDF, 텍스트(TXT) 등 한국 교회 현장에서 사용하시는 대부분의 원고 파일 형식을 드래그하여 바로 올리실 수 있습니다.
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="rounded-2xl border border-[#e5e8eb] bg-white transition-all overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+          <button onclick="toggleFaq(this)"
+            class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5">
+            <span class="text-[14.5px] font-bold text-[#191f28] sm:text-[15.5px]">원고 없이 설교하는데 쓸 수 있나요?</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b95a1" stroke-width="2" class="shrink-0 transition-transform">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-ans hidden px-5 pb-4 text-[13.5px] leading-relaxed text-[#4e5968] sm:px-6 sm:pb-5 sm:text-[14.5px] border-t border-[#f2f4f6] pt-3">
+            네! 설교 영상이 유튜브에 있다면 영상 링크만 붙여넣으시면 됩니다. 찬양과 광고가 포함된 1~2시간 분량의 전체 예배 영상도 AI가 설교 시작과 끝을 자동으로 찾아내어 설교 쇼츠와 모든 텍스트 자료를 완성합니다.
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="rounded-2xl border border-[#e5e8eb] bg-white transition-all overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+          <button onclick="toggleFaq(this)"
+            class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5">
+            <span class="text-[14.5px] font-bold text-[#191f28] sm:text-[15.5px]">만든 자료는 어떤 형식으로 받나요?</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b95a1" stroke-width="2" class="shrink-0 transition-transform">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-ans hidden px-5 pb-4 text-[13.5px] leading-relaxed text-[#4e5968] sm:px-6 sm:pb-5 sm:text-[14.5px] border-t border-[#f2f4f6] pt-3">
+            소그룹 나눔지·QT·설교 요약은 워드나 한글 파일 또는 단톡방 즉시 복사 텍스트로 받으실 수 있습니다. 카드뉴스는 고해상도 이미지(PNG), 쇼츠는 9:16 모바일 규격 MP4 동영상 파일로 바로 다운로드하실 수 있습니다.
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="rounded-2xl border border-[#e5e8eb] bg-white transition-all overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+          <button onclick="toggleFaq(this)"
+            class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5">
+            <span class="text-[14.5px] font-bold text-[#191f28] sm:text-[15.5px]">가입할 때 카드 등록이 필요한가요?</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b95a1" stroke-width="2" class="shrink-0 transition-transform">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-ans hidden px-5 pb-4 text-[13.5px] leading-relaxed text-[#4e5968] sm:px-6 sm:pb-5 sm:text-[14.5px] border-t border-[#f2f4f6] pt-3">
+            아닙니다. Free 무료 요금제는 신용카드 정보 등록 없이 카카오나 이메일로 바로 시작하실 수 있습니다. 충분히 경험해 보신 뒤 유료 전환을 선택하시면 됩니다.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-5 text-center">
+        <button onclick="alert('추가 문의사항은 하단 카카오톡 문의로 연락 주시면 신속히 안내해 드리겠습니다.')"
+          class="px-4 py-2 text-[14px] font-semibold text-[#3182f6] hover:underline underline-offset-4">
+          더보기
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 8: 이번 주 설교, 올려보시겠어요? ================= -->
+  <section class="px-5 py-12 sm:px-6 sm:py-16 text-center">
+    <div class="mx-auto max-w-[1200px]">
+      <h2 class="text-[28px] font-extrabold tracking-[-0.03em] sm:text-[40px] text-[#191f28]">
+        이번 주 설교, 올려보시겠어요?
+      </h2>
+      <p class="mx-auto mt-3 max-w-[400px] text-[15px] text-[#4e5968] sm:mt-4 sm:text-[16px]">
+        Free 플랜 무료 시작 · 카드 등록 필요 없음
+      </p>
+      <button onclick="scrollToUploadArea()"
+        class="mt-8 inline-block w-full max-w-[280px] rounded-2xl bg-[#3182f6] px-10 py-3.5 text-[15px] font-semibold text-white shadow-[0_4px_16px_rgba(49,130,246,0.35)] transition-all hover:bg-[#1b6ce5] hover:shadow-[0_6px_22px_rgba(49,130,246,0.45)] sm:mt-10 sm:w-auto sm:py-4 sm:text-[16px]">
+        무료로 시작하기
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="border-t border-[#f2f4f6] bg-[#fdfdfd] px-5 py-10 sm:px-6 sm:py-12 text-left">
+    <div class="mx-auto max-w-[1200px]">
+      <div class="flex flex-col items-center gap-4 sm:flex-row sm:justify-between sm:items-start sm:gap-0">
+        
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+          <svg width="18" height="22" viewBox="0 0 32 40" fill="none">
+            <path d="M16 0 Q20 10, 32 16 Q20 22, 16 40 Q12 22, 0 16 Q12 10, 16 0Z" fill="#3182f6"></path>
+          </svg>
+          <span class="text-[16px] font-bold text-[#191f28]">AI 사역도구</span>
+        </div>
+
+        <!-- Links -->
+        <div class="flex flex-col items-center gap-2 text-[12.5px] text-[#6b7684] sm:items-end">
+          <div class="flex flex-wrap justify-center gap-4 sm:justify-end">
+            <a class="hover:text-[#191f28] transition-colors" href="#preview">서비스 소개</a>
+            <a class="hover:text-[#191f28] transition-colors" href="javascript:void(0)" onclick="openHelpChat()">문의</a>
+            <a class="hover:text-[#191f28] transition-colors" href="#pricing">요금제</a>
+            <a class="hover:text-[#191f28] transition-colors" href="#preview">QT 자료집</a>
+            <a class="hover:text-[#191f28] transition-colors" href="#exegesis">성경사전</a>
+          </div>
+          <div class="flex flex-wrap justify-center gap-4 sm:justify-end">
+            <a class="hover:text-[#191f28] transition-colors" href="javascript:void(0)">이용약관</a>
+            <a class="hover:text-[#191f28] transition-colors font-semibold" href="javascript:void(0)">개인정보처리방침</a>
+            <a class="hover:text-[#191f28] transition-colors" href="javascript:void(0)">개인정보 이전 안내</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-5 text-center sm:text-left text-[11.5px] text-[#6b7684] leading-[1.8] border-t border-[#f2f4f6] pt-4">
+        <p>
+          <span class="whitespace-nowrap font-medium text-[#333d4b]">주식회사 AI 사역도구</span> | 
+          <span class="whitespace-nowrap">대표 정상후</span> | 
+          <span class="whitespace-nowrap">사업자등록번호 625-86-04089</span> | 
+          <span class="whitespace-nowrap">통신판매업 2026-서울종로-1298</span>
+        </p>
+        <p>서울특별시 종로구 동숭길 64, 5층 S156호</p>
+        <p class="mt-2 text-[#4e5968] font-bold">고객센터</p>
+        <p>대표번호 070-8028-3628 | 운영시간 10:00-18:00 (주말/공휴일 휴무) | 카카오톡 채널 상담 상시 운영</p>
+        <p class="mt-2 text-[#8b95a1]">성경 본문: 개역개정판 ⓒ대한성서공회. 대한성서공회의 허락을 받아 사용합니다.</p>
+        <p class="mt-1 text-[#8b95a1]">© 2026 AI 사역도구. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= FLOATING KAKAO BUTTON ================= -->
+  <a href="javascript:void(0)" onclick="openHelpChat()"
+    class="fixed bottom-5 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[#FEE500] shadow-[0_4px_16px_rgba(0,0,0,0.18)] transition-all duration-300 hover:scale-105 sm:bottom-7 sm:right-7 sm:h-auto sm:w-auto sm:gap-2.5 sm:px-5 sm:py-3.5"
+    aria-label="카카오톡 문의">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="sm:w-[26px] sm:h-[26px]">
+      <path d="M12 3C6.48 3 2 6.58 2 10.9c0 2.78 1.8 5.22 4.5 6.6-.2.73-.72 2.65-.82 3.06-.13.5.18.5.38.36.16-.1 2.46-1.67 3.46-2.35.48.07.97.1 1.48.1 5.52 0 10-3.58 10-7.9S17.52 3 12 3z" fill="#3C1E1E"></path>
+    </svg>
+    <span class="hidden text-[15px] font-bold text-[#3C1E1E] sm:inline">카카오톡 문의</span>
+  </a>
+
+
+  <!-- ================= AUDIENCE TARGET SELECTION MODAL ================= -->
+  <div id="audience-modal" class="modal-backdrop fixed inset-0 z-[100] hidden items-center justify-center p-4">
+    <div class="relative w-full max-w-[480px] rounded-3xl bg-white p-7 text-center shadow-2xl transition-all scale-95 duration-200">
+      
+      <!-- Close Button -->
+      <button onclick="closeAudienceModal()"
+        class="absolute top-5 right-5 flex h-8 w-8 items-center justify-center rounded-full bg-[#f2f4f6] text-[#6b7684] hover:bg-[#e5e8eb] transition-colors">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Modal Badge & Header -->
+      <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f0f6ff] text-[#3182f6] mb-3">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      </div>
+
+      <h3 class="text-[20px] font-extrabold text-[#191f28]">쇼츠 & 요약 타깃 대상을 선택하세요</h3>
+      <p class="mt-1 text-[13.5px] text-[#6b7684]">
+        대상에 맞추어 쇼츠의 감정 고조 컷과 요약 어조, 나눔 질문이 최적화됩니다.
+      </p>
+
+      <!-- 4 Audience Choices -->
+      <div class="mt-6 space-y-2.5 text-left">
+        
+        <label class="audience-opt flex items-center justify-between p-3.5 rounded-2xl border-2 border-[#3182f6] bg-[#f0f6ff]/60 cursor-pointer transition-all">
+          <div class="flex items-center gap-3">
+            <input type="radio" name="audience" value="general" checked class="h-4 w-4 text-[#3182f6] focus:ring-[#3182f6]" />
+            <div>
+              <p class="text-[14.5px] font-bold text-[#191f28]">기본 (장년부 & 전체 성도)</p>
+              <p class="text-[12px] text-[#6b7684]">깊이 있는 말씀 묵상과 안정된 감정의 위로·결단 쇼츠</p>
+            </div>
+          </div>
+          <span class="text-[12px] font-bold text-[#3182f6] bg-white px-2 py-0.5 rounded-md border border-blue-200">추천</span>
+        </label>
+
+        <label class="audience-opt flex items-center justify-between p-3.5 rounded-2xl border border-[#e5e8eb] bg-white hover:border-[#3182f6]/50 cursor-pointer transition-all">
+          <div class="flex items-center gap-3">
+            <input type="radio" name="audience" value="youth" class="h-4 w-4 text-[#3182f6] focus:ring-[#3182f6]" />
+            <div>
+              <p class="text-[14.5px] font-bold text-[#191f28]">대학부 / 청년부 (MZ 세대)</p>
+              <p class="text-[12px] text-[#6b7684]">빠른 템포 컷, 직관적 훅, 현실적 진로·관계 적용 질문</p>
+            </div>
+          </div>
+        </label>
+
+        <label class="audience-opt flex items-center justify-between p-3.5 rounded-2xl border border-[#e5e8eb] bg-white hover:border-[#3182f6]/50 cursor-pointer transition-all">
+          <div class="flex items-center gap-3">
+            <input type="radio" name="audience" value="teen" class="h-4 w-4 text-[#3182f6] focus:ring-[#3182f6]" />
+            <div>
+              <p class="text-[14.5px] font-bold text-[#191f28]">청소년부 (중고등부)</p>
+              <p class="text-[12px] text-[#6b7684]">강렬한 3초 훅킹, 쉬운 비유, 인스타 릴스 최적화</p>
+            </div>
+          </div>
+        </label>
+
+        <label class="audience-opt flex items-center justify-between p-3.5 rounded-2xl border border-[#e5e8eb] bg-white hover:border-[#3182f6]/50 cursor-pointer transition-all">
+          <div class="flex items-center gap-3">
+            <input type="radio" name="audience" value="child" class="h-4 w-4 text-[#3182f6] focus:ring-[#3182f6]" />
+            <div>
+              <p class="text-[14.5px] font-bold text-[#191f28]">초등부 / 어린이</p>
+              <p class="text-[12px] text-[#6b7684]">친근한 설명체와 흥미진진한 스토리텔링 중심</p>
+            </div>
+          </div>
+        </label>
+
+      </div>
+
+      <!-- Submit Button -->
+      <button onclick="startStudioGeneration()"
+        class="mt-6 w-full rounded-2xl bg-[#3182f6] py-3.5 text-[15px] font-bold text-white shadow-[0_4px_16px_rgba(49,130,246,0.4)] hover:bg-[#1b6de8] transition-all">
+        분석 및 쇼츠 생성 시작
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- ================= 3-STEP REALISTIC PROGRESS OVERLAY ================= -->
+  <div id="progress-overlay" class="modal-backdrop fixed inset-0 z-[120] hidden items-center justify-center p-4">
+    <div class="w-full max-w-[460px] rounded-3xl bg-white p-8 text-center shadow-2xl">
+      
+      <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f0f6ff] text-[#3182f6] mb-4">
+        <svg class="animate-spin" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+      </div>
+
+      <h3 class="text-[20px] font-extrabold text-[#191f28]">AI가 설교를 분석하고 있습니다</h3>
+      <p id="progress-step-text" class="mt-1 text-[13.5px] font-medium text-[#3182f6]">
+        1단계: 설교 본문 및 음성 추출 중...
+      </p>
+
+      <!-- Stepper List -->
+      <div class="mt-6 space-y-3 text-left">
+        <div id="step-row-1" class="flex items-center justify-between p-3 rounded-xl bg-[#f8fafc] border border-[#e5e8eb]">
+          <div class="flex items-center gap-2.5 text-[13px] font-bold text-[#191f28]">
+            <span id="step-badge-1" class="flex h-5 w-5 items-center justify-center rounded-full bg-[#3182f6] text-[11px] text-white">1</span>
+            <span>예배 영상 중 설교 구간 분리 (찬양·광고 제외)</span>
+          </div>
+          <span id="step-status-1" class="text-[12px] font-bold text-[#3182f6]">진행 중...</span>
+        </div>
+
+        <div id="step-row-2" class="flex items-center justify-between p-3 rounded-xl bg-[#f8fafc] border border-[#e5e8eb] opacity-50">
+          <div class="flex items-center gap-2.5 text-[13px] font-bold text-[#191f28]">
+            <span id="step-badge-2" class="flex h-5 w-5 items-center justify-center rounded-full bg-[#cbd5e1] text-[11px] text-white">2</span>
+            <span>감정 고조 & 은혜로운 하이라이트 구간 분석</span>
+          </div>
+          <span id="step-status-2" class="text-[12px] font-semibold text-[#8b95a1]">대기 중</span>
+        </div>
+
+        <div id="step-row-3" class="flex items-center justify-between p-3 rounded-xl bg-[#f8fafc] border border-[#e5e8eb] opacity-50">
+          <div class="flex items-center gap-2.5 text-[13px] font-bold text-[#191f28]">
+            <span id="step-badge-3" class="flex h-5 w-5 items-center justify-center rounded-full bg-[#cbd5e1] text-[11px] text-white">3</span>
+            <span>타깃 맞춤형 쇼츠 분할 컷 및 자료 10종 렌더링</span>
+          </div>
+          <span id="step-status-3" class="text-[12px] font-semibold text-[#8b95a1]">대기 중</span>
+        </div>
+      </div>
+
+      <div class="mt-6 h-2 w-full bg-[#e2e8f0] rounded-full overflow-hidden">
+        <div id="progress-bar-fill" class="h-full bg-[#3182f6] w-[15%] transition-all duration-300"></div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================= AI SHORTS STUDIO MODAL WORKSPACE ================= -->
+  <div id="studio-modal" class="modal-backdrop fixed inset-0 z-[150] hidden items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="relative w-full max-w-[1240px] max-h-[92vh] overflow-y-auto rounded-3xl bg-white p-5 sm:p-8 shadow-2xl text-left border border-[#e5e8eb]">
+      
+      <!-- Studio Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-5 border-b border-[#e5e8eb] gap-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="rounded-lg bg-[#3182f6] px-2.5 py-1 text-[11px] font-bold text-white uppercase">AI Studio</span>
+            <h2 class="text-[20px] sm:text-[24px] font-extrabold text-[#191f28]">
+              AI 쇼츠 & 사역 자료 스튜디오
+            </h2>
+          </div>
+          <p class="mt-1 text-[13px] text-[#6b7684]">
+            본문: <strong class="text-[#191f28]">빌립보서 4:6-7 "염려를 기도로 바꾸라"</strong> · 타깃: <span id="studio-target-label" class="font-bold text-[#3182f6]">기본 (전체 성도)</span>
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="downloadAllMaterials()"
+            class="rounded-xl bg-[#f0f6ff] text-[#3182f6] border border-blue-200 px-4 py-2 text-[13px] font-bold hover:bg-blue-100 transition-colors">
+            📦 전체 사역 자료 ZIP 다운로드
+          </button>
+          <button onclick="closeStudioModal()"
+            class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f2f4f6] text-[#6b7684] hover:bg-[#e5e8eb] transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Studio Body Grid -->
+      <div class="mt-6 grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-8">
+        
+        <!-- Left: Multiple Scenes Breakdown & 6 Clips -->
+        <div>
+          <div class="mb-4">
+            <h3 class="text-[17px] font-bold text-[#191f28]">
+              🎬 다중 씬 분할 쇼츠 모음 (감정 고조 및 끊김 없는 전환)
+            </h3>
+            <p class="text-[12.5px] text-[#6b7684]">
+              설교의 감정 절정 구간을 3개 이상의 씬으로 분할 편집하여 시청 지속률을 극대화합니다.
+            </p>
+          </div>
+
+          <!-- 3 Multi-Scene Decks -->
+          <div class="space-y-4">
+            
+            <!-- Deck 1 -->
+            <div class="studio-deck-card rounded-2xl border-2 border-[#3182f6] bg-[#f0f6ff]/40 p-4 transition-all cursor-pointer hover:shadow-md"
+              onclick="selectStudioClip(1, '간절함이 곧 영성이다', '도입 15초 → 절정 고조 20초 → 결단 15초')">
+              <div class="flex items-center justify-between mb-2">
+                <span class="rounded bg-[#3182f6] text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 1 (추천)</span>
+                <span class="text-[12px] font-semibold text-[#ef4444]">🔥 감정 고조도 98%</span>
+              </div>
+              <h4 class="text-[15.5px] font-bold text-[#191f28]">"간절함이 곧 영성이다"</h4>
+              <p class="text-[12.5px] text-[#4e5968] mt-1">
+                도입: 염려의 무의미함 직시 (15s) → 전환: 기도의 불꽃 점화 (20s) → 결단: 평강의 임재 (15s)
+              </p>
+              
+              <!-- 3 Scenes Visual Timeline -->
+              <div class="mt-3 grid grid-cols-3 gap-2">
+                <div class="rounded-lg bg-white p-2 border border-[#cbd5e1] text-[11px]">
+                  <span class="font-bold text-[#3182f6]">씬 1 [00:00]</span>
+                  <p class="text-[#64748b] truncate">염려는 해결이 아니다</p>
+                </div>
+                <div class="rounded-lg bg-white p-2 border border-[#3182f6] text-[11px]">
+                  <span class="font-bold text-[#ef4444]">씬 2 [00:15]</span>
+                  <p class="text-[#64748b] truncate">간절함으로 아뢰라</p>
+                </div>
+                <div class="rounded-lg bg-white p-2 border border-[#cbd5e1] text-[11px]">
+                  <span class="font-bold text-[#16a34a]">씬 3 [00:35]</span>
+                  <p class="text-[#64748b] truncate">평강이 지키신다</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deck 2 -->
+            <div class="studio-deck-card rounded-2xl border border-[#e5e8eb] bg-white p-4 transition-all cursor-pointer hover:border-[#3182f6]"
+              onclick="selectStudioClip(2, '염려를 기도로 바꾸는 단 하나의 비결', '고난 직시 12초 → 감사 전환 18초 → 평강 약속 20초')">
+              <div class="flex items-center justify-between mb-2">
+                <span class="rounded bg-[#64748b] text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 2</span>
+                <span class="text-[12px] font-semibold text-[#3b82f6]">💡 감동·위로 95%</span>
+              </div>
+              <h4 class="text-[15.5px] font-bold text-[#191f28]">"염려를 기도로 바꾸는 단 하나의 비결"</h4>
+              <p class="text-[12.5px] text-[#4e5968] mt-1">
+                바울의 감옥 서신에서 발견하는 감사의 역설과 기도의 실천적 방향
+              </p>
+              <div class="mt-3 grid grid-cols-3 gap-2">
+                <div class="rounded-lg bg-[#f8fafc] p-2 border border-[#e2e8f0] text-[11px]">
+                  <span class="font-bold text-[#64748b]">씬 1 [00:00]</span>
+                  <p class="text-[#64748b] truncate">감옥에서의 기쁨</p>
+                </div>
+                <div class="rounded-lg bg-[#f8fafc] p-2 border border-[#e2e8f0] text-[11px]">
+                  <span class="font-bold text-[#3182f6]">씬 2 [00:12]</span>
+                  <p class="text-[#64748b] truncate">감사의 선제적 고백</p>
+                </div>
+                <div class="rounded-lg bg-[#f8fafc] p-2 border border-[#e2e8f0] text-[11px]">
+                  <span class="font-bold text-[#16a34a]">씬 3 [00:30]</span>
+                  <p class="text-[#64748b] truncate">그리스도의 요새</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deck 3 -->
+            <div class="studio-deck-card rounded-2xl border border-[#e5e8eb] bg-white p-4 transition-all cursor-pointer hover:border-[#3182f6]"
+              onclick="selectStudioClip(3, '내 마음의 평강을 지키시는 하나님', '불안 진단 14초 → 기도 간구 16초 → 참된 평안 20초')">
+              <div class="flex items-center justify-between mb-2">
+                <span class="rounded bg-[#64748b] text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 3</span>
+                <span class="text-[12px] font-semibold text-[#8b5cf6]">⚡️ 결단·도전 92%</span>
+              </div>
+              <h4 class="text-[15.5px] font-bold text-[#191f28]">"내 마음의 평강을 지키시는 하나님"</h4>
+              <p class="text-[12.5px] text-[#4e5968] mt-1">
+                상황의 변화보다 먼저 찾아오는 내면의 신비로운 평안
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: 9:16 Shorts Video Simulator with Dynamic Subtitles -->
+        <div class="flex flex-col items-center">
+          <div class="relative w-[280px] rounded-[32px] border-[8px] border-[#191f28] bg-black aspect-[9/16] shadow-2xl overflow-hidden flex flex-col justify-between">
+            
+            <!-- Video Background Simulator -->
+            <div id="studio-player-bg" class="absolute inset-0 bg-cover bg-center transition-all duration-500"
+              style="background-image: url('https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=800&auto=format&fit=crop'); filter: brightness(0.65);">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10"></div>
+
+            <!-- Top Header in Phone -->
+            <div class="relative z-20 p-4 pt-5 text-center">
+              <span id="studio-shorts-tag" class="inline-block rounded-lg bg-[#3182f6] px-3 py-1 text-[11.5px] font-bold text-white tracking-wide shadow-sm">
+                간절함이 곧 영성이다
+              </span>
+            </div>
+
+            <!-- Animated Running Subtitles -->
+            <div class="relative z-20 px-4 text-center my-auto">
+              <div class="rounded-xl bg-black/70 backdrop-blur-md px-4 py-3 border border-white/20 shadow-lg">
+                <p id="studio-live-subtitle" class="text-[16px] font-black tracking-tight text-white leading-snug">
+                  "우리의 기도는 <span class="text-[#60a5fa]">하나님의 평강</span>으로 응답됩니다."
+                </p>
+              </div>
+            </div>
+
+            <!-- Bottom Video Player Controls -->
+            <div class="relative z-20 p-4">
+              <div class="flex items-center justify-between text-[11px] text-white/90 mb-1.5">
+                <span id="studio-time-curr">00:22</span>
+                <span class="text-[#60a5fa] font-bold">감정 고조 컷 [씬 2]</span>
+                <span>00:50</span>
+              </div>
+              <div class="h-1.5 w-full bg-white/30 rounded-full overflow-hidden mb-3">
+                <div class="h-full bg-[#3182f6] w-[45%] rounded-full"></div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex gap-2">
+                <button onclick="alert('9:16 MP4 고화질 쇼츠 영상 다운로드가 시작됩니다.')"
+                  class="flex-1 rounded-xl bg-[#3182f6] py-2 text-[12px] font-bold text-white text-center hover:bg-[#1b6de8] transition-colors">
+                  MP4 다운로드
+                </button>
+                <button onclick="copySubtitlesSRT()"
+                  class="rounded-xl bg-white/20 backdrop-blur-md px-3 py-2 text-[12px] font-semibold text-white hover:bg-white/30 transition-colors">
+                  자막(SRT) 복사
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <p class="mt-3 text-center text-[12px] text-[#6b7684]">
+            타깃 세대 맞춤형 9:16 쇼츠 영상 미리보기
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // Global State
+    let currentUploadTab = 'paste';
+    let currentSlideIndex = 0;
+    let isExegesisExpanded = false;
+    let isBillingAnnual = true;
+
+    // Card News Slide Data (7 slides)
+    const cardSlides = [
+      {
+        verse: "빌립보서 4:6-7",
+        titleA: "염려를 기도로<br/>바꾸라",
+        titleB: "염려는 소모이나,<br/>기도는 평강이다",
+        imgA: "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=800&auto=format&fit=crop",
+        imgB: "https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=800&auto=format&fit=crop"
+      },
+      {
+        verse: "빌립보서 4:6a",
+        titleA: "아무것도<br/>염려하지 말라",
+        titleB: "모든 일에 기도와<br/>간구로 나아가라",
+        imgA: "https://images.unsplash.com/photo-1519817650390-64a93db51149?q=80&w=800&auto=format&fit=crop",
+        imgB: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=800&auto=format&fit=crop"
+      },
+      {
+        verse: "빌립보서 4:6b",
+        titleA: "너희 구할 것을<br/>감사함으로",
+        titleB: "감사는 기도의<br/>열쇠입니다",
+        imgA: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?q=80&w=800&auto=format&fit=crop",
+        imgB: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=800&auto=format&fit=crop"
+      },
+      {
+        verse: "빌립보서 4:7a",
+        titleA: "지각에 뛰어난<br/>하나님의 평강",
+        titleB: "상황을 뛰어넘는<br/>참된 안식",
+        imgA: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=800&auto=format&fit=crop",
+        imgB: "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=800&auto=format&fit=crop"
+      },
+      {
+        verse: "빌립보서 4:7b",
+        titleA: "너희 마음과<br/>생각을 지키시리라",
+        titleB: "그리스도 예수<br/>안에서 지키심",
+        imgA: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=800&auto=format&fit=crop",
+        imgB: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop"
+      },
+      {
+        verse: "삶의 적용",
+        titleA: "오늘 당신의 걱정을<br/>종이에 적으십시오",
+        titleB: "걱정을 기도 제목으로<br/>바꾸십시오",
+        imgA: "https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop",
+        imgB: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=800&auto=format&fit=crop"
+      },
+      {
+        verse: "축복과 결단",
+        titleA: "주님의 초대에<br/>응답하십시오",
+        titleB: "평강의 주님이<br/>함께하십니다",
+        imgA: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=800&auto=format&fit=crop",
+        imgB: "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=800&auto=format&fit=crop"
+      }
+    ];
+
+    // Scroll to hero upload area
+    function scrollToUploadArea() {
+      const el = document.getElementById('hero-upload-container');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Tab Switching for Hero macOS Window
+    function selectUploadTab(tab) {
+      currentUploadTab = tab;
+
+      // Update Buttons
+      const btnFile = document.getElementById('tab-btn-file');
+      const btnPaste = document.getElementById('tab-btn-paste');
+      const btnYt = document.getElementById('tab-btn-yt');
+
+      const contentFile = document.getElementById('content-file');
+      const contentPaste = document.getElementById('content-paste');
+      const contentYt = document.getElementById('content-yt');
+
+      // Reset styles
+      [btnFile, btnPaste, btnYt].forEach(b => {
+        b.className = 'flex flex-col items-start p-4 rounded-xl border border-[#e5e8eb] bg-white hover:border-[#3182f6]/50 transition-all text-left';
+      });
+
+      // Hide all contents
+      contentFile.classList.add('hidden');
+      contentPaste.classList.add('hidden');
+      contentYt.classList.add('hidden');
+
+      if (tab === 'file') {
+        btnFile.className = 'flex flex-col items-start p-4 rounded-xl border-2 border-[#3182f6] bg-[#f0f6ff]/40 shadow-sm transition-all text-left';
+        contentFile.classList.remove('hidden');
+      } else if (tab === 'paste') {
+        btnPaste.className = 'flex flex-col items-start p-4 rounded-xl border-2 border-[#3182f6] bg-[#f0f6ff]/40 shadow-sm transition-all text-left';
+        contentPaste.classList.remove('hidden');
+      } else if (tab === 'yt') {
+        btnYt.className = 'flex flex-col items-start p-4 rounded-xl border-2 border-[#3182f6] bg-[#f0f6ff]/40 shadow-sm transition-all text-left';
+        contentYt.classList.remove('hidden');
+      }
+    }
+
+    // Update Textarea Counter
+    function updateCharCount(textarea) {
+      const len = textarea.value.length;
+      document.getElementById('char-counter').textContent = `${len.toLocaleString()} / 40,000자`;
+    }
+
+    function clearManuscript() {
+      const ta = document.getElementById('manuscript-input');
+      ta.value = '';
+      updateCharCount(ta);
+    }
+
+    function loadSampleManuscript() {
+      const ta = document.getElementById('manuscript-input');
+      ta.value = `궁극적으로 무너뜨릴 수 없습니다.
+기도한 후에도 상황이 변하지 않을 수 있습니다. 그러나 하나님은 약속하십니다. 기도하는 자에게 평강을 주겠다고. 그 평강이 당신의 마음을 지킬 것이라고.
+
+■ 결론
+오늘 말씀의 흐름을 다시 따라가 봅시다. 먼저 우리는 염려의 정체를 직시했습니다. 염려는 해결이 아니라 소모입니다. 그다음, 그 염려를 기도로 전환하는 길을 배웠습니다. 구체적으로, 감사함으로 하나님께 아뢰는 것입니다. 그리고 그 결과로 인간의 이해를 뛰어넘는 하나님의 평강이 우리 마음을 지킨다는 약속을 받았습니다.
+
+오늘 집에 돌아가시면 종이 한 장을 꺼내십시오. 지금 가장 마음을 짓누르는 걱정을 적으십시오. 그리고 그것을 기도 제목으로 바꾸어 하나님께 드리십시오. "주님, 이것이 제 걱정입니다. 감사함으로 드립니다." 이 단순한 전환이 오늘 여러분의 삶을 바꿀 수 있습니다.
+
+"아무것도 염려하지 말라"... 이것은 감정을 억누르라는 명령이 아닙니다. 걱정을 그대로 들고 하나님 앞에 나오라는 따뜻한 초대입니다. 오늘 그 초대에 응하시는 여러분이 되시길 축복합니다.`;
+      updateCharCount(ta);
+      selectUploadTab('paste');
+    }
+
+    function simulateFileUpload() {
+      document.getElementById('real-file-input').click();
+    }
+
+    function handleFileSelected(input) {
+      if (input.files && input.files[0]) {
+        alert(`선택된 파일 [${input.files[0].name}]을 성공적으로 인식했습니다. 타깃 대상을 선택해 주세요.`);
+        openAudienceModal('file');
+      }
+    }
+
+    // Result Tabs Switching
+    function switchResultTab(tabKey) {
+      const tabs = ['card', 'qt', 'group', 'summary'];
+      tabs.forEach(k => {
+        const btn = document.getElementById(`res-tab-${k}`);
+        const panel = document.getElementById(`panel-k` === `panel-${k}` ? `panel-${k}` : `panel-${k}`);
+        if (btn) {
+          if (k === tabKey) {
+            btn.className = 'res-tab-btn shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all lg:gap-3 lg:py-3 lg:text-left bg-[#191f28] text-white lg:bg-white lg:text-[#191f28] lg:shadow-[0_2px_12px_rgba(0,0,0,0.06)] lg:ring-1 lg:ring-[#e5e8eb]';
+          } else {
+            btn.className = 'res-tab-btn shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all lg:gap-3 lg:py-3 lg:text-left bg-white text-[#4e5968] hover:text-[#191f28] lg:bg-transparent lg:hover:bg-white/70';
+          }
+        }
+        const p = document.getElementById(`panel-${k}`);
+        if (p) {
+          if (k === tabKey) {
+            p.classList.remove('hidden');
+          } else {
+            p.classList.add('hidden');
+          }
+        }
+      });
+    }
+
+    // Card News Slider
+    function slideCardNews(delta) {
+      currentSlideIndex += delta;
+      if (currentSlideIndex < 0) currentSlideIndex = cardSlides.length - 1;
+      if (currentSlideIndex >= cardSlides.length) currentSlideIndex = 0;
+
+      const data = cardSlides[currentSlideIndex];
+      document.getElementById('card-carousel-counter').textContent = `${currentSlideIndex + 1} / ${cardSlides.length} 슬라이드`;
+
+      document.getElementById('slide-verse-a').textContent = data.verse;
+      document.getElementById('slide-title-a').innerHTML = data.titleA;
+      document.getElementById('card-slide-a').style.backgroundImage = `linear-gradient(to bottom, rgba(15,23,42,0.2) 0%, rgba(15,23,42,0.85) 100%), url('${data.imgA}')`;
+
+      document.getElementById('slide-verse-b').textContent = data.verse;
+      document.getElementById('slide-title-b').innerHTML = data.titleB;
+      document.getElementById('card-slide-b').style.backgroundImage = `linear-gradient(to bottom, rgba(15,23,42,0.2) 0%, rgba(15,23,42,0.85) 100%), url('${data.imgB}')`;
+    }
+
+    function toggleResourceList() {
+      const list = document.getElementById('res-detail-list');
+      const chevron = document.getElementById('res-chevron');
+      if (list.classList.contains('hidden')) {
+        list.classList.remove('hidden');
+        chevron.style.transform = 'rotate(180deg)';
+      } else {
+        list.classList.add('hidden');
+        chevron.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Exegesis Tabs
+    function switchExegesisTab(tabNum) {
+      [1, 2, 3].forEach(n => {
+        const btn = document.getElementById(`exegesis-tab-${n}`);
+        if (n === tabNum) {
+          btn.className = 'exegesis-tab-btn shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all lg:gap-3 lg:py-3 lg:text-left bg-[#191f28] text-white lg:bg-white lg:text-[#191f28] lg:shadow-[0_2px_12px_rgba(0,0,0,0.06)] lg:ring-1 lg:ring-[#e5e8eb]';
+        } else {
+          btn.className = 'exegesis-tab-btn shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all lg:gap-3 lg:py-3 lg:text-left bg-white text-[#4e5968] hover:text-[#191f28] lg:bg-transparent lg:hover:bg-white/70';
+        }
+      });
+    }
+
+    function toggleExegesisExpand() {
+      const area = document.getElementById('exegesis-scroll-area');
+      const grad = document.getElementById('exegesis-gradient');
+      const text = document.getElementById('exegesis-btn-text');
+      const chevron = document.getElementById('exegesis-chevron');
+
+      isExegesisExpanded = !isExegesisExpanded;
+      if (isExegesisExpanded) {
+        area.style.maxHeight = '1400px';
+        grad.classList.add('hidden');
+        text.textContent = '접기';
+        chevron.style.transform = 'rotate(180deg)';
+      } else {
+        area.style.maxHeight = '440px';
+        grad.classList.remove('hidden');
+        text.textContent = '더보기';
+        chevron.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Billing Toggle
+    function toggleBilling(mode) {
+      const btnM = document.getElementById('billing-monthly');
+      const btnA = document.getElementById('billing-annual');
+      const pBasic = document.getElementById('price-basic');
+      const pPro = document.getElementById('price-pro');
+      const sBasic = document.getElementById('strike-basic');
+      const sPro = document.getElementById('strike-pro');
+      const nBasic = document.getElementById('note-basic');
+      const nPro = document.getElementById('note-pro');
+
+      if (mode === 'monthly') {
+        isBillingAnnual = false;
+        btnM.className = 'px-5 sm:px-6 py-2 rounded-full text-[12.5px] sm:text-[13px] font-semibold transition-colors bg-[#191f28] text-white shadow-sm';
+        btnA.className = 'px-5 sm:px-6 py-2 rounded-full text-[12.5px] sm:text-[13px] font-semibold transition-colors flex items-center gap-1.5 text-[#4e5968] hover:text-[#191f28]';
+        
+        pBasic.textContent = '₩14,900';
+        pPro.textContent = '₩29,900';
+        sBasic.style.display = 'none';
+        sPro.style.display = 'none';
+        nBasic.textContent = '매월 정기 결제';
+        nPro.textContent = '매월 정기 결제';
+      } else {
+        isBillingAnnual = true;
+        btnA.className = 'px-5 sm:px-6 py-2 rounded-full text-[12.5px] sm:text-[13px] font-semibold transition-colors flex items-center gap-1.5 bg-[#191f28] text-white shadow-sm';
+        btnM.className = 'px-5 sm:px-6 py-2 rounded-full text-[12.5px] sm:text-[13px] font-semibold transition-colors text-[#4e5968] hover:text-[#191f28]';
+
+        pBasic.textContent = '₩12,410';
+        pPro.textContent = '₩24,910';
+        sBasic.style.display = 'inline';
+        sPro.style.display = 'inline';
+        nBasic.textContent = '1년 ₩149,000 한 번에 결제 · 2개월 무료';
+        nPro.textContent = '1년 ₩299,000 한 번에 결제 · 2개월 무료';
+      }
+    }
+
+    // FAQ Accordion
+    function toggleFaq(btn) {
+      const card = btn.closest('.rounded-2xl');
+      if (!card) return;
+      const ans = card.querySelector('.faq-ans');
+      const chevron = card.querySelector('svg');
+      if (!ans) return;
+      if (ans.classList.contains('hidden')) {
+        ans.classList.remove('hidden');
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+      } else {
+        ans.classList.add('hidden');
+        if (chevron) chevron.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Modal Handlers
+    function openAudienceModal(source) {
+      document.getElementById('audience-modal').classList.remove('hidden');
+      document.getElementById('audience-modal').classList.add('flex');
+    }
+
+    function closeAudienceModal() {
+      document.getElementById('audience-modal').classList.add('hidden');
+      document.getElementById('audience-modal').classList.remove('flex');
+    }
+
+    // Run 3-step progress and launch Studio Workspace
+    function startStudioGeneration() {
+      closeAudienceModal();
+      const selectedRadio = document.querySelector('input[name="audience"]:checked');
+      const audienceVal = selectedRadio ? selectedRadio.value : 'general';
+      
+      const labels = {
+        general: '기본 (장년부 & 전체 성도)',
+        youth: '대학부 / 청년부 (MZ 세대)',
+        teen: '청소년부 (중고등부)',
+        child: '초등부 / 어린이'
+      };
+      document.getElementById('studio-target-label').textContent = labels[audienceVal] || '기본 (전체 성도)';
+
+      // Show Progress Overlay
+      const overlay = document.getElementById('progress-overlay');
+      overlay.classList.remove('hidden');
+      overlay.classList.add('flex');
+
+      const fill = document.getElementById('progress-bar-fill');
+      const txt = document.getElementById('progress-step-text');
+
+      // Step 1
+      fill.style.width = '35%';
+      txt.textContent = '1단계: 예배 전체 영상 중 설교 구간 분리 중 (찬양·광고 제외)...';
+
+      setTimeout(() => {
+        // Step 2
+        document.getElementById('step-row-1').classList.add('bg-blue-50/50');
+        document.getElementById('step-status-1').textContent = '완료 ✓';
+        document.getElementById('step-status-1').className = 'text-[12px] font-bold text-[#16a34a]';
+
+        document.getElementById('step-row-2').classList.remove('opacity-50');
+        document.getElementById('step-badge-2').className = 'flex h-5 w-5 items-center justify-center rounded-full bg-[#3182f6] text-[11px] text-white';
+        document.getElementById('step-status-2').textContent = '분석 중...';
+        document.getElementById('step-status-2').className = 'text-[12px] font-bold text-[#3182f6]';
+
+        fill.style.width = '70%';
+        txt.textContent = '2단계: 감정 고조 & 은혜로운 하이라이트 구간 분석 중...';
+      }, 1000);
+
+      setTimeout(() => {
+        // Step 3
+        document.getElementById('step-row-2').classList.add('bg-blue-50/50');
+        document.getElementById('step-status-2').textContent = '완료 ✓';
+        document.getElementById('step-status-2').className = 'text-[12px] font-bold text-[#16a34a]';
+
+        document.getElementById('step-row-3').classList.remove('opacity-50');
+        document.getElementById('step-badge-3').className = 'flex h-5 w-5 items-center justify-center rounded-full bg-[#3182f6] text-[11px] text-white';
+        document.getElementById('step-status-3').textContent = '렌더링 중...';
+        document.getElementById('step-status-3').className = 'text-[12px] font-bold text-[#3182f6]';
+
+        fill.style.width = '100%';
+        txt.textContent = '3단계: 타깃 맞춤형 쇼츠 분할 컷 및 사역 자료 10종 생성 완료!';
+      }, 2000);
+
+      setTimeout(() => {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+        
+        // Open Studio Modal
+        const studio = document.getElementById('studio-modal');
+        studio.classList.remove('hidden');
+        studio.classList.add('flex');
+      }, 2700);
+    }
+
+    function closeStudioModal() {
+      document.getElementById('studio-modal').classList.add('hidden');
+      document.getElementById('studio-modal').classList.remove('flex');
+    }
+
+    // Studio Clip Selection
+    function selectStudioClip(num, title, cut) {
+      document.getElementById('studio-shorts-tag').textContent = title;
+      document.getElementById('studio-live-subtitle').innerHTML = `"${title} - <span class="text-[#60a5fa]">${cut}</span>"`;
+    }
+
+    function copySubtitlesSRT() {
+      const srtSample = `1\n00:00:00,000 --> 00:00:05,200\n염려는 해결이 아니라 소모입니다.\n\n2\n00:00:05,300 --> 00:00:15,000\n기도한 후에도 상황이 변하지 않을 수 있습니다.\n\n3\n00:00:15,100 --> 00:00:30,000\n그러나 하나님은 기도하는 자에게 지각에 뛰어난 평강을 주십니다.\n\n4\n00:00:30,100 --> 00:00:50,000\n그 평강이 당신의 마음과 생각을 지키실 것입니다.`;
+      navigator.clipboard.writeText(srtSample).then(() => {
+        alert('쇼츠 자막(SRT)이 클립보드에 복사되었습니다. 프리미어, 캡컷, 유튜브 쇼츠에 바로 붙여넣으실 수 있습니다.');
+      });
+    }
+
+    function downloadAllMaterials() {
+      alert('카드뉴스 7장, QT 6일치, 소그룹 나눔지, 설교 요약 워드 문서, 쇼츠 MP4 클립이 패키지(ZIP)로 저장됩니다.');
+    }
+
+    function openHelpChat() {
+      alert('카카오톡 채널 [AI 사역도구] 상담톡으로 연결됩니다. (운영시간 10:00 ~ 18:00)');
+    }
+
+    function toggleShortsPlay() {
+      const sub = document.getElementById('shorts-live-subtitle');
+      sub.classList.toggle('text-[#60a5fa]');
+    }
+  </script>
+
+</body>
+
+</html>
