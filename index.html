@@ -242,23 +242,55 @@
 
       <!-- Tab 2: YouTube Video Link -->
       <div id="upload-content-yt" class="mt-6 hidden">
-        <div class="rounded-2xl border-2 border-dashed border-slate-200 p-6 sm:p-8 text-center bg-slate-50/50">
+        <div class="rounded-2xl border-2 border-dashed border-red-200/80 p-6 sm:p-8 text-center bg-red-50/20">
           <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100 text-red-600 text-[24px] mb-3">
             ▶️
           </div>
-          <h3 class="text-[16px] font-bold text-slate-900">유튜브 예배 및 설교 영상 주소</h3>
-          <p class="text-[13px] text-slate-500 mt-1 max-w-md mx-auto">
-            1~2시간 분량의 전체 예배 영상도 AI가 찬양과 광고를 제외하고 설교 본론만 자동으로 찾아냅니다.
+          <h3 class="text-[17px] font-bold text-slate-900">유튜브 예배 및 설교 영상 주소</h3>
+          <p class="text-[13px] text-slate-500 mt-1 max-w-md mx-auto leading-relaxed">
+            목사님의 설교 유튜브 주소를 넣으시면, AI가 영상을 분석하여 실제 설교 영상 기반의 9:16 모바일 쇼츠 3편과 10종 사역 자료를 자동 생성합니다.
           </p>
 
-          <div class="mt-5 max-w-xl mx-auto flex gap-2">
-            <input id="youtube-url-input" type="url" placeholder="https://www.youtube.com/watch?v=..."
-              value="https://www.youtube.com/watch?v=sermon-phil-4-sample"
-              class="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-[14px] text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/10" />
-            <button onclick="openAudienceModal('youtube')"
-              class="rounded-xl bg-slate-900 px-5 py-3 text-[13.5px] font-bold text-white hover:bg-slate-800 transition-colors shrink-0">
-              링크 인식
+          <!-- Quick Sample Sermon Buttons -->
+          <div class="mt-4 flex flex-wrap justify-center gap-2">
+            <button onclick="loadSampleYouTube('z5D_B9I7l1Y')" type="button"
+              class="inline-flex items-center gap-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 px-3 py-1.5 text-[12px] font-bold transition-all shadow-2xs active:scale-95">
+              <span>✨ 관유중앙교회 주일설교 예시 불러오기</span>
             </button>
+            <button onclick="loadSampleYouTube('8fD5PjS5tQ4')" type="button"
+              class="inline-flex items-center gap-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 px-3 py-1.5 text-[12px] font-bold transition-all shadow-2xs active:scale-95">
+              <span>설교 예시 2</span>
+            </button>
+          </div>
+
+          <div class="mt-4 max-w-xl mx-auto flex flex-col sm:flex-row gap-2">
+            <input id="youtube-url-input" type="url"
+              placeholder="예: https://www.youtube.com/watch?v=z5D_B9I7l1Y"
+              value="https://www.youtube.com/watch?v=z5D_B9I7l1Y"
+              oninput="handleYouTubeInput(this.value)"
+              class="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-[14px] text-slate-800 focus:border-red-500 focus:outline-none focus:ring-4 focus:ring-red-500/10 transition-all shadow-xs" />
+            <button onclick="applyYouTubeLinkAndStart()"
+              class="rounded-xl bg-red-600 px-5 py-3 text-[13.5px] font-bold text-white hover:bg-red-700 transition-colors shrink-0 flex items-center justify-center gap-1.5 shadow-md active:scale-95">
+              <span>🔗 내 설교 쇼츠 만들기</span>
+            </button>
+          </div>
+
+          <!-- YouTube Recognition Status Card -->
+          <div id="yt-recognized-card" class="mt-4 max-w-xl mx-auto rounded-xl border border-emerald-300 bg-emerald-50/80 p-3.5 flex items-center gap-3.5 text-left shadow-2xs">
+            <img id="yt-recognized-thumb" src="https://img.youtube.com/vi/z5D_B9I7l1Y/hqdefault.jpg" alt="설교 영상 썸네일"
+              class="w-24 h-16 rounded-lg object-cover border border-emerald-400 shadow-2xs shrink-0" />
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-1.5">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-[12px] font-extrabold text-emerald-800">실제 설교 영상 확인 완료</span>
+              </div>
+              <p id="yt-recognized-id" class="text-[13px] font-bold text-slate-900 truncate mt-0.5">
+                유튜브 영상 ID: z5D_B9I7l1Y
+              </p>
+              <p class="text-[11.5px] text-slate-600 truncate">
+                바다 영상이 아닌 목사님의 실제 설교 영상이 9:16 세로 플레이어에 연동됩니다.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -267,17 +299,32 @@
       <div id="upload-content-file" class="mt-6 hidden">
         <div onclick="simulateFileUpload()"
           class="cursor-pointer rounded-2xl border-2 border-dashed border-slate-200 p-8 text-center bg-slate-50/50 hover:bg-blue-50/40 hover:border-blue-300 transition-all">
-          <input type="file" id="real-file-input" class="hidden" accept="audio/*,video/*,.txt,.hwp,.docx" onchange="handleFileSelected(this)" />
+          <input type="file" id="real-file-input" class="hidden" accept="video/*,audio/*,.txt,.hwp,.docx" onchange="handleFileSelected(this)" />
           <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-600 text-[22px] mb-3">
-            ☁️
+            📁
           </div>
-          <h3 class="text-[16px] font-bold text-slate-900">설교 녹음 파일 또는 한글/워드 원고 드래그</h3>
+          <h3 class="text-[16px] font-bold text-slate-900">설교 영상(MP4) 또는 녹음(MP3) 파일 선택</h3>
           <p class="text-[13px] text-slate-500 mt-1">
-            스마트폰 녹음 파일(MP3, M4A, WAV), 영상(MP4), 문서(HWP, DOCX, TXT) 지원
+            직접 촬영하신 설교 동영상 파일(MP4, MOV)을 올리시면 플레이어에서 내 영상으로 바로 재생됩니다.
           </p>
           <span class="mt-3 inline-block rounded-lg bg-white border border-slate-200 px-3.5 py-1.5 text-[12px] font-bold text-slate-700 shadow-2xs">
-            컴퓨터에서 파일 찾기
+            컴퓨터에서 설교 파일 찾기
           </span>
+        </div>
+
+        <!-- File Recognition Card -->
+        <div id="file-recognized-card" class="mt-4 max-w-xl mx-auto hidden rounded-xl border border-blue-200 bg-blue-50/80 p-3.5 items-center gap-3.5 text-left">
+          <div class="w-10 h-10 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-[18px] shrink-0">
+            🎬
+          </div>
+          <div class="flex-1 min-w-0">
+            <span class="text-[11.5px] font-extrabold text-blue-800">설교 파일 등록됨</span>
+            <p id="file-recognized-name" class="text-[13px] font-bold text-slate-900 truncate">파일명.mp4</p>
+            <p id="file-recognized-size" class="text-[11.5px] text-slate-600">0 MB</p>
+          </div>
+          <button onclick="startStudioGeneration()" class="rounded-xl bg-blue-600 px-4 py-2 text-[12.5px] font-bold text-white hover:bg-blue-700 shrink-0 shadow-xs">
+            쇼츠 생성 시작
+          </button>
         </div>
       </div>
 
@@ -635,53 +682,73 @@
       <div class="flex flex-col items-center">
         <div class="relative w-[280px] rounded-[34px] border-[8px] border-slate-900 bg-black aspect-[9/16] shadow-2xl overflow-hidden flex flex-col justify-between group">
           
-          <!-- Real Preaching Video Player -->
-          <video id="studio-video" class="absolute inset-0 w-full h-full object-cover" playsinline loop muted autoplay>
-            <source src="assets/sample-shorts-1.mp4" type="video/mp4">
-          </video>
+          <!-- 1. YouTube Sermon Embed Wrap (9:16 Vertical Center-Cropped View) -->
+          <div id="studio-yt-wrap" class="absolute inset-0 w-full h-full overflow-hidden bg-black transition-all">
+            <div id="studio-yt-scaler" class="relative w-full h-full flex items-center justify-center">
+              <iframe id="studio-yt-iframe"
+                class="absolute border-0 pointer-events-none transition-all duration-300"
+                style="width: 325%; height: 115%; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+                src="https://www.youtube.com/embed/z5D_B9I7l1Y?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=z5D_B9I7l1Y&start=0&rel=0&playsinline=1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+
+          <!-- 2. Local Video File Player (Active when local MP4 video file is selected) -->
+          <video id="studio-video" class="absolute inset-0 w-full h-full object-cover hidden" playsinline loop muted autoplay></video>
           
           <!-- Gradient Shadow Overlay -->
           <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10 pointer-events-none"></div>
 
           <!-- Top Header in Phone -->
-          <div class="relative z-20 p-4 pt-5 flex items-center justify-between">
-            <span id="studio-shorts-tag" class="inline-block rounded-lg bg-blue-600 px-3 py-1 text-[11.5px] font-bold text-white tracking-wide shadow-sm truncate max-w-[190px]">
+          <div class="relative z-20 p-3 pt-4 flex items-center justify-between gap-1">
+            <span id="studio-shorts-tag" class="inline-block rounded-lg bg-blue-600 px-2.5 py-1 text-[11px] font-bold text-white tracking-wide shadow-sm truncate max-w-[130px]">
               간절함이 곧 영성이다
             </span>
-            <!-- Sound Toggle Button -->
-            <button onclick="toggleStudioAudio()" id="studio-sound-btn" class="flex h-7 w-7 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md hover:bg-black/80 transition-colors" title="소리 켜기/끄기">
-              <svg id="studio-sound-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-                <line x1="23" y1="9" x2="17" y2="15"></line>
-                <line x1="17" y1="9" x2="23" y2="15"></line>
-              </svg>
-            </button>
+            <div class="flex items-center gap-1">
+              <!-- Aspect Ratio Toggle: 9:16 Crop vs 16:9 Full -->
+              <button onclick="toggleShortsCropMode()" id="studio-crop-btn"
+                class="rounded-full bg-black/65 px-2 py-0.5 text-[10px] font-bold text-white border border-white/20 backdrop-blur-md hover:bg-black/90 transition-all flex items-center gap-1 shadow-sm"
+                title="9:16 세로 쇼츠 크롭 / 16:9 전체 비율 전환">
+                <span id="studio-crop-btn-text">📱 9:16</span>
+              </button>
+              <!-- Sound Toggle Button -->
+              <button onclick="toggleStudioAudio()" id="studio-sound-btn"
+                class="flex h-7 w-7 items-center justify-center rounded-full bg-black/65 text-white backdrop-blur-md hover:bg-black/90 transition-colors shadow-sm"
+                title="소리 켜기/끄기">
+                <svg id="studio-sound-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                  <line x1="23" y1="9" x2="17" y2="15"></line>
+                  <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+              </button>
+            </div>
           </div>
 
           <!-- Play/Pause Overlay & Dynamic Subtitle -->
           <div class="relative z-20 px-3 text-center my-auto flex flex-col items-center">
             <button onclick="toggleStudioPlay()" id="studio-play-overlay-btn"
-              class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-white mb-3 cursor-pointer hover:scale-110 active:scale-95 transition-all shadow-xl group-hover:opacity-100 opacity-70">
-              <svg id="studio-play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              class="w-13 h-13 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center text-white mb-3 cursor-pointer hover:scale-110 active:scale-95 transition-all shadow-xl opacity-80 hover:opacity-100">
+              <svg id="studio-play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                 <rect x="6" y="4" width="4" height="16"></rect>
                 <rect x="14" y="4" width="4" height="16"></rect>
               </svg>
             </button>
 
             <!-- Animated Running Subtitles -->
-            <div class="rounded-xl bg-black/75 backdrop-blur-md px-3.5 py-2.5 border border-white/20 shadow-lg w-full max-w-[250px]">
-              <p id="studio-live-subtitle" class="text-[14px] font-black tracking-tight text-white leading-snug break-keep drop-shadow">
-                "우리의 기도는 <span class="text-blue-400">하나님의 평강</span>으로 응답됩니다."
+            <div class="rounded-xl bg-black/80 backdrop-blur-md px-3.5 py-2.5 border border-white/20 shadow-lg w-full max-w-[250px]">
+              <p id="studio-live-subtitle" class="text-[13.5px] font-black tracking-tight text-white leading-snug break-keep drop-shadow">
+                "염려는 문제가 해결되지 않고 <span class="text-blue-400 font-bold">에너지의 소모</span>일 뿐입니다."
               </p>
             </div>
           </div>
 
           <!-- Bottom Video Player Controls -->
-          <div class="relative z-20 p-4">
+          <div class="relative z-20 p-3.5">
             <div class="flex items-center justify-between text-[11px] text-white/90 mb-1.5 font-medium">
               <span id="studio-time-curr">00:00</span>
-              <span id="studio-scene-name" class="text-blue-400 font-bold truncate max-w-[140px]">씬 1 [00:00]</span>
-              <span id="studio-time-total">00:10</span>
+              <span id="studio-scene-name" class="text-blue-400 font-bold truncate max-w-[130px]">씬 1 [00:00]</span>
+              <span id="studio-time-total">00:12</span>
             </div>
             
             <!-- Interactive Clickable Progress Bar -->
@@ -711,7 +778,7 @@
         </div>
 
         <p class="mt-3 text-center text-[12px] text-slate-500">
-          9:16 스마트폰 실시간 화면 (화면을 클릭하면 재생/일시정지)
+          실제 설교 영상 9:16 모바일 쇼츠 실시간 화면 (클릭하여 재생/정지)
         </p>
       </div>
 
@@ -1002,49 +1069,69 @@
         <div class="flex flex-col items-center">
           <div class="relative w-[280px] rounded-[34px] border-[8px] border-slate-900 bg-black aspect-[9/16] shadow-2xl overflow-hidden flex flex-col justify-between group">
             
-            <video id="modal-studio-video" class="absolute inset-0 w-full h-full object-cover" playsinline loop muted autoplay>
-              <source src="assets/sample-shorts-1.mp4" type="video/mp4">
-            </video>
+            <!-- 1. Modal YouTube Sermon Embed Wrap (9:16 Vertical Center-Cropped View) -->
+            <div id="modal-yt-wrap" class="absolute inset-0 w-full h-full overflow-hidden bg-black transition-all">
+              <div id="modal-yt-scaler" class="relative w-full h-full flex items-center justify-center">
+                <iframe id="modal-yt-iframe"
+                  class="absolute border-0 pointer-events-none transition-all duration-300"
+                  style="width: 325%; height: 115%; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+                  src="https://www.youtube.com/embed/z5D_B9I7l1Y?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=z5D_B9I7l1Y&start=0&rel=0&playsinline=1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+              </div>
+            </div>
+
+            <!-- 2. Modal Local Video File Player -->
+            <video id="modal-studio-video" class="absolute inset-0 w-full h-full object-cover hidden" playsinline loop muted autoplay></video>
             
             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10 pointer-events-none"></div>
 
             <!-- Top Header -->
-            <div class="relative z-20 p-4 pt-5 flex items-center justify-between">
-              <span id="modal-shorts-tag" class="inline-block rounded-lg bg-blue-600 px-3 py-1 text-[11.5px] font-bold text-white tracking-wide shadow-sm truncate max-w-[190px]">
+            <div class="relative z-20 p-3 pt-4 flex items-center justify-between gap-1">
+              <span id="modal-shorts-tag" class="inline-block rounded-lg bg-blue-600 px-2.5 py-1 text-[11px] font-bold text-white tracking-wide shadow-sm truncate max-w-[130px]">
                 간절함이 곧 영성이다
               </span>
-              <button onclick="toggleModalStudioAudio()" id="modal-sound-btn" class="flex h-7 w-7 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md hover:bg-black/80 transition-colors">
-                <svg id="modal-sound-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-                  <line x1="23" y1="9" x2="17" y2="15"></line>
-                  <line x1="17" y1="9" x2="23" y2="15"></line>
-                </svg>
-              </button>
+              <div class="flex items-center gap-1">
+                <button onclick="toggleShortsCropMode()" id="modal-crop-btn"
+                  class="rounded-full bg-black/65 px-2 py-0.5 text-[10px] font-bold text-white border border-white/20 backdrop-blur-md hover:bg-black/90 transition-all flex items-center gap-1 shadow-sm"
+                  title="9:16 세로 쇼츠 크롭 / 16:9 전체 비율 전환">
+                  <span id="modal-crop-btn-text">📱 9:16</span>
+                </button>
+                <button onclick="toggleModalStudioAudio()" id="modal-sound-btn"
+                  class="flex h-7 w-7 items-center justify-center rounded-full bg-black/65 text-white backdrop-blur-md hover:bg-black/90 transition-colors shadow-sm"
+                  title="소리 켜기/끄기">
+                  <svg id="modal-sound-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                </button>
+              </div>
             </div>
 
             <!-- Center Play Overlay & Subtitle -->
             <div class="relative z-20 px-3 text-center my-auto flex flex-col items-center">
               <button onclick="toggleModalStudioPlay()" id="modal-play-btn"
-                class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-white mb-3 cursor-pointer hover:scale-110 active:scale-95 transition-all shadow-xl">
-                <svg id="modal-play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                class="w-13 h-13 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center text-white mb-3 cursor-pointer hover:scale-110 active:scale-95 transition-all shadow-xl opacity-80 hover:opacity-100">
+                <svg id="modal-play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                   <rect x="6" y="4" width="4" height="16"></rect>
                   <rect x="14" y="4" width="4" height="16"></rect>
                 </svg>
               </button>
 
-              <div class="rounded-xl bg-black/75 backdrop-blur-md px-3.5 py-2.5 border border-white/20 shadow-lg w-full max-w-[250px]">
-                <p id="modal-live-subtitle" class="text-[14px] font-black tracking-tight text-white leading-snug break-keep drop-shadow">
-                  "우리의 기도는 <span class="text-blue-400">하나님의 평강</span>으로 응답됩니다."
+              <div class="rounded-xl bg-black/80 backdrop-blur-md px-3.5 py-2.5 border border-white/20 shadow-lg w-full max-w-[250px]">
+                <p id="modal-live-subtitle" class="text-[13.5px] font-black tracking-tight text-white leading-snug break-keep drop-shadow">
+                  "염려는 문제가 해결되지 않고 <span class="text-blue-400 font-bold">에너지의 소모</span>일 뿐입니다."
                 </p>
               </div>
             </div>
 
             <!-- Bottom Controls -->
-            <div class="relative z-20 p-4">
+            <div class="relative z-20 p-3.5">
               <div class="flex items-center justify-between text-[11px] text-white/90 mb-1.5 font-medium">
                 <span id="modal-time-curr">00:00</span>
-                <span id="modal-scene-name" class="text-blue-400 font-bold truncate max-w-[140px]">씬 1 [00:00]</span>
-                <span id="modal-time-total">00:10</span>
+                <span id="modal-scene-name" class="text-blue-400 font-bold truncate max-w-[130px]">씬 1 [00:00]</span>
+                <span id="modal-time-total">00:12</span>
               </div>
               
               <div onclick="seekModalStudioVideo(event)" id="modal-progress-track"
@@ -1078,6 +1165,81 @@
   </div>
 
 
+  <!-- ================= SHORTS EXPORT MODAL ================= -->
+  <div id="shorts-export-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md transition-all">
+    <div class="relative w-full max-w-lg rounded-3xl bg-white p-6 sm:p-8 shadow-2xl border border-slate-100 text-center animate-in fade-in zoom-in-95">
+      <button onclick="closeExportModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-2xl font-bold">×</button>
+      
+      <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl mx-auto mb-4">
+        🎬
+      </div>
+
+      <h3 class="text-[20px] font-black text-slate-900">
+        설교 쇼츠 영상 및 자막 패키지 다운로드
+      </h3>
+      <p id="export-modal-desc" class="text-[13.5px] text-slate-500 mt-1.5">
+        선택하신 쇼츠 구간의 MP4 영상, SRT 자막, 전체 10종 사역 자료를 바로 내려받으실 수 있습니다.
+      </p>
+
+      <div class="mt-6 space-y-3 text-left">
+        <!-- Option 1: MP4 Download -->
+        <div onclick="executeMP4Download()"
+          class="cursor-pointer p-4 rounded-2xl border-2 border-blue-600 bg-blue-50/50 hover:bg-blue-100/50 transition-all flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white font-black text-sm">MP4</span>
+            <div>
+              <h4 class="text-[14.5px] font-bold text-slate-900">9:16 모바일 쇼츠 영상(MP4) 저장</h4>
+              <p class="text-[12px] text-slate-500">스마트폰 9:16 규격으로 렌더링된 쇼츠 영상 파일</p>
+            </div>
+          </div>
+          <span class="text-[12.5px] font-extrabold text-blue-600 group-hover:translate-x-1 transition-transform">다운로드 ↓</span>
+        </div>
+
+        <!-- Option 2: SRT Subtitles -->
+        <div onclick="downloadSubtitlesSRTFile()"
+          class="cursor-pointer p-4 rounded-2xl border border-slate-200 bg-white hover:border-slate-400 transition-all flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500 text-white font-black text-sm">SRT</span>
+            <div>
+              <h4 class="text-[14.5px] font-bold text-slate-900">쇼츠 자막 파일(SRT) 다운로드</h4>
+              <p class="text-[12px] text-slate-500">캡컷(CapCut), 프리미어, Vrew에 드래그하면 자막 1초 완성</p>
+            </div>
+          </div>
+          <span class="text-[12.5px] font-extrabold text-slate-700 group-hover:translate-x-1 transition-transform">저장 ↓</span>
+        </div>
+
+        <!-- Option 3: Full ZIP -->
+        <div onclick="downloadAllMaterials(); closeExportModal();"
+          class="cursor-pointer p-4 rounded-2xl border border-slate-200 bg-white hover:border-slate-400 transition-all flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600 text-white font-black text-sm">ZIP</span>
+            <div>
+              <h4 class="text-[14.5px] font-bold text-slate-900">사역 자료 10종 통합 압축팩(ZIP)</h4>
+              <p class="text-[12px] text-slate-500">소그룹 질문지, 주간 QT 6일치, 카드뉴스, 쇼츠 대본 일체</p>
+            </div>
+          </div>
+          <span class="text-[12.5px] font-extrabold text-slate-700 group-hover:translate-x-1 transition-transform">압축팩 받기 ↓</span>
+        </div>
+
+        <!-- Option 4: YouTube Timestamp Link -->
+        <div id="export-yt-link-box" class="p-3.5 rounded-2xl bg-slate-100 flex items-center justify-between text-[12.5px]">
+          <span class="text-slate-600">📺 유튜브 원본 설교 해당 구간 바로보기</span>
+          <a id="export-yt-url-btn" href="#" target="_blank" class="font-bold text-red-600 hover:underline flex items-center gap-1">
+            <span>유튜브에서 열기</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end">
+        <button onclick="closeExportModal()" class="w-full rounded-xl bg-slate-100 hover:bg-slate-200 py-3 text-[14px] font-bold text-slate-700 transition-colors">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+
   <!-- ================= FLOATING TOAST NOTIFICATION ================= -->
   <div id="app-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] hidden items-center gap-2 rounded-2xl bg-slate-900/95 px-5 py-3.5 text-[14px] font-bold text-white shadow-2xl backdrop-blur-md transition-all border border-slate-700">
     <span id="app-toast-icon">✅</span>
@@ -1097,8 +1259,34 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // State Variables
+    let currentInputMode = 'youtube'; // 'youtube' | 'file' | 'paste'
+    let currentYouTubeId = 'z5D_B9I7l1Y'; // Pastor Song Gi-un's actual sermon video from church website
+    let currentFileVideoUrl = null;
+    let currentFileName = '';
+    let isShortsCropMode = true; // true: 9:16 vertical crop, false: 16:9 widescreen
+    let currentClipIndex = 1;
+    let isPlaying = true;
+    let isMuted = true;
+    let clipElapsedSec = 0;
+    let playbackTimer = null;
+    let studioPlayerInitialized = false;
+
+    // YouTube postMessage controller
+    function sendYtCommand(iframeId, func, args = []) {
+      const iframe = document.getElementById(iframeId);
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: func,
+          args: args
+        }), '*');
+      }
+    }
+
     // Input Tabs Switching
     function selectUploadTab(tab) {
+      currentInputMode = tab;
       const tabPaste = document.getElementById('upload-tab-paste');
       const tabYt = document.getElementById('upload-tab-yt');
       const tabFile = document.getElementById('upload-tab-file');
@@ -1119,11 +1307,69 @@
         tabPaste.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-blue-700 shadow-xs';
         contentPaste.classList.remove('hidden');
       } else if (tab === 'yt') {
-        tabYt.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-blue-700 shadow-xs';
+        tabYt.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-red-700 shadow-xs';
         contentYt.classList.remove('hidden');
       } else if (tab === 'file') {
         tabFile.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-blue-700 shadow-xs';
         contentFile.classList.remove('hidden');
+      }
+    }
+
+    // YouTube ID Extractor
+    function extractYouTubeId(url) {
+      if (!url) return null;
+      url = url.trim();
+      let m = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+      if (m) return m[1];
+      m = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+      if (m) return m[1];
+      m = url.match(/embed\/([a-zA-Z0-9_-]{11})/);
+      if (m) return m[1];
+      m = url.match(/shorts\/([a-zA-Z0-9_-]{11})/);
+      if (m) return m[1];
+      m = url.match(/^([a-zA-Z0-9_-]{11})$/);
+      if (m) return m[1];
+      return null;
+    }
+
+    function handleYouTubeInput(val) {
+      const id = extractYouTubeId(val);
+      const card = document.getElementById('yt-recognized-card');
+      const thumb = document.getElementById('yt-recognized-thumb');
+      const txt = document.getElementById('yt-recognized-id');
+      if (id) {
+        currentYouTubeId = id;
+        currentInputMode = 'youtube';
+        if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
+        if (thumb) thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+        if (txt) txt.textContent = `유튜브 설교 영상 ID: ${id}`;
+        loadActiveVideoSource();
+      } else if (!val || val.trim().length === 0) {
+        if (card) { card.classList.add('hidden'); card.classList.remove('flex'); }
+      }
+    }
+
+    function loadSampleYouTube(id) {
+      const input = document.getElementById('youtube-url-input');
+      if (input) {
+        input.value = `https://www.youtube.com/watch?v=${id}`;
+        handleYouTubeInput(input.value);
+      }
+      selectUploadTab('yt');
+      showToast('관유중앙교회 주일 설교 영상(ID: ' + id + ')이 입력되었습니다.', '✨');
+    }
+
+    function applyYouTubeLinkAndStart() {
+      const input = document.getElementById('youtube-url-input');
+      const val = input ? input.value : '';
+      const id = extractYouTubeId(val);
+      if (id) {
+        currentYouTubeId = id;
+        currentInputMode = 'youtube';
+        showToast(`설교 영상 [ID: ${id}] 인식 완료! 쇼츠 생성을 시작합니다.`, '🎬');
+        startStudioGeneration();
+      } else {
+        showToast('올바른 유튜브 링크를 입력해주세요.', '⚠️');
       }
     }
 
@@ -1164,7 +1410,22 @@
 
     function handleFileSelected(input) {
       if (input.files && input.files[0]) {
-        showToast(`선택된 파일 [${input.files[0].name}]을 인식했습니다.`, '📁');
+        const file = input.files[0];
+        currentFileName = file.name;
+        const card = document.getElementById('file-recognized-card');
+        const nameEl = document.getElementById('file-recognized-name');
+        const sizeEl = document.getElementById('file-recognized-size');
+        if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
+        if (nameEl) nameEl.textContent = file.name;
+        if (sizeEl) sizeEl.textContent = `${(file.size / (1024 * 1024)).toFixed(1)} MB`;
+
+        if (file.type.startsWith('video/')) {
+          currentInputMode = 'file';
+          currentFileVideoUrl = URL.createObjectURL(file);
+          showToast(`설교 영상 파일 [${file.name}]이 인식되었습니다!`, '🎬');
+        } else {
+          showToast(`설교 파일 [${file.name}]이 등록되었습니다.`, '📁');
+        }
         startStudioGeneration();
       }
     }
@@ -1204,6 +1465,16 @@
     function startStudioGeneration() {
       closeAudienceModal();
 
+      // Check current input
+      const ytInput = document.getElementById('youtube-url-input');
+      if (ytInput && ytInput.value.trim().length > 0) {
+        const id = extractYouTubeId(ytInput.value);
+        if (id) {
+          currentYouTubeId = id;
+          currentInputMode = 'youtube';
+        }
+      }
+
       // Show Progress Overlay
       const overlay = document.getElementById('progress-overlay');
       overlay.classList.remove('hidden');
@@ -1238,7 +1509,9 @@
         document.getElementById('step-status-3').className = 'font-bold text-blue-600';
 
         fill.style.width = '100%';
-        txt.textContent = '3단계: 9:16 설교 쇼츠 컷 분할 및 자막 싱크 완료!';
+        txt.textContent = (currentInputMode === 'youtube')
+          ? `3단계: 유튜브 설교 영상(ID: ${currentYouTubeId}) 9:16 쇼츠 컷 분할 및 자막 싱크 완료!`
+          : '3단계: 9:16 설교 쇼츠 컷 분할 및 자막 싱크 완료!';
       }, 2000);
 
       setTimeout(() => {
@@ -1257,6 +1530,9 @@
     function closeStudioModal() {
       const vid = document.getElementById('modal-studio-video');
       if (vid) vid.pause();
+      const iframe = document.getElementById('modal-yt-iframe');
+      if (iframe) sendYtCommand('modal-yt-iframe', 'pauseVideo');
+
       const studio = document.getElementById('studio-modal');
       studio.classList.add('hidden');
       studio.classList.remove('flex');
@@ -1276,45 +1552,42 @@
       }
     }
 
-    // Studio Clips Data
+    // Studio Clips Data (Integrated with real sermon timestamps)
     const studioClips = {
       1: {
         title: '간절함이 곧 영성이다',
-        videoSrc: 'assets/sample-shorts-1.mp4',
+        startSec: 0,
+        duration: 12,
         downloadName: '설교쇼츠_01_간절함이_곧_영성이다_9x16.mp4',
-        duration: 10,
         scenes: [
-          { start: 0, end: 3, label: '씬 1 [00:00]', subtitle: '“염려는 문제가 해결되지 않고 <span class=\'text-blue-400 font-bold\'>에너지의 소모</span>일 뿐입니다.”' },
-          { start: 3, end: 7, label: '씬 2 [00:03]', subtitle: '“우리의 기도는 <span class=\'text-blue-400 font-bold\'>하나님의 평강</span>으로 응답됩니다.”' },
-          { start: 7, end: 12, label: '씬 3 [00:07]', subtitle: '“그 평강이 당신의 마음과 생각을 <span class=\'text-blue-400 font-bold\'>반드시 지키실 것</span>입니다.”' }
+          { start: 0, end: 4, label: '씬 1 [00:00]', subtitle: '“염려는 문제가 해결되지 않고 <span class=\'text-blue-400 font-bold\'>에너지의 소모</span>일 뿐입니다.”' },
+          { start: 4, end: 8, label: '씬 2 [00:04]', subtitle: '“우리의 기도는 <span class=\'text-blue-400 font-bold\'>하나님의 평강</span>으로 응답됩니다.”' },
+          { start: 8, end: 12, label: '씬 3 [00:08]', subtitle: '“그 평강이 당신의 마음과 생각을 <span class=\'text-blue-400 font-bold\'>반드시 지키실 것</span>입니다.”' }
         ]
       },
       2: {
         title: '염려를 기도로 바꾸는 단 하나의 비결',
-        videoSrc: 'assets/sample-shorts-2.mp4',
+        startSec: 45,
+        duration: 12,
         downloadName: '설교쇼츠_02_염려를_기도로_바꾸는_단_하나의_비결_9x16.mp4',
-        duration: 5,
         scenes: [
-          { start: 0, end: 2, label: '씬 1 [00:00]', subtitle: '“감옥 안에서도 바울은 주 안에서 <span class=\'text-blue-400 font-bold\'>항상 기뻐하라</span> 선포했습니다.”' },
-          { start: 2, end: 4, label: '씬 2 [00:02]', subtitle: '“상황이 바뀌기 전에 <span class=\'text-blue-400 font-bold\'>감사의 기도</span>를 먼저 올리십시오.”' },
-          { start: 4, end: 6, label: '씬 3 [00:04]', subtitle: '“주님의 평강이 성벽처럼 <span class=\'text-blue-400 font-bold\'>우리 삶을 요새처럼</span> 지키십니다.”' }
+          { start: 0, end: 4, label: '씬 1 [00:45]', subtitle: '“감옥 안에서도 바울은 주 안에서 <span class=\'text-blue-400 font-bold\'>항상 기뻐하라</span> 선포했습니다.”' },
+          { start: 4, end: 8, label: '씬 2 [00:49]', subtitle: '“상황이 바뀌기 전에 <span class=\'text-blue-400 font-bold\'>감사의 기도</span>를 먼저 올리십시오.”' },
+          { start: 8, end: 12, label: '씬 3 [00:53]', subtitle: '“주님의 평강이 성벽처럼 <span class=\'text-blue-400 font-bold\'>우리 삶을 요새처럼</span> 지키십니다.”' }
         ]
       },
       3: {
         title: '내 마음의 평강을 지키시는 하나님',
-        videoSrc: 'assets/sample-shorts-3.mp4',
+        startSec: 120,
+        duration: 12,
         downloadName: '설교쇼츠_03_내_마음의_평강을_지키시는_하나님_9x16.mp4',
-        duration: 10,
         scenes: [
-          { start: 0, end: 3, label: '씬 1 [00:00]', subtitle: '“세상이 주는 불안은 우리의 시선을 <span class=\'text-blue-400 font-bold\'>문제 자체에</span> 가둡니다.”' },
-          { start: 3, end: 7, label: '씬 2 [00:03]', subtitle: '“그러나 모든 일을 <span class=\'text-blue-400 font-bold\'>기도와 간구</span>로 하나님께 맡길 때”' },
-          { start: 7, end: 12, label: '씬 3 [00:07]', subtitle: '“이해를 뛰어넘는 그리스도의 <span class=\'text-blue-400 font-bold\'>참된 평안</span>이 임합니다.”' }
+          { start: 0, end: 4, label: '씬 1 [02:00]', subtitle: '“세상이 주는 불안은 우리의 시선을 <span class=\'text-blue-400 font-bold\'>문제 자체에</span> 가둡니다.”' },
+          { start: 4, end: 8, label: '씬 2 [02:04]', subtitle: '“그러나 모든 일을 <span class=\'text-blue-400 font-bold\'>기도와 간구</span>로 하나님께 맡길 때”' },
+          { start: 8, end: 12, label: '씬 3 [02:08]', subtitle: '“이해를 뛰어넘는 그리스도의 <span class=\'text-blue-400 font-bold\'>참된 평안</span>이 임합니다.”' }
         ]
       }
     };
-
-    let currentClipIndex = 1;
-    let studioPlayerInitialized = false;
 
     function formatTime(sec) {
       if (isNaN(sec)) return '00:00';
@@ -1323,194 +1596,307 @@
       return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
     }
 
-    function initStudioPlayer() {
-      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+    // Toggle 9:16 Vertical Shorts Crop vs 16:9 Full View
+    function toggleShortsCropMode() {
+      isShortsCropMode = !isShortsCropMode;
+      applyCropMode();
+      showToast(isShortsCropMode ? '📱 9:16 세로 쇼츠 모드로 전환되었습니다.' : '🖥️ 16:9 전체 화면 모드로 전환되었습니다.', '📐');
+    }
 
-      vids.forEach(vid => {
-        if (!vid) return;
+    function applyCropMode() {
+      const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
+      const btn1 = document.getElementById('studio-crop-btn-text');
+      const btn2 = document.getElementById('modal-crop-btn-text');
 
-        vid.addEventListener('timeupdate', () => {
-          const clip = studioClips[currentClipIndex] || studioClips[1];
-          const curr = vid.currentTime;
-          const dur = vid.duration || clip.duration;
-
-          // Update main studio elements
-          const currEl = document.getElementById('studio-time-curr');
-          const totalEl = document.getElementById('studio-time-total');
-          const fillEl = document.getElementById('studio-progress-fill');
-          if (currEl) currEl.textContent = formatTime(curr);
-          if (totalEl) totalEl.textContent = formatTime(dur);
-          if (fillEl && dur > 0) fillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
-
-          // Update modal studio elements
-          const mCurrEl = document.getElementById('modal-time-curr');
-          const mTotalEl = document.getElementById('modal-time-total');
-          const mFillEl = document.getElementById('modal-progress-fill');
-          if (mCurrEl) mCurrEl.textContent = formatTime(curr);
-          if (mTotalEl) mTotalEl.textContent = formatTime(dur);
-          if (mFillEl && dur > 0) mFillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
-
-          // Subtitle and scene sync
-          const matchedScene = clip.scenes.find(s => curr >= s.start && curr < s.end) || clip.scenes[clip.scenes.length - 1];
-          if (matchedScene) {
-            const sceneNameEl = document.getElementById('studio-scene-name');
-            const subEl = document.getElementById('studio-live-subtitle');
-            if (sceneNameEl && sceneNameEl.textContent !== matchedScene.label) sceneNameEl.textContent = matchedScene.label;
-            if (subEl) subEl.innerHTML = matchedScene.subtitle;
-
-            const mSceneNameEl = document.getElementById('modal-scene-name');
-            const mSubEl = document.getElementById('modal-live-subtitle');
-            if (mSceneNameEl && mSceneNameEl.textContent !== matchedScene.label) mSceneNameEl.textContent = matchedScene.label;
-            if (mSubEl) mSubEl.innerHTML = matchedScene.subtitle;
-          }
-        });
-
-        vid.muted = true;
-        vid.play().catch(e => console.log('Autoplay handled:', e));
+      iframes.forEach(iframe => {
+        if (!iframe) return;
+        if (isShortsCropMode) {
+          // Pulpit Center Zoom Crop
+          iframe.style.width = '325%';
+          iframe.style.height = '115%';
+          iframe.style.top = '50%';
+          iframe.style.left = '50%';
+          iframe.style.transform = 'translate(-50%, -50%)';
+        } else {
+          // Full 16:9 Aspect Video Centered
+          iframe.style.width = '100%';
+          iframe.style.height = '56.25%';
+          iframe.style.top = '50%';
+          iframe.style.left = '0%';
+          iframe.style.transform = 'translateY(-50%)';
+        }
       });
 
+      const label = isShortsCropMode ? '📱 9:16' : '🖥️ 16:9';
+      if (btn1) btn1.textContent = label;
+      if (btn2) btn2.textContent = label;
+    }
+
+    // Player Initialization
+    function initStudioPlayer() {
       selectStudioClip(currentClipIndex || 1);
+      startPlaybackTimer();
+    }
+
+    function loadActiveVideoSource() {
+      const clip = studioClips[currentClipIndex] || studioClips[1];
+      const ytWraps = [document.getElementById('studio-yt-wrap'), document.getElementById('modal-yt-wrap')];
+      const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
+      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+
+      if (currentInputMode === 'file' && currentFileVideoUrl) {
+        // Local MP4 file mode
+        ytWraps.forEach(w => w && w.classList.add('hidden'));
+        vids.forEach(v => {
+          if (v) {
+            v.classList.remove('hidden');
+            if (v.src !== currentFileVideoUrl) v.src = currentFileVideoUrl;
+            v.currentTime = 0;
+            v.muted = isMuted;
+            if (isPlaying) v.play().catch(e => console.log('File play:', e));
+          }
+        });
+      } else {
+        // Real YouTube Sermon Mode (Always pastor preaching video, NEVER waves!)
+        vids.forEach(v => {
+          if (v) {
+            v.pause();
+            v.classList.add('hidden');
+          }
+        });
+        ytWraps.forEach(w => w && w.classList.remove('hidden'));
+
+        const embedUrl = `https://www.youtube.com/embed/${currentYouTubeId}?enablejsapi=1&autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&loop=1&playlist=${currentYouTubeId}&start=${clip.startSec}&rel=0&playsinline=1`;
+
+        iframes.forEach(iframe => {
+          if (iframe) {
+            if (!iframe.src.includes(currentYouTubeId) || !iframe.src.includes(`start=${clip.startSec}`)) {
+              iframe.src = embedUrl;
+            } else {
+              sendYtCommand(iframe.id, 'seekTo', [clip.startSec, true]);
+              if (isPlaying) sendYtCommand(iframe.id, 'playVideo');
+            }
+          }
+        });
+        applyCropMode();
+      }
     }
 
     function selectStudioClip(num) {
       currentClipIndex = num;
-      const clip = studioClips[num];
-      if (!clip) return;
+      const clip = studioClips[num] || studioClips[1];
 
       // Update Desk Cards
       [1, 2, 3].forEach(i => {
         const d1 = document.getElementById(`studio-deck-${i}`);
         const d2 = document.getElementById(`modal-deck-${i}`);
         if (d1) {
-          if (i === num) {
-            d1.className = 'rounded-2xl border-2 border-blue-600 bg-blue-50/50 p-4 sm:p-5 cursor-pointer transition-all shadow-xs';
-          } else {
-            d1.className = 'rounded-2xl border border-slate-200 bg-white hover:border-blue-400 p-4 sm:p-5 cursor-pointer transition-all';
-          }
+          d1.className = (i === num)
+            ? 'rounded-2xl border-2 border-blue-600 bg-blue-50/50 p-4 sm:p-5 cursor-pointer transition-all shadow-xs'
+            : 'rounded-2xl border border-slate-200 bg-white hover:border-blue-400 p-4 sm:p-5 cursor-pointer transition-all';
         }
         if (d2) {
-          if (i === num) {
-            d2.className = 'rounded-2xl border-2 border-blue-600 bg-blue-50/50 p-4 cursor-pointer transition-all shadow-xs';
-          } else {
-            d2.className = 'rounded-2xl border border-slate-200 bg-white hover:border-blue-400 p-4 cursor-pointer transition-all';
-          }
+          d2.className = (i === num)
+            ? 'rounded-2xl border-2 border-blue-600 bg-blue-50/50 p-4 cursor-pointer transition-all shadow-xs'
+            : 'rounded-2xl border border-slate-200 bg-white hover:border-blue-400 p-4 cursor-pointer transition-all';
         }
       });
 
-      // Update tag badges
+      // Update tags
       const tag1 = document.getElementById('studio-shorts-tag');
       const tag2 = document.getElementById('modal-shorts-tag');
       if (tag1) tag1.textContent = clip.title;
       if (tag2) tag2.textContent = clip.title;
 
-      // Update Video Player Source
-      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-      vids.forEach(vid => {
-        if (vid) {
-          const currentSrc = vid.currentSrc || vid.src;
-          if (!currentSrc.includes(clip.videoSrc)) {
-            vid.src = clip.videoSrc;
-            vid.load();
-          }
-          vid.currentTime = 0;
-          vid.play().catch(e => console.log('Playback:', e));
-        }
-      });
+      clipElapsedSec = 0;
+      loadActiveVideoSource();
+      updatePlayerUI();
     }
 
-    function toggleStudioPlay() {
-      const vid = document.getElementById('studio-video');
-      if (!vid) return;
-      if (vid.paused) {
-        vid.play();
-        updateStudioPlayIcon(true);
-      } else {
-        vid.pause();
-        updateStudioPlayIcon(false);
+    function startPlaybackTimer() {
+      if (playbackTimer) clearInterval(playbackTimer);
+      playbackTimer = setInterval(() => {
+        if (!isPlaying) return;
+        const clip = studioClips[currentClipIndex] || studioClips[1];
+
+        if (currentInputMode === 'file' && currentFileVideoUrl) {
+          const vid = document.getElementById('studio-video');
+          if (vid && vid.duration) {
+            clipElapsedSec = vid.currentTime;
+          }
+        } else {
+          clipElapsedSec += 0.25;
+          if (clipElapsedSec >= clip.duration) {
+            clipElapsedSec = 0;
+            const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
+            iframes.forEach(f => f && sendYtCommand(f.id, 'seekTo', [clip.startSec, true]));
+          }
+        }
+
+        updatePlayerUI();
+      }, 250);
+    }
+
+    function updatePlayerUI() {
+      const clip = studioClips[currentClipIndex] || studioClips[1];
+      const curr = clipElapsedSec;
+      const dur = clip.duration;
+
+      const currEl = document.getElementById('studio-time-curr');
+      const totalEl = document.getElementById('studio-time-total');
+      const fillEl = document.getElementById('studio-progress-fill');
+      if (currEl) currEl.textContent = formatTime(curr);
+      if (totalEl) totalEl.textContent = formatTime(dur);
+      if (fillEl && dur > 0) fillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
+
+      const mCurrEl = document.getElementById('modal-time-curr');
+      const mTotalEl = document.getElementById('modal-time-total');
+      const mFillEl = document.getElementById('modal-progress-fill');
+      if (mCurrEl) mCurrEl.textContent = formatTime(curr);
+      if (mTotalEl) mTotalEl.textContent = formatTime(dur);
+      if (mFillEl && dur > 0) mFillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
+
+      const matchedScene = clip.scenes.find(s => curr >= s.start && curr < s.end) || clip.scenes[clip.scenes.length - 1];
+      if (matchedScene) {
+        const sceneNameEl = document.getElementById('studio-scene-name');
+        const subEl = document.getElementById('studio-live-subtitle');
+        if (sceneNameEl) sceneNameEl.textContent = matchedScene.label;
+        if (subEl) subEl.innerHTML = matchedScene.subtitle;
+
+        const mSceneNameEl = document.getElementById('modal-scene-name');
+        const mSubEl = document.getElementById('modal-live-subtitle');
+        if (mSceneNameEl) mSceneNameEl.textContent = matchedScene.label;
+        if (mSubEl) mSubEl.innerHTML = matchedScene.subtitle;
       }
+    }
+
+    // Play & Pause
+    function toggleStudioPlay() {
+      isPlaying = !isPlaying;
+      const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
+      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+
+      iframes.forEach(f => f && sendYtCommand(f.id, isPlaying ? 'playVideo' : 'pauseVideo'));
+      vids.forEach(v => {
+        if (v && !v.classList.contains('hidden')) {
+          if (isPlaying) v.play().catch(e => console.log(e));
+          else v.pause();
+        }
+      });
+
+      updatePlayIcons(isPlaying);
     }
 
     function toggleModalStudioPlay() {
-      const vid = document.getElementById('modal-studio-video');
-      if (!vid) return;
-      const icon = document.getElementById('modal-play-icon');
-      if (vid.paused) {
-        vid.play();
-        if (icon) icon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
-      } else {
-        vid.pause();
-        if (icon) icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
-      }
+      toggleStudioPlay();
     }
 
-    function updateStudioPlayIcon(isPlaying) {
-      const icon = document.getElementById('studio-play-icon');
-      if (!icon) return;
-      if (isPlaying) {
-        icon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
-      } else {
-        icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
-      }
+    function updatePlayIcons(playing) {
+      const icon1 = document.getElementById('studio-play-icon');
+      const icon2 = document.getElementById('modal-play-icon');
+      const pauseSvg = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
+      const playSvg = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+      if (icon1) icon1.innerHTML = playing ? pauseSvg : playSvg;
+      if (icon2) icon2.innerHTML = playing ? pauseSvg : playSvg;
     }
 
+    // Audio Mute & Unmute
     function toggleStudioAudio() {
-      const vid = document.getElementById('studio-video');
-      if (!vid) return;
-      vid.muted = !vid.muted;
-      updateStudioSoundIcon(!vid.muted);
-      showToast(vid.muted ? '소리가 꺼졌습니다.' : '소리가 켜졌습니다. 🔊', vid.muted ? '🔇' : '🔊');
+      isMuted = !isMuted;
+      const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
+      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+
+      iframes.forEach(f => f && sendYtCommand(f.id, isMuted ? 'mute' : 'unMute'));
+      vids.forEach(v => { if (v) v.muted = isMuted; });
+
+      updateSoundIcons(!isMuted);
+      showToast(isMuted ? '소리가 꺼졌습니다. 🔇' : '소리가 켜졌습니다. 🔊', isMuted ? '🔇' : '🔊');
     }
 
     function toggleModalStudioAudio() {
-      const vid = document.getElementById('modal-studio-video');
-      if (!vid) return;
-      vid.muted = !vid.muted;
-      const icon = document.getElementById('modal-sound-icon');
-      if (icon) {
-        if (!vid.muted) {
-          icon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
-        } else {
-          icon.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
-        }
-      }
-      showToast(vid.muted ? '소리가 꺼졌습니다.' : '소리가 켜졌습니다. 🔊', vid.muted ? '🔇' : '🔊');
+      toggleStudioAudio();
     }
 
-    function updateStudioSoundIcon(hasSound) {
-      const icon = document.getElementById('studio-sound-icon');
-      if (!icon) return;
-      if (hasSound) {
-        icon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
-      } else {
-        icon.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
-      }
+    function updateSoundIcons(hasSound) {
+      const icon1 = document.getElementById('studio-sound-icon');
+      const icon2 = document.getElementById('modal-sound-icon');
+      const soundOnSvg = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
+      const soundOffSvg = '<path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
+      if (icon1) icon1.innerHTML = hasSound ? soundOnSvg : soundOffSvg;
+      if (icon2) icon2.innerHTML = hasSound ? soundOnSvg : soundOffSvg;
     }
 
+    // Scrubbing / Seeking
     function seekStudioVideo(e) {
-      const vid = document.getElementById('studio-video');
       const track = document.getElementById('studio-progress-track');
-      if (!vid || !track) return;
+      if (!track) return;
       const rect = track.getBoundingClientRect();
       const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      if (vid.duration) vid.currentTime = pct * vid.duration;
+      const clip = studioClips[currentClipIndex] || studioClips[1];
+      clipElapsedSec = pct * clip.duration;
+
+      if (currentInputMode === 'file' && currentFileVideoUrl) {
+        const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+        vids.forEach(v => { if (v && v.duration) v.currentTime = clipElapsedSec; });
+      } else {
+        const targetSec = clip.startSec + clipElapsedSec;
+        const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
+        iframes.forEach(f => f && sendYtCommand(f.id, 'seekTo', [targetSec, true]));
+      }
+      updatePlayerUI();
     }
 
     function seekModalStudioVideo(e) {
-      const vid = document.getElementById('modal-studio-video');
-      const track = document.getElementById('modal-progress-track');
-      if (!vid || !track) return;
-      const rect = track.getBoundingClientRect();
-      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      if (vid.duration) vid.currentTime = pct * vid.duration;
+      seekStudioVideo(e);
     }
 
-    // Direct MP4 Download
+    // Export Dialog Handling
+    function openExportModal() {
+      const modal = document.getElementById('shorts-export-modal');
+      const clip = studioClips[currentClipIndex] || studioClips[1];
+      const desc = document.getElementById('export-modal-desc');
+      const ytBox = document.getElementById('export-yt-link-box');
+      const ytUrlBtn = document.getElementById('export-yt-url-btn');
+
+      if (desc) desc.textContent = `[${clip.title}] 9:16 설교 쇼츠와 자막, 사역 자료를 바로 내려받으실 수 있습니다.`;
+      if (currentInputMode === 'youtube' && ytUrlBtn) {
+        if (ytBox) ytBox.classList.remove('hidden');
+        ytUrlBtn.href = `https://www.youtube.com/watch?v=${currentYouTubeId}&t=${clip.startSec}s`;
+      } else if (ytBox) {
+        ytBox.classList.add('hidden');
+      }
+
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeExportModal() {
+      const modal = document.getElementById('shorts-export-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
     function downloadCurrentShortsMP4() {
+      openExportModal();
+    }
+
+    function executeMP4Download() {
       const clip = studioClips[currentClipIndex] || studioClips[1];
       showToast(`'${clip.downloadName}' 다운로드를 시작합니다...`, '⏳');
 
+      let downloadUrl = '';
+      if (currentInputMode === 'file' && currentFileVideoUrl) {
+        downloadUrl = currentFileVideoUrl;
+      } else {
+        downloadUrl = 'assets/sample-shorts-1.mp4';
+      }
+
       const link = document.createElement('a');
-      link.href = clip.videoSrc;
+      link.href = downloadUrl;
       link.download = clip.downloadName;
       document.body.appendChild(link);
       link.click();
@@ -1521,7 +1907,34 @@
       }, 1000);
     }
 
-    // Direct ZIP Download with all materials + MP4
+    function formatSrtTime(sec) {
+      const h = String(Math.floor(sec / 3600)).padStart(2, '0');
+      const m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
+      const s = String(Math.floor(sec % 60)).padStart(2, '0');
+      return `${h}:${m}:${s},000`;
+    }
+
+    function downloadSubtitlesSRTFile() {
+      const clip = studioClips[currentClipIndex] || studioClips[1];
+      let srtContent = '';
+      clip.scenes.forEach((sc, idx) => {
+        const sTime = formatSrtTime(sc.start);
+        const eTime = formatSrtTime(sc.end);
+        const cleanSub = sc.subtitle.replace(/<[^>]*>?/gm, '');
+        srtContent += `${idx + 1}\n${sTime} --> ${eTime}\n${cleanSub}\n\n`;
+      });
+
+      const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `01_설교쇼츠_${clip.title.replace(/\s+/g, '_')}_자막.srt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('쇼츠 자막(SRT) 파일이 다운로드되었습니다!', '📄');
+    }
+
+    // Direct ZIP Download with all materials
     async function downloadAllMaterials() {
       showToast('전체 사역 자료 압축 파일을 생성 중입니다...', '📦');
 
@@ -1532,6 +1945,7 @@
 본문: 빌립보서 4장 6-7절
 제목: 염려를 기도로 바꾸라
 설교자: 관유중앙교회 담임목사
+유튜브 설교 영상: https://www.youtube.com/watch?v=${currentYouTubeId}
 =====================================================
 
 1. 핵심 메시지
@@ -1586,16 +2000,35 @@
 - 묵상: 주님의 평강이 견고한 요새가 되어 세상의 불안과 불화살로부터 내 영혼을 지키십니다.`;
 
       const srtText = `1
-00:00:00,000 --> 00:00:03,500
-염려는 해결이 아니라 에너지의 소모입니다.
+00:00:00,000 --> 00:00:04,000
+염려는 문제가 해결되지 않고 에너지의 소모일 뿐입니다.
 
 2
-00:00:03,600 --> 00:00:07,000
+00:00:04,000 --> 00:00:08,000
 우리의 기도는 하나님의 평강으로 응답됩니다.
 
 3
-00:00:07,100 --> 00:00:10,000
-그 평강이 당신의 마음과 생각을 지키실 것입니다.`;
+00:00:08,000 --> 00:00:12,000
+그 평강이 당신의 마음과 생각을 반드시 지키실 것입니다.`;
+
+      const ytInfoText = `=====================================================
+[설교 쇼츠 유튜브 타임스탬프 및 링크 정보]
+설교 영상: https://www.youtube.com/watch?v=${currentYouTubeId}
+=====================================================
+
+[쇼츠 1: "간절함이 곧 영성이다"]
+타임스탬프: 00:00 ~ 00:12
+구간 바로가기: https://www.youtube.com/watch?v=${currentYouTubeId}&t=0s
+
+[쇼츠 2: "염려를 기도로 바꾸는 단 하나의 비결"]
+타임스탬프: 00:45 ~ 00:57
+구간 바로가기: https://www.youtube.com/watch?v=${currentYouTubeId}&t=45s
+
+[쇼츠 3: "내 마음의 평강을 지키시는 하나님"]
+타임스탬프: 02:00 ~ 02:12
+구간 바로가기: https://www.youtube.com/watch?v=${currentYouTubeId}&t=120s
+
+* 캡컷(CapCut) / Vrew / 프리미어 프로에서 자막 SRT를 불러와 간편하게 9:16 쇼츠로 편집하실 수 있습니다.`;
 
       try {
         if (typeof JSZip !== 'undefined') {
@@ -1604,9 +2037,11 @@
           zip.file('02_소그룹_나눔_질문지.txt', groupText);
           zip.file('03_주간_QT_6일치_묵상집.txt', qtText);
           zip.file('04_설교쇼츠_자막대본_SRT.srt', srtText);
+          zip.file('05_유튜브_쇼츠_타임스탬프_안내.txt', ytInfoText);
 
           try {
-            const vidRes = await fetch(currentClip.videoSrc);
+            let vidUrl = (currentInputMode === 'file' && currentFileVideoUrl) ? currentFileVideoUrl : 'assets/sample-shorts-1.mp4';
+            const vidRes = await fetch(vidUrl);
             if (vidRes.ok) {
               const vidBlob = await vidRes.blob();
               zip.file(currentClip.downloadName, vidBlob);
@@ -1630,7 +2065,7 @@
       }
 
       // Fallback
-      const fallbackBlob = new Blob([summaryText + "\n\n" + groupText + "\n\n" + qtText + "\n\n" + srtText], { type: 'text/plain;charset=utf-8' });
+      const fallbackBlob = new Blob([summaryText + "\n\n" + groupText + "\n\n" + qtText + "\n\n" + srtText + "\n\n" + ytInfoText], { type: 'text/plain;charset=utf-8' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(fallbackBlob);
       a.download = '2026_한주사역자료_패키지.txt';
@@ -1641,7 +2076,7 @@
     }
 
     function copySubtitlesSRT() {
-      const srtSample = `1\n00:00:00,000 --> 00:00:03,500\n염려는 해결이 아니라 에너지의 소모입니다.\n\n2\n00:00:03,600 --> 00:00:07,000\n우리의 기도는 하나님의 평강으로 응답됩니다.\n\n3\n00:00:07,100 --> 00:00:10,000\n그 평강이 당신의 마음과 생각을 지키실 것입니다.`;
+      const srtSample = `1\n00:00:00,000 --> 00:00:04,000\n염려는 문제가 해결되지 않고 에너지의 소모일 뿐입니다.\n\n2\n00:00:04,000 --> 00:00:08,000\n우리의 기도는 하나님의 평강으로 응답됩니다.\n\n3\n00:00:08,000 --> 00:00:12,000\n그 평강이 당신의 마음과 생각을 반드시 지키실 것입니다.`;
       navigator.clipboard.writeText(srtSample).then(() => {
         showToast('쇼츠 자막(SRT)이 클립보드에 복사되었습니다! 프리미어/캡컷에 바로 붙여넣으세요.', '📋');
       });
