@@ -19,6 +19,16 @@
     href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
     rel="stylesheet">
 
+  <!-- JSZip for Real Zip Downloads -->
+  <script src="assets/jszip.min.js"></script>
+  <script>
+    if (typeof JSZip === 'undefined') {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+      document.head.appendChild(s);
+    }
+  </script>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -729,35 +739,42 @@
       
       <!-- Left: Interactive 9:16 Shorts Phone Mockup -->
       <div class="flex flex-col items-center rounded-3xl bg-[#f7f8fa] px-6 py-10 sm:px-8 sm:py-12">
-        <div class="relative w-[260px] max-w-full rounded-[30px] border-[7px] border-[#191f28] bg-black aspect-[9/16] shadow-[0_16px_40px_rgba(0,0,0,0.22)] overflow-hidden flex flex-col justify-between">
+        <div class="relative w-[260px] max-w-full rounded-[30px] border-[7px] border-[#191f28] bg-black aspect-[9/16] shadow-[0_16px_40px_rgba(0,0,0,0.22)] overflow-hidden flex flex-col justify-between group">
           
-          <!-- Pastor Preaching Video Simulation / Dynamic Canvas -->
-          <div class="absolute inset-0 bg-cover bg-center"
-            style="background-image: url('https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=800&auto=format&fit=crop'); filter: brightness(0.65);">
-          </div>
+          <!-- Real Preaching Video Element -->
+          <video id="landing-shorts-video" class="absolute inset-0 w-full h-full object-cover" playsinline loop muted>
+            <source src="assets/sample-shorts-1.mp4" type="video/mp4">
+          </video>
 
           <!-- Video Ambient Glow / Overlay -->
-          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10 pointer-events-none"></div>
 
-          <!-- Top Video Title Badge -->
-          <div class="relative z-20 p-4 pt-5 text-center">
-            <span class="inline-block rounded-lg bg-[#3182f6] px-2.5 py-1 text-[11px] font-bold text-white tracking-wide shadow-sm">
+          <!-- Top Video Title Badge & Sound Toggle -->
+          <div class="relative z-20 p-4 pt-5 flex items-center justify-between">
+            <span class="inline-block rounded-lg bg-[#3182f6] px-2.5 py-1 text-[11px] font-bold text-white tracking-wide shadow-sm truncate max-w-[170px]">
               진짜 영성이 간절함인 이유
             </span>
+            <button onclick="toggleLandingShortsAudio()" id="landing-sound-btn" class="flex h-7 w-7 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md hover:bg-black/80 transition-colors" title="소리 켜기/끄기">
+              <svg id="landing-sound-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            </button>
           </div>
 
           <!-- Center Speaker Silhouette & Animated Dynamic Subtitle -->
-          <div class="relative z-20 px-4 text-center my-auto">
-            <div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 mx-auto flex items-center justify-center text-white mb-4 cursor-pointer hover:scale-105 transition-transform"
-              onclick="toggleShortsPlay()">
-              <svg id="shorts-play-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <div class="relative z-20 px-4 text-center my-auto flex flex-col items-center">
+            <div id="landing-play-btn" class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 mx-auto flex items-center justify-center text-white mb-4 cursor-pointer hover:scale-105 active:scale-95 transition-all shadow-xl"
+              onclick="toggleLandingShortsPlay()">
+              <svg id="landing-play-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
                 <polygon points="5 3 19 12 5 21 5 3"></polygon>
               </svg>
             </div>
 
             <!-- Dynamic Animated Subtitle -->
-            <div class="rounded-xl bg-black/65 backdrop-blur-md px-3.5 py-2 border border-white/20">
-              <p id="shorts-live-subtitle" class="text-[15px] font-black tracking-tight text-white drop-shadow-md">
+            <div class="rounded-xl bg-black/75 backdrop-blur-md px-3.5 py-2 border border-white/20 w-full">
+              <p id="shorts-live-subtitle" class="text-[14px] font-black tracking-tight text-white drop-shadow-md">
                 "저는 영성을 한마디로 <span class="text-[#60a5fa]">간절함</span>이라고"
               </p>
             </div>
@@ -765,13 +782,13 @@
 
           <!-- Bottom Control Bar -->
           <div class="relative z-20 p-4">
-            <div class="flex items-center justify-between text-[11px] text-white/80 mb-1.5">
-              <span>00:18</span>
-              <span class="text-[#60a5fa] font-bold">감정 고조 하이라이트 컷</span>
-              <span>00:54</span>
+            <div class="flex items-center justify-between text-[11px] text-white/80 mb-1.5 font-medium">
+              <span id="landing-time-curr">00:00</span>
+              <span id="landing-scene-label" class="text-[#60a5fa] font-bold">감정 고조 하이라이트 컷</span>
+              <span id="landing-time-total">00:10</span>
             </div>
-            <div class="h-1.5 w-full bg-white/30 rounded-full overflow-hidden">
-              <div class="h-full bg-[#3182f6] w-[35%] rounded-full animate-pulse"></div>
+            <div onclick="seekLandingShorts(event)" class="h-1.5 w-full bg-white/30 rounded-full overflow-hidden cursor-pointer hover:h-2 transition-all">
+              <div id="landing-progress-fill" class="h-full bg-[#3182f6] w-0 rounded-full transition-all duration-100"></div>
             </div>
           </div>
 
@@ -1557,8 +1574,8 @@
           <div class="space-y-4">
             
             <!-- Deck 1 -->
-            <div class="studio-deck-card rounded-2xl border-2 border-[#3182f6] bg-[#f0f6ff]/40 p-4 transition-all cursor-pointer hover:shadow-md"
-              onclick="selectStudioClip(1, '간절함이 곧 영성이다', '도입 15초 → 절정 고조 20초 → 결단 15초')">
+            <div id="studio-deck-1" class="studio-deck-card rounded-2xl border-2 border-[#3182f6] bg-[#f0f6ff]/50 p-4 transition-all cursor-pointer hover:shadow-md"
+              onclick="selectStudioClip(1)">
               <div class="flex items-center justify-between mb-2">
                 <span class="rounded bg-[#3182f6] text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 1 (추천)</span>
                 <span class="text-[12px] font-semibold text-[#ef4444]">🔥 감정 고조도 98%</span>
@@ -1575,19 +1592,19 @@
                   <p class="text-[#64748b] truncate">염려는 해결이 아니다</p>
                 </div>
                 <div class="rounded-lg bg-white p-2 border border-[#3182f6] text-[11px]">
-                  <span class="font-bold text-[#ef4444]">씬 2 [00:15]</span>
+                  <span class="font-bold text-[#ef4444]">씬 2 [00:03]</span>
                   <p class="text-[#64748b] truncate">간절함으로 아뢰라</p>
                 </div>
                 <div class="rounded-lg bg-white p-2 border border-[#cbd5e1] text-[11px]">
-                  <span class="font-bold text-[#16a34a]">씬 3 [00:35]</span>
+                  <span class="font-bold text-[#16a34a]">씬 3 [00:07]</span>
                   <p class="text-[#64748b] truncate">평강이 지키신다</p>
                 </div>
               </div>
             </div>
 
             <!-- Deck 2 -->
-            <div class="studio-deck-card rounded-2xl border border-[#e5e8eb] bg-white p-4 transition-all cursor-pointer hover:border-[#3182f6]"
-              onclick="selectStudioClip(2, '염려를 기도로 바꾸는 단 하나의 비결', '고난 직시 12초 → 감사 전환 18초 → 평강 약속 20초')">
+            <div id="studio-deck-2" class="studio-deck-card rounded-2xl border border-[#e5e8eb] bg-white p-4 transition-all cursor-pointer hover:border-[#3182f6]"
+              onclick="selectStudioClip(2)">
               <div class="flex items-center justify-between mb-2">
                 <span class="rounded bg-[#64748b] text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 2</span>
                 <span class="text-[12px] font-semibold text-[#3b82f6]">💡 감동·위로 95%</span>
@@ -1602,19 +1619,19 @@
                   <p class="text-[#64748b] truncate">감옥에서의 기쁨</p>
                 </div>
                 <div class="rounded-lg bg-[#f8fafc] p-2 border border-[#e2e8f0] text-[11px]">
-                  <span class="font-bold text-[#3182f6]">씬 2 [00:12]</span>
+                  <span class="font-bold text-[#3182f6]">씬 2 [00:02]</span>
                   <p class="text-[#64748b] truncate">감사의 선제적 고백</p>
                 </div>
                 <div class="rounded-lg bg-[#f8fafc] p-2 border border-[#e2e8f0] text-[11px]">
-                  <span class="font-bold text-[#16a34a]">씬 3 [00:30]</span>
+                  <span class="font-bold text-[#16a34a]">씬 3 [00:04]</span>
                   <p class="text-[#64748b] truncate">그리스도의 요새</p>
                 </div>
               </div>
             </div>
 
             <!-- Deck 3 -->
-            <div class="studio-deck-card rounded-2xl border border-[#e5e8eb] bg-white p-4 transition-all cursor-pointer hover:border-[#3182f6]"
-              onclick="selectStudioClip(3, '내 마음의 평강을 지키시는 하나님', '불안 진단 14초 → 기도 간구 16초 → 참된 평안 20초')">
+            <div id="studio-deck-3" class="studio-deck-card rounded-2xl border border-[#e5e8eb] bg-white p-4 transition-all cursor-pointer hover:border-[#3182f6]"
+              onclick="selectStudioClip(3)">
               <div class="flex items-center justify-between mb-2">
                 <span class="rounded bg-[#64748b] text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 3</span>
                 <span class="text-[12px] font-semibold text-[#8b5cf6]">⚡️ 결단·도전 92%</span>
@@ -1623,32 +1640,65 @@
               <p class="text-[12.5px] text-[#4e5968] mt-1">
                 상황의 변화보다 먼저 찾아오는 내면의 신비로운 평안
               </p>
+              <div class="mt-3 grid grid-cols-3 gap-2">
+                <div class="rounded-lg bg-[#f8fafc] p-2 border border-[#e2e8f0] text-[11px]">
+                  <span class="font-bold text-[#64748b]">씬 1 [00:00]</span>
+                  <p class="text-[#64748b] truncate">불안의 진단</p>
+                </div>
+                <div class="rounded-lg bg-[#f8fafc] p-2 border border-[#e2e8f0] text-[11px]">
+                  <span class="font-bold text-[#3182f6]">씬 2 [00:03]</span>
+                  <p class="text-[#64748b] truncate">기도의 간구</p>
+                </div>
+                <div class="rounded-lg bg-[#f8fafc] p-2 border border-[#e2e8f0] text-[11px]">
+                  <span class="font-bold text-[#16a34a]">씬 3 [00:07]</span>
+                  <p class="text-[#64748b] truncate">참된 평안</p>
+                </div>
+              </div>
             </div>
 
           </div>
         </div>
 
-        <!-- Right: 9:16 Shorts Video Simulator with Dynamic Subtitles -->
+        <!-- Right: 9:16 Shorts Real Video Player with Dynamic Subtitles & Download -->
         <div class="flex flex-col items-center">
-          <div class="relative w-[280px] rounded-[32px] border-[8px] border-[#191f28] bg-black aspect-[9/16] shadow-2xl overflow-hidden flex flex-col justify-between">
+          <div class="relative w-[280px] rounded-[32px] border-[8px] border-[#191f28] bg-black aspect-[9/16] shadow-2xl overflow-hidden flex flex-col justify-between group">
             
-            <!-- Video Background Simulator -->
-            <div id="studio-player-bg" class="absolute inset-0 bg-cover bg-center transition-all duration-500"
-              style="background-image: url('https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=800&auto=format&fit=crop'); filter: brightness(0.65);">
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10"></div>
+            <!-- Real Preaching Video Element -->
+            <video id="studio-video" class="absolute inset-0 w-full h-full object-cover" playsinline loop muted autoplay>
+              <source id="studio-video-src" src="assets/sample-shorts-1.mp4" type="video/mp4">
+            </video>
+            
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10 pointer-events-none"></div>
 
             <!-- Top Header in Phone -->
-            <div class="relative z-20 p-4 pt-5 text-center">
-              <span id="studio-shorts-tag" class="inline-block rounded-lg bg-[#3182f6] px-3 py-1 text-[11.5px] font-bold text-white tracking-wide shadow-sm">
+            <div class="relative z-20 p-4 pt-5 flex items-center justify-between">
+              <span id="studio-shorts-tag" class="inline-block rounded-lg bg-[#3182f6] px-3 py-1 text-[11.5px] font-bold text-white tracking-wide shadow-sm truncate max-w-[190px]">
                 간절함이 곧 영성이다
               </span>
+              <!-- Sound Toggle Button -->
+              <button onclick="toggleStudioAudio()" id="studio-sound-btn" class="flex h-7 w-7 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md hover:bg-black/80 transition-colors" title="소리 켜기/끄기">
+                <svg id="studio-sound-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                  <line x1="23" y1="9" x2="17" y2="15"></line>
+                  <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+              </button>
             </div>
 
-            <!-- Animated Running Subtitles -->
-            <div class="relative z-20 px-4 text-center my-auto">
-              <div class="rounded-xl bg-black/70 backdrop-blur-md px-4 py-3 border border-white/20 shadow-lg">
-                <p id="studio-live-subtitle" class="text-[16px] font-black tracking-tight text-white leading-snug">
+            <!-- Play/Pause Overlay & Dynamic Subtitle -->
+            <div class="relative z-20 px-3 text-center my-auto flex flex-col items-center">
+              <button onclick="toggleStudioPlay()" id="studio-play-overlay-btn"
+                class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-white mb-3 cursor-pointer hover:scale-110 active:scale-95 transition-all shadow-xl group-hover:opacity-100 opacity-70">
+                <svg id="studio-play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="6" y="4" width="4" height="16"></rect>
+                  <rect x="14" y="4" width="4" height="16"></rect>
+                </svg>
+              </button>
+
+              <!-- Animated Running Subtitles -->
+              <div class="rounded-xl bg-black/75 backdrop-blur-md px-3.5 py-2.5 border border-white/20 shadow-lg w-full max-w-[250px]">
+                <p id="studio-live-subtitle" class="text-[14px] font-black tracking-tight text-white leading-snug break-keep drop-shadow">
                   "우리의 기도는 <span class="text-[#60a5fa]">하나님의 평강</span>으로 응답됩니다."
                 </p>
               </div>
@@ -1656,23 +1706,31 @@
 
             <!-- Bottom Video Player Controls -->
             <div class="relative z-20 p-4">
-              <div class="flex items-center justify-between text-[11px] text-white/90 mb-1.5">
-                <span id="studio-time-curr">00:22</span>
-                <span class="text-[#60a5fa] font-bold">감정 고조 컷 [씬 2]</span>
-                <span>00:50</span>
+              <div class="flex items-center justify-between text-[11px] text-white/90 mb-1.5 font-medium">
+                <span id="studio-time-curr">00:00</span>
+                <span id="studio-scene-name" class="text-[#60a5fa] font-bold truncate max-w-[140px]">씬 1 [00:00]</span>
+                <span id="studio-time-total">00:10</span>
               </div>
-              <div class="h-1.5 w-full bg-white/30 rounded-full overflow-hidden mb-3">
-                <div class="h-full bg-[#3182f6] w-[45%] rounded-full"></div>
+              
+              <!-- Interactive Clickable Progress Bar -->
+              <div id="studio-progress-track" onclick="seekStudioVideo(event)"
+                class="h-2 w-full bg-white/30 rounded-full overflow-hidden mb-3 cursor-pointer hover:h-2.5 transition-all">
+                <div id="studio-progress-fill" class="h-full bg-[#3182f6] w-0 rounded-full transition-all duration-100"></div>
               </div>
 
-              <!-- Action Buttons -->
+              <!-- Action Buttons: Real Downloads -->
               <div class="flex gap-2">
-                <button onclick="alert('9:16 MP4 고화질 쇼츠 영상 다운로드가 시작됩니다.')"
-                  class="flex-1 rounded-xl bg-[#3182f6] py-2 text-[12px] font-bold text-white text-center hover:bg-[#1b6de8] transition-colors">
-                  MP4 다운로드
+                <button onclick="downloadCurrentShortsMP4()"
+                  class="flex-1 rounded-xl bg-[#3182f6] py-2.5 text-[12px] font-bold text-white text-center hover:bg-[#1b6de8] transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span>MP4 다운로드</span>
                 </button>
                 <button onclick="copySubtitlesSRT()"
-                  class="rounded-xl bg-white/20 backdrop-blur-md px-3 py-2 text-[12px] font-semibold text-white hover:bg-white/30 transition-colors">
+                  class="rounded-xl bg-white/20 backdrop-blur-md px-3 py-2.5 text-[12px] font-semibold text-white hover:bg-white/30 transition-all active:scale-95">
                   자막(SRT) 복사
                 </button>
               </div>
@@ -1681,7 +1739,7 @@
           </div>
 
           <p class="mt-3 text-center text-[12px] text-[#6b7684]">
-            타깃 세대 맞춤형 9:16 쇼츠 영상 미리보기
+            타깃 세대 맞춤형 9:16 쇼츠 영상 미리보기 (클릭하여 재생/일시정지)
           </p>
         </div>
 
@@ -2050,40 +2108,432 @@
         const studio = document.getElementById('studio-modal');
         studio.classList.remove('hidden');
         studio.classList.add('flex');
+        initStudioPlayer();
       }, 2700);
     }
 
     function closeStudioModal() {
+      const vid = document.getElementById('studio-video');
+      if (vid) vid.pause();
       document.getElementById('studio-modal').classList.add('hidden');
       document.getElementById('studio-modal').classList.remove('flex');
     }
 
-    // Studio Clip Selection
-    function selectStudioClip(num, title, cut) {
-      document.getElementById('studio-shorts-tag').textContent = title;
-      document.getElementById('studio-live-subtitle').innerHTML = `"${title} - <span class="text-[#60a5fa]">${cut}</span>"`;
+    // Floating Toast Notification
+    function showToast(msg, icon = '✅') {
+      const toast = document.getElementById('app-toast');
+      if (!toast) return;
+      document.getElementById('app-toast-icon').textContent = icon;
+      document.getElementById('app-toast-msg').textContent = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3500);
+    }
+
+    // Studio Clips Data
+    const studioClips = {
+      1: {
+        title: '간절함이 곧 영성이다',
+        videoSrc: 'assets/sample-shorts-1.mp4',
+        downloadName: '설교쇼츠_01_간절함이_곧_영성이다_9x16.mp4',
+        duration: 10,
+        scenes: [
+          { start: 0, end: 3, label: '씬 1 [00:00]', subtitle: '“염려는 문제가 해결되지 않고 <span class=\'text-[#60a5fa] font-bold\'>에너지의 소모</span>일 뿐입니다.”' },
+          { start: 3, end: 7, label: '씬 2 [00:03]', subtitle: '“우리의 기도는 <span class=\'text-[#60a5fa] font-bold\'>하나님의 평강</span>으로 응답됩니다.”' },
+          { start: 7, end: 12, label: '씬 3 [00:07]', subtitle: '“그 평강이 당신의 마음과 생각을 <span class=\'text-[#60a5fa] font-bold\'>반드시 지키실 것</span>입니다.”' }
+        ]
+      },
+      2: {
+        title: '염려를 기도로 바꾸는 단 하나의 비결',
+        videoSrc: 'assets/sample-shorts-2.mp4',
+        downloadName: '설교쇼츠_02_염려를_기도로_바꾸는_단_하나의_비결_9x16.mp4',
+        duration: 5,
+        scenes: [
+          { start: 0, end: 2, label: '씬 1 [00:00]', subtitle: '“감옥 안에서도 바울은 주 안에서 <span class=\'text-[#60a5fa] font-bold\'>항상 기뻐하라</span> 선포했습니다.”' },
+          { start: 2, end: 4, label: '씬 2 [00:02]', subtitle: '“상황이 바뀌기 전에 <span class=\'text-[#60a5fa] font-bold\'>감사의 기도</span>를 먼저 올리십시오.”' },
+          { start: 4, end: 6, label: '씬 3 [00:04]', subtitle: '“주님의 평강이 성벽처럼 <span class=\'text-[#60a5fa] font-bold\'>우리 삶을 요새처럼</span> 지키십니다.”' }
+        ]
+      },
+      3: {
+        title: '내 마음의 평강을 지키시는 하나님',
+        videoSrc: 'assets/sample-shorts-3.mp4',
+        downloadName: '설교쇼츠_03_내_마음의_평강을_지키시는_하나님_9x16.mp4',
+        duration: 10,
+        scenes: [
+          { start: 0, end: 3, label: '씬 1 [00:00]', subtitle: '“세상이 주는 불안은 우리의 시선을 <span class=\'text-[#60a5fa] font-bold\'>문제 자체에</span> 가둡니다.”' },
+          { start: 3, end: 7, label: '씬 2 [00:03]', subtitle: '“그러나 모든 일을 <span class=\'text-[#60a5fa] font-bold\'>기도와 간구</span>로 하나님께 맡길 때”' },
+          { start: 7, end: 12, label: '씬 3 [00:07]', subtitle: '“이해를 뛰어넘는 그리스도의 <span class=\'text-[#60a5fa] font-bold\'>참된 평안</span>이 임합니다.”' }
+        ]
+      }
+    };
+
+    let currentClipIndex = 1;
+    let studioPlayerInitialized = false;
+
+    function formatTime(sec) {
+      if (isNaN(sec)) return '00:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function initStudioPlayer() {
+      const vid = document.getElementById('studio-video');
+      if (!vid) return;
+
+      selectStudioClip(currentClipIndex || 1);
+
+      if (!studioPlayerInitialized) {
+        vid.addEventListener('timeupdate', () => {
+          const clip = studioClips[currentClipIndex] || studioClips[1];
+          const curr = vid.currentTime;
+          const dur = vid.duration || clip.duration;
+
+          const currEl = document.getElementById('studio-time-curr');
+          const totalEl = document.getElementById('studio-time-total');
+          const fillEl = document.getElementById('studio-progress-fill');
+          if (currEl) currEl.textContent = formatTime(curr);
+          if (totalEl) totalEl.textContent = formatTime(dur);
+          if (fillEl && dur > 0) {
+            fillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
+          }
+
+          // Subtitle and scene sync
+          const matchedScene = clip.scenes.find(s => curr >= s.start && curr < s.end) || clip.scenes[clip.scenes.length - 1];
+          if (matchedScene) {
+            const sceneNameEl = document.getElementById('studio-scene-name');
+            const subEl = document.getElementById('studio-live-subtitle');
+            if (sceneNameEl && sceneNameEl.textContent !== matchedScene.label) {
+              sceneNameEl.textContent = matchedScene.label;
+            }
+            if (subEl) {
+              subEl.innerHTML = matchedScene.subtitle;
+            }
+          }
+        });
+
+        vid.addEventListener('play', () => updateStudioPlayIcon(true));
+        vid.addEventListener('pause', () => updateStudioPlayIcon(false));
+        studioPlayerInitialized = true;
+      }
+
+      vid.muted = true;
+      updateStudioSoundIcon(false);
+      vid.play().catch(e => console.log('Autoplay handled:', e));
+    }
+
+    function selectStudioClip(num) {
+      currentClipIndex = num;
+      const clip = studioClips[num];
+      if (!clip) return;
+
+      // Update card visual highlight
+      [1, 2, 3].forEach(i => {
+        const card = document.getElementById(`studio-deck-${i}`);
+        if (!card) return;
+        if (i === num) {
+          card.className = 'studio-deck-card rounded-2xl border-2 border-[#3182f6] bg-[#f0f6ff]/50 p-4 transition-all cursor-pointer shadow-md';
+        } else {
+          card.className = 'studio-deck-card rounded-2xl border border-[#e5e8eb] bg-white p-4 transition-all cursor-pointer hover:border-[#3182f6]';
+        }
+      });
+
+      // Update phone mockup elements
+      const tag = document.getElementById('studio-shorts-tag');
+      if (tag) tag.textContent = clip.title;
+
+      const vid = document.getElementById('studio-video');
+      if (vid) {
+        const currentSrc = vid.currentSrc || vid.src;
+        if (!currentSrc.includes(clip.videoSrc)) {
+          vid.src = clip.videoSrc;
+          vid.load();
+        }
+        vid.currentTime = 0;
+        vid.play().catch(e => console.log('Playback:', e));
+      }
+
+      const totalEl = document.getElementById('studio-time-total');
+      if (totalEl) totalEl.textContent = formatTime(clip.duration);
+    }
+
+    function toggleStudioPlay() {
+      const vid = document.getElementById('studio-video');
+      if (!vid) return;
+      if (vid.paused) {
+        vid.play();
+        updateStudioPlayIcon(true);
+      } else {
+        vid.pause();
+        updateStudioPlayIcon(false);
+      }
+    }
+
+    function updateStudioPlayIcon(isPlaying) {
+      const icon = document.getElementById('studio-play-icon');
+      if (!icon) return;
+      if (isPlaying) {
+        icon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
+      } else {
+        icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+      }
+    }
+
+    function toggleStudioAudio() {
+      const vid = document.getElementById('studio-video');
+      if (!vid) return;
+      vid.muted = !vid.muted;
+      updateStudioSoundIcon(!vid.muted);
+      showToast(vid.muted ? '소리가 꺼졌습니다.' : '소리가 켜졌습니다. 🔊', vid.muted ? '🔇' : '🔊');
+    }
+
+    function updateStudioSoundIcon(hasSound) {
+      const icon = document.getElementById('studio-sound-icon');
+      if (!icon) return;
+      if (hasSound) {
+        icon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
+      } else {
+        icon.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
+      }
+    }
+
+    function seekStudioVideo(e) {
+      const vid = document.getElementById('studio-video');
+      const track = document.getElementById('studio-progress-track');
+      if (!vid || !track) return;
+      const rect = track.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if (vid.duration) {
+        vid.currentTime = pct * vid.duration;
+      }
+    }
+
+    // Direct MP4 Download
+    function downloadCurrentShortsMP4() {
+      const clip = studioClips[currentClipIndex] || studioClips[1];
+      showToast(`'${clip.downloadName}' 다운로드를 시작합니다...`, '⏳');
+      
+      const link = document.createElement('a');
+      link.href = clip.videoSrc;
+      link.download = clip.downloadName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => {
+        showToast(`✅ '${clip.downloadName}' 다운로드 완료!`, '🎉');
+      }, 1000);
+    }
+
+    // Direct ZIP Download with all materials + MP4
+    async function downloadAllMaterials() {
+      showToast('전체 사역 자료 압축 파일을 생성 중입니다...', '📦');
+
+      const currentClip = studioClips[currentClipIndex] || studioClips[1];
+
+      const summaryText = `=====================================================
+[설교 요약 및 사역 개요]
+본문: 빌립보서 4장 6-7절
+제목: 염려를 기도로 바꾸라
+설교자: 관유중앙교회 담임목사
+=====================================================
+
+1. 핵심 메시지
+염려는 스스로 문제를 해결하려는 무의미한 에너지 소모입니다.
+하나님께서는 우리의 모든 필요와 염려를 기도로 바꾸어 올릴 때,
+지각에 뛰어난 평강으로 마음과 생각을 지키십니다.
+
+2. 주간 사역 적용 가이드
+- 소그룹 나눔: 염려를 털어놓고 감사의 기도로 바꾸는 실천
+- QT 묵상: 6일간 빌립보서 4:6-7 절별 깊은 묵상
+- 쇼츠 영상: 30~50초 핵심 결단 영상 유튜브/인스타 공유`;
+
+      const groupText = `=====================================================
+[소그룹 나눔 질문지 - 구역·순·셀 예배용]
+본문: 빌립보서 4:6-7 "염려를 기도로 바꾸라"
+=====================================================
+
+[마음 열기]
+1. 이번 한 주 동안 나의 마음을 가장 무겁게 짓눌렀던 생각이나 염려는 무엇이었습니까?
+
+[말씀 나눔]
+2. 바울은 염려를 멈추는 비결로 '기도와 간구, 감사'를 제시합니다.
+   상황이 바뀌기 전에 먼저 감사함으로 기도해 본 경험이 있다면 나누어 봅시다.
+3. "모든 지각에 뛰어난 하나님의 평강"이란 어떤 의미일까요?
+   내가 경험한 신비로운 내면의 평안은 언제였습니까?
+
+[삶의 적용 및 기도]
+4. 오늘 내가 하나님께 온전히 맡겨드려야 할 한 가지 염려는 무엇입니까?
+   서로를 위해 기도하고 한 주간 기도의 승리를 선포합시다.`;
+
+      const qtText = `=====================================================
+[주간 QT 6일치 묵상 가이드]
+본문: 빌립보서 4:6-7
+=====================================================
+
+[월요일] 아무것도 염려하지 말고 (빌립보서 4:6a)
+- 묵상: 염려는 문제의 해결이 아닌 마음의 침몰을 가져옵니다. 오늘 염려를 직시하고 주님께 내려놓으십시오.
+
+[화요일] 오직 모든 일에 기도와 간구로 (빌립보서 4:6b)
+- 묵상: 사소한 일부터 중대한 문제까지 모든 것은 주님의 돌보심의 영역 안에 있습니다.
+
+[수요일] 너희 구할 것을 감사함으로 하나님께 아뢰라 (빌립보서 4:6c)
+- 묵상: 응답 이전의 감사는 가장 강력한 믿음의 표현입니다. 감사의 고백을 선제적으로 올리십시오.
+
+[목요일] 그리하면 모든 지각에 뛰어난 (빌립보서 4:7a)
+- 묵상: 사람의 계산과 이해를 뛰어넘는 하나님의 놀라운 지혜가 우리 삶에 개입하십니다.
+
+[금요일] 하나님의 평강이 그리스도 예수 안에서 (빌립보서 4:7b)
+- 묵상: 세상이 주는 일시적인 위로가 아닌, 그리스도 안에서 솟아나는 참된 평강입니다.
+
+[토요일] 너희 마음과 생각을 지키시리라 (빌립보서 4:7c)
+- 묵상: 주님의 평강이 견고한 요새가 되어 세상의 불안과 불화살로부터 내 영혼을 지키십니다.`;
+
+      const srtText = `1
+00:00:00,000 --> 00:00:03,500
+염려는 해결이 아니라 에너지의 소모입니다.
+
+2
+00:00:03,600 --> 00:00:07,000
+우리의 기도는 하나님의 평강으로 응답됩니다.
+
+3
+00:00:07,100 --> 00:00:10,000
+그 평강이 당신의 마음과 생각을 지키실 것입니다.`;
+
+      try {
+        if (typeof JSZip !== 'undefined') {
+          const zip = new JSZip();
+          zip.file('01_설교요약_및_개요.txt', summaryText);
+          zip.file('02_소그룹_나눔_질문지.txt', groupText);
+          zip.file('03_주간_QT_6일치_묵상집.txt', qtText);
+          zip.file('04_설교쇼츠_자막대본_SRT.srt', srtText);
+
+          try {
+            const vidRes = await fetch(currentClip.videoSrc);
+            if (vidRes.ok) {
+              const vidBlob = await vidRes.blob();
+              zip.file(currentClip.downloadName, vidBlob);
+            }
+          } catch (err) {
+            console.warn('Video bundle skipped in ZIP', err);
+          }
+
+          const content = await zip.generateAsync({ type: 'blob' });
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(content);
+          a.download = '2026_한주사역자료_패키지_ZIP.zip';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          showToast('✅ 전체 사역 자료(ZIP) 다운로드 완료!', '🎉');
+          return;
+        }
+      } catch (e) {
+        console.error('JSZip error:', e);
+      }
+
+      // Fallback if JSZip fails
+      const fallbackBlob = new Blob([summaryText + "\n\n" + groupText + "\n\n" + qtText + "\n\n" + srtText], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(fallbackBlob);
+      a.download = '2026_한주사역자료_패키지.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('사역 자료 텍스트 패키지가 다운로드되었습니다.', '📄');
     }
 
     function copySubtitlesSRT() {
-      const srtSample = `1\n00:00:00,000 --> 00:00:05,200\n염려는 해결이 아니라 소모입니다.\n\n2\n00:00:05,300 --> 00:00:15,000\n기도한 후에도 상황이 변하지 않을 수 있습니다.\n\n3\n00:00:15,100 --> 00:00:30,000\n그러나 하나님은 기도하는 자에게 지각에 뛰어난 평강을 주십니다.\n\n4\n00:00:30,100 --> 00:00:50,000\n그 평강이 당신의 마음과 생각을 지키실 것입니다.`;
+      const srtSample = `1\n00:00:00,000 --> 00:00:03,500\n염려는 해결이 아니라 에너지의 소모입니다.\n\n2\n00:00:03,600 --> 00:00:07,000\n우리의 기도는 하나님의 평강으로 응답됩니다.\n\n3\n00:00:07,100 --> 00:00:10,000\n그 평강이 당신의 마음과 생각을 지키실 것입니다.`;
       navigator.clipboard.writeText(srtSample).then(() => {
-        alert('쇼츠 자막(SRT)이 클립보드에 복사되었습니다. 프리미어, 캡컷, 유튜브 쇼츠에 바로 붙여넣으실 수 있습니다.');
+        showToast('쇼츠 자막(SRT)이 클립보드에 복사되었습니다! 프리미어/캡컷에 바로 붙여넣으세요.', '📋');
       });
     }
 
-    function downloadAllMaterials() {
-      alert('카드뉴스 7장, QT 6일치, 소그룹 나눔지, 설교 요약 워드 문서, 쇼츠 MP4 클립이 패키지(ZIP)로 저장됩니다.');
+    // Section 3 Landing Video Controls
+    let landingVideoInit = false;
+    function initLandingVideo() {
+      const vid = document.getElementById('landing-shorts-video');
+      if (!vid || landingVideoInit) return;
+      vid.addEventListener('timeupdate', () => {
+        const curr = vid.currentTime;
+        const dur = vid.duration || 10;
+        const currEl = document.getElementById('landing-time-curr');
+        const fillEl = document.getElementById('landing-progress-fill');
+        const subEl = document.getElementById('shorts-live-subtitle');
+        if (currEl) currEl.textContent = formatTime(curr);
+        if (fillEl && dur > 0) fillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
+        if (subEl) {
+          if (curr < 3) {
+            subEl.innerHTML = '"저는 영성을 한마디로 <span class="text-[#60a5fa]">간절함</span>이라고"';
+          } else if (curr < 7) {
+            subEl.innerHTML = '"기도는 상황을 바꾸기 전 <span class="text-[#60a5fa]">마음을 지키는 힘</span>입니다"';
+          } else {
+            subEl.innerHTML = '"하나님의 평강이 <span class="text-[#60a5fa]">당신을 온전히</span> 감싸실 것입니다"';
+          }
+        }
+      });
+      vid.addEventListener('loadedmetadata', () => {
+        const totalEl = document.getElementById('landing-time-total');
+        if (totalEl) totalEl.textContent = formatTime(vid.duration || 10);
+      });
+      landingVideoInit = true;
+    }
+
+    function toggleLandingShortsPlay() {
+      initLandingVideo();
+      const vid = document.getElementById('landing-shorts-video');
+      const btn = document.getElementById('landing-play-btn');
+      const icon = document.getElementById('landing-play-icon');
+      if (!vid) return;
+      if (vid.paused) {
+        vid.play();
+        if (btn) btn.classList.add('opacity-0');
+      } else {
+        vid.pause();
+        if (btn) btn.classList.remove('opacity-0');
+      }
+    }
+
+    function toggleLandingShortsAudio() {
+      const vid = document.getElementById('landing-shorts-video');
+      if (!vid) return;
+      vid.muted = !vid.muted;
+      const icon = document.getElementById('landing-sound-icon');
+      if (icon) {
+        if (!vid.muted) {
+          icon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
+        } else {
+          icon.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
+        }
+      }
+      showToast(vid.muted ? '소리가 꺼졌습니다.' : '소리가 켜졌습니다. 🔊', vid.muted ? '🔇' : '🔊');
+    }
+
+    function seekLandingShorts(e) {
+      const vid = document.getElementById('landing-shorts-video');
+      if (!vid) return;
+      const target = e.currentTarget;
+      const rect = target.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if (vid.duration) vid.currentTime = pct * vid.duration;
     }
 
     function openHelpChat() {
       alert('카카오톡 채널 [AI 사역도구] 상담톡으로 연결됩니다. (운영시간 10:00 ~ 18:00)');
     }
-
-    function toggleShortsPlay() {
-      const sub = document.getElementById('shorts-live-subtitle');
-      sub.classList.toggle('text-[#60a5fa]');
-    }
   </script>
+
+  <!-- Floating Toast Notification -->
+  <div id="app-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] hidden items-center gap-2 rounded-2xl bg-[#191f28]/95 px-5 py-3 text-[14px] font-semibold text-white shadow-2xl backdrop-blur-md transition-all border border-white/10">
+    <span id="app-toast-icon">✅</span>
+    <span id="app-toast-msg">다운로드가 시작되었습니다.</span>
+  </div>
 
 </body>
 
