@@ -51,7 +51,7 @@
               600: '#2563eb',
               700: '#1d4ed8',
               800: '#1e40af',
-              900: '#1e3a8a',
+            900: '#1e3a8a',
             }
           }
         }
@@ -85,13 +85,16 @@
       width: 8px;
       height: 8px;
     }
+
     ::-webkit-scrollbar-track {
       background: #f1f5f9;
     }
+
     ::-webkit-scrollbar-thumb {
       background: #cbd5e1;
       border-radius: 9999px;
     }
+
     ::-webkit-scrollbar-thumb:hover {
       background: #94a3b8;
     }
@@ -113,11 +116,13 @@
 
   <!-- ================= FLOATING HEADER / NAVBAR ================= -->
   <header class="sticky top-4 z-50 mx-auto max-w-6xl px-4 sm:px-6">
-    <nav class="flex h-16 items-center justify-between rounded-2xl border border-slate-200/80 bg-white/85 px-4 sm:px-6 shadow-[0_4px_24px_rgba(15,23,42,0.04)] backdrop-blur-xl transition-all">
-      
+    <nav
+      class="flex h-16 items-center justify-between rounded-2xl border border-slate-200/80 bg-white/85 px-4 sm:px-6 shadow-[0_4px_24px_rgba(15,23,42,0.04)] backdrop-blur-xl transition-all">
+
       <!-- Brand Logo -->
       <a class="flex items-center gap-2.5 cursor-pointer group" onclick="scrollToTop()">
-        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 shadow-sm transition-transform group-hover:scale-105">
+        <div
+          class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 shadow-sm transition-transform group-hover:scale-105">
           <svg width="18" height="20" viewBox="0 0 32 40" fill="none">
             <path d="M16 0 Q20 10, 32 16 Q20 22, 16 40 Q12 22, 0 16 Q12 10, 16 0Z" fill="#ffffff"></path>
           </svg>
@@ -148,16 +153,20 @@
 
   <!-- ================= HERO SECTION ================= -->
   <section class="relative z-10 mx-auto max-w-5xl px-4 pt-12 pb-6 text-center sm:pt-16 sm:pb-8">
-    
+
     <!-- Top Pill Badge -->
-    <div class="inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/80 px-4 py-1.5 text-[12.5px] font-bold text-blue-700 shadow-sm mb-6">
+    <div
+      class="inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/80 px-4 py-1.5 text-[12.5px] font-bold text-blue-700 shadow-sm mb-6">
       <span class="flex h-2 w-2 rounded-full bg-blue-600 animate-pulse"></span>
       <span>목회자를 위한 차세대 AI 사역 솔루션</span>
     </div>
 
     <!-- Main Headline -->
-    <h1 class="mx-auto max-w-4xl text-[34px] sm:text-[46px] md:text-[54px] font-extrabold tracking-[-0.03em] leading-[1.18] text-slate-900">
-      설교 원고 하나로, <span class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 bg-clip-text text-transparent">All in One</span>
+    <h1
+      class="mx-auto max-w-4xl text-[34px] sm:text-[46px] md:text-[54px] font-extrabold tracking-[-0.03em] leading-[1.18] text-slate-900">
+      설교 원고 하나로, <span
+        class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 bg-clip-text text-transparent">All in
+        One</span>
     </h1>
 
     <!-- Slogan / Subtitle -->
@@ -188,13 +197,15 @@
 
   <!-- ================= CENTRAL STUDIO CONSOLE ================= -->
   <section id="console-section" class="relative z-10 mx-auto max-w-4xl px-4 pt-4 pb-16">
-    <div class="rounded-3xl border border-slate-200/90 bg-white p-5 sm:p-8 shadow-[0_16px_48px_-12px_rgba(15,23,42,0.08)]">
-      
+    <div
+      class="rounded-3xl border border-slate-200/90 bg-white p-5 sm:p-8 shadow-[0_16px_48px_-12px_rgba(15,23,42,0.08)]">
+
       <!-- Console Header -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-100 gap-3">
         <div>
           <h2 class="text-[19px] sm:text-[21px] font-extrabold text-slate-900 flex items-center gap-2">
-            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-100 text-blue-700 text-[14px]">🎙️</span>
+            <span
+              class="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-100 text-blue-700 text-[14px]">🎙️</span>
             설교 입력 & 사역 자료 생성 콘솔
           </h2>
           <p class="text-[12.5px] text-slate-500 mt-0.5">
@@ -232,10 +243,23 @@
           <textarea id="manuscript-input" oninput="updateCharCount(this)" rows="7"
             placeholder="목사님의 이번 주 설교 원고 전문이나 요약문을 이곳에 편하게 붙여넣어 주세요..."
             class="w-full rounded-2xl border border-slate-200 p-4 sm:p-5 text-[14.5px] leading-relaxed text-slate-800 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all resize-y"></textarea>
-          
+
           <div class="mt-2 flex items-center justify-between text-[12px] text-slate-400 px-1">
-            <button onclick="clearManuscript()" class="hover:text-slate-600 transition-colors underline">내용 지우기</button>
+            <div class="flex items-center gap-3">
+              <button onclick="clearManuscript()" class="hover:text-slate-600 transition-colors underline">내용 지우기</button>
+              <button onclick="pasteFromClipboard()" class="hover:text-blue-600 transition-colors text-blue-600 font-semibold">📋 클립보드 붙여넣기</button>
+            </div>
             <span id="char-counter">0 / 40,000자</span>
+          </div>
+
+          <!-- Manuscript Status Card -->
+          <div id="manuscript-status-badge" class="hidden mt-3 rounded-xl bg-blue-50/90 border border-blue-200 p-3.5 text-[13px] text-blue-900 font-medium items-center justify-between shadow-2xs">
+            <span class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span>
+              <strong id="manuscript-status-title">설교 원고 인식 완료</strong>
+              <span id="manuscript-status-count" class="text-xs text-blue-600 font-bold">0자</span>
+            </span>
+            <span class="text-xs font-bold text-blue-700 bg-white px-2.5 py-1 rounded-lg border border-blue-200">AI 10종 생성 준비 완료 ✓</span>
           </div>
         </div>
       </div>
@@ -243,7 +267,8 @@
       <!-- Tab 2: YouTube Video Link -->
       <div id="upload-content-yt" class="mt-6 hidden">
         <div class="rounded-2xl border-2 border-dashed border-red-200/80 p-6 sm:p-8 text-center bg-red-50/20">
-          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100 text-red-600 text-[24px] mb-3">
+          <div
+            class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100 text-red-600 text-[24px] mb-3">
             ▶️
           </div>
           <h3 class="text-[17px] font-bold text-slate-900">유튜브 예배 및 설교 영상 주소</h3>
@@ -253,20 +278,24 @@
 
           <!-- Quick Sample Sermon Buttons -->
           <div class="mt-4 flex flex-wrap justify-center gap-2">
-            <button onclick="loadSampleYouTube('z5D_B9I7l1Y')" type="button"
+            <button onclick="loadSampleYouTube('z5D_B9I7l1Y', '너는 복이 될지라', '창세기 12:1-3')" type="button"
               class="inline-flex items-center gap-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 px-3 py-1.5 text-[12px] font-bold transition-all shadow-2xs active:scale-95">
-              <span>✨ 관유중앙교회 주일설교 예시 불러오기</span>
+              <span>✨ "너는 복이 될지라" (창 12:1-3)</span>
             </button>
-            <button onclick="loadSampleYouTube('8fD5PjS5tQ4')" type="button"
+            <button onclick="loadSampleYouTube('8fD5PjS5tQ4', '관유의 능력과 평화', '시편 133:1-3')" type="button"
               class="inline-flex items-center gap-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 px-3 py-1.5 text-[12px] font-bold transition-all shadow-2xs active:scale-95">
-              <span>설교 예시 2</span>
+              <span>✨ "관유의 능력과 평화" (시 133:1-3)</span>
+            </button>
+            <button onclick="loadSampleYouTube('W8744U1mE6Q', '광야에서 길을 내시는 하나님', '이사야 43:18-21')" type="button"
+              class="inline-flex items-center gap-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 px-3 py-1.5 text-[12px] font-bold transition-all shadow-2xs active:scale-95">
+              <span>✨ "광야에서 길을 내시는 하나님" (사 43:18-21)</span>
             </button>
           </div>
 
           <div class="mt-4 max-w-xl mx-auto flex flex-col sm:flex-row gap-2">
             <input id="youtube-url-input" type="url"
-              placeholder="예: https://www.youtube.com/watch?v=z5D_B9I7l1Y"
-              value="https://www.youtube.com/watch?v=z5D_B9I7l1Y"
+              placeholder="예: https://www.youtube.com/watch?v=z5D_B9I7l1Y 또는 youtu.be/..."
+              value=""
               oninput="handleYouTubeInput(this.value)"
               class="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-[14px] text-slate-800 focus:border-red-500 focus:outline-none focus:ring-4 focus:ring-red-500/10 transition-all shadow-xs" />
             <button onclick="applyYouTubeLinkAndStart()"
@@ -276,8 +305,8 @@
           </div>
 
           <!-- YouTube Recognition Status Card -->
-          <div id="yt-recognized-card" class="mt-4 max-w-xl mx-auto rounded-xl border border-emerald-300 bg-emerald-50/80 p-3.5 flex items-center gap-3.5 text-left shadow-2xs">
-            <img id="yt-recognized-thumb" src="https://img.youtube.com/vi/z5D_B9I7l1Y/hqdefault.jpg" alt="설교 영상 썸네일"
+          <div id="yt-recognized-card" class="mt-4 max-w-xl mx-auto hidden rounded-xl border border-emerald-300 bg-emerald-50/80 p-3.5 items-center gap-3.5 text-left shadow-2xs">
+            <img id="yt-recognized-thumb" src="" alt="설교 영상 썸네일"
               class="w-24 h-16 rounded-lg object-cover border border-emerald-400 shadow-2xs shrink-0" />
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-1.5">
@@ -285,10 +314,10 @@
                 <span class="text-[12px] font-extrabold text-emerald-800">실제 설교 영상 확인 완료</span>
               </div>
               <p id="yt-recognized-id" class="text-[13px] font-bold text-slate-900 truncate mt-0.5">
-                유튜브 영상 ID: z5D_B9I7l1Y
+                유튜브 영상 ID:
               </p>
-              <p class="text-[11.5px] text-slate-600 truncate">
-                바다 영상이 아닌 목사님의 실제 설교 영상이 9:16 세로 플레이어에 연동됩니다.
+              <p id="yt-recognized-desc" class="text-[11.5px] text-slate-600 truncate">
+                목사님의 실제 설교 영상이 9:16 세로 플레이어에 연동됩니다.
               </p>
             </div>
           </div>
@@ -297,34 +326,41 @@
 
       <!-- Tab 3: Audio/Video File Upload -->
       <div id="upload-content-file" class="mt-6 hidden">
-        <div onclick="simulateFileUpload()"
-          class="cursor-pointer rounded-2xl border-2 border-dashed border-slate-200 p-8 text-center bg-slate-50/50 hover:bg-blue-50/40 hover:border-blue-300 transition-all">
-          <input type="file" id="real-file-input" class="hidden" accept="video/*,audio/*,.txt,.hwp,.docx" onchange="handleFileSelected(this)" />
+        <div id="file-dropzone" onclick="simulateFileUpload()"
+          ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)"
+          class="cursor-pointer rounded-2xl border-2 border-dashed border-slate-300 p-8 text-center bg-slate-50/50 hover:bg-blue-50/40 hover:border-blue-400 transition-all">
+          <input type="file" id="real-file-input" class="hidden" accept="video/*,audio/*,.txt,.hwp,.docx,.pdf" onchange="handleFileSelected(this)" />
           <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-600 text-[22px] mb-3">
             📁
           </div>
-          <h3 class="text-[16px] font-bold text-slate-900">설교 영상(MP4) 또는 녹음(MP3) 파일 선택</h3>
+          <h3 class="text-[16px] font-bold text-slate-900">설교 영상(MP4), 녹음(MP3) 또는 원고 파일(TXT/HWP) 드래그</h3>
           <p class="text-[13px] text-slate-500 mt-1">
-            직접 촬영하신 설교 동영상 파일(MP4, MOV)을 올리시면 플레이어에서 내 영상으로 바로 재생됩니다.
+            스마트폰 녹음 파일(MP3, M4A, WAV), 영상(MP4, MOV), 원고 파일(TXT, HWP, DOCX) 지원
           </p>
-          <span class="mt-3 inline-block rounded-lg bg-white border border-slate-200 px-3.5 py-1.5 text-[12px] font-bold text-slate-700 shadow-2xs">
+          <span
+            class="mt-3 inline-block rounded-lg bg-white border border-slate-200 px-3.5 py-1.5 text-[12px] font-bold text-slate-700 shadow-2xs">
             컴퓨터에서 설교 파일 찾기
           </span>
         </div>
 
         <!-- File Recognition Card -->
-        <div id="file-recognized-card" class="mt-4 max-w-xl mx-auto hidden rounded-xl border border-blue-200 bg-blue-50/80 p-3.5 items-center gap-3.5 text-left">
-          <div class="w-10 h-10 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-[18px] shrink-0">
+        <div id="file-recognized-card" class="mt-4 max-w-xl mx-auto hidden rounded-xl border border-blue-200 bg-blue-50/80 p-3.5 items-center gap-3.5 text-left shadow-2xs">
+          <div id="file-type-icon" class="w-10 h-10 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-[18px] shrink-0">
             🎬
           </div>
           <div class="flex-1 min-w-0">
-            <span class="text-[11.5px] font-extrabold text-blue-800">설교 파일 등록됨</span>
+            <span id="file-type-badge" class="text-[11.5px] font-extrabold text-blue-800">설교 파일 등록됨</span>
             <p id="file-recognized-name" class="text-[13px] font-bold text-slate-900 truncate">파일명.mp4</p>
             <p id="file-recognized-size" class="text-[11.5px] text-slate-600">0 MB</p>
           </div>
-          <button onclick="startStudioGeneration()" class="rounded-xl bg-blue-600 px-4 py-2 text-[12.5px] font-bold text-white hover:bg-blue-700 shrink-0 shadow-xs">
-            쇼츠 생성 시작
-          </button>
+          <div class="flex items-center gap-2">
+            <button onclick="clearSelectedFile(event)" class="rounded-lg bg-white border border-slate-200 px-2.5 py-1.5 text-[12px] font-semibold text-slate-600 hover:bg-slate-100">
+              취소
+            </button>
+            <button onclick="startStudioGeneration()" class="rounded-xl bg-blue-600 px-4 py-2 text-[12.5px] font-bold text-white hover:bg-blue-700 shrink-0 shadow-xs">
+              쇼츠 생성 시작
+            </button>
+          </div>
         </div>
       </div>
 
@@ -335,17 +371,21 @@
             <span>🎯</span>
             <span>타깃 성도 맞춤 어조 선택:</span>
           </label>
-          
+
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <label class="flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50/60 px-3 py-2 cursor-pointer text-[12.5px] font-bold text-blue-900">
-              <input type="radio" name="console-audience" value="pastor" checked class="text-blue-600 focus:ring-blue-500" />
+            <label
+              class="flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50/60 px-3 py-2 cursor-pointer text-[12.5px] font-bold text-blue-900">
+              <input type="radio" name="console-audience" value="pastor" checked
+                class="text-blue-600 focus:ring-blue-500" />
               <span>장년부 & 전체 (기본)</span>
             </label>
-            <label class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 px-3 py-2 cursor-pointer text-[12.5px] font-semibold text-slate-700">
+            <label
+              class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 px-3 py-2 cursor-pointer text-[12.5px] font-semibold text-slate-700">
               <input type="radio" name="console-audience" value="youth" class="text-blue-600 focus:ring-blue-500" />
               <span>청년·대학부 (도전·결단)</span>
             </label>
-            <label class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 px-3 py-2 cursor-pointer text-[12.5px] font-semibold text-slate-700">
+            <label
+              class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 px-3 py-2 cursor-pointer text-[12.5px] font-semibold text-slate-700">
               <input type="radio" name="console-audience" value="nextgen" class="text-blue-600 focus:ring-blue-500" />
               <span>다음세대 (쉬운 눈높이)</span>
             </label>
@@ -383,8 +423,10 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <!-- Step 1 -->
-      <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs relative overflow-hidden group hover:border-blue-300 transition-all">
-        <span class="text-[38px] font-black text-slate-100 group-hover:text-blue-100 transition-colors absolute top-3 right-4 select-none">01</span>
+      <div
+        class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs relative overflow-hidden group hover:border-blue-300 transition-all">
+        <span
+          class="text-[38px] font-black text-slate-100 group-hover:text-blue-100 transition-colors absolute top-3 right-4 select-none">01</span>
         <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 text-[20px] mb-4">
           📝
         </div>
@@ -395,9 +437,12 @@
       </div>
 
       <!-- Step 2 -->
-      <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs relative overflow-hidden group hover:border-blue-300 transition-all">
-        <span class="text-[38px] font-black text-slate-100 group-hover:text-blue-100 transition-colors absolute top-3 right-4 select-none">02</span>
-        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 text-[20px] mb-4">
+      <div
+        class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs relative overflow-hidden group hover:border-blue-300 transition-all">
+        <span
+          class="text-[38px] font-black text-slate-100 group-hover:text-blue-100 transition-colors absolute top-3 right-4 select-none">02</span>
+        <div
+          class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 text-[20px] mb-4">
           ⚡️
         </div>
         <h3 class="text-[17px] font-bold text-slate-900">AI 10종 자동 변환</h3>
@@ -407,9 +452,12 @@
       </div>
 
       <!-- Step 3 -->
-      <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs relative overflow-hidden group hover:border-blue-300 transition-all">
-        <span class="text-[38px] font-black text-slate-100 group-hover:text-blue-100 transition-colors absolute top-3 right-4 select-none">03</span>
-        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 text-[20px] mb-4">
+      <div
+        class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs relative overflow-hidden group hover:border-blue-300 transition-all">
+        <span
+          class="text-[38px] font-black text-slate-100 group-hover:text-blue-100 transition-colors absolute top-3 right-4 select-none">03</span>
+        <div
+          class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 text-[20px] mb-4">
           📥
         </div>
         <h3 class="text-[17px] font-bold text-slate-900">원클릭 다운로드 & 공유</h3>
@@ -437,12 +485,14 @@
 
     <!-- 10 Assets Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      
+
       <!-- Asset 1: 소그룹 나눔지 -->
-      <div class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
+      <div
+        class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
-            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 text-[18px]">👥</span>
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 text-[18px]">👥</span>
             <span class="text-[11px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md">구역·순·셀</span>
           </div>
           <h3 class="text-[16px] font-bold text-slate-900">소그룹 나눔 질문지</h3>
@@ -457,10 +507,12 @@
       </div>
 
       <!-- Asset 2: 주간 QT 묵상집 -->
-      <div class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
+      <div
+        class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
-            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 text-amber-600 text-[18px]">☀️</span>
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 text-amber-600 text-[18px]">☀️</span>
             <span class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">월~토 6일치</span>
           </div>
           <h3 class="text-[16px] font-bold text-slate-900">주간 QT 6일치 묵상 가이드</h3>
@@ -475,10 +527,12 @@
       </div>
 
       <!-- Asset 3: 인스타 카드뉴스 -->
-      <div class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
+      <div
+        class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
-            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-pink-50 text-pink-600 text-[18px]">🖼️</span>
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-xl bg-pink-50 text-pink-600 text-[18px]">🖼️</span>
             <span class="text-[11px] font-bold text-pink-700 bg-pink-50 px-2 py-0.5 rounded-md">고해상도 7장</span>
           </div>
           <h3 class="text-[16px] font-bold text-slate-900">인스타그램 카드뉴스 7장</h3>
@@ -493,10 +547,12 @@
       </div>
 
       <!-- Asset 4: 9:16 모바일 쇼츠 -->
-      <div class="rounded-2xl border border-blue-200 bg-blue-50/30 p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
+      <div
+        class="rounded-2xl border border-blue-200 bg-blue-50/30 p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
-            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white text-[18px]">🎬</span>
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white text-[18px]">🎬</span>
             <span class="text-[11px] font-bold text-white bg-blue-600 px-2 py-0.5 rounded-md">인기 추천</span>
           </div>
           <h3 class="text-[16px] font-bold text-slate-900">9:16 모바일 설교 쇼츠 & 자막</h3>
@@ -511,10 +567,12 @@
       </div>
 
       <!-- Asset 5: 설교 요약 워드 문서 -->
-      <div class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
+      <div
+        class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
-            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 text-[18px]">📄</span>
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 text-[18px]">📄</span>
             <span class="text-[11px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md">목회 행정</span>
           </div>
           <h3 class="text-[16px] font-bold text-slate-900">설교 요약 및 3대지 개요</h3>
@@ -529,10 +587,12 @@
       </div>
 
       <!-- Asset 6: 설교 PPT 슬라이드 -->
-      <div class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
+      <div
+        class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
-            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-50 text-orange-600 text-[18px]">📊</span>
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-50 text-orange-600 text-[18px]">📊</span>
             <span class="text-[11px] font-bold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-md">예배 프레젠테이션</span>
           </div>
           <h3 class="text-[16px] font-bold text-slate-900">설교 발표용 PPT 슬라이드</h3>
@@ -549,7 +609,8 @@
     </div>
 
     <!-- Bottom Full Bundle Download Banner -->
-    <div class="mt-10 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-5 shadow-lg">
+    <div
+      class="mt-10 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-5 shadow-lg">
       <div>
         <h3 class="text-[18px] sm:text-[20px] font-extrabold">위의 10종 자료를 하나의 ZIP 압축 파일로 받으세요</h3>
         <p class="text-[13.5px] text-slate-300 mt-1">
@@ -579,8 +640,9 @@
     </div>
 
     <!-- Studio Desk Container -->
-    <div class="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-10 shadow-[0_16px_48px_-12px_rgba(15,23,42,0.06)] grid grid-cols-1 lg:grid-cols-[1.25fr_1fr] gap-10 items-center">
-      
+    <div
+      class="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-10 shadow-[0_16px_48px_-12px_rgba(15,23,42,0.06)] grid grid-cols-1 lg:grid-cols-[1.25fr_1fr] gap-10 items-center">
+
       <!-- Left: Scene Selection Decks -->
       <div>
         <div class="mb-5">
@@ -593,7 +655,7 @@
         </div>
 
         <div class="space-y-3.5">
-          
+
           <!-- Deck 1 -->
           <div id="studio-deck-1" onclick="selectStudioClip(1)"
             class="rounded-2xl border-2 border-blue-600 bg-blue-50/50 p-4 sm:p-5 cursor-pointer transition-all shadow-xs">
@@ -680,8 +742,9 @@
 
       <!-- Right: Real Interactive 9:16 Phone Simulator -->
       <div class="flex flex-col items-center">
-        <div class="relative w-[280px] rounded-[34px] border-[8px] border-slate-900 bg-black aspect-[9/16] shadow-2xl overflow-hidden flex flex-col justify-between group">
-          
+        <div
+          class="relative w-[280px] rounded-[34px] border-[8px] border-slate-900 bg-black aspect-[9/16] shadow-2xl overflow-hidden flex flex-col justify-between group">
+
           <!-- 1. YouTube Sermon Embed Wrap (9:16 Vertical Center-Cropped View) -->
           <div id="studio-yt-wrap" class="absolute inset-0 w-full h-full overflow-hidden bg-black transition-all">
             <div id="studio-yt-scaler" class="relative w-full h-full flex items-center justify-center">
@@ -696,9 +759,11 @@
 
           <!-- 2. Local Video File Player (Active when local MP4 video file is selected) -->
           <video id="studio-video" class="absolute inset-0 w-full h-full object-cover hidden" playsinline loop muted autoplay></video>
-          
+
           <!-- Gradient Shadow Overlay -->
-          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10 pointer-events-none"></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10 pointer-events-none">
+          </div>
 
           <!-- Top Header in Phone -->
           <div class="relative z-20 p-3 pt-4 flex items-center justify-between gap-1">
@@ -750,11 +815,12 @@
               <span id="studio-scene-name" class="text-blue-400 font-bold truncate max-w-[130px]">씬 1 [00:00]</span>
               <span id="studio-time-total">00:12</span>
             </div>
-            
+
             <!-- Interactive Clickable Progress Bar -->
             <div id="studio-progress-track" onclick="seekStudioVideo(event)"
               class="h-2 w-full bg-white/30 rounded-full overflow-hidden mb-3 cursor-pointer hover:h-2.5 transition-all">
-              <div id="studio-progress-fill" class="h-full bg-blue-500 w-0 rounded-full transition-all duration-100"></div>
+              <div id="studio-progress-fill" class="h-full bg-blue-500 w-0 rounded-full transition-all duration-100">
+              </div>
             </div>
 
             <!-- Action Buttons: Real Downloads -->
@@ -800,7 +866,8 @@
     <div class="space-y-3">
       <!-- FAQ 1 -->
       <div class="rounded-2xl border border-slate-200 bg-white p-5 transition-all">
-        <button onclick="toggleFaq(this)" class="flex w-full items-center justify-between text-left text-[16px] font-bold text-slate-900">
+        <button onclick="toggleFaq(this)"
+          class="flex w-full items-center justify-between text-left text-[16px] font-bold text-slate-900">
           <span>AI가 목사님의 신학이나 설교 본래 의도를 왜곡하지 않나요?</span>
           <span class="text-slate-400 text-lg transition-transform faq-icon">+</span>
         </button>
@@ -811,7 +878,8 @@
 
       <!-- FAQ 2 -->
       <div class="rounded-2xl border border-slate-200 bg-white p-5 transition-all">
-        <button onclick="toggleFaq(this)" class="flex w-full items-center justify-between text-left text-[16px] font-bold text-slate-900">
+        <button onclick="toggleFaq(this)"
+          class="flex w-full items-center justify-between text-left text-[16px] font-bold text-slate-900">
           <span>유튜브 전체 예배 영상에서 설교만 자동으로 잘라주나요?</span>
           <span class="text-slate-400 text-lg transition-transform faq-icon">+</span>
         </button>
@@ -822,18 +890,21 @@
 
       <!-- FAQ 3 -->
       <div class="rounded-2xl border border-slate-200 bg-white p-5 transition-all">
-        <button onclick="toggleFaq(this)" class="flex w-full items-center justify-between text-left text-[16px] font-bold text-slate-900">
+        <button onclick="toggleFaq(this)"
+          class="flex w-full items-center justify-between text-left text-[16px] font-bold text-slate-900">
           <span>생성된 자료는 어떤 형식으로 다운로드받나요?</span>
           <span class="text-slate-400 text-lg transition-transform faq-icon">+</span>
         </button>
         <div class="hidden pt-3 text-[14px] leading-relaxed text-slate-600 border-t border-slate-100 mt-3 faq-body">
-          소그룹 나눔지와 QT는 워드(Word), 한글(HWP) 및 단톡방 즉시 복사 텍스트로 제공됩니다. 쇼츠 영상은 9:16 모바일 규격 고화질 MP4 파일과 ZIP 압축 패키지로 즉시 다운로드하실 수 있습니다.
+          소그룹 나눔지와 QT는 워드(Word), 한글(HWP) 및 단톡방 즉시 복사 텍스트로 제공됩니다. 쇼츠 영상은 9:16 모바일 규격 고화질 MP4 파일과 ZIP 압축 패키지로 즉시 다운로드하실 수
+          있습니다.
         </div>
       </div>
 
       <!-- FAQ 4 -->
       <div class="rounded-2xl border border-slate-200 bg-white p-5 transition-all">
-        <button onclick="toggleFaq(this)" class="flex w-full items-center justify-between text-left text-[16px] font-bold text-slate-900">
+        <button onclick="toggleFaq(this)"
+          class="flex w-full items-center justify-between text-left text-[16px] font-bold text-slate-900">
           <span>설교 저작권과 원고 보안은 안전한가요?</span>
           <span class="text-slate-400 text-lg transition-transform faq-icon">+</span>
         </button>
@@ -849,7 +920,7 @@
   <footer class="border-t border-slate-200 bg-white py-12 px-4 sm:px-6">
     <div class="mx-auto max-w-6xl">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-        
+
         <!-- Logo & Title -->
         <div class="flex items-center gap-2.5">
           <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
@@ -870,9 +941,11 @@
 
       </div>
 
-      <div class="mt-6 border-t border-slate-100 pt-6 text-center sm:text-left text-[11.5px] text-slate-400 leading-relaxed">
+      <div
+        class="mt-6 border-t border-slate-100 pt-6 text-center sm:text-left text-[11.5px] text-slate-400 leading-relaxed">
         <p>
-          <span class="font-semibold text-slate-600">주식회사 AI 사역도구</span> | 대표 정상후 | 사업자등록번호 625-86-04089 | 통신판매업 2026-서울종로-1298
+          <span class="font-semibold text-slate-600">주식회사 AI 사역도구</span> | 대표 정상후 | 사업자등록번호 625-86-04089 | 통신판매업
+          2026-서울종로-1298
         </p>
         <p class="mt-1">
           서울특별시 종로구 동숭길 64, 5층 S156호 | 고객센터 070-8028-3628 (운영시간 10:00 ~ 18:00, 주말/공휴일 휴무)
@@ -890,16 +963,20 @@
     class="fixed bottom-6 right-6 z-40 flex h-12 w-12 sm:h-13 sm:w-auto sm:px-4 sm:py-3 items-center justify-center gap-2 rounded-full bg-[#FEE500] text-[#3C1E1E] shadow-xl hover:scale-105 active:scale-95 transition-all"
     title="카카오톡 문의">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 3C6.48 3 2 6.58 2 10.9c0 2.78 1.8 5.22 4.5 6.6-.2.73-.72 2.65-.82 3.06-.13.5.18.5.38.36.16-.1 2.46-1.67 3.46-2.35.48.07.97.1 1.48.1 5.52 0 10-3.58 10-7.9S17.52 3 12 3z"></path>
+      <path
+        d="M12 3C6.48 3 2 6.58 2 10.9c0 2.78 1.8 5.22 4.5 6.6-.2.73-.72 2.65-.82 3.06-.13.5.18.5.38.36.16-.1 2.46-1.67 3.46-2.35.48.07.97.1 1.48.1 5.52 0 10-3.58 10-7.9S17.52 3 12 3z">
+      </path>
     </svg>
     <span class="hidden sm:inline text-[13.5px] font-bold">카카오톡 문의</span>
   </button>
 
 
   <!-- ================= PROGRESS / GENERATION MODAL ================= -->
-  <div id="progress-overlay" class="fixed inset-0 z-[200] hidden items-center justify-center bg-slate-900/60 backdrop-blur-md p-4">
+  <div id="progress-overlay"
+    class="fixed inset-0 z-[200] hidden items-center justify-center bg-slate-900/60 backdrop-blur-md p-4">
     <div class="w-full max-w-md rounded-3xl bg-white p-6 sm:p-8 shadow-2xl text-center">
-      <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 text-[26px] mb-4 animate-spin">
+      <div
+        class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 text-[26px] mb-4 animate-spin">
         ⚙️
       </div>
       <h3 class="text-[19px] font-extrabold text-slate-900">AI 사역 자료 10종 생성 중</h3>
@@ -909,7 +986,9 @@
 
       <!-- Progress Track -->
       <div class="mt-4 h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
-        <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-blue-600 to-indigo-600 w-1/3 rounded-full transition-all duration-500"></div>
+        <div id="progress-bar-fill"
+          class="h-full bg-gradient-to-r from-blue-600 to-indigo-600 w-1/3 rounded-full transition-all duration-500">
+        </div>
       </div>
 
       <!-- Step List -->
@@ -932,7 +1011,8 @@
 
 
   <!-- ================= TARGET AUDIENCE MODAL ================= -->
-  <div id="audience-modal" class="fixed inset-0 z-[160] hidden items-center justify-center bg-slate-900/60 backdrop-blur-md p-4">
+  <div id="audience-modal"
+    class="fixed inset-0 z-[160] hidden items-center justify-center bg-slate-900/60 backdrop-blur-md p-4">
     <div class="w-full max-w-lg rounded-3xl bg-white p-6 sm:p-8 shadow-2xl text-left">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100">
         <h3 class="text-[18px] font-extrabold text-slate-900">타깃 성도 대상을 선택하세요</h3>
@@ -943,7 +1023,8 @@
       </p>
 
       <div class="mt-4 space-y-2.5">
-        <label class="flex items-center justify-between p-3.5 rounded-2xl border-2 border-blue-500 bg-blue-50/50 cursor-pointer">
+        <label
+          class="flex items-center justify-between p-3.5 rounded-2xl border-2 border-blue-500 bg-blue-50/50 cursor-pointer">
           <div class="flex items-center gap-3">
             <input type="radio" name="modal-target-radio" value="pastor" checked class="text-blue-600" />
             <div>
@@ -954,7 +1035,8 @@
           <span class="text-xs bg-blue-600 text-white px-2 py-0.5 rounded font-bold">추천</span>
         </label>
 
-        <label class="flex items-center justify-between p-3.5 rounded-2xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+        <label
+          class="flex items-center justify-between p-3.5 rounded-2xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
           <div class="flex items-center gap-3">
             <input type="radio" name="modal-target-radio" value="youth" class="text-blue-600" />
             <div>
@@ -964,7 +1046,8 @@
           </div>
         </label>
 
-        <label class="flex items-center justify-between p-3.5 rounded-2xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+        <label
+          class="flex items-center justify-between p-3.5 rounded-2xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
           <div class="flex items-center gap-3">
             <input type="radio" name="modal-target-radio" value="nextgen" class="text-blue-600" />
             <div>
@@ -976,10 +1059,12 @@
       </div>
 
       <div class="mt-6 flex justify-end gap-2.5">
-        <button onclick="closeAudienceModal()" class="rounded-xl px-4 py-2.5 text-[13px] font-semibold text-slate-600 hover:bg-slate-100">
+        <button onclick="closeAudienceModal()"
+          class="rounded-xl px-4 py-2.5 text-[13px] font-semibold text-slate-600 hover:bg-slate-100">
           취소
         </button>
-        <button onclick="startStudioGeneration()" class="rounded-xl bg-blue-600 hover:bg-blue-700 px-5 py-2.5 text-[13.5px] font-bold text-white shadow-sm">
+        <button onclick="startStudioGeneration()"
+          class="rounded-xl bg-blue-600 hover:bg-blue-700 px-5 py-2.5 text-[13.5px] font-bold text-white shadow-sm">
           분석 및 생성 시작
         </button>
       </div>
@@ -988,175 +1073,364 @@
 
 
   <!-- ================= STUDIO RESULT MODAL ================= -->
-  <div id="studio-modal" class="fixed inset-0 z-[150] hidden items-center justify-center bg-slate-900/70 backdrop-blur-md p-3 sm:p-6 overflow-y-auto">
-    <div class="w-full max-w-5xl rounded-3xl bg-white p-6 sm:p-8 shadow-2xl my-auto max-h-[92vh] overflow-y-auto">
-      
+  <div id="studio-modal"
+    class="fixed inset-0 z-[150] hidden items-center justify-center bg-slate-900/75 backdrop-blur-md p-2 sm:p-4 md:p-6 overflow-y-auto">
+    <div class="w-full max-w-6xl rounded-3xl bg-white p-5 sm:p-8 shadow-2xl my-auto max-h-[94vh] flex flex-col overflow-hidden">
+
       <!-- Studio Header -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-200 gap-3 shrink-0">
         <div>
           <div class="flex items-center gap-2">
-            <span class="rounded-lg bg-blue-600 px-2.5 py-1 text-[11px] font-bold text-white uppercase tracking-wide">AI Studio</span>
-            <h2 class="text-[20px] sm:text-[22px] font-extrabold text-slate-900">
+            <span class="rounded-lg bg-blue-600 px-2.5 py-1 text-[11px] font-bold text-white uppercase tracking-wide shadow-xs">AI Studio</span>
+            <h2 id="studio-header-title" class="text-[19px] sm:text-[22px] font-black text-slate-900">
               AI 사역 자료 & 쇼츠 스튜디오
             </h2>
           </div>
           <p class="mt-1 text-[13px] text-slate-500">
-            본문: <strong class="text-slate-800">빌립보서 4:6-7 "염려를 기도로 바꾸라"</strong> · 타깃: <span id="studio-target-label" class="font-bold text-blue-600">장년부 & 전체 성도</span>
+            제목: <strong id="studio-sermon-name" class="text-slate-800">"염려를 기도로 바꾸라"</strong> · 본문: <span id="studio-scripture-ref" class="font-bold text-blue-600">빌립보서 4:6-7</span> · 타깃: <span id="studio-target-label" class="font-semibold text-slate-700">장년부 & 전체</span>
           </p>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 shrink-0">
           <button onclick="downloadAllMaterials()"
-            class="rounded-xl bg-blue-50 text-blue-700 border border-blue-200 px-4 py-2 text-[13px] font-bold hover:bg-blue-100 transition-colors flex items-center gap-1.5">
-            <span>📦 전체 사역 자료 ZIP 다운로드</span>
+            class="rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-[13px] font-bold text-white hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center gap-1.5 shadow-md active:scale-95">
+            <span>📦 10종 사역자료 ZIP 다운로드</span>
           </button>
           <button onclick="closeStudioModal()"
-            class="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
+            class="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors text-lg font-bold">
             ✕
           </button>
         </div>
       </div>
 
-      <!-- Studio Body Grid -->
-      <div class="mt-6 grid grid-cols-1 lg:grid-cols-[1.25fr_1fr] gap-8">
-        
-        <!-- Left: Scenes Breakdown -->
-        <div>
-          <h3 class="text-[17px] font-bold text-slate-900 mb-1">
-            🎬 다중 씬 분할 쇼츠 모음 (클릭하여 전환)
-          </h3>
-          <p class="text-[12.5px] text-slate-500 mb-4">
-            클릭하시면 우측 스마트폰 플레이어에서 즉시 해당 쇼츠 비디오가 재생됩니다.
-          </p>
+      <!-- Studio Navigation Tabs Bar -->
+      <div class="mt-4 flex gap-1.5 overflow-x-auto pb-2 border-b border-slate-100 shrink-0 scrollbar-none">
+        <button id="studio-tab-btn-shorts" onclick="switchStudioTab('shorts')"
+          class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all bg-blue-600 text-white shadow-xs whitespace-nowrap">
+          <span>📱 9:16 설교 쇼츠 (3편)</span>
+        </button>
+        <button id="studio-tab-btn-smallgroup" onclick="switchStudioTab('smallgroup')"
+          class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap">
+          <span>👥 소그룹 나눔 질문지</span>
+        </button>
+        <button id="studio-tab-btn-qt" onclick="switchStudioTab('qt')"
+          class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap">
+          <span>☀️ 주간 QT 6일치</span>
+        </button>
+        <button id="studio-tab-btn-cardnews" onclick="switchStudioTab('cardnews')"
+          class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap">
+          <span>🖼️ 인스타 카드뉴스 7장</span>
+        </button>
+        <button id="studio-tab-btn-outline" onclick="switchStudioTab('outline')"
+          class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap">
+          <span>📝 설교 3대지 요약</span>
+        </button>
+        <button id="studio-tab-btn-kakao" onclick="switchStudioTab('kakao')"
+          class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap">
+          <span>💬 성도 단톡방 알림톡</span>
+        </button>
+        <button id="studio-tab-btn-bulletin" onclick="switchStudioTab('bulletin')"
+          class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap">
+          <span>📜 주보 요약 & 기도문</span>
+        </button>
+      </div>
 
-          <div class="space-y-3.5">
-            <!-- Modal Deck 1 -->
-            <div id="modal-deck-1" onclick="selectStudioClip(1)"
-              class="rounded-2xl border-2 border-blue-600 bg-blue-50/50 p-4 cursor-pointer transition-all shadow-xs">
-              <div class="flex items-center justify-between mb-1.5">
-                <span class="rounded bg-blue-600 text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 1 (추천)</span>
-                <span class="text-[12px] font-semibold text-red-500">🔥 감정 고조도 98%</span>
+      <!-- Studio Content Body (Scrollable Panels) -->
+      <div class="mt-4 flex-1 overflow-y-auto pr-1">
+
+        <!-- Panel 1: 9:16 Shorts Studio -->
+        <div id="studio-panel-shorts" class="block">
+          <div class="grid grid-cols-1 lg:grid-cols-[1.25fr_1fr] gap-8">
+            <!-- Left: Scenes Breakdown -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-[17px] font-bold text-slate-900">
+                  🎬 다중 씬 분할 쇼츠 모음 (클릭하여 전환)
+                </h3>
+                <span class="text-xs bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full font-bold border border-emerald-200">
+                  자막 싱크 완료 ✓
+                </span>
               </div>
-              <h4 class="text-[15.5px] font-bold text-slate-900">"간절함이 곧 영성이다"</h4>
-              <p class="text-[12px] text-slate-600 mt-1">도입(15s) → 전환: 기도의 불꽃(20s) → 결단: 평강의 임재(15s)</p>
+              <p class="text-[12.5px] text-slate-500 mb-4">
+                클릭하시면 우측 스마트폰 플레이어에서 즉시 해당 쇼츠 비디오가 재생됩니다.
+              </p>
+
+              <div id="studio-shorts-card-list" class="space-y-3.5">
+                <!-- Modal Deck 1 -->
+                <div id="modal-deck-1" onclick="selectStudioClip(1)"
+                  class="rounded-2xl border-2 border-blue-600 bg-blue-50/50 p-4 cursor-pointer transition-all shadow-xs">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="rounded bg-blue-600 text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 1 (추천)</span>
+                    <span class="text-[12px] font-semibold text-red-500">🔥 감정 고조도 98%</span>
+                  </div>
+                  <h4 id="deck-title-1" class="text-[15.5px] font-bold text-slate-900">"간절함이 곧 영성이다"</h4>
+                  <p id="deck-sub-1" class="text-[12px] text-slate-600 mt-1">도입(15s) → 전환: 기도의 불꽃(20s) → 결단: 평강의 임재(15s)</p>
+                </div>
+
+                <!-- Modal Deck 2 -->
+                <div id="modal-deck-2" onclick="selectStudioClip(2)"
+                  class="rounded-2xl border border-slate-200 bg-white hover:border-blue-400 p-4 cursor-pointer transition-all">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="rounded bg-slate-600 text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 2</span>
+                    <span class="text-[12px] font-semibold text-blue-600">💡 감동·위로 95%</span>
+                  </div>
+                  <h4 id="deck-title-2" class="text-[15.5px] font-bold text-slate-900">"염려를 기도로 바꾸는 단 하나의 비결"</h4>
+                  <p id="deck-sub-2" class="text-[12px] text-slate-600 mt-1">바울의 감옥 서신에서 발견하는 감사의 역설과 실천</p>
+                </div>
+
+                <!-- Modal Deck 3 -->
+                <div id="modal-deck-3" onclick="selectStudioClip(3)"
+                  class="rounded-2xl border border-slate-200 bg-white hover:border-blue-400 p-4 cursor-pointer transition-all">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="rounded bg-slate-600 text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 3</span>
+                    <span class="text-[12px] font-semibold text-purple-600">⚡️ 결단·도전 92%</span>
+                  </div>
+                  <h4 id="deck-title-3" class="text-[15.5px] font-bold text-slate-900">"내 마음의 평강을 지키시는 하나님"</h4>
+                  <p id="deck-sub-3" class="text-[12px] text-slate-600 mt-1">상황의 변화보다 먼저 찾아오는 내면의 신비로운 평안</p>
+                </div>
+              </div>
             </div>
 
-            <!-- Modal Deck 2 -->
-            <div id="modal-deck-2" onclick="selectStudioClip(2)"
-              class="rounded-2xl border border-slate-200 bg-white hover:border-blue-400 p-4 cursor-pointer transition-all">
-              <div class="flex items-center justify-between mb-1.5">
-                <span class="rounded bg-slate-600 text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 2</span>
-                <span class="text-[12px] font-semibold text-blue-600">💡 감동·위로 95%</span>
-              </div>
-              <h4 class="text-[15.5px] font-bold text-slate-900">"염려를 기도로 바꾸는 단 하나의 비결"</h4>
-              <p class="text-[12px] text-slate-600 mt-1">바울의 감옥 서신에서 발견하는 감사의 역설과 실천</p>
-            </div>
+            <!-- Right: 9:16 Video Player -->
+            <div class="flex flex-col items-center">
+              <div class="relative w-[280px] rounded-[34px] border-[8px] border-slate-900 bg-black aspect-[9/16] shadow-2xl overflow-hidden flex flex-col justify-between group">
+                
+                <!-- 1. Modal YouTube Sermon Embed Wrap (9:16 Vertical Center-Cropped View) -->
+                <div id="modal-yt-wrap" class="absolute inset-0 w-full h-full overflow-hidden bg-black transition-all">
+                  <div id="modal-yt-scaler" class="relative w-full h-full flex items-center justify-center">
+                    <iframe id="modal-yt-iframe"
+                      class="absolute border-0 pointer-events-none transition-all duration-300"
+                      style="width: 325%; height: 115%; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+                      src="https://www.youtube.com/embed/z5D_B9I7l1Y?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=z5D_B9I7l1Y&start=0&rel=0&playsinline=1"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+                  </div>
+                </div>
 
-            <!-- Modal Deck 3 -->
-            <div id="modal-deck-3" onclick="selectStudioClip(3)"
-              class="rounded-2xl border border-slate-200 bg-white hover:border-blue-400 p-4 cursor-pointer transition-all">
-              <div class="flex items-center justify-between mb-1.5">
-                <span class="rounded bg-slate-600 text-white px-2 py-0.5 text-[11px] font-bold">쇼츠 3</span>
-                <span class="text-[12px] font-semibold text-purple-600">⚡️ 결단·도전 92%</span>
+                <!-- 2. Modal Local Video File Player -->
+                <video id="modal-studio-video" class="absolute inset-0 w-full h-full object-cover hidden" playsinline loop muted autoplay></video>
+
+                <!-- 3. Modal Audio Visualizer (Used when audio file is uploaded) -->
+                <div id="modal-audio-wrap" class="absolute inset-0 w-full h-full bg-gradient-to-b from-slate-900 via-indigo-950 to-black hidden flex-col items-center justify-center p-6 text-center">
+                  <div class="w-16 h-16 rounded-3xl bg-blue-600/30 border border-blue-400/40 flex items-center justify-center text-3xl shadow-lg mb-4 animate-pulse">
+                    🎙️
+                  </div>
+                  <h4 id="audio-visualizer-title" class="text-white font-extrabold text-[15px] truncate max-w-[220px]">주일 설교 녹음</h4>
+                  <p id="audio-visualizer-ref" class="text-blue-300 text-[12px] mt-1">관유중앙교회 주일예배</p>
+                  
+                  <div class="flex items-end justify-center gap-1 h-12 my-6">
+                    <span class="w-1.5 bg-blue-400 rounded-full animate-bounce h-6"></span>
+                    <span class="w-1.5 bg-indigo-400 rounded-full animate-bounce h-10"></span>
+                    <span class="w-1.5 bg-blue-300 rounded-full animate-bounce h-8"></span>
+                    <span class="w-1.5 bg-cyan-400 rounded-full animate-bounce h-12"></span>
+                    <span class="w-1.5 bg-blue-500 rounded-full animate-bounce h-7"></span>
+                    <span class="w-1.5 bg-indigo-300 rounded-full animate-bounce h-11"></span>
+                    <span class="w-1.5 bg-blue-400 rounded-full animate-bounce h-5"></span>
+                  </div>
+                  <audio id="modal-studio-audio" class="hidden"></audio>
+                </div>
+
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10 pointer-events-none"></div>
+
+                <!-- Top Header in Phone -->
+                <div class="relative z-20 p-3 pt-4 flex items-center justify-between gap-1">
+                  <span id="modal-shorts-tag" class="inline-block rounded-lg bg-blue-600 px-2.5 py-1 text-[11px] font-bold text-white tracking-wide shadow-sm truncate max-w-[130px]">
+                    간절함이 곧 영성이다
+                  </span>
+                  <div class="flex items-center gap-1">
+                    <button onclick="toggleShortsCropMode()" id="modal-crop-btn"
+                      class="rounded-full bg-black/65 px-2 py-0.5 text-[10px] font-bold text-white border border-white/20 backdrop-blur-md hover:bg-black/90 transition-all flex items-center gap-1 shadow-sm"
+                      title="9:16 세로 쇼츠 크롭 / 16:9 전체 비율 전환">
+                      <span id="modal-crop-btn-text">📱 9:16</span>
+                    </button>
+                    <button onclick="toggleModalStudioAudio()" id="modal-sound-btn"
+                      class="flex h-7 w-7 items-center justify-center rounded-full bg-black/65 text-white backdrop-blur-md hover:bg-black/90 transition-colors shadow-sm"
+                      title="소리 켜기/끄기">
+                      <svg id="modal-sound-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Center Play Overlay & Subtitle -->
+                <div class="relative z-20 px-3 text-center my-auto flex flex-col items-center">
+                  <button onclick="toggleModalStudioPlay()" id="modal-play-btn"
+                    class="w-13 h-13 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center text-white mb-3 cursor-pointer hover:scale-110 active:scale-95 transition-all shadow-xl opacity-80 hover:opacity-100">
+                    <svg id="modal-play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                      <rect x="6" y="4" width="4" height="16"></rect>
+                      <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                  </button>
+
+                  <div class="rounded-xl bg-black/80 backdrop-blur-md px-3.5 py-2.5 border border-white/20 shadow-lg w-full max-w-[250px]">
+                    <p id="modal-live-subtitle" class="text-[13.5px] font-black tracking-tight text-white leading-snug break-keep drop-shadow">
+                      "염려는 문제가 해결되지 않고 <span class="text-blue-400 font-bold">에너지의 소모</span>일 뿐입니다."
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Bottom Controls -->
+                <div class="relative z-20 p-3.5">
+                  <div class="flex items-center justify-between text-[11px] text-white/90 mb-1.5 font-medium">
+                    <span id="modal-time-curr">00:00</span>
+                    <span id="modal-scene-name" class="text-blue-400 font-bold truncate max-w-[130px]">씬 1 [00:00]</span>
+                    <span id="modal-time-total">00:12</span>
+                  </div>
+
+                  <div onclick="seekModalStudioVideo(event)" id="modal-progress-track"
+                    class="h-2 w-full bg-white/30 rounded-full overflow-hidden mb-3 cursor-pointer hover:h-2.5 transition-all">
+                    <div id="modal-progress-fill" class="h-full bg-blue-500 w-0 rounded-full transition-all duration-100"></div>
+                  </div>
+
+                  <div class="flex gap-2">
+                    <button onclick="downloadCurrentShortsMP4()"
+                      class="flex-1 rounded-xl bg-blue-600 py-2.5 text-[12px] font-bold text-white text-center hover:bg-blue-700 transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                      </svg>
+                      <span>MP4 다운로드</span>
+                    </button>
+                    <button onclick="copySubtitlesSRT()"
+                      class="rounded-xl bg-white/20 backdrop-blur-md px-3 py-2.5 text-[12px] font-semibold text-white hover:bg-white/30 transition-all active:scale-95">
+                      자막(SRT) 복사
+                    </button>
+                  </div>
+                </div>
+
               </div>
-              <h4 class="text-[15.5px] font-bold text-slate-900">"내 마음의 평강을 지키시는 하나님"</h4>
-              <p class="text-[12px] text-slate-600 mt-1">상황의 변화보다 먼저 찾아오는 내면의 신비로운 평안</p>
             </div>
           </div>
         </div>
 
-        <!-- Right: 9:16 Video Player -->
-        <div class="flex flex-col items-center">
-          <div class="relative w-[280px] rounded-[34px] border-[8px] border-slate-900 bg-black aspect-[9/16] shadow-2xl overflow-hidden flex flex-col justify-between group">
-            
-            <!-- 1. Modal YouTube Sermon Embed Wrap (9:16 Vertical Center-Cropped View) -->
-            <div id="modal-yt-wrap" class="absolute inset-0 w-full h-full overflow-hidden bg-black transition-all">
-              <div id="modal-yt-scaler" class="relative w-full h-full flex items-center justify-center">
-                <iframe id="modal-yt-iframe"
-                  class="absolute border-0 pointer-events-none transition-all duration-300"
-                  style="width: 325%; height: 115%; top: 50%; left: 50%; transform: translate(-50%, -50%);"
-                  src="https://www.youtube.com/embed/z5D_B9I7l1Y?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=z5D_B9I7l1Y&start=0&rel=0&playsinline=1"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen></iframe>
-              </div>
+        <!-- Panel 2: 소그룹 나눔 질문지 -->
+        <div id="studio-panel-smallgroup" class="hidden">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-[17px] font-bold text-slate-900">👥 구역·순·셀·목장 예배용 소그룹 나눔 질문지</h3>
+              <p class="text-[12.5px] text-slate-500">마음 열기부터 말씀 묵상, 삶의 적용 및 합심 기도 제목까지 원클릭으로 복사하여 단톡방에 배포하세요.</p>
             </div>
-
-            <!-- 2. Modal Local Video File Player -->
-            <video id="modal-studio-video" class="absolute inset-0 w-full h-full object-cover hidden" playsinline loop muted autoplay></video>
-            
-            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 z-10 pointer-events-none"></div>
-
-            <!-- Top Header -->
-            <div class="relative z-20 p-3 pt-4 flex items-center justify-between gap-1">
-              <span id="modal-shorts-tag" class="inline-block rounded-lg bg-blue-600 px-2.5 py-1 text-[11px] font-bold text-white tracking-wide shadow-sm truncate max-w-[130px]">
-                간절함이 곧 영성이다
-              </span>
-              <div class="flex items-center gap-1">
-                <button onclick="toggleShortsCropMode()" id="modal-crop-btn"
-                  class="rounded-full bg-black/65 px-2 py-0.5 text-[10px] font-bold text-white border border-white/20 backdrop-blur-md hover:bg-black/90 transition-all flex items-center gap-1 shadow-sm"
-                  title="9:16 세로 쇼츠 크롭 / 16:9 전체 비율 전환">
-                  <span id="modal-crop-btn-text">📱 9:16</span>
-                </button>
-                <button onclick="toggleModalStudioAudio()" id="modal-sound-btn"
-                  class="flex h-7 w-7 items-center justify-center rounded-full bg-black/65 text-white backdrop-blur-md hover:bg-black/90 transition-colors shadow-sm"
-                  title="소리 켜기/끄기">
-                  <svg id="modal-sound-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-                    <line x1="23" y1="9" x2="17" y2="15"></line>
-                    <line x1="17" y1="9" x2="23" y2="15"></line>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Center Play Overlay & Subtitle -->
-            <div class="relative z-20 px-3 text-center my-auto flex flex-col items-center">
-              <button onclick="toggleModalStudioPlay()" id="modal-play-btn"
-                class="w-13 h-13 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center text-white mb-3 cursor-pointer hover:scale-110 active:scale-95 transition-all shadow-xl opacity-80 hover:opacity-100">
-                <svg id="modal-play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                  <rect x="6" y="4" width="4" height="16"></rect>
-                  <rect x="14" y="4" width="4" height="16"></rect>
-                </svg>
+            <div class="flex items-center gap-2">
+              <button onclick="copyPanelText('smallgroup')"
+                class="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[12.5px] px-3.5 py-2 transition-all flex items-center gap-1.5 shadow-xs active:scale-95">
+                <span>📋 전체 복사하기</span>
               </button>
-
-              <div class="rounded-xl bg-black/80 backdrop-blur-md px-3.5 py-2.5 border border-white/20 shadow-lg w-full max-w-[250px]">
-                <p id="modal-live-subtitle" class="text-[13.5px] font-black tracking-tight text-white leading-snug break-keep drop-shadow">
-                  "염려는 문제가 해결되지 않고 <span class="text-blue-400 font-bold">에너지의 소모</span>일 뿐입니다."
-                </p>
-              </div>
+              <button onclick="downloadPanelText('smallgroup')"
+                class="rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[12.5px] px-3 py-2 transition-colors">
+                <span>💾 텍스트 저장</span>
+              </button>
             </div>
-
-            <!-- Bottom Controls -->
-            <div class="relative z-20 p-3.5">
-              <div class="flex items-center justify-between text-[11px] text-white/90 mb-1.5 font-medium">
-                <span id="modal-time-curr">00:00</span>
-                <span id="modal-scene-name" class="text-blue-400 font-bold truncate max-w-[130px]">씬 1 [00:00]</span>
-                <span id="modal-time-total">00:12</span>
-              </div>
-              
-              <div onclick="seekModalStudioVideo(event)" id="modal-progress-track"
-                class="h-2 w-full bg-white/30 rounded-full overflow-hidden mb-3 cursor-pointer hover:h-2.5 transition-all">
-                <div id="modal-progress-fill" class="h-full bg-blue-500 w-0 rounded-full transition-all duration-100"></div>
-              </div>
-
-              <div class="flex gap-2">
-                <button onclick="downloadCurrentShortsMP4()"
-                  class="flex-1 rounded-xl bg-blue-600 py-2.5 text-[12px] font-bold text-white text-center hover:bg-blue-700 transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  <span>MP4 다운로드</span>
-                </button>
-                <button onclick="copySubtitlesSRT()"
-                  class="rounded-xl bg-white/20 backdrop-blur-md px-3 py-2.5 text-[12px] font-semibold text-white hover:bg-white/30 transition-all active:scale-95">
-                  자막(SRT) 복사
-                </button>
-              </div>
-            </div>
-
           </div>
+          <div id="content-smallgroup-body" class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 font-mono text-[13.5px] text-slate-800 leading-relaxed whitespace-pre-wrap select-all"></div>
+        </div>
+
+        <!-- Panel 3: 주간 QT 6일치 -->
+        <div id="studio-panel-qt" class="hidden">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-[17px] font-bold text-slate-900">☀️ 주간 QT 6일치 묵상 가이드 (월요일 ~ 토요일)</h3>
+              <p class="text-[12.5px] text-slate-500">주일 본문을 절별로 깊이 묵상하며 성도들이 매일 삶에 적용할 수 있는 묵상집입니다.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="copyPanelText('qt')"
+                class="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[12.5px] px-3.5 py-2 transition-all flex items-center gap-1.5 shadow-xs active:scale-95">
+                <span>📋 전체 복사하기</span>
+              </button>
+              <button onclick="downloadPanelText('qt')"
+                class="rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[12.5px] px-3 py-2 transition-colors">
+                <span>💾 텍스트 저장</span>
+              </button>
+            </div>
+          </div>
+          <div id="content-qt-body" class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 font-mono text-[13.5px] text-slate-800 leading-relaxed whitespace-pre-wrap select-all"></div>
+        </div>
+
+        <!-- Panel 4: 인스타 카드뉴스 7장 -->
+        <div id="studio-panel-cardnews" class="hidden">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-[17px] font-bold text-slate-900">🖼️ 인스타그램 & SNS 카드뉴스 7장</h3>
+              <p class="text-[12.5px] text-slate-500">설교 핵심 문장을 시각적인 카드 이미지 형태로 추출하여 교회 SNS 및 성도 단톡방에 바로 공유할 수 있습니다.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="copyPanelText('cardnews')"
+                class="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[12.5px] px-3.5 py-2 transition-all flex items-center gap-1.5 shadow-xs active:scale-95">
+                <span>📋 카드 텍스트 전체 복사</span>
+              </button>
+              <button onclick="downloadPanelText('cardnews')"
+                class="rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[12.5px] px-3 py-2 transition-colors">
+                <span>💾 텍스트 저장</span>
+              </button>
+            </div>
+          </div>
+          <div id="content-cardnews-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+        </div>
+
+        <!-- Panel 5: 설교 3대지 요약 -->
+        <div id="studio-panel-outline" class="hidden">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-[17px] font-bold text-slate-900">📝 설교 요약 & 3대지 구조화 분석</h3>
+              <p class="text-[12.5px] text-slate-500">서론, 본론(1·2·3대지), 결론과 삶의 적용을 한눈에 조망할 수 있는 구조화 리포트입니다.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="copyPanelText('outline')"
+                class="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[12.5px] px-3.5 py-2 transition-all flex items-center gap-1.5 shadow-xs active:scale-95">
+                <span>📋 전체 복사하기</span>
+              </button>
+              <button onclick="downloadPanelText('outline')"
+                class="rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[12.5px] px-3 py-2 transition-colors">
+                <span>💾 텍스트 저장</span>
+              </button>
+            </div>
+          </div>
+          <div id="content-outline-body" class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 font-mono text-[13.5px] text-slate-800 leading-relaxed whitespace-pre-wrap select-all"></div>
+        </div>
+
+        <!-- Panel 6: 성도 단톡방 알림톡 -->
+        <div id="studio-panel-kakao" class="hidden">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-[17px] font-bold text-slate-900">💬 성도 주간 알림톡 & 단톡방 목회 서신</h3>
+              <p class="text-[12.5px] text-slate-500">주일 저녁 또는 월요일 아침, 성도 단체 카톡방에 바로 복사하여 보낼 수 있는 은혜로운 알림톡입니다.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="copyPanelText('kakao')"
+                class="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[12.5px] px-3.5 py-2 transition-all flex items-center gap-1.5 shadow-xs active:scale-95">
+                <span>📋 카톡용 복사하기</span>
+              </button>
+              <button onclick="downloadPanelText('kakao')"
+                class="rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[12.5px] px-3 py-2 transition-colors">
+                <span>💾 텍스트 저장</span>
+              </button>
+            </div>
+          </div>
+          <div id="content-kakao-body" class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 font-mono text-[13.5px] text-slate-800 leading-relaxed whitespace-pre-wrap select-all"></div>
+        </div>
+
+        <!-- Panel 7: 주보 요약 & 기도문 -->
+        <div id="studio-panel-bulletin" class="hidden">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-[17px] font-bold text-slate-900">📜 주보 설교 요약란 & 주일 대표 기도문</h3>
+              <p class="text-[12.5px] text-slate-500">교회 주보 인쇄용 500자 설교 요약문과 주일 예배용 대표 기도문 및 축도문입니다.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="copyPanelText('bulletin')"
+                class="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[12.5px] px-3.5 py-2 transition-all flex items-center gap-1.5 shadow-xs active:scale-95">
+                <span>📋 주보용 복사하기</span>
+              </button>
+              <button onclick="downloadPanelText('bulletin')"
+                class="rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[12.5px] px-3 py-2 transition-colors">
+                <span>💾 텍스트 저장</span>
+              </button>
+            </div>
+          </div>
+          <div id="content-bulletin-body" class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 font-mono text-[13.5px] text-slate-800 leading-relaxed whitespace-pre-wrap select-all"></div>
         </div>
 
       </div>
@@ -1241,856 +1515,15 @@
 
 
   <!-- ================= FLOATING TOAST NOTIFICATION ================= -->
-  <div id="app-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] hidden items-center gap-2 rounded-2xl bg-slate-900/95 px-5 py-3.5 text-[14px] font-bold text-white shadow-2xl backdrop-blur-md transition-all border border-slate-700">
+  <div id="app-toast"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] hidden items-center gap-2 rounded-2xl bg-slate-900/95 px-5 py-3.5 text-[14px] font-bold text-white shadow-2xl backdrop-blur-md transition-all border border-slate-700">
     <span id="app-toast-icon">✅</span>
     <span id="app-toast-msg">다운로드가 시작되었습니다.</span>
   </div>
 
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
-  <script>
-    // Smooth Scroll Helpers
-    function scrollToUploadArea() {
-      const el = document.getElementById('console-section');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // State Variables
-    let currentInputMode = 'youtube'; // 'youtube' | 'file' | 'paste'
-    let currentYouTubeId = 'z5D_B9I7l1Y'; // Pastor Song Gi-un's actual sermon video from church website
-    let currentFileVideoUrl = null;
-    let currentFileName = '';
-    let isShortsCropMode = true; // true: 9:16 vertical crop, false: 16:9 widescreen
-    let currentClipIndex = 1;
-    let isPlaying = true;
-    let isMuted = true;
-    let clipElapsedSec = 0;
-    let playbackTimer = null;
-    let studioPlayerInitialized = false;
-
-    // YouTube postMessage controller
-    function sendYtCommand(iframeId, func, args = []) {
-      const iframe = document.getElementById(iframeId);
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({
-          event: 'command',
-          func: func,
-          args: args
-        }), '*');
-      }
-    }
-
-    // Input Tabs Switching
-    function selectUploadTab(tab) {
-      currentInputMode = tab;
-      const tabPaste = document.getElementById('upload-tab-paste');
-      const tabYt = document.getElementById('upload-tab-yt');
-      const tabFile = document.getElementById('upload-tab-file');
-
-      const contentPaste = document.getElementById('upload-content-paste');
-      const contentYt = document.getElementById('upload-content-yt');
-      const contentFile = document.getElementById('upload-content-file');
-
-      // Reset
-      [tabPaste, tabYt, tabFile].forEach(t => {
-        if (t) t.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all text-slate-600 hover:text-slate-900';
-      });
-      [contentPaste, contentYt, contentFile].forEach(c => {
-        if (c) c.classList.add('hidden');
-      });
-
-      if (tab === 'paste') {
-        tabPaste.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-blue-700 shadow-xs';
-        contentPaste.classList.remove('hidden');
-      } else if (tab === 'yt') {
-        tabYt.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-red-700 shadow-xs';
-        contentYt.classList.remove('hidden');
-      } else if (tab === 'file') {
-        tabFile.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-blue-700 shadow-xs';
-        contentFile.classList.remove('hidden');
-      }
-    }
-
-    // YouTube ID Extractor
-    function extractYouTubeId(url) {
-      if (!url) return null;
-      url = url.trim();
-      let m = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
-      if (m) return m[1];
-      m = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
-      if (m) return m[1];
-      m = url.match(/embed\/([a-zA-Z0-9_-]{11})/);
-      if (m) return m[1];
-      m = url.match(/shorts\/([a-zA-Z0-9_-]{11})/);
-      if (m) return m[1];
-      m = url.match(/^([a-zA-Z0-9_-]{11})$/);
-      if (m) return m[1];
-      return null;
-    }
-
-    function handleYouTubeInput(val) {
-      const id = extractYouTubeId(val);
-      const card = document.getElementById('yt-recognized-card');
-      const thumb = document.getElementById('yt-recognized-thumb');
-      const txt = document.getElementById('yt-recognized-id');
-      if (id) {
-        currentYouTubeId = id;
-        currentInputMode = 'youtube';
-        if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
-        if (thumb) thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-        if (txt) txt.textContent = `유튜브 설교 영상 ID: ${id}`;
-        loadActiveVideoSource();
-      } else if (!val || val.trim().length === 0) {
-        if (card) { card.classList.add('hidden'); card.classList.remove('flex'); }
-      }
-    }
-
-    function loadSampleYouTube(id) {
-      const input = document.getElementById('youtube-url-input');
-      if (input) {
-        input.value = `https://www.youtube.com/watch?v=${id}`;
-        handleYouTubeInput(input.value);
-      }
-      selectUploadTab('yt');
-      showToast('관유중앙교회 주일 설교 영상(ID: ' + id + ')이 입력되었습니다.', '✨');
-    }
-
-    function applyYouTubeLinkAndStart() {
-      const input = document.getElementById('youtube-url-input');
-      const val = input ? input.value : '';
-      const id = extractYouTubeId(val);
-      if (id) {
-        currentYouTubeId = id;
-        currentInputMode = 'youtube';
-        showToast(`설교 영상 [ID: ${id}] 인식 완료! 쇼츠 생성을 시작합니다.`, '🎬');
-        startStudioGeneration();
-      } else {
-        showToast('올바른 유튜브 링크를 입력해주세요.', '⚠️');
-      }
-    }
-
-    // Text Counter & Sample Load
-    function updateCharCount(textarea) {
-      const len = textarea.value.length;
-      document.getElementById('char-counter').textContent = `${len.toLocaleString()} / 40,000자`;
-    }
-
-    function clearManuscript() {
-      const ta = document.getElementById('manuscript-input');
-      ta.value = '';
-      updateCharCount(ta);
-    }
-
-    function loadSampleManuscript() {
-      const ta = document.getElementById('manuscript-input');
-      ta.value = `[빌립보서 4장 6-7절 "염려를 기도로 바꾸라"]
-
-■ 서론: 염려의 무의미함 직시
-우리가 살아가면서 겪는 대부분의 문제는 걱정한다고 해서 해결되지 않습니다. 염려는 문제의 해결이 아니라 우리 영혼의 에너지를 소모시킬 뿐입니다. 오늘 사도 바울은 감옥이라는 최악의 환경 속에서도 성도들을 향해 단호하게 권면합니다. "아무것도 염려하지 말라."
-
-■ 본론: 모든 일에 기도와 감사로
-그렇다면 염려가 찾아올 때 우리는 어떻게 해야 합니까? 바울은 염려를 억누르는 대신 기도로 전환하라고 말합니다. "오직 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라."
-우리가 상황이 바뀌기 전에도 감사함으로 기도를 시작할 때, 믿음의 불꽃이 타오르기 시작합니다. 하나님은 문제를 피하게 하시는 분이 아니라, 문제 한가운데서 우리를 지키시는 분이십니다.
-
-■ 결론: 마음과 생각을 지키시는 참된 평강
-그리하면 모든 지각에 뛰어난 하나님의 평강이 그리스도 예수 안에서 너희 마음과 생각을 지키시리라.
-기도한 후에도 환경은 즉시 변하지 않을 수 있습니다. 그러나 하나님은 그 어떤 상황도 흔들 수 없는 하늘의 평강으로 우리의 내면을 성벽처럼 감싸 안으십니다. 이 거룩한 평안이 오늘 여러분의 가정과 삶에 충만하기를 주님의 이름으로 축복합니다.`;
-      updateCharCount(ta);
-      selectUploadTab('paste');
-      showToast('예시 설교 원고(빌립보서 4:6-7)가 입력되었습니다.', '✨');
-    }
-
-    function simulateFileUpload() {
-      document.getElementById('real-file-input').click();
-    }
-
-    function handleFileSelected(input) {
-      if (input.files && input.files[0]) {
-        const file = input.files[0];
-        currentFileName = file.name;
-        const card = document.getElementById('file-recognized-card');
-        const nameEl = document.getElementById('file-recognized-name');
-        const sizeEl = document.getElementById('file-recognized-size');
-        if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
-        if (nameEl) nameEl.textContent = file.name;
-        if (sizeEl) sizeEl.textContent = `${(file.size / (1024 * 1024)).toFixed(1)} MB`;
-
-        if (file.type.startsWith('video/')) {
-          currentInputMode = 'file';
-          currentFileVideoUrl = URL.createObjectURL(file);
-          showToast(`설교 영상 파일 [${file.name}]이 인식되었습니다!`, '🎬');
-        } else {
-          showToast(`설교 파일 [${file.name}]이 등록되었습니다.`, '📁');
-        }
-        startStudioGeneration();
-      }
-    }
-
-    // Toast Notification System
-    function showToast(msg, icon = '✅') {
-      const toast = document.getElementById('app-toast');
-      if (!toast) return;
-      document.getElementById('app-toast-icon').textContent = icon;
-      document.getElementById('app-toast-msg').textContent = msg;
-      toast.classList.remove('hidden');
-      toast.classList.add('flex');
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => {
-        toast.classList.add('hidden');
-        toast.classList.remove('flex');
-      }, 3500);
-    }
-
-    // Modal Triggers
-    function openAudienceModal(source) {
-      const m = document.getElementById('audience-modal');
-      if (m) {
-        m.classList.remove('hidden');
-        m.classList.add('flex');
-      }
-    }
-
-    function closeAudienceModal() {
-      const m = document.getElementById('audience-modal');
-      if (m) {
-        m.classList.add('hidden');
-        m.classList.remove('flex');
-      }
-    }
-
-    function startStudioGeneration() {
-      closeAudienceModal();
-
-      // Check current input
-      const ytInput = document.getElementById('youtube-url-input');
-      if (ytInput && ytInput.value.trim().length > 0) {
-        const id = extractYouTubeId(ytInput.value);
-        if (id) {
-          currentYouTubeId = id;
-          currentInputMode = 'youtube';
-        }
-      }
-
-      // Show Progress Overlay
-      const overlay = document.getElementById('progress-overlay');
-      overlay.classList.remove('hidden');
-      overlay.classList.add('flex');
-
-      const fill = document.getElementById('progress-bar-fill');
-      const txt = document.getElementById('progress-step-text');
-
-      fill.style.width = '35%';
-      txt.textContent = '1단계: 설교 원고 분석 및 핵심 메시지 구조화 중...';
-
-      setTimeout(() => {
-        document.getElementById('step-row-1').classList.add('bg-blue-50');
-        document.getElementById('step-status-1').textContent = '완료 ✓';
-        document.getElementById('step-status-1').className = 'font-bold text-emerald-600';
-
-        document.getElementById('step-row-2').classList.remove('opacity-50');
-        document.getElementById('step-status-2').textContent = '생성 중...';
-        document.getElementById('step-status-2').className = 'font-bold text-blue-600';
-
-        fill.style.width = '70%';
-        txt.textContent = '2단계: 소그룹 질문지, QT 6일치, 카드뉴스 렌더링 중...';
-      }, 1000);
-
-      setTimeout(() => {
-        document.getElementById('step-row-2').classList.add('bg-blue-50');
-        document.getElementById('step-status-2').textContent = '완료 ✓';
-        document.getElementById('step-status-2').className = 'font-bold text-emerald-600';
-
-        document.getElementById('step-row-3').classList.remove('opacity-50');
-        document.getElementById('step-status-3').textContent = '생성 중...';
-        document.getElementById('step-status-3').className = 'font-bold text-blue-600';
-
-        fill.style.width = '100%';
-        txt.textContent = (currentInputMode === 'youtube')
-          ? `3단계: 유튜브 설교 영상(ID: ${currentYouTubeId}) 9:16 쇼츠 컷 분할 및 자막 싱크 완료!`
-          : '3단계: 9:16 설교 쇼츠 컷 분할 및 자막 싱크 완료!';
-      }, 2000);
-
-      setTimeout(() => {
-        overlay.classList.add('hidden');
-        overlay.classList.remove('flex');
-
-        // Open Studio Modal
-        const studio = document.getElementById('studio-modal');
-        studio.classList.remove('hidden');
-        studio.classList.add('flex');
-
-        initStudioPlayer();
-      }, 2600);
-    }
-
-    function closeStudioModal() {
-      const vid = document.getElementById('modal-studio-video');
-      if (vid) vid.pause();
-      const iframe = document.getElementById('modal-yt-iframe');
-      if (iframe) sendYtCommand('modal-yt-iframe', 'pauseVideo');
-
-      const studio = document.getElementById('studio-modal');
-      studio.classList.add('hidden');
-      studio.classList.remove('flex');
-    }
-
-    // FAQ Accordion
-    function toggleFaq(btn) {
-      const body = btn.parentElement.querySelector('.faq-body');
-      const icon = btn.querySelector('.faq-icon');
-      if (!body) return;
-      if (body.classList.contains('hidden')) {
-        body.classList.remove('hidden');
-        icon.textContent = '−';
-      } else {
-        body.classList.add('hidden');
-        icon.textContent = '+';
-      }
-    }
-
-    // Studio Clips Data (Integrated with real sermon timestamps)
-    const studioClips = {
-      1: {
-        title: '간절함이 곧 영성이다',
-        startSec: 0,
-        duration: 12,
-        downloadName: '설교쇼츠_01_간절함이_곧_영성이다_9x16.mp4',
-        scenes: [
-          { start: 0, end: 4, label: '씬 1 [00:00]', subtitle: '“염려는 문제가 해결되지 않고 <span class=\'text-blue-400 font-bold\'>에너지의 소모</span>일 뿐입니다.”' },
-          { start: 4, end: 8, label: '씬 2 [00:04]', subtitle: '“우리의 기도는 <span class=\'text-blue-400 font-bold\'>하나님의 평강</span>으로 응답됩니다.”' },
-          { start: 8, end: 12, label: '씬 3 [00:08]', subtitle: '“그 평강이 당신의 마음과 생각을 <span class=\'text-blue-400 font-bold\'>반드시 지키실 것</span>입니다.”' }
-        ]
-      },
-      2: {
-        title: '염려를 기도로 바꾸는 단 하나의 비결',
-        startSec: 45,
-        duration: 12,
-        downloadName: '설교쇼츠_02_염려를_기도로_바꾸는_단_하나의_비결_9x16.mp4',
-        scenes: [
-          { start: 0, end: 4, label: '씬 1 [00:45]', subtitle: '“감옥 안에서도 바울은 주 안에서 <span class=\'text-blue-400 font-bold\'>항상 기뻐하라</span> 선포했습니다.”' },
-          { start: 4, end: 8, label: '씬 2 [00:49]', subtitle: '“상황이 바뀌기 전에 <span class=\'text-blue-400 font-bold\'>감사의 기도</span>를 먼저 올리십시오.”' },
-          { start: 8, end: 12, label: '씬 3 [00:53]', subtitle: '“주님의 평강이 성벽처럼 <span class=\'text-blue-400 font-bold\'>우리 삶을 요새처럼</span> 지키십니다.”' }
-        ]
-      },
-      3: {
-        title: '내 마음의 평강을 지키시는 하나님',
-        startSec: 120,
-        duration: 12,
-        downloadName: '설교쇼츠_03_내_마음의_평강을_지키시는_하나님_9x16.mp4',
-        scenes: [
-          { start: 0, end: 4, label: '씬 1 [02:00]', subtitle: '“세상이 주는 불안은 우리의 시선을 <span class=\'text-blue-400 font-bold\'>문제 자체에</span> 가둡니다.”' },
-          { start: 4, end: 8, label: '씬 2 [02:04]', subtitle: '“그러나 모든 일을 <span class=\'text-blue-400 font-bold\'>기도와 간구</span>로 하나님께 맡길 때”' },
-          { start: 8, end: 12, label: '씬 3 [02:08]', subtitle: '“이해를 뛰어넘는 그리스도의 <span class=\'text-blue-400 font-bold\'>참된 평안</span>이 임합니다.”' }
-        ]
-      }
-    };
-
-    function formatTime(sec) {
-      if (isNaN(sec)) return '00:00';
-      const m = Math.floor(sec / 60);
-      const s = Math.floor(sec % 60);
-      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-    }
-
-    // Toggle 9:16 Vertical Shorts Crop vs 16:9 Full View
-    function toggleShortsCropMode() {
-      isShortsCropMode = !isShortsCropMode;
-      applyCropMode();
-      showToast(isShortsCropMode ? '📱 9:16 세로 쇼츠 모드로 전환되었습니다.' : '🖥️ 16:9 전체 화면 모드로 전환되었습니다.', '📐');
-    }
-
-    function applyCropMode() {
-      const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-      const btn1 = document.getElementById('studio-crop-btn-text');
-      const btn2 = document.getElementById('modal-crop-btn-text');
-
-      iframes.forEach(iframe => {
-        if (!iframe) return;
-        if (isShortsCropMode) {
-          // Pulpit Center Zoom Crop
-          iframe.style.width = '325%';
-          iframe.style.height = '115%';
-          iframe.style.top = '50%';
-          iframe.style.left = '50%';
-          iframe.style.transform = 'translate(-50%, -50%)';
-        } else {
-          // Full 16:9 Aspect Video Centered
-          iframe.style.width = '100%';
-          iframe.style.height = '56.25%';
-          iframe.style.top = '50%';
-          iframe.style.left = '0%';
-          iframe.style.transform = 'translateY(-50%)';
-        }
-      });
-
-      const label = isShortsCropMode ? '📱 9:16' : '🖥️ 16:9';
-      if (btn1) btn1.textContent = label;
-      if (btn2) btn2.textContent = label;
-    }
-
-    // Player Initialization
-    function initStudioPlayer() {
-      selectStudioClip(currentClipIndex || 1);
-      startPlaybackTimer();
-    }
-
-    function loadActiveVideoSource() {
-      const clip = studioClips[currentClipIndex] || studioClips[1];
-      const ytWraps = [document.getElementById('studio-yt-wrap'), document.getElementById('modal-yt-wrap')];
-      const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-
-      if (currentInputMode === 'file' && currentFileVideoUrl) {
-        // Local MP4 file mode
-        ytWraps.forEach(w => w && w.classList.add('hidden'));
-        vids.forEach(v => {
-          if (v) {
-            v.classList.remove('hidden');
-            if (v.src !== currentFileVideoUrl) v.src = currentFileVideoUrl;
-            v.currentTime = 0;
-            v.muted = isMuted;
-            if (isPlaying) v.play().catch(e => console.log('File play:', e));
-          }
-        });
-      } else {
-        // Real YouTube Sermon Mode (Always pastor preaching video, NEVER waves!)
-        vids.forEach(v => {
-          if (v) {
-            v.pause();
-            v.classList.add('hidden');
-          }
-        });
-        ytWraps.forEach(w => w && w.classList.remove('hidden'));
-
-        const embedUrl = `https://www.youtube.com/embed/${currentYouTubeId}?enablejsapi=1&autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&loop=1&playlist=${currentYouTubeId}&start=${clip.startSec}&rel=0&playsinline=1`;
-
-        iframes.forEach(iframe => {
-          if (iframe) {
-            if (!iframe.src.includes(currentYouTubeId) || !iframe.src.includes(`start=${clip.startSec}`)) {
-              iframe.src = embedUrl;
-            } else {
-              sendYtCommand(iframe.id, 'seekTo', [clip.startSec, true]);
-              if (isPlaying) sendYtCommand(iframe.id, 'playVideo');
-            }
-          }
-        });
-        applyCropMode();
-      }
-    }
-
-    function selectStudioClip(num) {
-      currentClipIndex = num;
-      const clip = studioClips[num] || studioClips[1];
-
-      // Update Desk Cards
-      [1, 2, 3].forEach(i => {
-        const d1 = document.getElementById(`studio-deck-${i}`);
-        const d2 = document.getElementById(`modal-deck-${i}`);
-        if (d1) {
-          d1.className = (i === num)
-            ? 'rounded-2xl border-2 border-blue-600 bg-blue-50/50 p-4 sm:p-5 cursor-pointer transition-all shadow-xs'
-            : 'rounded-2xl border border-slate-200 bg-white hover:border-blue-400 p-4 sm:p-5 cursor-pointer transition-all';
-        }
-        if (d2) {
-          d2.className = (i === num)
-            ? 'rounded-2xl border-2 border-blue-600 bg-blue-50/50 p-4 cursor-pointer transition-all shadow-xs'
-            : 'rounded-2xl border border-slate-200 bg-white hover:border-blue-400 p-4 cursor-pointer transition-all';
-        }
-      });
-
-      // Update tags
-      const tag1 = document.getElementById('studio-shorts-tag');
-      const tag2 = document.getElementById('modal-shorts-tag');
-      if (tag1) tag1.textContent = clip.title;
-      if (tag2) tag2.textContent = clip.title;
-
-      clipElapsedSec = 0;
-      loadActiveVideoSource();
-      updatePlayerUI();
-    }
-
-    function startPlaybackTimer() {
-      if (playbackTimer) clearInterval(playbackTimer);
-      playbackTimer = setInterval(() => {
-        if (!isPlaying) return;
-        const clip = studioClips[currentClipIndex] || studioClips[1];
-
-        if (currentInputMode === 'file' && currentFileVideoUrl) {
-          const vid = document.getElementById('studio-video');
-          if (vid && vid.duration) {
-            clipElapsedSec = vid.currentTime;
-          }
-        } else {
-          clipElapsedSec += 0.25;
-          if (clipElapsedSec >= clip.duration) {
-            clipElapsedSec = 0;
-            const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-            iframes.forEach(f => f && sendYtCommand(f.id, 'seekTo', [clip.startSec, true]));
-          }
-        }
-
-        updatePlayerUI();
-      }, 250);
-    }
-
-    function updatePlayerUI() {
-      const clip = studioClips[currentClipIndex] || studioClips[1];
-      const curr = clipElapsedSec;
-      const dur = clip.duration;
-
-      const currEl = document.getElementById('studio-time-curr');
-      const totalEl = document.getElementById('studio-time-total');
-      const fillEl = document.getElementById('studio-progress-fill');
-      if (currEl) currEl.textContent = formatTime(curr);
-      if (totalEl) totalEl.textContent = formatTime(dur);
-      if (fillEl && dur > 0) fillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
-
-      const mCurrEl = document.getElementById('modal-time-curr');
-      const mTotalEl = document.getElementById('modal-time-total');
-      const mFillEl = document.getElementById('modal-progress-fill');
-      if (mCurrEl) mCurrEl.textContent = formatTime(curr);
-      if (mTotalEl) mTotalEl.textContent = formatTime(dur);
-      if (mFillEl && dur > 0) mFillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
-
-      const matchedScene = clip.scenes.find(s => curr >= s.start && curr < s.end) || clip.scenes[clip.scenes.length - 1];
-      if (matchedScene) {
-        const sceneNameEl = document.getElementById('studio-scene-name');
-        const subEl = document.getElementById('studio-live-subtitle');
-        if (sceneNameEl) sceneNameEl.textContent = matchedScene.label;
-        if (subEl) subEl.innerHTML = matchedScene.subtitle;
-
-        const mSceneNameEl = document.getElementById('modal-scene-name');
-        const mSubEl = document.getElementById('modal-live-subtitle');
-        if (mSceneNameEl) mSceneNameEl.textContent = matchedScene.label;
-        if (mSubEl) mSubEl.innerHTML = matchedScene.subtitle;
-      }
-    }
-
-    // Play & Pause
-    function toggleStudioPlay() {
-      isPlaying = !isPlaying;
-      const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-
-      iframes.forEach(f => f && sendYtCommand(f.id, isPlaying ? 'playVideo' : 'pauseVideo'));
-      vids.forEach(v => {
-        if (v && !v.classList.contains('hidden')) {
-          if (isPlaying) v.play().catch(e => console.log(e));
-          else v.pause();
-        }
-      });
-
-      updatePlayIcons(isPlaying);
-    }
-
-    function toggleModalStudioPlay() {
-      toggleStudioPlay();
-    }
-
-    function updatePlayIcons(playing) {
-      const icon1 = document.getElementById('studio-play-icon');
-      const icon2 = document.getElementById('modal-play-icon');
-      const pauseSvg = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
-      const playSvg = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
-      if (icon1) icon1.innerHTML = playing ? pauseSvg : playSvg;
-      if (icon2) icon2.innerHTML = playing ? pauseSvg : playSvg;
-    }
-
-    // Audio Mute & Unmute
-    function toggleStudioAudio() {
-      isMuted = !isMuted;
-      const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-
-      iframes.forEach(f => f && sendYtCommand(f.id, isMuted ? 'mute' : 'unMute'));
-      vids.forEach(v => { if (v) v.muted = isMuted; });
-
-      updateSoundIcons(!isMuted);
-      showToast(isMuted ? '소리가 꺼졌습니다. 🔇' : '소리가 켜졌습니다. 🔊', isMuted ? '🔇' : '🔊');
-    }
-
-    function toggleModalStudioAudio() {
-      toggleStudioAudio();
-    }
-
-    function updateSoundIcons(hasSound) {
-      const icon1 = document.getElementById('studio-sound-icon');
-      const icon2 = document.getElementById('modal-sound-icon');
-      const soundOnSvg = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
-      const soundOffSvg = '<path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
-      if (icon1) icon1.innerHTML = hasSound ? soundOnSvg : soundOffSvg;
-      if (icon2) icon2.innerHTML = hasSound ? soundOnSvg : soundOffSvg;
-    }
-
-    // Scrubbing / Seeking
-    function seekStudioVideo(e) {
-      const track = document.getElementById('studio-progress-track');
-      if (!track) return;
-      const rect = track.getBoundingClientRect();
-      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      const clip = studioClips[currentClipIndex] || studioClips[1];
-      clipElapsedSec = pct * clip.duration;
-
-      if (currentInputMode === 'file' && currentFileVideoUrl) {
-        const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-        vids.forEach(v => { if (v && v.duration) v.currentTime = clipElapsedSec; });
-      } else {
-        const targetSec = clip.startSec + clipElapsedSec;
-        const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-        iframes.forEach(f => f && sendYtCommand(f.id, 'seekTo', [targetSec, true]));
-      }
-      updatePlayerUI();
-    }
-
-    function seekModalStudioVideo(e) {
-      seekStudioVideo(e);
-    }
-
-    // Export Dialog Handling
-    function openExportModal() {
-      const modal = document.getElementById('shorts-export-modal');
-      const clip = studioClips[currentClipIndex] || studioClips[1];
-      const desc = document.getElementById('export-modal-desc');
-      const ytBox = document.getElementById('export-yt-link-box');
-      const ytUrlBtn = document.getElementById('export-yt-url-btn');
-
-      if (desc) desc.textContent = `[${clip.title}] 9:16 설교 쇼츠와 자막, 사역 자료를 바로 내려받으실 수 있습니다.`;
-      if (currentInputMode === 'youtube' && ytUrlBtn) {
-        if (ytBox) ytBox.classList.remove('hidden');
-        ytUrlBtn.href = `https://www.youtube.com/watch?v=${currentYouTubeId}&t=${clip.startSec}s`;
-      } else if (ytBox) {
-        ytBox.classList.add('hidden');
-      }
-
-      if (modal) {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-      }
-    }
-
-    function closeExportModal() {
-      const modal = document.getElementById('shorts-export-modal');
-      if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-      }
-    }
-
-    function downloadCurrentShortsMP4() {
-      openExportModal();
-    }
-
-    function executeMP4Download() {
-      const clip = studioClips[currentClipIndex] || studioClips[1];
-      showToast(`'${clip.downloadName}' 다운로드를 시작합니다...`, '⏳');
-
-      let downloadUrl = '';
-      if (currentInputMode === 'file' && currentFileVideoUrl) {
-        downloadUrl = currentFileVideoUrl;
-      } else {
-        downloadUrl = 'assets/sample-shorts-1.mp4';
-      }
-
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.download = clip.downloadName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      setTimeout(() => {
-        showToast(`✅ '${clip.downloadName}' 다운로드 완료!`, '🎉');
-      }, 1000);
-    }
-
-    function formatSrtTime(sec) {
-      const h = String(Math.floor(sec / 3600)).padStart(2, '0');
-      const m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
-      const s = String(Math.floor(sec % 60)).padStart(2, '0');
-      return `${h}:${m}:${s},000`;
-    }
-
-    function downloadSubtitlesSRTFile() {
-      const clip = studioClips[currentClipIndex] || studioClips[1];
-      let srtContent = '';
-      clip.scenes.forEach((sc, idx) => {
-        const sTime = formatSrtTime(sc.start);
-        const eTime = formatSrtTime(sc.end);
-        const cleanSub = sc.subtitle.replace(/<[^>]*>?/gm, '');
-        srtContent += `${idx + 1}\n${sTime} --> ${eTime}\n${cleanSub}\n\n`;
-      });
-
-      const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `01_설교쇼츠_${clip.title.replace(/\s+/g, '_')}_자막.srt`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      showToast('쇼츠 자막(SRT) 파일이 다운로드되었습니다!', '📄');
-    }
-
-    // Direct ZIP Download with all materials
-    async function downloadAllMaterials() {
-      showToast('전체 사역 자료 압축 파일을 생성 중입니다...', '📦');
-
-      const currentClip = studioClips[currentClipIndex] || studioClips[1];
-
-      const summaryText = `=====================================================
-[설교 요약 및 사역 개요]
-본문: 빌립보서 4장 6-7절
-제목: 염려를 기도로 바꾸라
-설교자: 관유중앙교회 담임목사
-유튜브 설교 영상: https://www.youtube.com/watch?v=${currentYouTubeId}
-=====================================================
-
-1. 핵심 메시지
-염려는 스스로 문제를 해결하려는 무의미한 에너지 소모입니다.
-하나님께서는 우리의 모든 필요와 염려를 기도로 바꾸어 올릴 때,
-지각에 뛰어난 평강으로 마음과 생각을 지키십니다.
-
-2. 주간 사역 적용 가이드
-- 소그룹 나눔: 염려를 털어놓고 감사의 기도로 바꾸는 실천
-- QT 묵상: 6일간 빌립보서 4:6-7 절별 깊은 묵상
-- 쇼츠 영상: 30~50초 핵심 결단 영상 유튜브/인스타 공유`;
-
-      const groupText = `=====================================================
-[소그룹 나눔 질문지 - 구역·순·셀 예배용]
-본문: 빌립보서 4:6-7 "염려를 기도로 바꾸라"
-=====================================================
-
-[마음 열기]
-1. 이번 한 주 동안 나의 마음을 가장 무겁게 짓눌렀던 생각이나 염려는 무엇이었습니까?
-
-[말씀 나눔]
-2. 바울은 염려를 멈추는 비결로 '기도와 간구, 감사'를 제시합니다.
-   상황이 바뀌기 전에 먼저 감사함으로 기도해 본 경험이 있다면 나누어 봅시다.
-3. "모든 지각에 뛰어난 하나님의 평강"이란 어떤 의미일까요?
-   내가 경험한 신비로운 내면의 평안은 언제였습니까?
-
-[삶의 적용 및 기도]
-4. 오늘 내가 하나님께 온전히 맡겨드려야 할 한 가지 염려는 무엇입니까?
-   서로를 위해 기도하고 한 주간 기도의 승리를 선포합시다.`;
-
-      const qtText = `=====================================================
-[주간 QT 6일치 묵상 가이드]
-본문: 빌립보서 4:6-7
-=====================================================
-
-[월요일] 아무것도 염려하지 말고 (빌립보서 4:6a)
-- 묵상: 염려는 문제의 해결이 아닌 마음의 침몰을 가져옵니다. 오늘 염려를 직시하고 주님께 내려놓으십시오.
-
-[화요일] 오직 모든 일에 기도와 간구로 (빌립보서 4:6b)
-- 묵상: 사소한 일부터 중대한 문제까지 모든 것은 주님의 돌보심의 영역 안에 있습니다.
-
-[수요일] 너희 구할 것을 감사함으로 하나님께 아뢰라 (빌립보서 4:6c)
-- 묵상: 응답 이전의 감사는 가장 강력한 믿음의 표현입니다. 감사의 고백을 선제적으로 올리십시오.
-
-[목요일] 그리하면 모든 지각에 뛰어난 (빌립보서 4:7a)
-- 묵상: 사람의 계산과 이해를 뛰어넘는 하나님의 놀라운 지혜가 우리 삶에 개입하십니다.
-
-[금요일] 하나님의 평강이 그리스도 예수 안에서 (빌립보서 4:7b)
-- 묵상: 세상이 주는 일시적인 위로가 아닌, 그리스도 안에서 솟아나는 참된 평강입니다.
-
-[토요일] 너희 마음과 생각을 지키시리라 (빌립보서 4:7c)
-- 묵상: 주님의 평강이 견고한 요새가 되어 세상의 불안과 불화살로부터 내 영혼을 지키십니다.`;
-
-      const srtText = `1
-00:00:00,000 --> 00:00:04,000
-염려는 문제가 해결되지 않고 에너지의 소모일 뿐입니다.
-
-2
-00:00:04,000 --> 00:00:08,000
-우리의 기도는 하나님의 평강으로 응답됩니다.
-
-3
-00:00:08,000 --> 00:00:12,000
-그 평강이 당신의 마음과 생각을 반드시 지키실 것입니다.`;
-
-      const ytInfoText = `=====================================================
-[설교 쇼츠 유튜브 타임스탬프 및 링크 정보]
-설교 영상: https://www.youtube.com/watch?v=${currentYouTubeId}
-=====================================================
-
-[쇼츠 1: "간절함이 곧 영성이다"]
-타임스탬프: 00:00 ~ 00:12
-구간 바로가기: https://www.youtube.com/watch?v=${currentYouTubeId}&t=0s
-
-[쇼츠 2: "염려를 기도로 바꾸는 단 하나의 비결"]
-타임스탬프: 00:45 ~ 00:57
-구간 바로가기: https://www.youtube.com/watch?v=${currentYouTubeId}&t=45s
-
-[쇼츠 3: "내 마음의 평강을 지키시는 하나님"]
-타임스탬프: 02:00 ~ 02:12
-구간 바로가기: https://www.youtube.com/watch?v=${currentYouTubeId}&t=120s
-
-* 캡컷(CapCut) / Vrew / 프리미어 프로에서 자막 SRT를 불러와 간편하게 9:16 쇼츠로 편집하실 수 있습니다.`;
-
-      try {
-        if (typeof JSZip !== 'undefined') {
-          const zip = new JSZip();
-          zip.file('01_설교요약_및_개요.txt', summaryText);
-          zip.file('02_소그룹_나눔_질문지.txt', groupText);
-          zip.file('03_주간_QT_6일치_묵상집.txt', qtText);
-          zip.file('04_설교쇼츠_자막대본_SRT.srt', srtText);
-          zip.file('05_유튜브_쇼츠_타임스탬프_안내.txt', ytInfoText);
-
-          try {
-            let vidUrl = (currentInputMode === 'file' && currentFileVideoUrl) ? currentFileVideoUrl : 'assets/sample-shorts-1.mp4';
-            const vidRes = await fetch(vidUrl);
-            if (vidRes.ok) {
-              const vidBlob = await vidRes.blob();
-              zip.file(currentClip.downloadName, vidBlob);
-            }
-          } catch (err) {
-            console.warn('Video bundle skipped in ZIP', err);
-          }
-
-          const content = await zip.generateAsync({ type: 'blob' });
-          const a = document.createElement('a');
-          a.href = URL.createObjectURL(content);
-          a.download = '2026_한주사역자료_패키지_ZIP.zip';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          showToast('✅ 전체 사역 자료(ZIP) 다운로드 완료!', '🎉');
-          return;
-        }
-      } catch (e) {
-        console.error('JSZip error:', e);
-      }
-
-      // Fallback
-      const fallbackBlob = new Blob([summaryText + "\n\n" + groupText + "\n\n" + qtText + "\n\n" + srtText + "\n\n" + ytInfoText], { type: 'text/plain;charset=utf-8' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(fallbackBlob);
-      a.download = '2026_한주사역자료_패키지.txt';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      showToast('사역 자료 텍스트 패키지가 다운로드되었습니다.', '📄');
-    }
-
-    function copySubtitlesSRT() {
-      const srtSample = `1\n00:00:00,000 --> 00:00:04,000\n염려는 문제가 해결되지 않고 에너지의 소모일 뿐입니다.\n\n2\n00:00:04,000 --> 00:00:08,000\n우리의 기도는 하나님의 평강으로 응답됩니다.\n\n3\n00:00:08,000 --> 00:00:12,000\n그 평강이 당신의 마음과 생각을 반드시 지키실 것입니다.`;
-      navigator.clipboard.writeText(srtSample).then(() => {
-        showToast('쇼츠 자막(SRT)이 클립보드에 복사되었습니다! 프리미어/캡컷에 바로 붙여넣으세요.', '📋');
-      });
-    }
-
-    function openHelpChat() {
-      alert('카카오톡 채널 [AI 사역도구] 1:1 목회자 전담 상담톡으로 연결됩니다. (운영시간 10:00 ~ 18:00)');
-    }
-
-    // Auto initialize studio player on load
-    window.addEventListener('DOMContentLoaded', () => {
-      initStudioPlayer();
-    });
-  </script>
+  <script src="assets/app.js"></script>
 
 </body>
 
