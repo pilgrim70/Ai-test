@@ -215,7 +215,7 @@ function sendYtCommand(iframeId, func, args = []) {
 }
 
 // ================= INPUT TABS SWITCHING =================
-function selectUploadTab(tab) {
+function selectUploadTab(tab, triggerModal = false) {
   currentInputMode = tab;
   const tabPaste = document.getElementById('upload-tab-paste');
   const tabYt = document.getElementById('upload-tab-yt');
@@ -225,25 +225,48 @@ function selectUploadTab(tab) {
   const contentYt = document.getElementById('upload-content-yt');
   const contentFile = document.getElementById('upload-content-file');
 
-  const defClass = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all text-slate-600 hover:text-slate-900';
+  const defClass = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all text-slate-600 hover:text-slate-900 border border-transparent';
   if (tabPaste) tabPaste.className = defClass;
   if (tabYt) tabYt.className = defClass;
   if (tabFile) tabFile.className = defClass;
 
-  if (contentPaste) contentPaste.classList.add('hidden');
-  if (contentYt) contentYt.classList.add('hidden');
-  if (contentFile) contentFile.classList.add('hidden');
+  if (contentPaste) { contentPaste.classList.add('hidden'); contentPaste.classList.remove('block'); }
+  if (contentYt) { contentYt.classList.add('hidden'); contentYt.classList.remove('block'); }
+  if (contentFile) { contentFile.classList.add('hidden'); contentFile.classList.remove('block'); }
 
   if (tab === 'paste') {
-    if (tabPaste) tabPaste.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-blue-700 shadow-xs';
-    if (contentPaste) contentPaste.classList.remove('hidden');
+    if (tabPaste) tabPaste.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-blue-700 shadow-xs border border-blue-200';
+    if (contentPaste) { contentPaste.classList.remove('hidden'); contentPaste.classList.add('block'); }
   } else if (tab === 'yt') {
-    if (tabYt) tabYt.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-red-700 shadow-xs';
-    if (contentYt) contentYt.classList.remove('hidden');
+    if (tabYt) tabYt.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-red-600 shadow-xs border border-red-200';
+    if (contentYt) { contentYt.classList.remove('hidden'); contentYt.classList.add('block'); }
+    if (triggerModal) {
+      openYouTubeModal();
+    }
   } else if (tab === 'file') {
-    if (tabFile) tabFile.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-blue-700 shadow-xs';
-    if (contentFile) contentFile.classList.remove('hidden');
+    if (tabFile) tabFile.className = 'flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all bg-white text-blue-700 shadow-xs border border-blue-200';
+    if (contentFile) { contentFile.classList.remove('hidden'); contentFile.classList.add('block'); }
   }
+}
+
+async function pasteToYouTubeInput() {
+  const input = document.getElementById('youtube-url-input');
+  if (!input) return;
+  try {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      const text = await navigator.clipboard.readText();
+      if (text && text.trim().length > 0) {
+        input.value = text.trim();
+        handleYouTubeInput(input.value);
+        showToast('유튜브 링크를 붙여넣었습니다! ✓', '📋');
+        return;
+      }
+    }
+  } catch (e) {
+    console.warn(e);
+  }
+  input.focus();
+  showToast('단축키(Ctrl+V / Cmd+V)로 링크를 붙여넣어 주세요.', 'ℹ️');
 }
 
 // ================= TAB 1: MANUSCRIPT TEXT =================
@@ -1734,9 +1757,128 @@ function openHelpChat() {
   alert('카카오톡 채널 [AI 사역도구] 1:1 목회자 전담 상담톡으로 연결됩니다. (운영시간 10:00 ~ 18:00)');
 }
 
+
+// ================= DEDICATED YOUTUBE MODAL HELPERS (MATCHING ORIGINAL SITE) =================
+function openYouTubeModal() {
+  const m = document.getElementById('youtube-link-modal');
+  if (m) {
+    m.classList.remove('hidden');
+    m.classList.add('flex');
+    const input = document.getElementById('modal-youtube-url-input');
+    if (input) {
+      setTimeout(() => input.focus(), 100);
+      if (currentYouTubeId && (!input.value || input.value.trim().length === 0)) {
+        input.value = `https://www.youtube.com/watch?v=${currentYouTubeId}`;
+        handleModalYouTubeInput(input.value);
+      }
+    }
+  }
+}
+
+function closeYouTubeModal() {
+  const m = document.getElementById('youtube-link-modal');
+  if (m) {
+    m.classList.add('hidden');
+    m.classList.remove('flex');
+  }
+}
+
+async function pasteToModalYouTubeInput() {
+  const input = document.getElementById('modal-youtube-url-input');
+  if (!input) return;
+  try {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      const text = await navigator.clipboard.readText();
+      if (text && text.trim().length > 0) {
+        input.value = text.trim();
+        handleModalYouTubeInput(input.value);
+        showToast('유튜브 링크를 붙여넣었습니다! ✓', '📋');
+        return;
+      }
+    }
+  } catch (e) {
+    console.warn(e);
+  }
+  input.focus();
+  showToast('단축키(Ctrl+V / Cmd+V)로 링크를 붙여넣어 주세요.', 'ℹ️');
+}
+
+function handleModalYouTubeInput(val) {
+  const id = extractYouTubeId(val);
+  const card = document.getElementById('modal-yt-recognized-card');
+  const thumb = document.getElementById('modal-yt-recognized-thumb');
+  const titleEl = document.getElementById('modal-yt-recognized-title');
+  const idEl = document.getElementById('modal-yt-recognized-id');
+
+  if (id) {
+    currentYouTubeId = id;
+    if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
+    if (thumb) thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    const preset = sermonPresets[id];
+    if (preset) {
+      currentYouTubeTitle = preset.title;
+      currentYouTubeScripture = preset.scripture;
+      if (titleEl) titleEl.textContent = `"${preset.title}" (${preset.scripture})`;
+    } else {
+      if (titleEl) titleEl.textContent = '주일 예배 설교 영상';
+    }
+    if (idEl) idEl.textContent = `유튜브 ID: ${id} · 쇼츠 생성 준비 완료`;
+  } else {
+    if (card) { card.classList.add('hidden'); card.classList.remove('flex'); }
+  }
+}
+
+function loadPresetToModal(id, title, scripture) {
+  const input = document.getElementById('modal-youtube-url-input');
+  if (input) {
+    input.value = `https://www.youtube.com/watch?v=${id}`;
+    handleModalYouTubeInput(input.value);
+  }
+  currentYouTubeId = id;
+  currentYouTubeTitle = title;
+  currentYouTubeScripture = scripture;
+  showToast(`"${title}" 설교 영상이 선택되었습니다.`, '✨');
+}
+
+function submitModalYouTubeAndStart() {
+  const input = document.getElementById('modal-youtube-url-input');
+  const val = input ? input.value.trim() : '';
+  const id = extractYouTubeId(val);
+  if (id) {
+    currentYouTubeId = id;
+    currentInputMode = 'yt';
+    closeYouTubeModal();
+    startStudioGeneration();
+  } else {
+    showToast('올바른 유튜브 영상 링크를 입력해 주세요.', '⚠️');
+  }
+}
+
+// Recent Sermon One-Click Studio Opener
+function loadRecentSermon(id, title, scripture) {
+  if (id === 'custom') {
+    currentInputMode = 'paste';
+    const ta = document.getElementById('manuscript-input');
+    if (ta) {
+      ta.value = `[${scripture} "${title}"]\n\n■ 서론: 시련 앞에서 성도가 취해야 할 믿음의 태도\n■ 1대지: 여러 가지 시험을 만나거든 온전히 기쁘게 여기라\n■ 2대지: 믿음의 시련이 인내를 만들어 내는 신비\n■ 3대지: 인내를 온전히 이루라 이는 너희로 온전하고 구비하여 부족함이 없게 함이라\n■ 결론: 흔들리지 않는 믿음으로 승리하는 삶`;
+      updateCharCount(ta);
+    }
+    selectUploadTab('paste');
+  } else {
+    currentInputMode = 'yt';
+    currentYouTubeId = id;
+    currentYouTubeTitle = title;
+    currentYouTubeScripture = scripture;
+    selectUploadTab('yt');
+  }
+  showToast(`최근 설교 ["${title}"] 자료를 불러옵니다...`, '⚡️');
+  startStudioGeneration();
+}
+
 // Auto initialize studio player and select default paste tab
 window.addEventListener('DOMContentLoaded', () => {
   selectUploadTab('paste');
   initStudioPlayer();
   analyzeAndGenerateMinistryAssets();
 });
+
