@@ -1882,3 +1882,69 @@ window.addEventListener('DOMContentLoaded', () => {
   analyzeAndGenerateMinistryAssets();
 });
 
+// ================= 10-ASSET SHOWCASE ONE-CLICK LAUNCHER =================
+function openAssetFeature(key) {
+  // Ensure active sermon is generated
+  analyzeAndGenerateMinistryAssets();
+  const studio = document.getElementById('studio-modal');
+
+  if (key === 'shorts') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('shorts');
+    selectStudioClip(1);
+    initStudioPlayer();
+    showToast('📱 9:16 설교 쇼츠 3편 스튜디오가 활성화되었습니다.', '🎬');
+  } else if (key === 'smallgroup') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('smallgroup');
+    showToast('👥 구역·순·셀 소그룹 나눔 질문지가 준비되었습니다.', '📋');
+  } else if (key === 'qt') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('qt');
+    showToast('☀️ 월~토 주간 QT 6일치 묵상 가이드가 준비되었습니다.', '📖');
+  } else if (key === 'cardnews') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('cardnews');
+    showToast('🖼️ 인스타그램 카드뉴스 7장이 렌더링되었습니다.', '🎨');
+  } else if (key === 'outline') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('outline');
+    showToast('📝 설교 3대지 구조화 요약 리포트가 열렸습니다.', '📑');
+  } else if (key === 'kakao') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('kakao');
+    showToast('💬 성도 단톡방 알림톡 목회 서신이 준비되었습니다.', '💬');
+  } else if (key === 'bulletin') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('bulletin');
+    showToast('📜 주보 요약 500자 및 주일 대표 기도문이 열렸습니다.', '📜');
+  } else if (key === 'srt') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('srt');
+    downloadSubtitlesSRTFile();
+    copySubtitlesSRT();
+    showToast('📄 쇼츠 자막(SRT) 파일 다운로드 및 클립보드 복사 완료!', '🎬');
+  } else if (key === 'timestamp') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('timestamp');
+    copyYouTubeTimestamps();
+    showToast('⏱️ 유튜브 타임스탬프가 복사되었습니다! 설명란에 붙여넣으세요.', '⏱️');
+  } else if (key === 'zip') {
+    downloadAllMaterials();
+    showToast('📦 전체 10종 사역 자료 압축팩(ZIP) 다운로드를 시작합니다.', '🎉');
+  }
+}
+
+function copyYouTubeTimestamps() {
+  const text = (generatedMinistryAssets && generatedMinistryAssets.ytInfoText) ?
+    generatedMinistryAssets.ytInfoText :
+    (document.getElementById('content-timestamp-body')?.textContent || '');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('유튜브 타임스탬프 안내문이 클립보드에 복사되었습니다! 유튜브 설명란에 붙여넣으세요.', '⏱️');
+    });
+  } else {
+    showToast('타임스탬프 복사 완료!', '⏱️');
+  }
+}
+

@@ -568,168 +568,231 @@
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
       <!-- Item 1: Shorts -->
-      <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+      <div onclick="openAssetFeature('shorts')"
+        class="cursor-pointer group relative overflow-hidden rounded-3xl border-2 border-slate-200/90 bg-white p-6 shadow-xs hover:border-blue-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between active:scale-[0.98]">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-red-50 text-red-600 text-[20px]">📱</span>
-            <span class="text-xs bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded-full">조회수 극대화</span>
+            <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-red-50 text-red-600 text-[22px] group-hover:scale-110 transition-transform">📱</span>
+            <span class="text-xs bg-red-100 text-red-800 font-extrabold px-2.5 py-1 rounded-full">조회수 극대화</span>
           </div>
-          <h3 class="text-[18px] font-extrabold text-slate-900">01. 9:16 설교 쇼츠 3편</h3>
+          <h3 class="text-[18px] font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">01. 9:16 설교 쇼츠 3편</h3>
           <p class="text-[13px] text-slate-500 mt-2 leading-relaxed">
             설교 본문에서 감정 고조 구간을 정밀 추출하여 시청 지속률을 높인 3단계 씬 분할 모바일 쇼츠를 생성합니다.
           </p>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-          <span>MP4 파일 / SRT 자막</span>
-          <span class="text-blue-600 font-bold">생성 100% 지원</span>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-400 font-medium">MP4 파일 / SRT 자막</span>
+          <span class="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 group-hover:bg-blue-600 px-3 py-1.5 font-bold text-blue-700 group-hover:text-white transition-all shadow-2xs">
+            <span>⚡️ 쇼츠 스튜디오 열기</span>
+            <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+          </span>
         </div>
       </div>
 
       <!-- Item 2: Small Group -->
-      <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+      <div onclick="openAssetFeature('smallgroup')"
+        class="cursor-pointer group relative overflow-hidden rounded-3xl border-2 border-slate-200/90 bg-white p-6 shadow-xs hover:border-blue-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between active:scale-[0.98]">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 text-[20px]">👥</span>
-            <span class="text-xs bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded-full">구역·순·셀</span>
+            <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 text-[22px] group-hover:scale-110 transition-transform">👥</span>
+            <span class="text-xs bg-blue-100 text-blue-800 font-extrabold px-2.5 py-1 rounded-full">구역·순·셀</span>
           </div>
-          <h3 class="text-[18px] font-extrabold text-slate-900">02. 소그룹 나눔 질문지</h3>
+          <h3 class="text-[18px] font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">02. 소그룹 나눔 질문지</h3>
           <p class="text-[13px] text-slate-500 mt-2 leading-relaxed">
             마음 열기부터 1·2·3대지 말씀 묵상, 구체적인 삶의 적용과 합심 기도 제목까지 원클릭으로 정제합니다.
           </p>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-          <span>단톡방 배포용 텍스트</span>
-          <span class="text-blue-600 font-bold">원클릭 복사</span>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-400 font-medium">단톡방 배포용 텍스트</span>
+          <span class="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 group-hover:bg-blue-600 px-3 py-1.5 font-bold text-blue-700 group-hover:text-white transition-all shadow-2xs">
+            <span>⚡️ 나눔지 즉시 열기</span>
+            <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+          </span>
         </div>
       </div>
 
       <!-- Item 3: Weekly QT -->
-      <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+      <div onclick="openAssetFeature('qt')"
+        class="cursor-pointer group relative overflow-hidden rounded-3xl border-2 border-slate-200/90 bg-white p-6 shadow-xs hover:border-blue-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between active:scale-[0.98]">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 text-[20px]">☀️</span>
-            <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">월~토 매일 경건</span>
+            <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 text-[22px] group-hover:scale-110 transition-transform">☀️</span>
+            <span class="text-xs bg-amber-100 text-amber-800 font-extrabold px-2.5 py-1 rounded-full">월~토 매일 경건</span>
           </div>
-          <h3 class="text-[18px] font-extrabold text-slate-900">03. 주간 QT 6일치 묵상집</h3>
+          <h3 class="text-[18px] font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">03. 주간 QT 6일치 묵상집</h3>
           <p class="text-[13px] text-slate-500 mt-2 leading-relaxed">
             주일 본문을 절별로 깊이 묵상하며 성도들이 매일 삶의 자리에서 말씀과 동행할 수 있는 경건 에세이입니다.
           </p>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-          <span>6일치 질문 & 기도문</span>
-          <span class="text-blue-600 font-bold">인쇄/텍스트 제공</span>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-400 font-medium">6일치 질문 & 기도문</span>
+          <span class="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 group-hover:bg-blue-600 px-3 py-1.5 font-bold text-blue-700 group-hover:text-white transition-all shadow-2xs">
+            <span>⚡️ QT집 즉시 열기</span>
+            <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+          </span>
         </div>
       </div>
 
       <!-- Item 4: Card News -->
-      <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+      <div onclick="openAssetFeature('cardnews')"
+        class="cursor-pointer group relative overflow-hidden rounded-3xl border-2 border-slate-200/90 bg-white p-6 shadow-xs hover:border-blue-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between active:scale-[0.98]">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-purple-50 text-purple-600 text-[20px]">🖼️</span>
-            <span class="text-xs bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full">인스타그램/SNS</span>
+            <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-purple-50 text-purple-600 text-[22px] group-hover:scale-110 transition-transform">🖼️</span>
+            <span class="text-xs bg-purple-100 text-purple-800 font-extrabold px-2.5 py-1 rounded-full">인스타그램/SNS</span>
           </div>
-          <h3 class="text-[18px] font-extrabold text-slate-900">04. 인스타 카드뉴스 7장</h3>
+          <h3 class="text-[18px] font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">04. 인스타 카드뉴스 7장</h3>
           <p class="text-[13px] text-slate-500 mt-2 leading-relaxed">
             표지, 핵심 질문, 3대지 명제, 은혜의 결론, 실천 과제까지 시각적 카드 7장으로 디자인 및 텍스트를 추출합니다.
           </p>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-          <span>카드 슬라이드 7장</span>
-          <span class="text-blue-600 font-bold">전체 복사 지원</span>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-400 font-medium">카드 슬라이드 7장</span>
+          <span class="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 group-hover:bg-blue-600 px-3 py-1.5 font-bold text-blue-700 group-hover:text-white transition-all shadow-2xs">
+            <span>⚡️ 카드뉴스 7장 보기</span>
+            <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+          </span>
         </div>
       </div>
 
       <!-- Item 5: Sermon Outline -->
-      <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+      <div onclick="openAssetFeature('outline')"
+        class="cursor-pointer group relative overflow-hidden rounded-3xl border-2 border-slate-200/90 bg-white p-6 shadow-xs hover:border-blue-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between active:scale-[0.98]">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 text-[20px]">📝</span>
-            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">설교학적 분석</span>
+            <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 text-[22px] group-hover:scale-110 transition-transform">📝</span>
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-extrabold px-2.5 py-1 rounded-full">설교학적 분석</span>
           </div>
-          <h3 class="text-[18px] font-extrabold text-slate-900">05. 설교 3대지 구조화 요약</h3>
+          <h3 class="text-[18px] font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">05. 설교 3대지 구조화 요약</h3>
           <p class="text-[13px] text-slate-500 mt-2 leading-relaxed">
             서론, 1·2·3대지 명제와 성경적 근거, 결론 및 사역적 결단을 한눈에 조망할 수 있는 구조화 리포트입니다.
           </p>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-          <span>목회자 보관/인쇄용</span>
-          <span class="text-blue-600 font-bold">1초 요약</span>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-400 font-medium">목회자 보관/인쇄용</span>
+          <span class="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 group-hover:bg-blue-600 px-3 py-1.5 font-bold text-blue-700 group-hover:text-white transition-all shadow-2xs">
+            <span>⚡️ 3대지 리포트 보기</span>
+            <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+          </span>
         </div>
       </div>
 
       <!-- Item 6: Kakao Pastoral Letter -->
-      <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+      <div onclick="openAssetFeature('kakao')"
+        class="cursor-pointer group relative overflow-hidden rounded-3xl border-2 border-slate-200/90 bg-white p-6 shadow-xs hover:border-blue-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between active:scale-[0.98]">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-yellow-50 text-yellow-600 text-[20px]">💬</span>
-            <span class="text-xs bg-yellow-100 text-yellow-800 font-bold px-2 py-0.5 rounded-full">성도 소통</span>
+            <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-yellow-50 text-yellow-600 text-[22px] group-hover:scale-110 transition-transform">💬</span>
+            <span class="text-xs bg-yellow-100 text-yellow-800 font-extrabold px-2.5 py-1 rounded-full">성도 소통</span>
           </div>
-          <h3 class="text-[18px] font-extrabold text-slate-900">06. 성도 단톡방 알림톡</h3>
+          <h3 class="text-[18px] font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">06. 성도 단톡방 알림톡</h3>
           <p class="text-[13px] text-slate-500 mt-2 leading-relaxed">
             주일 저녁 또는 월요일 아침, 성도 단체 카톡방에 바로 복사하여 보낼 수 있는 은혜로운 목회 서신입니다.
           </p>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-          <span>카톡 최적화 포맷</span>
-          <span class="text-blue-600 font-bold">원클릭 복사</span>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-400 font-medium">카톡 최적화 포맷</span>
+          <span class="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 group-hover:bg-blue-600 px-3 py-1.5 font-bold text-blue-700 group-hover:text-white transition-all shadow-2xs">
+            <span>⚡️ 알림톡 서신 열기</span>
+            <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+          </span>
         </div>
       </div>
 
       <!-- Item 7: Bulletin Summary & Prayer -->
-      <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+      <div onclick="openAssetFeature('bulletin')"
+        class="cursor-pointer group relative overflow-hidden rounded-3xl border-2 border-slate-200/90 bg-white p-6 shadow-xs hover:border-blue-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between active:scale-[0.98]">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 text-[20px]">📜</span>
-            <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full">주보 인쇄용</span>
+            <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 text-[22px] group-hover:scale-110 transition-transform">📜</span>
+            <span class="text-xs bg-indigo-100 text-indigo-800 font-extrabold px-2.5 py-1 rounded-full">주보 인쇄용</span>
           </div>
-          <h3 class="text-[18px] font-extrabold text-slate-900">07. 주보 요약 & 주일 대표 기도문</h3>
+          <h3 class="text-[18px] font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">07. 주보 요약 & 주일 대표 기도문</h3>
           <p class="text-[13px] text-slate-500 mt-2 leading-relaxed">
             교회 주보 인쇄용 500자 설교 요약문과 주일 대예배 대표 기도문 및 목회 축도문을 자동 생성합니다.
           </p>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-          <span>인쇄용 500자 요약</span>
-          <span class="text-blue-600 font-bold">기도문/축도 포함</span>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-400 font-medium">인쇄용 500자 요약 / 축도</span>
+          <span class="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 group-hover:bg-blue-600 px-3 py-1.5 font-bold text-blue-700 group-hover:text-white transition-all shadow-2xs">
+            <span>⚡️ 주보 요약문 열기</span>
+            <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+          </span>
         </div>
       </div>
 
       <!-- Item 8: SRT Subtitles -->
-      <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+      <div onclick="openAssetFeature('srt')"
+        class="cursor-pointer group relative overflow-hidden rounded-3xl border-2 border-slate-200/90 bg-white p-6 shadow-xs hover:border-blue-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between active:scale-[0.98]">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-50 text-rose-600 text-[20px]">📄</span>
-            <span class="text-xs bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-full">영상 편집용</span>
+            <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-50 text-rose-600 text-[22px] group-hover:scale-110 transition-transform">📄</span>
+            <span class="text-xs bg-rose-100 text-rose-800 font-extrabold px-2.5 py-1 rounded-full">영상 편집용</span>
           </div>
-          <h3 class="text-[18px] font-extrabold text-slate-900">08. 쇼츠 자막 파일 (SRT)</h3>
+          <h3 class="text-[18px] font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">08. 쇼츠 자막 파일 (SRT)</h3>
           <p class="text-[13px] text-slate-500 mt-2 leading-relaxed">
             캡컷(CapCut), 프리미어 프로, Vrew에 파일만 끌어놓으면 1초 만에 싱크가 정확한 자막이 완성됩니다.
           </p>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-          <span>표준 SRT 포맷</span>
-          <span class="text-blue-600 font-bold">1초 드래그 완성</span>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-400 font-medium">표준 SRT 포맷</span>
+          <span class="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 group-hover:bg-blue-600 px-3 py-1.5 font-bold text-blue-700 group-hover:text-white transition-all shadow-2xs">
+            <span>⚡️ 자막 다운로드 & 확인</span>
+            <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+          </span>
         </div>
       </div>
 
       <!-- Item 9: YouTube Timestamp -->
-      <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+      <div onclick="openAssetFeature('timestamp')"
+        class="cursor-pointer group relative overflow-hidden rounded-3xl border-2 border-slate-200/90 bg-white p-6 shadow-xs hover:border-blue-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between active:scale-[0.98]">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-teal-50 text-teal-600 text-[20px]">⏱️</span>
-            <span class="text-xs bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-full">유튜브 타임라인</span>
+            <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal-50 text-teal-600 text-[22px] group-hover:scale-110 transition-transform">⏱️</span>
+            <span class="text-xs bg-teal-100 text-teal-800 font-extrabold px-2.5 py-1 rounded-full">유튜브 타임라인</span>
           </div>
-          <h3 class="text-[18px] font-extrabold text-slate-900">09. 유튜브 타임스탬프 안내문</h3>
+          <h3 class="text-[18px] font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">09. 유튜브 타임스탬프 안내문</h3>
           <p class="text-[13px] text-slate-500 mt-2 leading-relaxed">
             설교 유튜브 영상 더보기란 및 고정 댓글에 붙여넣을 수 있는 타임스탬프와 구간 바로가기 링크를 제공합니다.
           </p>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-          <span>타임라인 링크 일체</span>
-          <span class="text-blue-600 font-bold">댓글 복사용</span>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-400 font-medium">타임라인 링크 일체</span>
+          <span class="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 group-hover:bg-blue-600 px-3 py-1.5 font-bold text-blue-700 group-hover:text-white transition-all shadow-2xs">
+            <span>⚡️ 타임스탬프 복사 & 확인</span>
+            <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+          </span>
         </div>
+      </div>
+
+      <!-- Item 10: Full ZIP Bundle Card -->
+      <div onclick="openAssetFeature('zip')"
+        class="col-span-1 md:col-span-2 lg:col-span-3 cursor-pointer group relative overflow-hidden rounded-3xl border-2 border-indigo-300 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 sm:p-8 text-white shadow-xl hover:border-blue-400 hover:shadow-2xl hover:-translate-y-1.5 transition-all active:scale-[0.99] flex flex-col sm:flex-row items-center justify-between gap-5">
+        <div class="flex items-center gap-4">
+          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white text-2xl shadow-md shrink-0 group-hover:scale-110 transition-transform">
+            📦
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs bg-blue-500/30 text-blue-300 font-bold px-2.5 py-0.5 rounded-full border border-blue-400/30">올인원 패키지</span>
+              <span class="text-xs text-slate-300">10종 통합 일괄 다운로드</span>
+            </div>
+            <h3 class="text-[19px] sm:text-[22px] font-black text-white group-hover:text-blue-300 transition-colors">
+              10. 전체 사역 자료 통합 압축팩 (ZIP)
+            </h3>
+            <p class="text-[13.5px] text-slate-300 mt-1 max-w-2xl leading-relaxed">
+              위 9종 사역 자료(설교 요약, 나눔지, QT 묵상집, 카드뉴스, 주보 요약, 자막 SRT, 타임스탬프)와 쇼츠 영상을 하나의 압축 파일(ZIP)로 단 1초 만에 일괄 다운로드합니다.
+            </p>
+          </div>
+        </div>
+        <button type="button"
+          class="rounded-xl bg-blue-600 group-hover:bg-blue-500 px-6 py-3.5 text-[14px] font-bold text-white shadow-md transition-all shrink-0 flex items-center gap-2 active:scale-95">
+          <span>⚡️ ZIP 즉시 다운로드</span>
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
       </div>
 
     </div>
@@ -1280,6 +1343,14 @@
           class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap">
           <span>📜 주보 요약 & 기도문</span>
         </button>
+        <button id="studio-tab-btn-srt" onclick="switchStudioTab('srt')"
+          class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap">
+          <span>📄 쇼츠 자막(SRT)</span>
+        </button>
+        <button id="studio-tab-btn-timestamp" onclick="switchStudioTab('timestamp')"
+          class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap">
+          <span>⏱️ 유튜브 타임스탬프</span>
+        </button>
       </div>
 
       <!-- Studio Content Body (Scrollable Panels) -->
@@ -1578,6 +1649,50 @@
             </div>
           </div>
           <div id="content-bulletin-body" class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 font-mono text-[13.5px] text-slate-800 leading-relaxed whitespace-pre-wrap select-all"></div>
+        </div>
+
+        <!-- Panel 8: 쇼츠 자막 파일 (SRT) -->
+        <div id="studio-panel-srt" class="hidden">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-[17px] font-bold text-slate-900">📄 캡컷(CapCut)·프리미어 프로 싱크 맞춤 쇼츠 자막 (SRT)</h3>
+              <p class="text-[12.5px] text-slate-500">타임코드가 정밀하게 싱크된 표준 SRT 포맷입니다. 영상 편집 프로그램(CapCut, Premiere, Vrew)에 그대로 끌어놓거나 다운로드하세요.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="copySubtitlesSRT()"
+                class="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[12.5px] px-3.5 py-2 transition-all flex items-center gap-1.5 shadow-xs active:scale-95">
+                <span>📋 SRT 전체 복사</span>
+              </button>
+              <button onclick="downloadSubtitlesSRTFile()"
+                class="rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-[12.5px] px-3.5 py-2 transition-colors flex items-center gap-1.5 shadow-xs active:scale-95">
+                <span>💾 SRT 파일 저장</span>
+              </button>
+            </div>
+          </div>
+          <div id="content-srt-body"
+            class="rounded-2xl border border-slate-800 bg-slate-900 p-5 font-mono text-[13px] text-emerald-400 leading-relaxed whitespace-pre-wrap select-all shadow-inner overflow-x-auto"></div>
+        </div>
+
+        <!-- Panel 9: 유튜브 타임스탬프 안내문 -->
+        <div id="studio-panel-timestamp" class="hidden">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-[17px] font-bold text-slate-900">⏱️ 설교 유튜브 타임스탬프 & 영상 더보기 설명란</h3>
+              <p class="text-[12.5px] text-slate-500">설교 유튜브 영상의 더보기 설명란 및 고정 댓글에 복사하여 붙여넣으실 수 있는 챕터 타임라인과 바로가기 링크입니다.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="copyYouTubeTimestamps()"
+                class="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[12.5px] px-3.5 py-2 transition-all flex items-center gap-1.5 shadow-xs active:scale-95">
+                <span>📋 타임스탬프 복사하기</span>
+              </button>
+              <button onclick="downloadPanelText('timestamp')"
+                class="rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[12.5px] px-3 py-2 transition-colors">
+                <span>💾 텍스트 저장</span>
+              </button>
+            </div>
+          </div>
+          <div id="content-timestamp-body"
+            class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 font-mono text-[13.5px] text-slate-800 leading-relaxed whitespace-pre-wrap select-all"></div>
         </div>
 
       </div>
@@ -2691,6 +2806,12 @@ Q5. 이번 주간 나의 삶의 현장(가정, 직장, 대인관계)에서 말�
   const bulBody = document.getElementById('content-bulletin-body');
   if (bulBody) bulBody.textContent = bulletinText;
 
+  const srtBody = document.getElementById('content-srt-body');
+  if (srtBody) srtBody.textContent = srtText;
+
+  const ytBody = document.getElementById('content-timestamp-body');
+  if (ytBody) ytBody.textContent = ytInfoText;
+
   // Render Card News Visual Grid
   renderCardNewsGrid(cardNewsCards);
 }
@@ -2720,7 +2841,7 @@ function renderCardNewsGrid(cards) {
 // ================= STUDIO MODAL TAB SWITCHING =================
 function switchStudioTab(tabId) {
   currentActiveStudioTab = tabId;
-  const tabs = ['shorts', 'smallgroup', 'qt', 'cardnews', 'outline', 'kakao', 'bulletin'];
+  const tabs = ['shorts', 'smallgroup', 'qt', 'cardnews', 'outline', 'kakao', 'bulletin', 'srt', 'timestamp'];
 
   tabs.forEach(t => {
     const btn = document.getElementById(`studio-tab-btn-${t}`);
@@ -2771,6 +2892,8 @@ function copyPanelText(key) {
   else if (key === 'outline') { text = generatedMinistryAssets.outlineText; name = '설교 3대지 구조화 요약'; }
   else if (key === 'kakao') { text = generatedMinistryAssets.kakaoText; name = '단톡방 알림톡'; }
   else if (key === 'bulletin') { text = generatedMinistryAssets.bulletinText; name = '주보 요약 & 대표 기도문'; }
+  else if (key === 'srt') { text = generatedMinistryAssets.srtText; name = '쇼츠 자막 (SRT)'; }
+  else if (key === 'timestamp') { text = generatedMinistryAssets.ytInfoText; name = '유튜브 타임스탬프 안내문'; }
 
   if (!text) {
     showToast('복사할 내용이 없습니다.', '⚠️');
@@ -2795,6 +2918,8 @@ function downloadPanelText(key) {
   else if (key === 'outline') { text = generatedMinistryAssets.outlineText; filename = `${safeTitle}_설교_3대지_요약.txt`; }
   else if (key === 'kakao') { text = generatedMinistryAssets.kakaoText; filename = `${safeTitle}_성도_단톡방_알림톡.txt`; }
   else if (key === 'bulletin') { text = generatedMinistryAssets.bulletinText; filename = `${safeTitle}_주보_요약_및_기도문.txt`; }
+  else if (key === 'srt') { text = generatedMinistryAssets.srtText; filename = `${safeTitle}_쇼츠_자막_SRT.srt`; }
+  else if (key === 'timestamp') { text = generatedMinistryAssets.ytInfoText; filename = `${safeTitle}_유튜브_타임스탬프_안내.txt`; }
 
   if (!text) {
     showToast('다운로드할 내용이 없습니다.', '⚠️');
@@ -3556,6 +3681,73 @@ window.addEventListener('DOMContentLoaded', () => {
   analyzeAndGenerateMinistryAssets();
 });
 
+
+
+// ================= 10-ASSET SHOWCASE ONE-CLICK LAUNCHER =================
+function openAssetFeature(key) {
+  // Ensure active sermon is generated
+  analyzeAndGenerateMinistryAssets();
+  const studio = document.getElementById('studio-modal');
+
+  if (key === 'shorts') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('shorts');
+    selectStudioClip(1);
+    initStudioPlayer();
+    showToast('📱 9:16 설교 쇼츠 3편 스튜디오가 활성화되었습니다.', '🎬');
+  } else if (key === 'smallgroup') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('smallgroup');
+    showToast('👥 구역·순·셀 소그룹 나눔 질문지가 준비되었습니다.', '📋');
+  } else if (key === 'qt') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('qt');
+    showToast('☀️ 월~토 주간 QT 6일치 묵상 가이드가 준비되었습니다.', '📖');
+  } else if (key === 'cardnews') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('cardnews');
+    showToast('🖼️ 인스타그램 카드뉴스 7장이 렌더링되었습니다.', '🎨');
+  } else if (key === 'outline') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('outline');
+    showToast('📝 설교 3대지 구조화 요약 리포트가 열렸습니다.', '📑');
+  } else if (key === 'kakao') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('kakao');
+    showToast('💬 성도 단톡방 알림톡 목회 서신이 준비되었습니다.', '💬');
+  } else if (key === 'bulletin') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('bulletin');
+    showToast('📜 주보 요약 500자 및 주일 대표 기도문이 열렸습니다.', '📜');
+  } else if (key === 'srt') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('srt');
+    downloadSubtitlesSRTFile();
+    copySubtitlesSRT();
+    showToast('📄 쇼츠 자막(SRT) 파일 다운로드 및 클립보드 복사 완료!', '🎬');
+  } else if (key === 'timestamp') {
+    if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
+    switchStudioTab('timestamp');
+    copyYouTubeTimestamps();
+    showToast('⏱️ 유튜브 타임스탬프가 복사되었습니다! 설명란에 붙여넣으세요.', '⏱️');
+  } else if (key === 'zip') {
+    downloadAllMaterials();
+    showToast('📦 전체 10종 사역 자료 압축팩(ZIP) 다운로드를 시작합니다.', '🎉');
+  }
+}
+
+function copyYouTubeTimestamps() {
+  const text = (generatedMinistryAssets && generatedMinistryAssets.ytInfoText) ?
+    generatedMinistryAssets.ytInfoText :
+    (document.getElementById('content-timestamp-body')?.textContent || '');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('유튜브 타임스탬프 안내문이 클립보드에 복사되었습니다! 유튜브 설명란에 붙여넣으세요.', '⏱️');
+    });
+  } else {
+    showToast('타임스탬프 복사 완료!', '⏱️');
+  }
+}
 
   </script>
 
