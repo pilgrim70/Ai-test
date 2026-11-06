@@ -364,25 +364,30 @@ class PastoralAudioEngine {
     if (this.audioCtx && this.audioCtx.state === 'suspended') {
       this.audioCtx.resume();
     }
+    if (this.synth && this.synth.paused) {
+      this.synth.resume();
+    }
   }
 
   playSacredPianoAmbience() {
     try {
       this.initContext();
       if (!this.audioCtx) return;
-      const notes = [174.61, 220.00, 261.63, 329.63, 392.00];
+      const chordFrequencies = [130.81, 196.00, 261.63, 329.63, 493.88];
       const now = this.audioCtx.currentTime;
-      notes.forEach((freq, idx) => {
+      
+      chordFrequencies.forEach((freq, idx) => {
         const osc = this.audioCtx.createOscillator();
         const gain = this.audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
-        gain.gain.setValueAtTime(0.012, now + idx * 0.08);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 4.5);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.05);
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.22, now + 0.12 + idx * 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 5.2);
         osc.connect(gain);
         gain.connect(this.audioCtx.destination);
-        osc.start(now + idx * 0.08);
-        osc.stop(now + 4.8);
+        osc.start(now + idx * 0.05);
+        osc.stop(now + 5.5);
       });
     } catch(e) {
       console.warn('Piano ambience error:', e);
@@ -400,20 +405,22 @@ class PastoralAudioEngine {
     this.lastSpokenText = cleanText;
 
     try {
+      this.initContext();
       this.synth.cancel();
+      if (this.synth.paused) this.synth.resume();
+
       const utter = new SpeechSynthesisUtterance(cleanText);
       utter.lang = 'ko-KR';
       utter.rate = Math.min(1.5, Math.max(0.8, rate));
-      utter.pitch = 0.96;
+      utter.pitch = 0.95;
       utter.volume = 1.0;
 
       const voices = this.synth.getVoices();
-      const koVoice = voices.find(v => v.lang.startsWith('ko') && (v.name.includes('Yuna') || v.name.includes('Google') || v.name.includes('Korean')));
+      const koVoice = voices.find(v => v.lang.startsWith('ko') && (v.name.includes('Yuna') || v.name.includes('Google') || v.name.includes('Korean') || v.name.includes('Heami') || v.name.includes('Seoyeon')));
       if (koVoice) utter.voice = koVoice;
 
       this.currentUtterance = utter;
       this.synth.speak(utter);
-
       this.playSacredPianoAmbience();
     } catch(e) {
       console.warn('Speech synthesis error:', e);
@@ -421,12 +428,58 @@ class PastoralAudioEngine {
   }
 
   stop() {
-    if (this.synth) this.synth.cancel();
+    if (this.synth) {
+      this.synth.cancel();
+    }
     this.lastSpokenText = '';
   }
 }
 
 const pastoralAudio = new PastoralAudioEngine();
+
+// ================= 5 SELECTABLE SHORTS LAYOUT STYLES =================
+let currentShortsLayout = 1;
+
+function setShortsLayoutStyle(num) {
+  currentShortsLayout = parseInt(num) || 1;
+  
+  [1, 2, 3, 4, 5].forEach(i => {
+    const btns = [document.getElementById(`layout-choice-${i}`), document.getElementById(`inpage-layout-choice-${i}`)];
+    btns.forEach(btn => {
+      if (!btn) return;
+      if (i === currentShortsLayout) {
+        btn.className = 'layout-choice-btn active flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-indigo-950 font-black transition-all text-center shadow-md scale-[1.02] ring-2 ring-indigo-400/40';
+      } else {
+        btn.className = 'layout-choice-btn flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border-2 border-slate-200 bg-white hover:border-slate-300 text-slate-700 transition-all text-center opacity-80 hover:opacity-100';
+      }
+    });
+  });
+
+  const styleNames = {
+    1: '스타일 1 [클래식 예배형 1:1]',
+    2: '스타일 2 [시네마틱 골드형 16:9]',
+    3: '스타일 3 [모던 화이트 카드형]',
+    4: '스타일 4 [전체화면 몰입형 9:16]',
+    5: '스타일 5 [말씀 본문 집중형]'
+  };
+
+  const badges = [document.getElementById('active-layout-badge'), document.getElementById('inpage-active-layout-badge')];
+  badges.forEach(b => {
+    if (b) b.textContent = `현재 적용: ${styleNames[currentShortsLayout]}`;
+  });
+
+  const shells = [document.getElementById('modal-phone-shell'), document.getElementById('studio-phone-shell')];
+  shells.forEach(shell => {
+    if (!shell) return;
+    for (let c = 1; c <= 5; c++) {
+      shell.classList.remove(`shorts-layout-${c}`);
+    }
+    shell.classList.add(`shorts-layout-${currentShortsLayout}`);
+    shell.setAttribute('data-shorts-layout', currentShortsLayout);
+  });
+
+  showToast(`🎨 ${styleNames[currentShortsLayout]} 레이아웃이 적용되었습니다!`, '✨');
+}
 
 function forceUnmuteAndPlaySound() {
   isMuted = false;
@@ -1761,78 +1814,20 @@ function formatTime(sec) {
 
 function toggleShortsCropMode() {
   isShortsCropMode = !isShortsCropMode;
-  applyCropMode();
   showToast(isShortsCropMode ? '📱 9:16 세로 쇼츠 모드로 전환되었습니다.' : '🖥️ 16:9 전체 화면 모드로 전환되었습니다.', '📐');
-}
-
-function applyCropMode() {
-  const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-  const btn1 = document.getElementById('studio-crop-btn-text');
-  const btn2 = document.getElementById('modal-crop-btn-text');
-
-  iframes.forEach(iframe => {
-    if (!iframe) return;
-    if (isShortsCropMode) {
-      iframe.style.width = '325%';
-      iframe.style.height = '115%';
-      iframe.style.top = '50%';
-      iframe.style.left = '50%';
-      iframe.style.transform = 'translate(-50%, -50%)';
-    } else {
-      iframe.style.width = '100%';
-      iframe.style.height = '56.25%';
-      iframe.style.top = '50%';
-      iframe.style.left = '0%';
-      iframe.style.transform = 'translateY(-50%)';
-    }
-  });
-
-  const label = isShortsCropMode ? '📱 9:16' : '🖥️ 16:9';
-  if (btn1) btn1.textContent = label;
-  if (btn2) btn2.textContent = label;
 }
 
 function initStudioPlayer() {
   selectStudioClip(currentClipIndex || 1);
+  setShortsLayoutStyle(currentShortsLayout || 1);
   startPlaybackTimer();
 }
 
 function loadActiveVideoSource() {
   const clip = studioClips[currentClipIndex] || studioClips[1];
-  const ytWraps = [document.getElementById('studio-yt-wrap'), document.getElementById('modal-yt-wrap')];
-  const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
   const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-  const audioWrap = document.getElementById('modal-audio-wrap');
-  const audioEl = document.getElementById('modal-studio-audio');
-
-  // 1. Audio File Mode
-  if (currentInputMode === 'file' && currentFileType === 'audio' && currentFileAudioUrl) {
-    ytWraps.forEach(w => w && w.classList.add('hidden'));
-    vids.forEach(v => v && v.classList.add('hidden'));
-    if (audioWrap) {
-      audioWrap.classList.remove('hidden');
-      audioWrap.classList.add('flex');
-      const titleEl = document.getElementById('audio-visualizer-title');
-      if (titleEl) titleEl.textContent = generatedMinistryAssets.sermonTitle;
-    }
-    if (audioEl) {
-      if (audioEl.src !== currentFileAudioUrl) audioEl.src = currentFileAudioUrl;
-      audioEl.currentTime = 0;
-      audioEl.muted = isMuted;
-      if (isPlaying) audioEl.play().catch(e => console.log('Audio play:', e));
-    }
-    return;
-  }
-
-  // Hide audio visualizer if not audio mode
-  if (audioWrap) {
-    audioWrap.classList.add('hidden');
-    audioWrap.classList.remove('flex');
-  }
-
-  // 2. Local Video File Mode
+  
   if (currentInputMode === 'file' && currentFileVideoUrl) {
-    ytWraps.forEach(w => w && w.classList.add('hidden'));
     vids.forEach(v => {
       if (v) {
         v.classList.remove('hidden');
@@ -1842,38 +1837,29 @@ function loadActiveVideoSource() {
         if (isPlaying) v.play().catch(e => console.log('File play:', e));
       }
     });
-    return;
+  } else {
+    vids.forEach(v => {
+      if (v) {
+        v.pause();
+        v.classList.add('hidden');
+      }
+    });
   }
 
-  // 3. YouTube Sermon Mode (Always pastor preaching video, NEVER waves!)
-  vids.forEach(v => {
-    if (v) {
-      v.pause();
-      v.classList.add('hidden');
+  // Preaching Pulpit Motion Visual
+  const pulpitImgs = [document.getElementById('studio-pulpit-img'), document.getElementById('modal-pulpit-img')];
+  pulpitImgs.forEach(img => {
+    if (img) {
+      img.src = 'assets/pastor.jpg';
+      img.style.animationPlayState = isPlaying ? 'running' : 'paused';
     }
   });
-  ytWraps.forEach(w => w && w.classList.remove('hidden'));
-
-  const embedUrl = `https://www.youtube.com/embed/${currentYouTubeId}?enablejsapi=1&autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&loop=1&playlist=${currentYouTubeId}&start=${clip.startSec}&rel=0&playsinline=1`;
-
-  iframes.forEach(iframe => {
-    if (iframe) {
-      if (!iframe.src.includes(currentYouTubeId) || !iframe.src.includes(`start=${clip.startSec}`)) {
-        iframe.src = embedUrl;
-      } else {
-        sendYtCommand(iframe.id, 'seekTo', [clip.startSec, true]);
-        if (isPlaying) sendYtCommand(iframe.id, 'playVideo');
-      }
-    }
-  });
-  applyCropMode();
 }
 
 function selectStudioClip(num) {
   currentClipIndex = num;
   const clip = studioClips[num] || studioClips[1];
 
-  // Update all 10 Decks
   for (let i = 1; i <= 10; i++) {
     const d1 = document.getElementById(`studio-deck-${i}`);
     const d2 = document.getElementById(`modal-deck-${i}`);
@@ -1889,17 +1875,14 @@ function selectStudioClip(num) {
     }
   }
 
-  // Update tags
   const tag1 = document.getElementById('studio-shorts-tag');
   const tag2 = document.getElementById('modal-shorts-tag');
-  if (tag1) tag1.textContent = clip.title;
-  if (tag2) tag2.textContent = clip.title;
+  if (tag1) tag1.textContent = `쇼츠 ${num}편 (${clip.tag || '감동'})`;
+  if (tag2) tag2.textContent = `쇼츠 ${num}편 (${clip.tag || '감동'})`;
 
   clipElapsedSec = 0;
   pastoralAudio.stop();
   loadActiveVideoSource();
-  const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-  iframes.forEach(f => f && sendYtCommand(f.id, 'setPlaybackRate', [currentPlaybackRate]));
   updatePlayerUI();
 
   if (isPlaying && !isMuted) {
@@ -1908,260 +1891,58 @@ function selectStudioClip(num) {
   }
 }
 
-
-// ================= AI SPEECH CLEANER & 10-SHORTS SYNTHESIS ENGINE =================
-function cleanPastoralSpeech(raw) {
-  if (!raw) return '';
-  return raw
-    .replace(/(?:어\.\.\.|어,|어\s+|으\.\.\.|으,|으\s+|음\.\.\.|음,|음\s+|저\.\.\.|저,|그\.\.\.|그\s+)/g, '')
-    .replace(/\(호흡\s*소리\)|\(숨소리\)|\[숨소리\]|\(헐떡임\)/g, '')
-    .replace(/\s{2,}/g, ' ')
-    .trim();
-}
-
-function generate10ShortsSuite(title, scripture, points) {
-  const cleanTitle = (title || '광야의 식탁을 베푸시는 하나님의 은혜').replace(/[\[\]"']/g, '').trim();
-  const scrip = scripture || '시편 78장 17-25절';
-  const p1 = (points && points[0]) || '광야의 결핍 속에서도 믿음을 지키는 성도';
-  const p2 = (points && points[1]) || '굳은 반석의 생수와 하늘의 만나를 경험하는 은혜';
-  const p3 = (points && points[2]) || '신실하게 채우시는 하나님의 식탁 앞으로 나아감';
-
-  const themes = [
-    {
-      num: 1,
-      title: `${cleanTitle} - 광야의 식탁을 베푸시는 하나님`,
-      tag: '🔥 감정 고조도 99% (결단)',
-      s1: '사방이 메마른 광야처럼 캄캄하고 길이 보이지 않을 때, 우리는 쉽게 원망과 낙심의 늪에 빠집니다.',
-      s2: '그러나 하나님은 반석을 쳐서 물을 내시며 하늘 문을 열어 만나를 비처럼 쏟아부으시는 전능자이십니다!',
-      s3: '인간의 계산이 끝나는 바로 그 자리가 하나님의 기적의 식탁이 차려지는 은혜의 무대입니다.',
-      s4: '두려워하지 마십시오! 주님이 오늘 당신의 광야 한가운데서 식탁을 베푸십니다!'
-    },
-    {
-      num: 2,
-      title: `결핍 앞에서도 흔들리지 않는 믿음 (${scrip})`,
-      tag: '💡 감동·위로 98% (믿음)',
-      s1: '통장의 잔고와 척박한 현실 앞에 서면, 누구나 불안과 염려의 수렁에 빠져들기 쉽습니다.',
-      s2: `이스라엘은 광야에서 하나님을 시험했으나, 참된 성도는 결핍 속에서 주를 바라봅니다. ${p1}!`,
-      s3: '광야의 메마름은 망하게 하려는 것이 아니라, 오직 살아계신 주님만 신뢰하도록 빚으시는 과정입니다.',
-      s4: '환경을 보지 말고 광야의 주인이신 전능하신 하나님을 신뢰하십시오!'
-    },
-    {
-      num: 3,
-      title: '하나님이 과연 식탁을 베푸실 수 있으랴? 의심을 깨라',
-      tag: '⚡️ 능력·도전 97% (회복)',
-      s1: '‘정말 이 절망적인 상황에서 길이 열릴까?’ 우리는 스스로의 지혜로 한계를 긋고 의심합니다.',
-      s2: '하나님이 과연 광야에서 식탁을 베푸실 수 있으랴 불평했던 불신앙의 입술을 오늘 닫아야 합니다.',
-      s3: '내 좁은 상식과 경험의 틀을 깰 때, 비로소 전능하신 하나님의 초자연적 역사가 시작됩니다.',
-      s4: '주께는 불가능이 없습니다! 의심을 버리고 믿음으로 담대히 서십시오!'
-    },
-    {
-      num: 4,
-      title: '굳은 반석에서 터져 나오는 생수의 기적',
-      tag: '🔥 영적 권세 98% (권능)',
-      s1: '목마른 사막 한가운데 거대한 바위만 가로막혀 있다면, 누가 물을 기대하겠습니까?',
-      s2: `그러나 주의 지팡이가 반석을 칠 때, 굳은 바위가 쪼개지며 시원한 강물이 쏟아져 나왔습니다. ${p2}!`,
-      s3: '당신의 삶을 짓누르는 가장 단단한 문제의 바위가, 하나님의 은혜가 터져 나오는 생수 근원이 될 것입니다.',
-      s4: '메마른 당신의 영혼과 삶의 현장에 주님의 시원한 생수가 넘쳐흐를지어다!'
-    },
-    {
-      num: 5,
-      title: '하늘 문을 열고 쏟아부으시는 만나의 은혜',
-      tag: '💡 소망·공급 96% (축복)',
-      s1: '곡식 한 톨 자라지 않는 사막에서, 수백만 백성이 어떻게 40년을 살아남았을까요?',
-      s2: '땅의 문이 닫히자 하나님은 하늘 문을 여시고 천사의 양식인 만나를 비처럼 내리셨습니다.',
-      s3: '세상의 계산으로는 막막할지라도, 하늘의 전능하신 아버지께서 결코 당신을 굶기지 않으십니다.',
-      s4: '오늘도 하늘 문을 여시고 당신의 가정과 일터를 신실하게 먹이시는 주님을 찬양합니다!'
-    },
-    {
-      num: 6,
-      title: '날마다 새롭게 채우시는 성실하신 공급',
-      tag: '⚡️ 평안·담대 95% (신뢰)',
-      s1: '10년 치를 미리 손에 쥐고 있어야 안심이 되는 것이 인간의 연약한 본성입니다.',
-      s2: '그러나 만나는 하루치씩 내렸습니다. 매일 아침 주님과 눈을 맞추며 신뢰하는 법을 가르치신 것입니다.',
-      s3: '오늘 하루를 먹이신 신실하신 하나님께서, 내일의 광야도 어김없이 가장 좋은 것으로 책임져 주십니다.',
-      s4: '내일 일을 염려하지 마십시오! 날마다 새 아침마다 신선한 은혜를 부어주십니다!'
-    },
-    {
-      num: 7,
-      title: '인간의 계산이 끝나는 곳이 기적의 시작입니다',
-      tag: '🔥 믿음 항복 98% (순종)',
-      s1: '밤새 머리를 싸매고 주판알을 튕겨도, 돌아오는 것은 가슴 조이는 불안과 한숨뿐입니다.',
-      s2: `모세도 백성도 광야에서는 계산할 수 없었습니다. 인간의 지혜가 바닥난 그 자리가 하나님의 일터입니다. ${p3}!`,
-      s3: '내 고집스러운 계산을 십자가 앞에 내려놓고 주께 맡길 때, 하늘의 무한한 계산법이 작동합니다.',
-      s4: '손을 펴고 주님께 맡기십시오! 당신이 내려놓을 때 주님이 친히 일하십니다!'
-    },
-    {
-      num: 8,
-      title: '광야의 고난이 바로 은혜의 만찬 초대장입니다',
-      tag: '💡 위로·소망 96% (성숙)',
-      s1: '‘왜 하나님은 사랑하는 내게 이토록 거친 광야를 걷게 하실까?’ 마음 깊이 묻고 계십니까?',
-      s2: '광야를 지나지 않았다면 반석의 생수를 맛볼 수 없었고 하늘의 만나를 경험할 수 없었습니다.',
-      s3: '지금 겪는 고난은 망하게 하려는 저주가 아니라, 하나님을 가장 깊이 만나는 거룩한 만찬 초대장입니다.',
-      s4: '광야를 두려워하지 마십시오! 그곳이 바로 가장 풍성한 하나님의 식탁입니다!'
-    },
-    {
-      num: 9,
-      title: '원망의 입술을 닫고 기적의 감사를 선포하라',
-      tag: '⚡️ 영적 승리 97% (찬양)',
-      s1: '원망과 불평은 영혼을 갉아먹고 기적의 문을 닫아버리는 가장 무서운 영적 독소입니다.',
-      s2: '이스라엘은 원망하다 광야에 엎드러졌지만, 감사는 메마른 땅에서 기적의 샘을 터뜨리는 거룩한 열쇠입니다.',
-      s3: '눈에 보이는 것이 없을 때 먼저 드리는 감사가 흑암의 결박을 끊고 하늘의 문을 활짝 엽니다.',
-      s4: '입술을 열어 감사를 선포하십시오! 하나님의 영광스러운 식탁이 차려질 것입니다!'
-    },
-    {
-      num: 10,
-      title: '오늘 주님이 차려주신 은혜의 식탁으로 나아오라',
-      tag: '🔥 복음 초청 99% (구원)',
-      s1: '세상에 지치고 상하여 영혼의 깊은 갈증 속에 방황하는 분이 계십니까?',
-      s2: '하늘에서 내려온 참된 생명의 떡, 예수 그리스도께서 오늘 당신을 그분의 풍성한 식탁으로 부르십니다.',
-      s3: '아무 값없이 베푸시는 십자가 사랑 앞에 마음의 문을 활짝 열고 주 예수님을 구주로 영접하십시오.',
-      s4: '광야의 식탁을 베푸시는 예수 그리스도의 거룩하신 이름으로 여러분을 축복합니다!'
-    }
-  ];
-
-  const result = {};
-  themes.forEach(t => {
-    result[t.num] = {
-      title: t.title,
-      tag: t.tag,
-      sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · 1.3배속 45초',
-      startSec: (t.num - 1) * 120,
-      duration: 45,
-      scenes: [
-        { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: `“${cleanPastoralSpeech(t.s1)}”` },
-        { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: `“${cleanPastoralSpeech(t.s2)}”` },
-        { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: `“${cleanPastoralSpeech(t.s3)}”` },
-        { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: `“<span class='text-amber-400 font-black'>${cleanPastoralSpeech(t.s4)}</span>”` }
-      ]
-    };
-  });
-  return result;
-}
-
-let currentPlaybackRate = 1.3;
-
-function setStudioPlaybackRate(rate) {
-  currentPlaybackRate = rate;
-  [1.0, 1.2, 1.3, 1.5].forEach(r => {
-    const key = String(r).replace('.', '');
-    const b = document.getElementById(`rate-btn-${key}`);
-    if (b) {
-      if (r === rate) {
-        b.className = 'px-2.5 py-1 rounded-lg text-xs font-extrabold bg-blue-600 text-white shadow-xs';
-      } else {
-        b.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-white/10 hover:bg-white/20 text-slate-300 transition-colors';
-      }
-    }
-  });
-
-  const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-  iframes.forEach(f => f && sendYtCommand(f.id, 'setPlaybackRate', [rate]));
-
-  const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-  vids.forEach(v => { if (v) v.playbackRate = rate; });
-
-  const aud = document.getElementById('modal-studio-audio');
-  if (aud) aud.playbackRate = rate;
-
-  showToast(`⚡ 재생 속도가 ${rate}배속으로 변경되었습니다. (45초 타이머 연동)`, '⚡');
-}
-
-function renderStudioShortsList() {
-  const container = document.getElementById('studio-shorts-card-list');
-  if (!container) return;
-
-  const clipKeys = Object.keys(studioClips).map(Number).sort((a, b) => a - b);
-  container.innerHTML = clipKeys.map(num => {
-    const clip = studioClips[num];
-    const isActive = (num === currentClipIndex);
-    return `
-      <div id="modal-deck-${num}" onclick="selectStudioClip(${num})"
-        class="rounded-2xl ${isActive ? 'border-2 border-blue-600 bg-blue-50/80 shadow-md' : 'border border-slate-200 bg-white hover:border-blue-400 hover:shadow-xs'} p-4 cursor-pointer transition-all">
-        <div class="flex items-center justify-between mb-1.5">
-          <div class="flex items-center gap-2">
-            <span class="rounded-lg ${isActive ? 'bg-blue-600 text-white' : 'bg-slate-700 text-white'} px-2.5 py-0.5 text-[11px] font-black">
-              쇼츠 ${String(num).padStart(2, '0')}${num === 1 ? ' (추천)' : ''}
-            </span>
-            <span class="text-[11px] font-extrabold text-blue-700 bg-blue-100/80 px-2 py-0.5 rounded-md">
-              ⚡ 45초 (1.3배속)
-            </span>
-          </div>
-          <span class="text-[11.5px] font-bold text-red-600">${clip.tag || '🔥 감정 고조도 98%'}</span>
-        </div>
-        <h4 id="deck-title-${num}" class="text-[15.5px] font-black text-slate-900 mt-1">"${clip.title}"</h4>
-        <div class="flex flex-wrap items-center gap-1.5 mt-2">
-          <span class="text-[10px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded">씬1 도입 10s</span>
-          <span class="text-slate-300 text-xs">➔</span>
-          <span class="text-[10px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded">씬2 전환 15s</span>
-          <span class="text-slate-300 text-xs">➔</span>
-          <span class="text-[10px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded">씬3 결단 15s</span>
-          <span class="text-slate-300 text-xs">➔</span>
-          <span class="text-[10px] bg-amber-100 text-amber-800 font-extrabold px-2 py-0.5 rounded">씬4 선포 5s</span>
-        </div>
-        <p id="deck-sub-${num}" class="text-[11.5px] text-slate-500 mt-1.5 truncate">
-          ${clip.sub || '원문 1분 10초 ➔ AI 숨소리/어·음 컷팅 + 1.3배속 = 45초 완성'}
-        </p>
-      </div>
-    `;
-  }).join('');
-}
-
 function startPlaybackTimer() {
-  if (playbackTimer) clearInterval(playbackTimer);
+  stopPlaybackTimer();
   playbackTimer = setInterval(() => {
     if (!isPlaying) return;
     const clip = studioClips[currentClipIndex] || studioClips[1];
-    const maxDur = clip.duration || 45;
+    const dur = clip.duration || 45;
 
-    if (currentInputMode === 'file' && currentFileVideoUrl) {
-      const vid = document.getElementById('modal-studio-video');
-      if (vid && vid.duration) clipElapsedSec = vid.currentTime % maxDur;
-    } else if (currentInputMode === 'file' && currentFileType === 'audio' && currentFileAudioUrl) {
-      const aud = document.getElementById('modal-studio-audio');
-      if (aud && aud.duration) clipElapsedSec = aud.currentTime % maxDur;
-    } else {
-      clipElapsedSec += 0.25 * currentPlaybackRate;
-      if (clipElapsedSec >= maxDur) {
-        clipElapsedSec = 0;
-        const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-        iframes.forEach(f => f && sendYtCommand(f.id, 'seekTo', [clip.startSec || 0, true]));
-      }
+    clipElapsedSec += 0.25 * currentPlaybackRate;
+    if (clipElapsedSec >= dur) {
+      clipElapsedSec = 0;
     }
 
     updatePlayerUI();
   }, 250);
 }
 
+function stopPlaybackTimer() {
+  if (playbackTimer) {
+    clearInterval(playbackTimer);
+    playbackTimer = null;
+  }
+}
+
 function updatePlayerUI() {
   const clip = studioClips[currentClipIndex] || studioClips[1];
   const curr = clipElapsedSec;
-  const dur = clip.duration;
+  const dur = clip.duration || 45;
 
-  const currEl = document.getElementById('studio-time-curr');
-  const totalEl = document.getElementById('studio-time-total');
-  const fillEl = document.getElementById('studio-progress-fill');
-  if (currEl) currEl.textContent = formatTime(curr);
-  if (totalEl) totalEl.textContent = formatTime(dur);
-  if (fillEl && dur > 0) fillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
+  ['studio', 'modal'].forEach(prefix => {
+    const currEl = document.getElementById(`${prefix}-time-curr`);
+    const totalEl = document.getElementById(`${prefix}-time-total`);
+    const fillEl = document.getElementById(`${prefix}-progress-fill`);
+    const titleEl = document.getElementById(`${prefix}-sermon-title`);
+    const scripEl = document.getElementById(`${prefix}-scripture-title`);
+    const churchEl = document.getElementById(`${prefix}-church-name`);
 
-  const mCurrEl = document.getElementById('modal-time-curr');
-  const mTotalEl = document.getElementById('modal-time-total');
-  const mFillEl = document.getElementById('modal-progress-fill');
-  if (mCurrEl) mCurrEl.textContent = formatTime(curr);
-  if (mTotalEl) mTotalEl.textContent = formatTime(dur);
-  if (mFillEl && dur > 0) mFillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
+    if (currEl) currEl.textContent = formatTime(curr);
+    if (totalEl) totalEl.textContent = formatTime(dur);
+    if (fillEl && dur > 0) fillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
+    if (titleEl) titleEl.textContent = clip.title;
+    if (scripEl) scripEl.textContent = generatedMinistryAssets.scripture || '시편 78장 17-25절';
+    if (churchEl) churchEl.textContent = '복의근원 관유중앙교회';
+  });
 
   const matchedScene = (clip.scenes && clip.scenes.find(s => curr >= s.start && curr < s.end)) || (clip.scenes && clip.scenes[clip.scenes.length - 1]);
   if (matchedScene) {
-    const sceneNameEl = document.getElementById('studio-scene-name');
-    const subEl = document.getElementById('studio-live-subtitle');
-    if (sceneNameEl) sceneNameEl.textContent = matchedScene.label;
-    if (subEl) subEl.innerHTML = matchedScene.subtitle;
-
-    const mSceneNameEl = document.getElementById('modal-scene-name');
-    const mSubEl = document.getElementById('modal-live-subtitle');
-    if (mSceneNameEl) mSceneNameEl.textContent = matchedScene.label;
-    if (mSubEl) mSubEl.innerHTML = matchedScene.subtitle;
+    ['studio', 'modal'].forEach(prefix => {
+      const sceneBadge = document.getElementById(`${prefix}-scene-badge`);
+      const subEl = document.getElementById(`${prefix}-live-subtitle`);
+      if (sceneBadge) sceneBadge.textContent = matchedScene.label;
+      if (subEl) subEl.innerHTML = matchedScene.subtitle;
+    });
 
     if (isPlaying && !isMuted && matchedScene) {
       pastoralAudio.speakLine(matchedScene.subtitle, currentPlaybackRate);
@@ -2169,33 +1950,25 @@ function updatePlayerUI() {
   }
 }
 
-// Play & Pause
 function toggleStudioPlay() {
   isPlaying = !isPlaying;
   if (!isPlaying) {
     pastoralAudio.stop();
-  } else if (!isMuted) {
+    stopPlaybackTimer();
+  } else {
+    if (isMuted) {
+      isMuted = false;
+      updateSoundIcons(true);
+    }
+    pastoralAudio.initContext();
+    startPlaybackTimer();
     const clip = studioClips[currentClipIndex] || studioClips[1];
     const curr = clipElapsedSec;
     const activeScene = (clip.scenes && clip.scenes.find(s => curr >= s.start && curr < s.end)) || (clip.scenes && clip.scenes[0]);
-    if (activeScene) pastoralAudio.speakLine(activeScene.subtitle, currentPlaybackRate);
-  }
-  const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-  const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-  const aud = document.getElementById('modal-studio-audio');
-
-  iframes.forEach(f => f && sendYtCommand(f.id, isPlaying ? 'playVideo' : 'pauseVideo'));
-  vids.forEach(v => {
-    if (v && !v.classList.contains('hidden')) {
-      if (isPlaying) v.play().catch(e => console.log(e));
-      else v.pause();
+    if (activeScene) {
+      pastoralAudio.speakLine(activeScene.subtitle, currentPlaybackRate);
     }
-  });
-  if (aud && !aud.classList.contains('hidden')) {
-    if (isPlaying) aud.play().catch(e => console.log(e));
-    else aud.pause();
   }
-
   updatePlayIcons(isPlaying);
 }
 
@@ -2210,21 +1983,45 @@ function updatePlayIcons(playing) {
   const playSvg = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
   if (icon1) icon1.innerHTML = playing ? pauseSvg : playSvg;
   if (icon2) icon2.innerHTML = playing ? pauseSvg : playSvg;
+
+  const pulpitImgs = [document.getElementById('studio-pulpit-img'), document.getElementById('modal-pulpit-img')];
+  pulpitImgs.forEach(img => {
+    if (img) {
+      img.style.animationPlayState = playing ? 'running' : 'paused';
+    }
+  });
+
+  const eqBars = document.querySelectorAll('.live-eq-bar');
+  eqBars.forEach(bar => {
+    if (!isMuted && playing) {
+      bar.style.animationPlayState = 'running';
+      bar.style.opacity = '1';
+    } else {
+      bar.style.animationPlayState = 'paused';
+      bar.style.opacity = '0.35';
+    }
+  });
 }
 
-// Audio Mute & Unmute
 function toggleStudioAudio() {
   isMuted = !isMuted;
-  const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-  const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-  const aud = document.getElementById('modal-studio-audio');
+  pastoralAudio.initContext();
 
-  iframes.forEach(f => f && sendYtCommand(f.id, isMuted ? 'mute' : 'unMute'));
-  vids.forEach(v => { if (v) v.muted = isMuted; });
-  if (aud) aud.muted = isMuted;
-
-  updateSoundIcons(!isMuted);
-  showToast(isMuted ? '소리가 꺼졌습니다. 🔇' : '소리가 켜졌습니다. 🔊', isMuted ? '🔇' : '🔊');
+  if (!isMuted) {
+    updateSoundIcons(true);
+    pastoralAudio.playSacredPianoAmbience();
+    const clip = studioClips[currentClipIndex] || studioClips[1];
+    const curr = clipElapsedSec;
+    const activeScene = (clip.scenes && clip.scenes.find(s => curr >= s.start && curr < s.end)) || (clip.scenes && clip.scenes[0]);
+    if (activeScene) {
+      pastoralAudio.speakLine(activeScene.subtitle, currentPlaybackRate);
+    }
+    showToast('🔊 1.3배속 설교 음성과 BGM이 활성화되었습니다!', '✨');
+  } else {
+    pastoralAudio.stop();
+    updateSoundIcons(false);
+    showToast('🔇 소리가 꺼졌습니다.', '🔇');
+  }
 }
 
 function toggleModalStudioAudio() {
@@ -2232,31 +2029,40 @@ function toggleModalStudioAudio() {
 }
 
 function updateSoundIcons(hasSound) {
-  const icon1 = document.getElementById('studio-sound-icon');
-  const icon2 = document.getElementById('modal-sound-icon');
-  const soundOnSvg = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
-  const soundOffSvg = '<path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
-  if (icon1) icon1.innerHTML = hasSound ? soundOnSvg : soundOffSvg;
-  if (icon2) icon2.innerHTML = hasSound ? soundOnSvg : soundOffSvg;
+  const btns = [document.getElementById('modal-sound-btn'), document.getElementById('studio-sound-btn')];
+  btns.forEach(btn => {
+    if (!btn) return;
+    if (hasSound) {
+      btn.className = 'shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[10.5px] font-black shadow-md transition-all bg-emerald-500 hover:bg-emerald-600 text-white cursor-pointer active:scale-95 animate-pulse';
+      btn.innerHTML = '<span>🔊</span><span>소리 ON</span>';
+      btn.title = '소리 끄기';
+    } else {
+      btn.className = 'shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[10.5px] font-bold shadow-sm transition-all bg-slate-700 hover:bg-slate-600 text-slate-300 cursor-pointer active:scale-95';
+      btn.innerHTML = '<span>🔇</span><span>소리 끔</span>';
+      btn.title = '소리 켜기';
+    }
+  });
+
+  const eqBars = document.querySelectorAll('.live-eq-bar');
+  eqBars.forEach(bar => {
+    if (hasSound && isPlaying) {
+      bar.style.animationPlayState = 'running';
+      bar.style.opacity = '1';
+    } else {
+      bar.style.animationPlayState = 'paused';
+      bar.style.opacity = '0.35';
+    }
+  });
 }
 
-// Scrubbing / Seeking
 function seekStudioVideo(e) {
   const track = document.getElementById('studio-progress-track');
   if (!track) return;
   const rect = track.getBoundingClientRect();
   const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
   const clip = studioClips[currentClipIndex] || studioClips[1];
-  clipElapsedSec = pct * clip.duration;
-
-  if (currentInputMode === 'file' && currentFileVideoUrl) {
-    const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-    vids.forEach(v => { if (v && v.duration) v.currentTime = clipElapsedSec; });
-  } else {
-    const targetSec = clip.startSec + clipElapsedSec;
-    const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-    iframes.forEach(f => f && sendYtCommand(f.id, 'seekTo', [targetSec, true]));
-  }
+  clipElapsedSec = pct * (clip.duration || 45);
+  pastoralAudio.stop();
   updatePlayerUI();
 }
 
@@ -2266,16 +2072,8 @@ function seekModalStudioVideo(e) {
   const rect = track.getBoundingClientRect();
   const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
   const clip = studioClips[currentClipIndex] || studioClips[1];
-  clipElapsedSec = pct * clip.duration;
-
-  if (currentInputMode === 'file' && currentFileVideoUrl) {
-    const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-    vids.forEach(v => { if (v && v.duration) v.currentTime = clipElapsedSec; });
-  } else {
-    const targetSec = clip.startSec + clipElapsedSec;
-    const iframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
-    iframes.forEach(f => f && sendYtCommand(f.id, 'seekTo', [targetSec, true]));
-  }
+  clipElapsedSec = pct * (clip.duration || 45);
+  pastoralAudio.stop();
   updatePlayerUI();
 }
 
