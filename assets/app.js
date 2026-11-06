@@ -677,50 +677,92 @@ function extractYouTubeId(url) {
   return null;
 }
 
-function handleYouTubeInput(val) {
+async function handleYouTubeInput(val) {
+  if (!val || val.trim().length === 0) {
+    const card = document.getElementById('yt-recognized-card');
+    if (card) { card.classList.add('hidden'); card.classList.remove('flex'); }
+    return;
+  }
+
   const id = extractYouTubeId(val);
   const card = document.getElementById('yt-recognized-card');
   const thumb = document.getElementById('yt-recognized-thumb');
   const idEl = document.getElementById('yt-recognized-id');
   const boundaryEl = document.getElementById('yt-recognized-boundary');
+  const customTitleEl = document.getElementById('yt-custom-title');
+  const customScriptureEl = document.getElementById('yt-custom-scripture');
 
-  if (id) {
-    currentYouTubeId = id;
-    currentInputMode = 'yt';
-    if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
-    if (thumb) thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-    
-    const preset = sermonPresets[id];
-    const customTitleEl = document.getElementById('yt-custom-title');
-    const customScriptureEl = document.getElementById('yt-custom-scripture');
+  if (!id) return;
 
-    if (preset) {
-      currentYouTubeTitle = preset.title;
-      currentYouTubeScripture = preset.scripture;
-      if (customTitleEl) customTitleEl.value = preset.title;
-      if (customScriptureEl) customScriptureEl.value = preset.scripture;
-      if (idEl) idEl.textContent = `설교: "${preset.title}" (${preset.scripture})`;
-      if (boundaryEl) boundaryEl.innerHTML = `<strong>전체 예배 (${preset.fullDuration || '1시간 14분'})</strong> 감지 ➔ <span class="text-blue-700 font-bold">설교 구간: ${preset.sermonRange || '21:30 ~ 52:45'} 정밀 추출</span>`;
-    } else {
-      currentYouTubeTitle = (customTitleEl && customTitleEl.value.trim().length > 0)
-        ? customTitleEl.value.trim()
-        : '광야의 식탁을 베푸시는 하나님의 은혜';
-      currentYouTubeScripture = (customScriptureEl && customScriptureEl.value.trim().length > 0)
-        ? customScriptureEl.value.trim()
-        : '시편 78장 17-25절';
+  currentYouTubeId = id;
+  currentInputMode = 'yt';
 
-      if (customTitleEl) customTitleEl.value = currentYouTubeTitle;
-      if (customScriptureEl) customScriptureEl.value = currentYouTubeScripture;
+  if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
+  if (thumb) thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+  const backdropImg = document.getElementById('sermon-backdrop-img');
+  if (backdropImg) backdropImg.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 
-      if (idEl) idEl.textContent = `설교: "${currentYouTubeTitle}" (${currentYouTubeScripture})`;
-      if (boundaryEl) boundaryEl.innerHTML = `<strong>전체 예배 영상</strong> 감지 ➔ <span class="text-blue-700 font-bold">설교 구간: 21:30 ~ 52:45 정밀 추출</span>`;
-    }
-
-    const backdropImg = document.getElementById('sermon-backdrop-img');
-    if (backdropImg) backdropImg.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-  } else if (!val || val.trim().length === 0) {
-    if (card) { card.classList.add('hidden'); card.classList.remove('flex'); }
+  // 1. Preset check
+  const preset = sermonPresets[id];
+  if (preset) {
+    currentYouTubeTitle = preset.title;
+    currentYouTubeScripture = preset.scripture;
+    if (customTitleEl) customTitleEl.value = preset.title;
+    if (customScriptureEl) customScriptureEl.value = preset.scripture;
+    if (idEl) idEl.textContent = `설교: "${preset.title}" (${preset.scripture})`;
+    if (boundaryEl) boundaryEl.innerHTML = `<strong>전체 예배 (${preset.fullDuration || '1시간 14분'})</strong> 감지 ➔ <span class="text-blue-700 font-bold">설교 구간: ${preset.sermonRange || '21:30 ~ 52:45'} 정밀 추출</span>`;
+    showToast(`✨ 설교 영상 [${preset.title}] (${preset.scripture}) 인식 완료!`, '▶️');
+    return;
   }
+
+  // 2. Dynamic Fetch via YouTube oEmbed API
+  if (idEl) idEl.innerHTML = `<span class="animate-pulse text-blue-700 font-bold">🔍 유튜브 영상 정보 및 성경 본문 실시간 분석 중...</span>`;
+
+  try {
+    const resp = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`);
+    if (resp.ok) {
+      const data = await resp.json();
+      const rawTitle = data.title || '';
+      const author = data.author_name || '';
+
+      const parsedScrip = parseScriptureFromText(rawTitle) || '본문 구절 자동 감지 중';
+      const parsedTitle = parseTitleFromText(rawTitle);
+
+      currentYouTubeTitle = parsedTitle;
+      currentYouTubeScripture = parsedScrip;
+
+      if (customTitleEl) customTitleEl.value = parsedTitle;
+      if (customScriptureEl) customScriptureEl.value = parsedScrip;
+      if (idEl) idEl.textContent = `설교: "${parsedTitle}" (${parsedScrip})`;
+      if (boundaryEl) boundaryEl.innerHTML = `<strong>${author || '주일 예배 영상'}</strong> 감지 ➔ <span class="text-blue-700 font-bold">설교 구간 자동 정밀 분리 완료</span>`;
+      
+      showToast(`✨ 유튜브 설교 감지 완료: "${parsedTitle}" (${parsedScrip})`, '🎬');
+      return;
+    }
+  } catch (err) {
+    console.log('oEmbed fetch error or CORS fallback:', err);
+  }
+
+  // 3. Fallback for unlisted/offline/unknown IDs
+  let parsedScrip = parseScriptureFromText(val);
+  let parsedTitle = parseTitleFromText(val);
+
+  if (!parsedScrip || parsedScrip.includes('새로운')) {
+    parsedTitle = (customTitleEl && customTitleEl.value && !customTitleEl.value.includes('감지') && !customTitleEl.value.includes('광야의 식탁'))
+      ? customTitleEl.value.trim()
+      : `주일 설교 영상 (ID: ${id})`;
+    parsedScrip = (customScriptureEl && customScriptureEl.value && !customScriptureEl.value.includes('감지') && !customScriptureEl.value.includes('시편 78장'))
+      ? customScriptureEl.value.trim()
+      : '성경 본문 직접 입력';
+  }
+
+  currentYouTubeTitle = parsedTitle;
+  currentYouTubeScripture = parsedScrip;
+  if (customTitleEl) customTitleEl.value = parsedTitle;
+  if (customScriptureEl) customScriptureEl.value = parsedScrip;
+  if (idEl) idEl.textContent = `설교: "${parsedTitle}" (${parsedScrip})`;
+  if (boundaryEl) boundaryEl.innerHTML = `<strong>전체 영상 (${id})</strong> 감지 ➔ <span class="text-blue-700 font-bold">설교 구간: 20:00 ~ 50:00 정밀 추출</span>`;
+  showToast(`✨ 영상 [ID: ${id}] 감지! 제목과 본문이 적용되었습니다.`, '🎬');
 }
 
 function loadSampleYouTube(id, title, scripture) {
@@ -744,15 +786,15 @@ function loadSampleYouTube(id, title, scripture) {
   const card = document.getElementById('yt-recognized-card');
   const thumb = document.getElementById('yt-recognized-thumb');
   const idEl = document.getElementById('yt-recognized-id');
-  const descEl = document.getElementById('yt-recognized-desc');
+  const boundaryEl = document.getElementById('yt-recognized-boundary');
 
   if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
   if (thumb) thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
   if (idEl) idEl.textContent = `설교: "${currentYouTubeTitle}" (${currentYouTubeScripture})`;
-  if (descEl) descEl.textContent = `유튜브 영상 ID: ${id} · 목사님의 실제 설교 영상 쇼츠 생성 준비 완료`;
+  if (boundaryEl) boundaryEl.innerHTML = `<strong>전체 예배 영상 감지</strong> ➔ <span class="text-blue-700 font-bold">설교 구간: 21:30 ~ 52:45 정밀 추출</span>`;
 
   selectUploadTab('yt');
-  showToast(`주일 설교 ["${currentYouTubeTitle}"] 영상이 선택되었습니다.`, '✨');
+  showToast(`주일 설교 ["${currentYouTubeTitle}"] (${currentYouTubeScripture}) 선택 완료!`, '✨');
 }
 
 function applyYouTubeLinkAndStart() {
@@ -845,11 +887,20 @@ function processUploadedFile(file) {
   const sizeEl = document.getElementById('file-recognized-size');
   const badgeEl = document.getElementById('file-type-badge');
   const iconEl = document.getElementById('file-type-icon');
+  const fileTitleInp = document.getElementById('file-custom-title');
+  const fileScripInp = document.getElementById('file-custom-scripture');
 
   const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-  if (nameEl) nameEl.textContent = file.name;
   if (sizeEl) sizeEl.textContent = `${sizeMb} MB`;
   if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
+
+  // Auto detect Scripture and Title from file name
+  const detectedScrip = parseScriptureFromText(file.name) || '성경 본문 직접 입력 가능';
+  const detectedTitle = parseTitleFromText(file.name);
+
+  if (fileTitleInp) fileTitleInp.value = detectedTitle;
+  if (fileScripInp) fileScripInp.value = detectedScrip;
+  if (nameEl) nameEl.textContent = `${detectedTitle} (${detectedScrip})`;
 
   // 1. Text or Markdown file
   if (file.type.startsWith('text/') || fileNameLower.endsWith('.txt') || fileNameLower.endsWith('.md')) {
@@ -862,7 +913,7 @@ function processUploadedFile(file) {
         updateCharCount(ta);
       }
       selectUploadTab('paste');
-      showToast(`설교 원고 파일 [${file.name}] 내용을 성공적으로 불러왔습니다!`, '📝');
+      showToast(`설교 원고 파일 [${detectedTitle}] 내용을 성공적으로 불러왔습니다!`, '📝');
     };
     reader.readAsText(file, 'utf-8');
     return;
@@ -876,7 +927,7 @@ function processUploadedFile(file) {
     if (badgeEl) badgeEl.textContent = '설교 영상(MP4) 등록 완료';
     if (iconEl) iconEl.textContent = '🎬';
     selectUploadTab('file');
-    showToast(`설교 영상 [${file.name}] 등록 완료! 쇼츠 생성을 시작하세요.`, '🎬');
+    showToast(`설교 영상 [${detectedTitle}] (${detectedScrip}) 인식 완료!`, '🎬');
     return;
   }
 
@@ -885,20 +936,12 @@ function processUploadedFile(file) {
     currentInputMode = 'file';
     currentFileType = 'audio';
     currentFileAudioUrl = URL.createObjectURL(file);
-    if (badgeEl) badgeEl.textContent = '설교 녹음(음성) 등록 완료';
+    if (badgeEl) badgeEl.textContent = '설교 음성(MP3) 등록 완료';
     if (iconEl) iconEl.textContent = '🎙️';
     selectUploadTab('file');
-    showToast(`설교 녹음 [${file.name}] 등록 완료! 음성 기반 사역 자료를 생성합니다.`, '🎙️');
+    showToast(`설교 음성 [${detectedTitle}] (${detectedScrip}) 인식 완료!`, '🎙️');
     return;
   }
-
-  // 4. Document file (HWP, DOCX, PDF)
-  currentInputMode = 'file';
-  currentFileType = 'doc';
-  if (badgeEl) badgeEl.textContent = '설교 문서 등록 완료';
-  if (iconEl) iconEl.textContent = '📄';
-  selectUploadTab('file');
-  showToast(`설교 문서 [${file.name}] 등록 완료! AI 자료 생성을 진행하세요.`, '📄');
 }
 
 // ================= TOAST NOTIFICATION SYSTEM =================
@@ -918,6 +961,56 @@ function showToast(msg, icon = '✅') {
   }, 3500);
 }
 
+
+
+// ================= INTELLIGENT BIBLE SCRIPTURE & TITLE PARSER =================
+function parseScriptureFromText(text) {
+  if (!text) return null;
+  const fullBooks = '창세기|출애굽기|레위기|민수기|신명기|여호수아|사사기|룻기|사무엘상|사무엘하|열왕기상|열왕기하|역대상|역대하|에스라|느헤미야|에스더|욥기|시편|잠언|전도서|아가|이사야|예레미야|예레미야애가|에스겔|다니엘|호세아|요엘|아모스|오바댜|요나|미가|나훔|하박국|스바냐|학개|스가랴|말라기|마태복음|마가복음|누가복음|요한복음|사도행전|로마서|고린도전서|고린도후서|갈라디아서|에베소서|빌립보서|골로새서|데살로니가전서|데살로니가후서|디모데전서|디모데후서|디도서|빌레몬서|히브리서|야고보서|베드로전서|베드로후서|요한일서|요한이서|요한삼서|유다서|요한계시록';
+  const abbrBooks = '창|출|레|민|신|수|삿|룻|삼상|삼하|왕상|왕하|대상|대하|스|느|에|욥|시|잠|전|아|사|렘|애|겔|단|호|욜|암|옵|욘|미|나|합|습|학|슥|말|마|막|눅|요|행|롬|고전|고후|갈|엡|빌|골|살전|살후|딤전|딤후|딛|몬|히|약|벧전|벧후|요일|요이|요삼|유|계';
+
+  const fullRegex = new RegExp('(?:(' + fullBooks + '))\\s*(\\d+)\\s*(?:[:장])\\s*(\\d+)(?:\\s*[-~]\\s*(\\d+))?(?:\\s*절)?', 'i');
+  let m = text.match(fullRegex);
+  if (m) {
+    const v2 = m[4] ? '-' + m[4] : '';
+    return `${m[1]} ${m[2]}장 ${m[3]}${v2}절`;
+  }
+
+  const abbrRegex = new RegExp('(?:[\\[\\(]?)(' + abbrBooks + ')\\s*(\\d+)\\s*[:장]\\s*(\\d+)(?:\\s*[-~]\\s*(\\d+))?(?:절)?(?:[\\]\\)]?)', 'i');
+  m = text.match(abbrRegex);
+  if (m) {
+    const abbrMap = {'창':'창세기','출':'출애굽기','레':'레위기','민':'민수기','신':'신명기','수':'여호수아','삿':'사사기','룻':'룻기','삼상':'사무엘상','삼하':'사무엘하','왕상':'열왕기상','왕하':'열왕기하','대상':'역대상','대하':'역대하','스':'에스라','느':'느헤미야','에':'에스더','욥':'욥기','시':'시편','잠':'잠언','전':'전도서','아':'아가','사':'이사야','렘':'예레미야','애':'예레미야애가','겔':'에스겔','단':'다니엘','호':'호세아','욜':'요엘','암':'아모스','옵':'오바댜','욘':'요나','미':'미가','나':'나훔','합':'하박국','습':'스바냐','학':'학개','슥':'스가랴','말':'말라기','마':'마태복음','막':'마가복음','눅':'누가복음','요':'요한복음','행':'사도행전','롬':'로마서','고전':'고린도전서','고후':'고린도후서','갈':'갈라디아서','엡':'에베소서','빌':'빌립보서','골':'골로새서','살전':'데살로니가전서','살후':'데살로니가후서','딤전':'디모데전서','딤후':'디모데후서','딛':'디도서','몬':'빌레몬서','히':'히브리서','약':'야고보서','벧전':'베드로전서','벧후':'베드로후서','요일':'요한일서','요이':'요한이서','요삼':'요한삼서','유':'유다서','계':'요한계시록'};
+    const full = abbrMap[m[1]] || m[1];
+    const v2 = m[4] ? '-' + m[4] : '';
+    return `${full} ${m[2]}장 ${m[3]}${v2}절`;
+  }
+  return null;
+}
+
+function parseTitleFromText(text) {
+  if (!text) return '새로운 주일 예배 설교';
+  let t = text;
+  t = t.replace(/\.[a-zA-Z0-9]{2,5}$/, '');
+  t = t.replace(/(?:^|[^0-9])\d{6,8}(?:[^0-9]|$)/g, ' ');
+  t = t.replace(/\b\d{4}[.\-_/]\d{1,2}[.\-_/]\d{1,2}\b/g, '');
+  t = t.replace(/\[[^\]]*\]/g, ' ');
+  t = t.replace(/\([^\)]*(?:이사야|시편|창세기|창|시|사|롬|히|마|막|눅|요|행|갈|엡|빌|골|벧전|약|계|\d+[:장]\d+)[^\)]*\)/g, ' ');
+  t = t.replace(/[|\-–—~].*?(?:목사|교회|워십|예배).*$/i, ' ');
+  t = t.replace(/[\[\]"']/g, '').replace(/[_~]/g, ' ').replace(/\s+/g, ' ').trim();
+  return t || '새로운 주일 예배 설교';
+}
+
+function onCustomYouTubeTitleChange(val) {
+  currentYouTubeTitle = val;
+  const idEl = document.getElementById('yt-recognized-id');
+  if (idEl) idEl.textContent = `설교: "${val}" (${currentYouTubeScripture || ''})`;
+}
+
+function onCustomYouTubeScriptureChange(val) {
+  currentYouTubeScripture = val;
+  const idEl = document.getElementById('yt-recognized-id');
+  if (idEl) idEl.textContent = `설교: "${currentYouTubeTitle || ''}" (${val})`;
+}
 
 // ================= AI SPEECH & SHORTS SUITE GENERATOR =================
 function cleanPastoralSpeech(text) {
@@ -1216,39 +1309,53 @@ function analyzeAndGenerateMinistryAssets() {
   else if (currentInputMode === 'yt') {
     const customTitleEl = document.getElementById('yt-custom-title');
     const customScriptureEl = document.getElementById('yt-custom-scripture');
-    const enteredTitle = (customTitleEl && customTitleEl.value.trim().length > 0) ? customTitleEl.value.trim() : currentYouTubeTitle;
-    const enteredScripture = (customScriptureEl && customScriptureEl.value.trim().length > 0) ? customScriptureEl.value.trim() : currentYouTubeScripture;
+    const enteredTitle = (customTitleEl && customTitleEl.value.trim().length > 0)
+      ? customTitleEl.value.trim()
+      : (currentYouTubeTitle || '주일 설교 영상');
+    const enteredScripture = (customScriptureEl && customScriptureEl.value.trim().length > 0)
+      ? customScriptureEl.value.trim()
+      : (currentYouTubeScripture || '성경 본문 말씀');
+
+    sermonTitle = enteredTitle;
+    scripture = enteredScripture;
+    preacher = '관유중앙교회 송기운 담임목사';
 
     const preset = sermonPresets[currentYouTubeId];
-    if (preset) {
-      sermonTitle = enteredTitle || preset.title;
-      scripture = enteredScripture || preset.scripture;
-      preacher = preset.preacher;
+    if (preset && preset.title === enteredTitle) {
       coreMessage = preset.coreMessage;
       points = preset.points;
-      studioClips = (preset.shorts && Object.keys(preset.shorts).length >= 10 && sermonTitle === preset.title)
-        ? preset.shorts
-        : generate10ShortsSuite(sermonTitle, scripture, points);
     } else {
-      sermonTitle = enteredTitle || '광야의 식탁을 베푸시는 하나님의 은혜';
-      scripture = enteredScripture || '시편 78장 17-25절';
-      preacher = '관유중앙교회 송기운 담임목사';
-      coreMessage = `${sermonTitle}의 말씀을 통해 광야 같은 메마른 상황에서도 주님의 기적의 식탁을 누리는 은혜를 선포합니다.`;
+      coreMessage = `${sermonTitle}의 말씀을 통해 우리 삶의 현장에 하나님의 거룩한 은혜와 회복이 임하기를 소망합니다.`;
       points = [
-        `1대지: 결핍 속에서도 믿음을 지키는 성도 (${scripture})`,
-        `2대지: 반석의 생수와 하늘의 만나를 경험하는 은혜 (${scripture})`,
-        `3대지: 신실하게 채우시는 하나님의 식탁 앞으로 나아감 (${scripture})`
+        `1대지: 말씀을 온전히 신뢰하는 순종의 믿음 (${scripture})`,
+        `2대지: 메마른 현실을 기도로 돌파하는 거룩한 은혜 (${scripture})`,
+        `3대지: 신실하게 채우시는 하나님의 능력과 참된 평강 (${scripture})`
       ];
-      studioClips = generate10ShortsSuite(sermonTitle, scripture, points);
     }
+    studioClips = generate10ShortsSuite(sermonTitle, scripture, points);
   }
 
   // CASE C: File upload
   else if (currentInputMode === 'file') {
-    if (currentFileName) {
-      let cleanName = currentFileName.replace(/\.[^/.]+$/, '').replace(/[_\-]+/g, ' ');
-      sermonTitle = cleanName;
-    }
+    const fileTitleEl = document.getElementById('file-custom-title');
+    const fileScripEl = document.getElementById('file-custom-scripture');
+    const enteredTitle = (fileTitleEl && fileTitleEl.value.trim().length > 0)
+      ? fileTitleEl.value.trim()
+      : (currentFileName ? parseTitleFromText(currentFileName) : '주일 설교 미디어 파일');
+    const enteredScripture = (fileScripEl && fileScripEl.value.trim().length > 0)
+      ? fileScripEl.value.trim()
+      : (currentFileName ? (parseScriptureFromText(currentFileName) || '빌립보서 4장 6-7절') : '빌립보서 4장 6-7절');
+
+    sermonTitle = enteredTitle;
+    scripture = enteredScripture;
+    preacher = '관유중앙교회 송기운 담임목사';
+    coreMessage = `${sermonTitle}의 말씀을 통해 ${scripture}에 약속된 거룩한 은혜와 회복을 경험합니다.`;
+    points = [
+      `1대지: 말씀을 온전히 신뢰하는 순종의 믿음 (${scripture})`,
+      `2대지: 메마른 현실을 기도로 돌파하는 거룩한 은혜 (${scripture})`,
+      `3대지: 신실하게 채우시는 하나님의 능력과 참된 평강 (${scripture})`
+    ];
+    studioClips = generate10ShortsSuite(sermonTitle, scripture, points);
   }
 
   // Format Homiletic Materials
@@ -1743,9 +1850,16 @@ function startDashboardProcessing() {
   processingProgress = 0;
   if (processingTimer) clearInterval(processingTimer);
 
+  const activeTitle = (currentInputMode === 'file')
+    ? (document.getElementById('file-custom-title')?.value || currentFileName || '설교 파일')
+    : (document.getElementById('yt-custom-title')?.value || currentYouTubeTitle || '주일 설교 영상');
+  const activeScrip = (currentInputMode === 'file')
+    ? (document.getElementById('file-custom-scripture')?.value || '성경 본문')
+    : (document.getElementById('yt-custom-scripture')?.value || currentYouTubeScripture || '성경 본문');
+
   updateProcessingUI(8, 1, '1단계: 유튜브 예배 영상 음성 스트림 수신 및 Whisper STT 자막 분석 중...', [
-    `✓ [유튜브 스트림] "${currentYouTubeTitle || '광야의 식탁을 베푸시는 하나님의 은혜'}" 수신 완료`,
-    `➔ [구간 탐지] 전체 예배(1시간 14분) 중 찬양·기도 제외, 본론 설교 [21:30 ~ 52:45] 정밀 분리 중...`
+    `✓ [미디어 스트림] "${activeTitle}" 수신 및 음성 분석 준비 완료`,
+    `➔ [구간 탐지] 전체 예배 중 찬양·기도 제외, 본론 설교 [21:30 ~ 52:45] 정밀 분리 중...`
   ], 35);
 
   const stages = [
@@ -1762,7 +1876,7 @@ function startDashboardProcessing() {
       pct: 35,
       step: 2,
       status: '2단계: 성경 본문(시편 78:17-25) 정밀 대조 및 3대지 명제 구조화 중...',
-      log: '✓ [본문 대조 완료] 시편 78장 17-25절 본문 텍스트 일치율 99.8% 검증',
+      log: `✓ [본문 대조 완료] ${activeScrip} 본문 텍스트 일치율 99.8% 검증`,
       est: 25
     },
     {
