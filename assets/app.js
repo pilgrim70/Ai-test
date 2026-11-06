@@ -347,50 +347,17 @@ let generatedMinistryAssets = {
   ytInfoText: ''
 };
 
-// ================= PASTORAL SPEECH & SACRED AUDIO ENGINE =================
+// ================= PASTORAL SPEECH AUDIO ENGINE (NO BGM, PURE VOICE) =================
 class PastoralAudioEngine {
   constructor() {
-    this.audioCtx = null;
     this.synth = typeof window !== 'undefined' ? window.speechSynthesis : null;
     this.currentUtterance = null;
     this.lastSpokenText = '';
   }
 
   initContext() {
-    if (!this.audioCtx && typeof window !== 'undefined') {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (AudioCtx) this.audioCtx = new AudioCtx();
-    }
-    if (this.audioCtx && this.audioCtx.state === 'suspended') {
-      this.audioCtx.resume();
-    }
     if (this.synth && this.synth.paused) {
       this.synth.resume();
-    }
-  }
-
-  playSacredPianoAmbience() {
-    try {
-      this.initContext();
-      if (!this.audioCtx) return;
-      const chordFrequencies = [130.81, 196.00, 261.63, 329.63, 493.88];
-      const now = this.audioCtx.currentTime;
-      
-      chordFrequencies.forEach((freq, idx) => {
-        const osc = this.audioCtx.createOscillator();
-        const gain = this.audioCtx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(freq, now + idx * 0.05);
-        gain.gain.setValueAtTime(0.001, now);
-        gain.gain.linearRampToValueAtTime(0.22, now + 0.12 + idx * 0.05);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 5.2);
-        osc.connect(gain);
-        gain.connect(this.audioCtx.destination);
-        osc.start(now + idx * 0.05);
-        osc.stop(now + 5.5);
-      });
-    } catch(e) {
-      console.warn('Piano ambience error:', e);
     }
   }
 
@@ -405,23 +372,37 @@ class PastoralAudioEngine {
     this.lastSpokenText = cleanText;
 
     try {
-      this.initContext();
       this.synth.cancel();
-      if (this.synth.paused) this.synth.resume();
+      setTimeout(() => {
+        try {
+          if (this.synth.paused) this.synth.resume();
 
-      const utter = new SpeechSynthesisUtterance(cleanText);
-      utter.lang = 'ko-KR';
-      utter.rate = Math.min(1.5, Math.max(0.8, rate));
-      utter.pitch = 0.95;
-      utter.volume = 1.0;
+          const utter = new SpeechSynthesisUtterance(cleanText);
+          utter.lang = 'ko-KR';
+          utter.rate = Math.min(1.5, Math.max(0.8, rate || 1.3));
+          utter.pitch = 0.95;
+          utter.volume = 1.0;
 
-      const voices = this.synth.getVoices();
-      const koVoice = voices.find(v => v.lang.startsWith('ko') && (v.name.includes('Yuna') || v.name.includes('Google') || v.name.includes('Korean') || v.name.includes('Heami') || v.name.includes('Seoyeon')));
-      if (koVoice) utter.voice = koVoice;
+          const voices = this.synth.getVoices();
+          const koVoice = voices.find(v => v.lang && v.lang.startsWith('ko') && (v.name.includes('Yuna') || v.name.includes('Google') || v.name.includes('Korean') || v.name.includes('Heami') || v.name.includes('Seoyeon'))) ||
+                         voices.find(v => v.lang && v.lang.startsWith('ko'));
+          if (koVoice) utter.voice = koVoice;
 
-      this.currentUtterance = utter;
-      this.synth.speak(utter);
-      this.playSacredPianoAmbience();
+          utter.onstart = () => {
+            const eqBars = document.querySelectorAll('.live-eq-bar');
+            eqBars.forEach(b => { b.style.animationPlayState = 'running'; b.style.opacity = '1'; });
+          };
+          utter.onend = () => {
+            const eqBars = document.querySelectorAll('.live-eq-bar');
+            eqBars.forEach(b => { b.style.animationPlayState = 'paused'; b.style.opacity = '0.35'; });
+          };
+
+          this.currentUtterance = utter;
+          this.synth.speak(utter);
+        } catch(err) {
+          console.warn('Speech synthesis error:', err);
+        }
+      }, 40);
     } catch(e) {
       console.warn('Speech synthesis error:', e);
     }
@@ -432,6 +413,8 @@ class PastoralAudioEngine {
       this.synth.cancel();
     }
     this.lastSpokenText = '';
+    const eqBars = document.querySelectorAll('.live-eq-bar');
+    eqBars.forEach(b => { b.style.animationPlayState = 'paused'; b.style.opacity = '0.35'; });
   }
 }
 
@@ -1681,12 +1664,17 @@ function finalizeProcessing() {
   if (actionBox) {
     actionBox.classList.remove('hidden');
     actionBox.classList.add('flex');
-    actionBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    actionBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   addSermonToRecentHistory(currentYouTubeId || 'F3IRIXNF1V8', currentYouTubeTitle || '광야의 식탁을 베푸시는 하나님의 은혜', currentYouTubeScripture || '시편 78장 17-25절');
 
-  showToast('🎉 설교 심층 분석 및 10종 사역 자료 생성이 완료되었습니다!', '✨');
+  showToast('🎉 설교 심층 분석 및 10편의 쇼츠 생성이 완료되었습니다!', '✨');
+
+  // Auto-launch the Studio Modal after 1.2 seconds so user sees all 10 shorts immediately!
+  setTimeout(() => {
+    openStudioModalAfterProcessing();
+  }, 1200);
 }
 
 function openStudioModalAfterProcessing() {
