@@ -373,6 +373,7 @@ class PastoralAudioEngine {
 
     try {
       this.synth.cancel();
+      // Chrome delay fix to prevent synchronous cancel-and-speak cancellation bug
       setTimeout(() => {
         try {
           if (this.synth.paused) this.synth.resume();
@@ -426,6 +427,7 @@ let currentShortsLayout = 1;
 function setShortsLayoutStyle(num) {
   currentShortsLayout = parseInt(num) || 1;
   
+  // Update button highlights (both modal and in-page)
   [1, 2, 3, 4, 5].forEach(i => {
     const btns = [document.getElementById(`layout-choice-${i}`), document.getElementById(`inpage-layout-choice-${i}`)];
     btns.forEach(btn => {
@@ -451,6 +453,7 @@ function setShortsLayoutStyle(num) {
     if (b) b.textContent = `현재 적용: ${styleNames[currentShortsLayout]}`;
   });
 
+  // Apply layout classes to phone shells
   const shells = [document.getElementById('modal-phone-shell'), document.getElementById('studio-phone-shell')];
   shells.forEach(shell => {
     if (!shell) return;
@@ -463,6 +466,7 @@ function setShortsLayoutStyle(num) {
 
   showToast(`🎨 ${styleNames[currentShortsLayout]} 레이아웃이 적용되었습니다!`, '✨');
 }
+
 
 function forceUnmuteAndPlaySound() {
   isMuted = false;
@@ -914,6 +918,230 @@ function showToast(msg, icon = '✅') {
   }, 3500);
 }
 
+
+// ================= AI SPEECH & SHORTS SUITE GENERATOR =================
+function cleanPastoralSpeech(text) {
+  if (!text) return '';
+  return text
+    .replace(/\b(어|으|음|아|그|저|에|음\.\.\.)\b/g, '')
+    .replace(/(어\s+|으\s+|음\s+|아\s+|그\s+|저\s+)/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function generate10ShortsSuite(title, scripture, points) {
+  const cleanTitle = (title || '광야의 식탁을 베푸시는 하나님의 은혜').replace(/[\[\]"']/g, '').trim();
+  const scrip = scripture || '시편 78장 17-25절';
+  const p1 = (points && points[0]) || '말씀을 따라가는 순종의 믿음';
+  const p2 = (points && points[1]) || '감사로 상황을 돌파하는 영적 권세';
+  const p3 = (points && points[2]) || '마음과 생각을 지키시는 참된 평강';
+
+  const themes = [
+    { num: 1, title: `${cleanTitle} - 복의 근원이 되는 결단`, tag: '🔥 감정 고조도 99% (결단)', s1: '머무르는 안주에는 역사가 일어나지 않습니다. 익숙한 불안의 자리를 털고 일어나십시오.', s2: `세상은 조건을 보지만 하나님은 당신의 순종을 보십니다. ${p1}!`, s3: '상황보다 크신 하나님께서 당신을 반드시 거룩한 복의 통로로 세우실 것입니다.', s4: '너는 복이 될지라! 오늘 주님의 그 선언을 믿음으로 취하십시오!' },
+    { num: 2, title: `염려를 기도로 바꾸는 단 하나의 비결`, tag: '💡 감동·위로 98% (믿음)', s1: '밤새 고민해도 바뀌는 것은 없습니다. 염려는 해결이 아니라 영혼의 소모입니다.', s2: `어떤 절망 속에서도 감사의 기도를 올릴 때 기적이 시작됩니다. ${p2}!`, s3: '내 계산이 끝나는 자리에서 비로소 하나님의 전능하신 손길이 일하십니다.', s4: '염려를 기도로 바꾸십시오! 하나님의 평강이 당신을 성벽처럼 지키십니다!' },
+    { num: 3, title: `광야의 식탁을 베푸시는 하나님의 손길`, tag: '⚡️ 능력·치유 97% (회복)', s1: '사방이 메마른 광야처럼 캄캄할 때, 낙심하며 불평의 늪에 빠지지 마십시오.', s2: '하나님은 반석을 쳐서 생수를 내시며 하늘 문을 열어 만나를 쏟아부으십니다.', s3: '인간의 방법이 막힌 그곳이 하나님의 기적이 시작되는 은혜의 식탁입니다.', s4: '두려워하지 마십시오! 주님이 광야 한가운데서 당신을 위해 식탁을 베푸십니다!' },
+    { num: 4, title: `내 힘을 뺄 때 시작되는 주님의 기적`, tag: '🔥 겸손·권능 96% (치유)', s1: '내가 쥐고 흔들려 하는 한, 하나님이 역사하실 자리는 없습니다.', s2: '야곱이 얍복강에서 환도뼈가 꺾였을 때, 비로소 이스라엘의 복이 임했습니다.', s3: '내 자존심과 고집을 십자가 앞에 내려놓을 때 하늘의 능력이 나타납니다.', s4: '손을 펴고 주님께 맡기십시오! 당신이 항복할 때 주님이 승리하십니다!' },
+    { num: 5, title: `시련이 인내를, 인내가 소망을 낳는다`, tag: '💡 소망·비전 96% (인내)', s1: '왜 사랑하는 자녀에게 이토록 거친 풍랑과 불같은 시험이 찾아올까요?', s2: '용광로의 뜨거운 불을 통과하지 않고는 순도 99%의 정금이 나올 수 없습니다.', s3: '지금 겪는 시련은 망하게 하려는 것이 아니라 더 큰 축복을 담는 그릇을 빚는 과정입니다.', s4: '끝까지 인내하십시오! 눈물로 씨를 뿌린 그 자리에서 기쁨의 단을 거둘 것입니다!' },
+    { num: 6, title: `세상이 줄 수 없는 하나님의 평강`, tag: '⚡️ 평안·담대 95% (평안)', s1: '통장의 잔고나 세상의 안락이 주는 평안은 작은 바람에도 무너집니다.', s2: '예수 그리스도의 평강은 풍랑 속에서도 베개를 베고 잘 수 있는 신비로운 평안입니다.', s3: `${p3}! 주님이 나와 함께 계시기에 폭풍 속에서도 영혼은 고요합니다.`, s4: '그리스도의 평강이 오늘 여러분의 가정과 일터를 든든히 지키실지어다!' },
+    { num: 7, title: `감사함으로 그 문에 들어가는 권세`, tag: '🔥 영적 권세 98% (전환)', s1: '문제가 해결된 뒤의 감사는 누구나 하지만, 흑암 속의 감사는 사탄을 꺾는 폭탄입니다.', s2: '바울과 실라가 감옥 깊은 곳에서 찬송할 때 옥터가 흔들리고 차꼬가 풀렸습니다.', s3: '가장 답답하고 원망스러운 자리에서 먼저 감사의 제단을 쌓으십시오.', s4: '당신의 입술에서 터져 나오는 감사가 닫힌 기적의 문을 활짝 열 것입니다!' },
+    { num: 8, title: `너는 내 것이라 지명하여 부르신 은혜`, tag: '💡 정체성·회복 95% (은혜)', s1: '세상은 당신의 조건과 성과로 가치를 매기지만, 주님은 피값으로 당신을 사셨습니다.', s2: '물 가운데를 지날 때에도 물이 침몰치 못하며 불 가운데서도 타지 아니할 것입니다.', s3: '세상의 초라한 시선에 위축되지 마십시오. 당신은 만왕의 왕의 보배로운 자녀입니다.', s4: '두려워 말라 내가 너를 구속하였고 지명하여 불렀나니 너는 내 것이라!' },
+    { num: 9, title: `무너진 제단을 다시 수축하는 믿음`, tag: '⚡️ 부흥·결단 94% (회복)', s1: '갈멜산에서 엘리야가 불을 내리기 전 가장 먼저 한 일은 무너진 제단을 고치는 일이었습니다.', s2: '기도가 식어버리고 예배의 감격이 무뎌진 자리에 하늘의 부흥이 임할 수 없습니다.', s3: '바쁘다는 핑계로 놓쳤던 무릎의 자리, 말씀의 자리를 오늘 다시 수축하십시오.', s4: '당신의 무너진 예배가 살아날 때 하늘의 불과 거룩한 단비가 쏟아집니다!' },
+    { num: 10, title: `오늘 당신의 삶을 바꾸시는 주님의 음성`, tag: '🔥 복음 초청 99% (구원)', s1: '오늘 이 시간, 이 자리에 우연히 앉아 계신 분은 단 한 사람도 없습니다.', s2: '태초부터 당신을 향한 거룩한 계획을 품으시고 십자가 사랑으로 찾아오신 주님의 부르심입니다.', s3: '내일로 미루지 마십시오. 오늘 마음의 문을 활짝 열고 주님을 구주로 영접하십시오.', s4: '주 예수 그리스도와 함께하는 영원한 생명의 역사가 지금 시작됩니다!' }
+  ];
+
+  const result = {};
+  themes.forEach(t => {
+    result[t.num] = {
+      title: t.title,
+      tag: t.tag,
+      sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · 1.3배속 45초',
+      startSec: (t.num - 1) * 120,
+      duration: 45,
+      scenes: [
+        { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: `“${cleanPastoralSpeech(t.s1)}”` },
+        { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: `“${cleanPastoralSpeech(t.s2)}”` },
+        { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: `“${cleanPastoralSpeech(t.s3)}”` },
+        { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: `“${cleanPastoralSpeech(t.s4)}”` }
+      ]
+    };
+  });
+  return result;
+}
+
+function renderAll10ShortsDecks() {
+  if (!studioClips) return;
+  ['studio', 'modal'].forEach(prefix => {
+    const container = document.getElementById(`${prefix}-shorts-card-list`);
+    if (!container) return;
+
+    const clipKeys = Object.keys(studioClips).map(Number).sort((a, b) => a - b);
+    container.innerHTML = clipKeys.map(num => {
+      const clip = studioClips[num];
+      const isActive = (num === (currentClipIndex || 1));
+      const borderClass = isActive
+        ? 'border-2 border-blue-600 bg-blue-50/80 shadow-md ring-2 ring-blue-400/30'
+        : 'border border-slate-200 bg-white hover:border-blue-400 opacity-90 hover:opacity-100';
+      const badgeBg = isActive ? 'bg-blue-600 text-white' : 'bg-slate-700 text-white';
+
+      const s1Text = (clip.scenes && clip.scenes[0])
+        ? clip.scenes[0].subtitle.replace(/<[^>]*>?/gm, '').replace(/[“"”]/g, '')
+        : '';
+
+      return `
+        <div id="${prefix}-deck-${num}" onclick="selectStudioClip(${num})"
+          class="rounded-2xl ${borderClass} p-4 sm:p-4.5 cursor-pointer transition-all">
+          <div class="flex items-center justify-between mb-1.5">
+            <div class="flex items-center gap-1.5">
+              <span class="rounded-md ${badgeBg} px-2 py-0.5 text-[11px] font-bold">
+                쇼츠 ${String(num).padStart(2, '0')}${num === 1 ? ' (추천)' : ''}
+              </span>
+              <span class="text-[10.5px] font-extrabold text-blue-700 bg-blue-100/80 px-2 py-0.5 rounded-md">
+                ⚡ 45초 (1.3배속)
+              </span>
+            </div>
+            <span class="text-[11.5px] font-bold text-red-500">${clip.tag || '🔥 감정 고조도 98%'}</span>
+          </div>
+          <h4 class="text-[15px] font-black text-slate-900 leading-snug">"${clip.title}"</h4>
+          <p class="text-[12px] text-slate-600 mt-1 leading-relaxed line-clamp-2">${s1Text}</p>
+          <div class="mt-2 flex items-center justify-between text-[10.5px] text-slate-400 font-mono">
+            <span>도입(10s) → 전환(15s) → 결단(15s) → 선포(5s)</span>
+            <span class="text-blue-600 font-bold">⚡ 1.3배속 45초</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  });
+}
+
+// ================= SHORTS REFINEMENT EDITOR CONTROLLER =================
+function loadClipIntoRefineEditor(num) {
+  const clip = (studioClips && studioClips[num]) ? studioClips[num] : (studioClips ? studioClips[1] : null);
+  if (!clip) return;
+
+  ['studio', 'modal'].forEach(p => {
+    const badge = document.getElementById(`${p}-refine-active-badge`);
+    const titleInput = document.getElementById(`${p}-refine-title-input`);
+    const scripInput = document.getElementById(`${p}-refine-scripture-input`);
+    const churchInput = document.getElementById(`${p}-refine-church-input`);
+
+    if (badge) badge.textContent = `쇼츠 ${String(num).padStart(2, '0')}편 편집 중`;
+    if (titleInput) titleInput.value = clip.title || '';
+    if (scripInput) scripInput.value = (generatedMinistryAssets && generatedMinistryAssets.scripture) ? generatedMinistryAssets.scripture : (clip.scripture || '시편 78장 17-25절');
+    if (churchInput) churchInput.value = '복의근원 관유중앙교회';
+
+    if (clip.scenes && clip.scenes.length >= 4) {
+      for (let i = 0; i < 4; i++) {
+        const sceneInput = document.getElementById(`${p}-refine-scene-${i+1}-input`);
+        if (sceneInput) {
+          const cleanSceneText = (clip.scenes[i].subtitle || '')
+            .replace(/<[^>]*>?/gm, '')
+            .replace(/[“"”]/g, '')
+            .trim();
+          sceneInput.value = cleanSceneText;
+        }
+      }
+    }
+  });
+}
+
+function onRefineTitleChange(val, prefix) {
+  const clip = studioClips[currentClipIndex] || studioClips[1];
+  if (clip) clip.title = val;
+
+  ['studio', 'modal'].forEach(p => {
+    const tEl = document.getElementById(`${p}-sermon-title`);
+    if (tEl) tEl.textContent = val;
+    const inp = document.getElementById(`${p}-refine-title-input`);
+    if (inp && p !== prefix) inp.value = val;
+    const deckTitle = document.querySelector(`#${p}-deck-${currentClipIndex} h4`);
+    if (deckTitle) deckTitle.textContent = `"${val}"`;
+  });
+}
+
+function onRefineScriptureChange(val, prefix) {
+  if (generatedMinistryAssets) generatedMinistryAssets.scripture = val;
+
+  ['studio', 'modal'].forEach(p => {
+    const sEl = document.getElementById(`${p}-scripture-title`);
+    if (sEl) sEl.textContent = val;
+    const inp = document.getElementById(`${p}-refine-scripture-input`);
+    if (inp && p !== prefix) inp.value = val;
+  });
+}
+
+function onRefineSceneChange(sceneIdx, val, prefix) {
+  const clip = studioClips[currentClipIndex] || studioClips[1];
+  if (clip && clip.scenes && clip.scenes[sceneIdx]) {
+    clip.scenes[sceneIdx].subtitle = `“${val}”`;
+    
+    // Sync other prefix input
+    const otherPrefix = prefix === 'studio' ? 'modal' : 'studio';
+    const otherInp = document.getElementById(`${otherPrefix}-refine-scene-${sceneIdx+1}-input`);
+    if (otherInp) otherInp.value = val;
+
+    // Live update subtitle on screen if current elapsed time matches
+    const s = clip.scenes[sceneIdx];
+    if (clipElapsedSec >= s.start && clipElapsedSec < s.end) {
+      ['studio', 'modal'].forEach(p => {
+        const subEl = document.getElementById(`${p}-live-subtitle`);
+        if (subEl) subEl.textContent = `“${val}”`;
+      });
+    }
+  }
+}
+
+function onRefineChurchChange(val, prefix) {
+  ['studio', 'modal'].forEach(p => {
+    const cEl = document.getElementById(`${p}-church-name`);
+    if (cEl) cEl.textContent = val;
+    const inp = document.getElementById(`${p}-refine-church-input`);
+    if (inp && p !== prefix) inp.value = val;
+  });
+}
+
+function saveRefinedShortsClip(prefix) {
+  const num = currentClipIndex || 1;
+  const clip = studioClips[num] || studioClips[1];
+  if (!clip) return;
+
+  const titleInp = document.getElementById(`${prefix}-refine-title-input`);
+  const scripInp = document.getElementById(`${prefix}-refine-scripture-input`);
+  if (titleInp && titleInp.value.trim()) clip.title = titleInp.value.trim();
+  if (scripInp && scripInp.value.trim() && generatedMinistryAssets) {
+    generatedMinistryAssets.scripture = scripInp.value.trim();
+  }
+
+  for (let i = 0; i < 4; i++) {
+    const sInp = document.getElementById(`${prefix}-refine-scene-${i+1}-input`);
+    if (sInp && clip.scenes[i]) {
+      clip.scenes[i].subtitle = `“${sInp.value.trim()}”`;
+    }
+  }
+
+  // Update card titles in both decks
+  ['studio', 'modal'].forEach(p => {
+    const cardTitle = document.querySelector(`#${p}-deck-${num} h4`);
+    if (cardTitle) cardTitle.textContent = `"${clip.title}"`;
+  });
+
+  updatePlayerUI();
+  showToast(`✅ 쇼츠 ${String(num).padStart(2, '0')}편 다듬기 내용이 성공적으로 저장되었습니다!`, '✨');
+}
+
+function playRefinedClipFromStart(prefix) {
+  saveRefinedShortsClip(prefix);
+  clipElapsedSec = 0;
+  if (!isPlaying) {
+    toggleStudioPlay();
+  } else {
+    updatePlayerUI();
+    const clip = studioClips[currentClipIndex] || studioClips[1];
+    if (clip && clip.scenes && clip.scenes[0] && !isMuted) {
+      pastoralAudio.speakLine(clip.scenes[0].subtitle, currentPlaybackRate);
+    }
+  }
+}
+
 // ================= DYNAMIC HOMILETIC ANALYZER & ENGINE =================
 function analyzeAndGenerateMinistryAssets() {
   // Determine active target audience
@@ -1263,26 +1491,36 @@ Q5. 이번 주간 나의 삶의 현장(가정, 직장, 대인관계)에서 말�
   }
 
   // 8. YouTube info text
-  const ytInfoText = `=====================================================
-[설교 쇼츠 유튜브 타임스탬프 및 영상 구간 정보]
+  let ytInfoText = `=====================================================
+[설교 쇼츠 유튜브 타임스탬프 및 영상 구간 정보 10편]
 설교 영상: https://www.youtube.com/watch?v=${currentYouTubeId}
 설교 제목: "${cleanTitle}" (${scripture})
 =====================================================
 
-[쇼츠 1: "${activeClips[1]?.title || '쇼츠 1'}"]
-타임스탬프: 00:00 ~ 00:12
-구간 바로가기: https://www.youtube.com/watch?v=${currentYouTubeId}&t=0s
+[설교 본문 전체 타임라인]
+00:00 찬양 및 묵상
+05:30 대표 기도
+12:15 성경 봉독 (${scripture})
+15:00 말씀 선포 ("${cleanTitle}")
+45:20 결단 기도 및 축도
 
-[쇼츠 2: "${activeClips[2]?.title || '쇼츠 2'}"]
-타임스탬프: 00:45 ~ 00:57
-구간 바로가기: https://www.youtube.com/watch?v=${currentYouTubeId}&t=45s
+[AI 추천 45초 황금규격 쇼츠 10편 타임라인 바로가기]\n\n`;
 
-[쇼츠 3: "${activeClips[3]?.title || '쇼츠 3'}"]
-타임스탬프: 02:00 ~ 02:12
-구간 바로가기: https://www.youtube.com/watch?v=${currentYouTubeId}&t=120s
+  for (let i = 1; i <= 10; i++) {
+    const cl = (studioClips && studioClips[i]) ? studioClips[i] : (activeClips && activeClips[i]);
+    if (cl) {
+      const startMin = Math.floor(((i - 1) * 120) / 60);
+      const startSec = ((i - 1) * 120) % 60;
+      const timeStr = `${String(startMin).padStart(2, '0')}:${String(startSec).padStart(2, '0')}`;
+      const firstLine = (cl.scenes && cl.scenes[0]) ? cl.scenes[0].subtitle.replace(/<[^>]*>?/gm, '').replace(/[“"”]/g, '') : '';
+      ytInfoText += `[쇼츠 ${String(i).padStart(2, '0')}: "${cl.title}"]\n`;
+      ytInfoText += `타임스탬프: ${timeStr} (1.3배속 45초 규격)\n`;
+      ytInfoText += `핵심 메시지: ${firstLine}\n`;
+      ytInfoText += `바로가기 링크: https://www.youtube.com/watch?v=${currentYouTubeId}&t=${(i - 1) * 120}s\n\n`;
+    }
+  }
 
-* 캡컷(CapCut) / Vrew / 프리미어 프로에서 자막 SRT를 불러와 간편하게 9:16 세로 쇼츠로 렌더링하실 수 있습니다.`;
-
+  ytInfoText += `* 캡컷(CapCut), Vrew, 프리미어 프로에서 자막 SRT를 불러와 간편하게 9:16 세로 쇼츠로 렌더링하실 수 있습니다.\n`;
   // Store in Global Repository
   generatedMinistryAssets = {
     sermonTitle: cleanTitle,
@@ -1308,20 +1546,10 @@ Q5. 이번 주간 나의 삶의 현장(가정, 직장, 대인관계)에서 말�
   if (mScrip) mScrip.textContent = scripture;
   if (mTarget) mTarget.textContent = audienceLabel;
 
-  // Update Modal Shorts Deck Titles
-  const t1 = document.getElementById('deck-title-1');
-  const s1 = document.getElementById('deck-sub-1');
-  const t2 = document.getElementById('deck-title-2');
-  const s2 = document.getElementById('deck-sub-2');
-  const t3 = document.getElementById('deck-title-3');
-  const s3 = document.getElementById('deck-sub-3');
-
-  if (t1) t1.textContent = `"${activeClips[1]?.title || '쇼츠 1'}"`;
-  if (s1) s1.textContent = activeClips[1]?.sub || '';
-  if (t2) t2.textContent = `"${activeClips[2]?.title || '쇼츠 2'}"`;
-  if (s2) s2.textContent = activeClips[2]?.sub || '';
-  if (t3) t3.textContent = `"${activeClips[3]?.title || '쇼츠 3'}"`;
-  if (s3) s3.textContent = activeClips[3]?.sub || '';
+  // Update All 10 Shorts Deck Titles & Subs in Both Panels
+  renderAll10ShortsDecks();
+  loadClipIntoRefineEditor(currentClipIndex || 1);
+  updatePlayerUI();
 
   // Populate Text Panels
   const sgBody = document.getElementById('content-smallgroup-body');
@@ -1847,7 +2075,9 @@ function loadActiveVideoSource() {
 function selectStudioClip(num) {
   currentClipIndex = num;
   const clip = studioClips[num] || studioClips[1];
+  loadClipIntoRefineEditor(num);
 
+  // Update all 10 Decks in Modal and Main Page
   for (let i = 1; i <= 10; i++) {
     const d1 = document.getElementById(`studio-deck-${i}`);
     const d2 = document.getElementById(`modal-deck-${i}`);
@@ -1863,6 +2093,7 @@ function selectStudioClip(num) {
     }
   }
 
+  // Update tags and titles
   const tag1 = document.getElementById('studio-shorts-tag');
   const tag2 = document.getElementById('modal-shorts-tag');
   if (tag1) tag1.textContent = `쇼츠 ${num}편 (${clip.tag || '감동'})`;
@@ -1879,6 +2110,7 @@ function selectStudioClip(num) {
   }
 }
 
+// Playback Timer
 function startPlaybackTimer() {
   stopPlaybackTimer();
   playbackTimer = setInterval(() => {
@@ -1938,6 +2170,7 @@ function updatePlayerUI() {
   }
 }
 
+// Play & Pause
 function toggleStudioPlay() {
   isPlaying = !isPlaying;
   if (!isPlaying) {
@@ -1991,6 +2224,7 @@ function updatePlayIcons(playing) {
   });
 }
 
+// Audio Mute & Unmute
 function toggleStudioAudio() {
   isMuted = !isMuted;
   pastoralAudio.initContext();
@@ -2373,11 +2607,23 @@ function openAssetFeature(key) {
   const studio = document.getElementById('studio-modal');
 
   if (key === 'shorts') {
+    // 1. Smoothly scroll down directly to the Shorts Studio & Refinement Editor Suite!
+    const shortsSection = document.getElementById('shorts-section');
+    if (shortsSection) {
+      shortsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      shortsSection.classList.add('ring-4', 'ring-blue-500/50', 'rounded-3xl', 'transition-all', 'duration-500');
+      setTimeout(() => {
+        shortsSection.classList.remove('ring-4', 'ring-blue-500/50');
+      }, 2500);
+    }
+    // Also activate modal studio
     if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
     switchStudioTab('shorts');
-    selectStudioClip(1);
+    renderAll10ShortsDecks();
+    selectStudioClip(currentClipIndex || 1);
+    loadClipIntoRefineEditor(currentClipIndex || 1);
     initStudioPlayer();
-    showToast('📱 9:16 설교 쇼츠 10편 스튜디오가 활성화되었습니다. (1.3배속 45초 연동)', '🎬');
+    showToast('🎬 설교 쇼츠 10편 스튜디오와 세부 다듬기 편집기가 활성화되었습니다!', '✨');
   } else if (key === 'smallgroup') {
     if (studio) { studio.classList.remove('hidden'); studio.classList.add('flex'); }
     switchStudioTab('smallgroup');
