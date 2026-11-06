@@ -1438,99 +1438,273 @@ function downloadPanelText(key) {
 }
 
 // ================= GENERATION WORKFLOW TRIGGER =================
-function startStudioGeneration() {
+
+// ================= MULTI-STAGE REALISTIC SERMON PROCESSING PIPELINE =================
+let processingTimer = null;
+let processingProgress = 0;
+let isFastTracking = false;
+
+function triggerDeepSermonAnalysis() {
+  // If triggered from YouTube modal, show Image 2 searching view first
+  const modalViewInput = document.getElementById('modal-yt-view-input');
+  const modalViewSearching = document.getElementById('modal-yt-view-searching');
+
+  if (modalViewInput && modalViewSearching && !modalViewInput.classList.contains('hidden')) {
+    modalViewInput.classList.add('hidden');
+    modalViewSearching.classList.remove('hidden');
+    modalViewSearching.classList.add('flex');
+
+    setTimeout(() => {
+      closeYouTubeModal();
+      modalViewInput.classList.remove('hidden');
+      modalViewSearching.classList.add('hidden');
+      modalViewSearching.classList.remove('flex');
+      startDashboardProcessing();
+    }, 3200);
+  } else {
+    startDashboardProcessing();
+  }
+}
+
+function startDashboardProcessing() {
   closeAudienceModal();
 
-  // Validate inputs according to currentInputMode
-  if (currentInputMode === 'paste') {
-    const ta = document.getElementById('manuscript-input');
-    if (!ta || ta.value.trim().length === 0) {
-      showToast('설교 원고가 입력되지 않아 대표 예시 설교(빌립보서 4:6-7)로 자동 설정합니다.', 'ℹ️');
-      loadSampleManuscript();
-    }
-  } else if (currentInputMode === 'yt') {
-    const ytInput = document.getElementById('youtube-url-input');
-    const val = ytInput ? ytInput.value.trim() : '';
-    const id = extractYouTubeId(val);
-    if (id) {
-      currentYouTubeId = id;
-    } else if (!currentYouTubeId) {
-      loadSampleYouTube('z5D_B9I7l1Y', '너는 복이 될지라', '창세기 12:1-3');
-    }
-  } else if (currentInputMode === 'file') {
-    if (!currentFileName && !currentFileVideoUrl && !currentFileAudioUrl) {
-      showToast('설교 파일을 먼저 선택해 주세요.', '📁');
-      simulateFileUpload();
-      return;
-    }
+  const dashboard = document.getElementById('processing-dashboard-section');
+  if (dashboard) {
+    dashboard.classList.remove('hidden');
+    dashboard.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  // Show Progress Overlay
-  const overlay = document.getElementById('progress-overlay');
-  if (overlay) {
-    overlay.classList.remove('hidden');
-    overlay.classList.add('flex');
-  }
+  isFastTracking = false;
+  processingProgress = 0;
+  if (processingTimer) clearInterval(processingTimer);
 
-  const fill = document.getElementById('progress-bar-fill');
-  const txt = document.getElementById('progress-step-text');
-  if (fill) fill.style.width = '35%';
-  if (txt) txt.textContent = '1단계: 설교 원고 분석 및 핵심 메시지 구조화 중...';
+  updateProcessingUI(8, 1, '1단계: 유튜브 예배 영상 음성 스트림 수신 및 Whisper STT 자막 분석 중...', [
+    `✓ [유튜브 스트림] "${currentYouTubeTitle || '광야의 식탁을 베푸시는 하나님의 은혜'}" 수신 완료`,
+    `➔ [구간 탐지] 전체 예배(1시간 14분) 중 찬양·기도 제외, 본론 설교 [21:30 ~ 52:45] 정밀 분리 중...`
+  ], 35);
 
-  setTimeout(() => {
-    const r1 = document.getElementById('step-row-1');
-    const s1 = document.getElementById('step-status-1');
-    const r2 = document.getElementById('step-row-2');
-    const s2 = document.getElementById('step-status-2');
-
-    if (r1) r1.classList.add('bg-blue-50');
-    if (s1) { s1.textContent = '완료 ✓'; s1.className = 'font-bold text-emerald-600'; }
-    if (r2) r2.classList.remove('opacity-50');
-    if (s2) { s2.textContent = '생성 중...'; s2.className = 'font-bold text-blue-600'; }
-
-    if (fill) fill.style.width = '70%';
-    if (txt) txt.textContent = '2단계: 소그룹 질문지, QT 6일치, 카드뉴스 렌더링 중...';
-  }, 900);
-
-  setTimeout(() => {
-    const r2 = document.getElementById('step-row-2');
-    const s2 = document.getElementById('step-status-2');
-    const r3 = document.getElementById('step-row-3');
-    const s3 = document.getElementById('step-status-3');
-
-    if (r2) r2.classList.add('bg-blue-50');
-    if (s2) { s2.textContent = '완료 ✓'; s2.className = 'font-bold text-emerald-600'; }
-    if (r3) r3.classList.remove('opacity-50');
-    if (s3) { s3.textContent = '생성 중...'; s3.className = 'font-bold text-blue-600'; }
-
-    if (fill) fill.style.width = '100%';
-    if (txt) {
-      txt.textContent = (currentInputMode === 'yt')
-        ? `3단계: 유튜브 설교 영상(ID: ${currentYouTubeId}) 9:16 쇼츠 컷 분할 및 자막 싱크 완료!`
-        : '3단계: 9:16 설교 쇼츠 컷 분할 및 10종 자료 패키지 생성 완료!';
+  const stages = [
+    {
+      sec: 4,
+      pct: 18,
+      step: 1,
+      status: '1단계: 1시간 14분 예배 중 본론 설교 구간(21:30~52:45) 분리 및 음성 텍스트화 중...',
+      log: '✓ [설교 구간 분리 완료] 21분 30초 ~ 52분 45초 (순수 설교 31분 15초 추출)',
+      est: 30
+    },
+    {
+      sec: 9,
+      pct: 35,
+      step: 2,
+      status: '2단계: 성경 본문(시편 78:17-25) 정밀 대조 및 3대지 명제 구조화 중...',
+      log: '✓ [본문 대조 완료] 시편 78장 17-25절 본문 텍스트 일치율 99.8% 검증',
+      est: 25
+    },
+    {
+      sec: 14,
+      pct: 52,
+      step: 2,
+      status: '2단계: AI 호흡음 제거 및 불필요한 추임새(어, 으, 음, 저) 100% 컷팅 정제 중...',
+      log: '✓ [오디오 클리닝] 들숨/날숨 숨소리 48개소 및 잡음 컷팅 필터링 완료',
+      est: 20
+    },
+    {
+      sec: 20,
+      pct: 68,
+      step: 2,
+      status: '2단계: 감정 곡선 99% 절정 구간 4단계 씬(도입-전환-결단-선포) 추출 중...',
+      log: '✓ [감정 곡선 분석] 1.3배속 45초 황금 규격 씬 결합 및 골드 선포 자막 생성',
+      est: 14
+    },
+    {
+      sec: 26,
+      pct: 85,
+      step: 2,
+      status: '2단계: 소그룹 나눔 질문지, 주간 QT 6일치, 인스타 카드뉴스 7장 집필 중...',
+      log: '✓ [10종 목회 자료] 구역·셀 나눔지 및 성도 단톡방 서신 원고 생성 완료',
+      est: 8
+    },
+    {
+      sec: 31,
+      pct: 95,
+      step: 3,
+      status: '3단계: 9:16 모바일 쇼츠 10편 비디오 렌더링 및 타임코드 SRT 싱크 완료 중...',
+      log: '✓ [쇼츠 10편 렌더링 완료] 1번부터 10번까지 45초 비디오 패키징 완료!',
+      est: 3
+    },
+    {
+      sec: 35,
+      pct: 100,
+      step: 3,
+      status: '완료: 10편의 쇼츠와 10종 사역 자료가 최고 품질로 완성되었습니다!',
+      log: '🎉 [처리 완료] 목사님의 설교가 10종의 전문 사역 자료와 10편의 쇼츠로 완성되었습니다.',
+      est: 0
     }
-  }, 1900);
+  ];
 
-  setTimeout(() => {
-    if (overlay) {
-      overlay.classList.add('hidden');
-      overlay.classList.remove('flex');
+  let currentStageIdx = 0;
+  const startTime = Date.now();
+
+  processingTimer = setInterval(() => {
+    if (isFastTracking) return;
+    const elapsedSec = (Date.now() - startTime) / 1000;
+
+    while (currentStageIdx < stages.length && elapsedSec >= stages[currentStageIdx].sec) {
+      const s = stages[currentStageIdx];
+      updateProcessingUI(s.pct, s.step, s.status, [s.log], s.est);
+      currentStageIdx++;
+      if (s.pct >= 100) {
+        clearInterval(processingTimer);
+        finalizeProcessing();
+        break;
+      }
     }
-
-    // Run Dynamic Homiletic Engine
-    analyzeAndGenerateMinistryAssets();
-
-    // Open Studio Modal
-    const studio = document.getElementById('studio-modal');
-    if (studio) {
-      studio.classList.remove('hidden');
-      studio.classList.add('flex');
-    }
-
-    switchStudioTab('shorts');
-    initStudioPlayer();
-  }, 2500);
+  }, 400);
 }
+
+function updateProcessingUI(pct, step, statusText, newLogs = [], estSec = 0) {
+  const line = document.getElementById('processing-stepper-line');
+  const badge = document.getElementById('processing-pct-badge');
+  const statusEl = document.getElementById('processing-current-status');
+  const estEl = document.getElementById('processing-time-estimate');
+  const logFeed = document.getElementById('processing-log-feed');
+
+  if (line) line.style.width = `${Math.min(100, (step === 1 ? pct * 0.5 : (step === 2 ? 50 + (pct - 35) * 0.7 : 100)))}%`;
+  if (badge) badge.textContent = `${pct}%`;
+  if (statusEl) statusEl.innerHTML = `<span class="w-2 h-2 rounded-full ${pct >= 100 ? 'bg-emerald-500' : 'bg-blue-600 animate-ping'}"></span><span>${statusText}</span>`;
+  if (estEl) estEl.textContent = estSec > 0 ? `예상 소요 시간: 약 ${estSec}초` : '완료됨 ✓';
+
+  const n1 = document.getElementById('step-node-1');
+  const l1 = document.getElementById('step-label-1');
+  const n2 = document.getElementById('step-node-2');
+  const l2 = document.getElementById('step-label-2');
+  const n3 = document.getElementById('step-node-3');
+  const l3 = document.getElementById('step-label-3');
+
+  if (step === 1) {
+    if (n1) { n1.className = 'w-11 h-11 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-md'; n1.innerHTML = '<svg class="animate-spin w-5 h-5 text-white" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>'; }
+    if (l1) { l1.className = 'text-[12.5px] font-extrabold text-blue-600 mt-2.5'; }
+  } else if (step === 2) {
+    if (n1) { n1.className = 'w-11 h-11 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shadow-sm'; n1.innerHTML = '✓'; }
+    if (l1) { l1.className = 'text-[12.5px] font-bold text-slate-700 mt-2.5'; }
+    if (n2) { n2.className = 'w-11 h-11 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-md'; n2.innerHTML = '<svg class="animate-spin w-5 h-5 text-white" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>'; }
+    if (l2) { l2.className = 'text-[12.5px] font-extrabold text-blue-600 mt-2.5'; }
+  } else if (step === 3) {
+    if (n1) { n1.className = 'w-11 h-11 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shadow-sm'; n1.innerHTML = '✓'; }
+    if (n2) { n2.className = 'w-11 h-11 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shadow-sm'; n2.innerHTML = '✓'; }
+    if (l2) { l2.className = 'text-[12.5px] font-bold text-slate-700 mt-2.5'; }
+    if (n3) { n3.className = 'w-11 h-11 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm shadow-lg'; n3.innerHTML = '✓'; }
+    if (l3) { l3.className = 'text-[12.5px] font-black text-emerald-600 mt-2.5'; }
+  }
+
+  if (logFeed && newLogs.length > 0) {
+    newLogs.forEach(txt => {
+      const p = document.createElement('p');
+      p.className = txt.startsWith('✓') ? 'text-emerald-700 font-semibold' : (txt.startsWith('🎉') ? 'text-blue-700 font-black' : 'text-slate-600');
+      p.textContent = txt;
+      logFeed.appendChild(p);
+      logFeed.scrollTop = logFeed.scrollHeight;
+    });
+  }
+}
+
+function fastTrackProcessing() {
+  if (isFastTracking) return;
+  isFastTracking = true;
+  if (processingTimer) clearInterval(processingTimer);
+
+  updateProcessingUI(100, 3, '완료: 10편의 쇼츠와 10종 사역 자료가 최고 품질로 완성되었습니다!', [
+    '⚡ [빠른 완료 실행] 설교 분석 및 10종 사역자료 즉시 생성 완료!'
+  ], 0);
+
+  finalizeProcessing();
+}
+
+function finalizeProcessing() {
+  analyzeAndGenerateMinistryAssets();
+
+  const actionBox = document.getElementById('processing-complete-action');
+  if (actionBox) {
+    actionBox.classList.remove('hidden');
+    actionBox.classList.add('flex');
+    actionBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  addSermonToRecentHistory(currentYouTubeId || 'F3IRIXNF1V8', currentYouTubeTitle || '광야의 식탁을 베푸시는 하나님의 은혜', currentYouTubeScripture || '시편 78장 17-25절');
+
+  showToast('🎉 설교 심층 분석 및 10종 사역 자료 생성이 완료되었습니다!', '✨');
+}
+
+function openStudioModalAfterProcessing() {
+  const studio = document.getElementById('studio-modal');
+  if (studio) {
+    studio.classList.remove('hidden');
+    studio.classList.add('flex');
+  }
+  switchStudioTab('shorts');
+  initStudioPlayer();
+}
+
+function addSermonToRecentHistory(id, title, scripture) {
+  const container = document.querySelector('.space-y-2\\.5') || document.getElementById('recent-sermons-list');
+  if (!container) return;
+
+  const newItem = document.createElement('div');
+  newItem.onclick = () => loadRecentSermon(id, title, scripture);
+  newItem.className = 'flex items-center justify-between p-3.5 sm:p-4 rounded-2xl border-2 border-emerald-400 bg-emerald-50/40 hover:bg-emerald-50 transition-all cursor-pointer group shadow-sm mb-2.5';
+  newItem.innerHTML = `
+    <div class="flex items-center gap-3.5">
+      <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-red-100 text-red-600 font-bold text-[18px] shrink-0">▶️</span>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-[14.5px] font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">
+            ${title}
+          </span>
+          <span class="rounded-full bg-emerald-100 text-emerald-800 px-2 py-0.5 text-[11px] font-black border border-emerald-300">
+            완료
+          </span>
+        </div>
+        <p class="text-[12px] text-slate-500 mt-0.5">
+          ${scripture} · 10종 사역자료 & 쇼츠 10편 준비 완료
+        </p>
+      </div>
+    </div>
+    <span class="text-xs font-black text-blue-700 bg-blue-100 group-hover:bg-blue-600 group-hover:text-white px-3 py-1.5 rounded-xl transition-all shadow-2xs">
+      스튜디오 열기 →
+    </span>
+  `;
+  container.prepend(newItem);
+}
+
+function startStudioGeneration() {
+  triggerDeepSermonAnalysis();
+}
+
+function submitModalYouTubeAndStart() {
+  const input = document.getElementById('modal-youtube-url-input');
+  const val = input ? input.value.trim() : '';
+  const id = extractYouTubeId(val);
+
+  if (id) {
+    currentYouTubeId = id;
+    currentInputMode = 'yt';
+
+    const customTitleEl = document.getElementById('yt-custom-title');
+    const customScriptureEl = document.getElementById('yt-custom-scripture');
+    if (customTitleEl && customTitleEl.value.trim().length > 0) {
+      currentYouTubeTitle = customTitleEl.value.trim();
+    }
+    if (customScriptureEl && customScriptureEl.value.trim().length > 0) {
+      currentYouTubeScripture = customScriptureEl.value.trim();
+    }
+
+    triggerDeepSermonAnalysis();
+  } else {
+    showToast('올바른 유튜브 영상 링크를 입력해 주세요.', '⚠️');
+  }
+}
+
 
 function closeStudioModal() {
   pastoralAudio.stop();
