@@ -15,10 +15,10 @@ function scrollToTop() {
 }
 
 // ================= GLOBAL STATE =================
-let currentInputMode = 'paste'; // 'paste' | 'yt' | 'file'
-let currentYouTubeId = 'z5D_B9I7l1Y';
-let currentYouTubeTitle = '너는 복이 될지라';
-let currentYouTubeScripture = '창세기 12:1-3';
+let currentInputMode = 'yt'; // 'paste' | 'yt' | 'file'
+let currentYouTubeId = 'F3lRIXNF1V8';
+let currentYouTubeTitle = '여호와께 감사하라!';
+let currentYouTubeScripture = '시편 138편 (참고, 역대상 16:7-11)';
 let currentFileVideoUrl = null;
 let currentFileAudioUrl = null;
 let currentFileName = '';
@@ -33,196 +33,185 @@ let currentActiveStudioTab = 'shorts';
 
 // Preset Sermons Database for Instant & Accurate Matching
 const sermonPresets = {
-    'F3IRIXNF1V8': {
-    title: '광야의 식탁을 베푸시는 하나님의 은혜',
-    scripture: '시편 78장 17-25절',
+  'F3lRIXNF1V8': {
+    title: '여호와께 감사하라!',
+    scripture: '시편 138편 (참고, 역대상 16:7-11)',
     preacher: '관유중앙교회 송기운 담임목사',
-    fullDuration: '1시간 14분 20초',
-    sermonRange: '21:30 ~ 52:45',
-    coreMessage: '인간의 지혜와 계산이 끝나는 메마른 광야의 한복판에서, 하나님은 반석을 쳐서 물을 내시며 하늘 문을 열어 만나를 비처럼 쏟아부으시는 풍성한 은혜의 식탁을 베푸십니다.',
+    fullDuration: '2시간 4분 22초',
+    sermonRange: '25:00 ~ 58:30',
+    coreMessage: '감사는 환경의 결과가 아니라 승리를 선언하는 믿음의 결단입니다. 시편 138편을 통해 다윗은 고난과 위기 속에서도 전심으로 주께 감사하고 찬양할 때 막힌 문이 열리고 주님의 오른손이 우리를 구원하신다고 선포합니다.',
     points: [
-      '1대지: 광야의 결핍 속에서도 하나님을 시험치 않는 믿음 (시 78:17-19)',
-      '2대지: 굳은 반석에서 터져 나오는 생수와 하늘의 만나 (시 78:20-24)',
-      '3대지: 주의 백성을 배불리 먹이시는 신실하신 하나님의 식탁 (시 78:25)'
+      '1대지: 전심으로 주께 감사하며 주의 이름을 찬양하라 (시 138:1-2)',
+      '2대지: 부르짖는 날에 내 영혼에 힘을 주어 강하게 하심 (시 138:3)',
+      '3대지: 환난 중에도 나를 살리시고 주의 인자하심으로 온전케 하심 (시 138:7-8)'
     ],
     shorts: {
       1: {
-        title: '광야 한가운데서 식탁을 베푸시는 하나님',
+        title: '여호와께 감사하라 - 고난을 이기는 감사의 결단',
         tag: '🔥 감정 고조도 99% (결단)',
         sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · 1.3배속 45초',
-        startSec: 1290,
+        startSec: 1500,
         duration: 45,
         scenes: [
-          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“사방이 메마른 광야처럼 캄캄할 때, <span class=\'text-blue-400 font-bold\'>우리는 쉽게 원망하고 낙심</span>합니다.”' },
-          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“그러나 하나님은 <span class=\'text-blue-400 font-bold\'>반석을 쳐서 물을 내시며</span>, 하늘 문을 열어 만나를 비처럼 내리시는 전능자이십니다.”' },
-          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“인간의 계산이 끝나는 곳이 바로 <span class=\'text-blue-400 font-bold\'>하나님의 기적의 식탁이 차려지는 은혜의 무대</span>입니다.”' },
-          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>두려워하지 마십시오! 주님이 오늘 당신을 위한 식탁을 베푸십니다!</span>”' }
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“인생의 위기와 메마른 고난 앞에 서면, <span class=\'text-blue-400 font-bold\'>누구나 원망과 낙심의 늪에 빠지기</span> 쉽습니다.”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“그러나 다윗은 절망의 한복판에서 <span class=\'text-blue-400 font-bold\'>전심으로 주께 감사하며</span> 주의 성전을 향해 찬양했습니다.”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“부르짖는 날에 내 영혼에 힘을 주어 <span class=\'text-blue-400 font-bold\'>나를 강하게 하시는 하나님의 손길</span>을 신뢰하십시오.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>감사는 승리의 선언입니다! 오늘 여호와께 감사함으로 일어서십시오!</span>”' }
         ]
       },
       2: {
-        title: '광야의 결핍 앞에서도 흔들리지 않는 믿음',
+        title: '전심으로 주께 감사하며 주의 이름을 찬양하라',
         tag: '💡 감동·위로 98% (믿음)',
-        sub: '결핍은 불평의 이유가 아닌 살아계신 하나님을 경험하는 통로',
-        startSec: 1380,
-        duration: 45,
-        scenes: [
-          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“통장의 잔고와 척박한 현실 앞에 서면, <span class=\'text-blue-400 font-bold\'>누구나 불안에 사로잡히기 쉽습니다</span>.”' },
-          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“이스라엘은 광야에서 하나님을 시험했으나, <span class=\'text-blue-400 font-bold\'>참된 성도는 결핍 속에서 주님을 바라봅니다</span>.”' },
-          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“광야의 메마름은 망하게 하려는 것이 아니라, <span class=\'text-blue-400 font-bold\'>오직 주님만 의지하도록 빚으시는 과정</span>입니다.”' },
-          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>환경을 보지 말고 광야의 주인이신 하나님을 신뢰하십시오!</span>”' }
-        ]
-      },
-      3: {
-        title: '하나님이 식탁을 베푸실 수 있으랴? 의심을 깨라',
-        tag: '⚡️ 능력·도전 97% (회복)',
-        sub: '전능자의 무한한 능력을 나의 좁은 생각으로 제한하지 말라',
-        startSec: 1470,
-        duration: 45,
-        scenes: [
-          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“‘정말 이 절망적인 상황에서 길이 열릴까?’ <span class=\'text-blue-400 font-bold\'>우리는 스스로 한계를 긋습니다</span>.”' },
-          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“하나님이 과연 광야에서 식탁을 베푸실 수 있으랴 불평했던 <span class=\'text-blue-400 font-bold\'>불신앙의 입술을 닫아야 합니다</span>.”' },
-          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“내 좁은 경험과 상식의 틀을 깰 때, <span class=\'text-blue-400 font-bold\'>전능하신 하나님의 기적이 역사하기 시작합니다</span>.”' },
-          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>주께는 능치 못함이 없습니다! 의심을 버리고 믿음으로 서십시오!</span>”' }
-        ]
-      },
-      4: {
-        title: '굳은 반석에서 터져 나오는 생수의 기적',
-        tag: '🔥 영적 권세 98% (권능)',
-        sub: '가장 단단하고 절망적인 바위가 가장 신선한 생수 샘터가 된다',
-        startSec: 1560,
-        duration: 45,
-        scenes: [
-          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“목마른 사막 한가운데 거대한 바위만 서 있다면, <span class=\'text-blue-400 font-bold\'>누가 물을 기대하겠습니까?</span>”' },
-          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“그러나 모세의 지팡이가 반석을 칠 때, <span class=\'text-blue-400 font-bold\'>굳은 바위가 쪼개지며 시원한 강물이 쏟아져 나왔습니다</span>.”' },
-          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“당신의 삶을 가로막은 가장 단단한 바위가, <span class=\'text-blue-400 font-bold\'>하나님의 은혜가 터져 나오는 생수 근원이 될 것입니다</span>.”' },
-          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>메마른 당신의 영혼과 삶에 주님의 생수가 넘쳐흐를지어다!</span>”' }
-        ]
-      },
-      5: {
-        title: '하늘 문을 열고 쏟아부으시는 만나의 은혜',
-        tag: '💡 소망·비전 96% (공급)',
-        sub: '땅의 양식이 끊어질 때 비로소 하늘의 초자연적 공급이 시작된다',
+        sub: '환경을 뛰어넘어 주의 성전을 향해 올리는 거룩한 감사의 제단',
         startSec: 1650,
         duration: 45,
         scenes: [
-          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“곡식 한 톨 자라지 않는 사막에서, <span class=\'text-blue-400 font-bold\'>수백만 백성이 40년을 어떻게 살았을까요?</span>”' },
-          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“땅의 문이 막히자 하나님은 <span class=\'text-blue-400 font-bold\'>하늘 문을 여시고 천사의 양식인 만나를 비처럼 내리셨습니다</span>.”' },
-          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“세상의 계산으로는 굶어 죽을 것 같아도, <span class=\'text-blue-400 font-bold\'>하늘의 아버지께서 당신을 굶기지 않으십니다</span>.”' },
-          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>오늘도 하늘 문을 여시고 당신의 일터를 먹이시는 주님을 찬양합니다!</span>”' }
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“조건이 채워져서 하는 감사는 초보적인 신앙이지만, <span class=\'text-blue-400 font-bold\'>어둠 속 감사는 하늘 문을 여는 열쇠</span>입니다.”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“주의 인자하심과 성실하심을 찬양할 때, <span class=\'text-blue-400 font-bold\'>주께서 주의 말씀을 주의 이름보다 높이셨습니다</span>.”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“세상의 계산을 멈추고 <span class=\'text-blue-400 font-bold\'>주의 성전을 향해 무릎 꿇는 성도</span>가 되십시오.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>전심으로 감사하십시오! 당신의 찬양이 기적의 통로가 됩니다!</span>”' }
         ]
       },
-      6: {
-        title: '날마다 새롭게 채우시는 성실하신 공급',
-        tag: '⚡️ 평안·담대 95% (신뢰)',
-        sub: '1년 치를 미리 쌓아두지 않아도 매일 아침 내리는 신선한 은혜',
-        startSec: 1740,
+      3: {
+        title: '부르짖는 날에 내 영혼을 강하게 하시는 주님',
+        tag: '⚡️ 능력·치유 97% (회복)',
+        sub: '내가 간구할 때 내 영혼에 힘을 주어 담대하게 세우시는 하나님',
+        startSec: 1800,
         duration: 45,
         scenes: [
-          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“내년의 노후까지 미리 쥐고 있어야 <span class=\'text-blue-400 font-bold\'>비로소 안심이 되는 것이 인간의 연약함입니다</span>.”' },
-          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“그러나 만나는 하루치씩 내렸습니다. <span class=\'text-blue-400 font-bold\'>매일 아침 주님과 눈을 맞추며 신뢰하는 법을 가르치셨습니다</span>.”' },
-          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“오늘 하루를 먹이신 신실하신 하나님께서, <span class=\'text-blue-400 font-bold\'>내일의 광야도 어김없이 책임져 주십니다</span>.”' },
-          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>내일 일을 염려하지 마십시오! 날마다 새 은혜를 부어주십니다!</span>”' }
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“혼자 감당할 수 없는 무게로 가슴이 짓눌릴 때, <span class=\'text-blue-400 font-bold\'>탄식하지 말고 주님께 부르짖으십시오</span>.”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“하나님은 내가 부르짖는 바로 그날에 응답하시며, <span class=\'text-blue-400 font-bold\'>내 영혼에 새 힘을 불어넣으십니다</span>.”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“환경보다 더 강한 영적 담대함이 <span class=\'text-blue-400 font-bold\'>기도하는 당신의 심령에 부어질 것입니다</span>.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>주가 내 영혼을 강하게 하십니다! 담대하게 다시 전진하십시오!</span>”' }
         ]
       },
-      7: {
-        title: '인간의 계산이 끝나는 곳이 기적의 시작입니다',
-        tag: '🔥 믿음 결단 98% (항복)',
-        sub: '내 손을 펴고 주님 앞에 무릎 꿇을 때 비로소 일하시는 하나님',
-        startSec: 1830,
+      4: {
+        title: '비천한 자를 굽어보시는 하나님의 은혜',
+        tag: '🔥 겸손·권능 96% (치유)',
+        sub: '높이 계셔도 낮은 자를 굽어살피시며 교만한 자를 아시는 주님',
+        startSec: 1950,
         duration: 45,
         scenes: [
-          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“밤새 머리를 싸매고 주판알을 튕겨도, <span class=\'text-blue-400 font-bold\'>돌아오는 것은 가슴 조이는 한숨뿐입니다</span>.”' },
-          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“모세도 광야에서는 계산할 수 없었습니다. <span class=\'text-blue-400 font-bold\'>인간의 지혜가 바닥난 바로 그 자리가 하나님의 일터입니다</span>.”' },
-          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“내 고집스러운 계산을 내려놓고 주께 맡길 때, <span class=\'text-blue-400 font-bold\'>하늘의 무한한 계산법이 작동하기 시작합니다</span>.”' },
-          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>손을 펴고 주님께 맡기십시오! 당신이 내려놓을 때 주님이 일하십니다!</span>”' }
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“세상은 높은 자와 힘 있는 자만 기억하지만, <span class=\'text-blue-400 font-bold\'>주님은 가장 낮은 자를 주목하십니다</span>.”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“여호와께서는 높이 계셔도 낮은 자를 굽어살피시며, <span class=\'text-blue-400 font-bold\'>상한 심령을 품어 안으십니다</span>.”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“나의 초라함이나 부족함 때문에 낙심하지 마십시오. <span class=\'text-blue-400 font-bold\'>낮아진 그 자리가 은혜의 보좌</span>입니다.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>주님이 당신을 굽어살피십니다! 주의 따뜻한 품에서 안식하십시오!</span>”' }
         ]
       },
-      8: {
-        title: '광야의 고난이 바로 은혜의 만찬 초대장입니다',
-        tag: '💡 위로·소망 96% (성숙)',
-        sub: '꽃길에서는 결코 맛볼 수 없는 반석의 생수와 만나의 신비',
-        startSec: 1920,
-        duration: 45,
-        scenes: [
-          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“‘왜 하나님은 사랑하는 내게 <span class=\'text-blue-400 font-bold\'>이토록 혹독한 광야를 지나게 하실까?’ 묻고 계십니까?</span>”' },
-          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“광야를 지나지 않았다면 <span class=\'text-blue-400 font-bold\'>반석의 생수를 맛볼 수 없었고 하늘의 만나를 경험할 수 없었습니다</span>.”' },
-          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“지금 겪는 고난은 저주가 아니라, <span class=\'text-blue-400 font-bold\'>하나님을 가장 깊이 만나는 거룩한 만찬의 자리입니다</span>.”' },
-          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>광야를 두려워 마십시오! 그곳이 가장 풍성한 하나님의 식탁입니다!</span>”' }
-        ]
-      },
-      9: {
-        title: '원망의 입술을 닫고 기적의 감사를 선포하라',
-        tag: '⚡️ 영적 승리 97% (찬양)',
-        sub: '원망은 광야를 무덤으로 만들지만 감사는 광야를 천국으로 바꾼다',
-        startSec: 2010,
-        duration: 45,
-        scenes: [
-          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“원망과 불평은 <span class=\'text-blue-400 font-bold\'>내 영혼을 갉아먹고 기적의 문을 닫아버리는 무서운 독입니다</span>.”' },
-          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“이스라엘은 원망하다 광야에 엎드러졌지만, <span class=\'text-blue-400 font-bold\'>감사는 메마른 땅에서 기적의 샘을 터뜨리는 열쇠입니다</span>.”' },
-          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“눈에 보이는 것이 없을 때 먼저 드리는 감사가 <span class=\'text-blue-400 font-bold\'>사탄의 결박을 끊고 하늘 문을 엽니다</span>.”' },
-          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>입술을 열어 감사를 선포하십시오! 기적의 식탁이 차려질 것입니다!</span>”' }
-        ]
-      },
-      10: {
-        title: '오늘 주님이 차려주신 은혜의 식탁으로 나아오라',
-        tag: '🔥 복음 초청 99% (은혜)',
-        sub: '생명의 떡이신 예수 그리스도 안에서 누리는 영원한 만족과 승리',
+      5: {
+        title: '환난 중에도 나를 살리시는 주의 오른손',
+        tag: '💡 소망·비전 96% (인내)',
+        sub: '내가 고난 가운데 다닐지라도 주의 손을 펴사 나를 구원하시는 능력',
         startSec: 2100,
         duration: 45,
         scenes: [
-          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“세상에 지치고 상하여 <span class=\'text-blue-400 font-bold\'>영혼의 극심한 갈증 속에 방황하고 계십니까?</span>”' },
-          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“하늘에서 내려온 참된 떡, <span class=\'text-blue-400 font-bold\'>예수 그리스도께서 오늘 당신을 그분의 풍성한 식탁으로 부르십니다</span>.”' },
-          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“아무 값없이 베푸시는 십자가 사랑 앞에 <span class=\'text-blue-400 font-bold\'>마음의 문을 활짝 열고 주님을 영접하십시오</span>.”' },
-          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>광야의 식탁을 베푸시는 예수 그리스도의 이름으로 축복합니다!</span>”' }
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“사방으로 우겨쌈을 당하여 피할 길이 보이지 않는 <span class=\'text-blue-400 font-bold\'>막막한 고난을 지나고 계십니까</span>?”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“시편 기자는 고백합니다: <span class=\'text-blue-400 font-bold\'>내가 환난 중에 다닐지라도 주께서 나를 살아나게 하십니다</span>.”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“주의 전능하신 오른손이 원수의 분노를 막으시고, <span class=\'text-blue-400 font-bold\'>당신을 굳건하게 붙들어 구원하십니다</span>.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>환난을 두려워 마십시오! 주의 권능의 오른손이 당신을 살리십니다!</span>”' }
+        ]
+      },
+      6: {
+        title: '나를 위하여 모든 것을 온전하게 이루시는 하나님',
+        tag: '⚡️ 평안·담대 95% (평안)',
+        sub: '주의 손으로 지으신 것을 버리지 아니하시며 끝까지 완성하시는 은혜',
+        startSec: 2250,
+        duration: 45,
+        scenes: [
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“내 실력과 지혜로는 미완성으로 끝날 것 같아 <span class=\'text-blue-400 font-bold\'>불안에 떨고 계십니까</span>?”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“여호와께서 나를 위하여 모든 것을 완전하게 이루실 것입니다! <span class=\'text-blue-400 font-bold\'>주의 인자하심은 영원합니다</span>.”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“주께서 친히 시작하신 선한 일을 <span class=\'text-blue-400 font-bold\'>반드시 가장 아름답게 끝맺으실 것</span>을 믿으십시오.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>주님이 이루십니다! 불안을 내려놓고 주님의 신실하심을 찬양하십시오!</span>”' }
+        ]
+      },
+      7: {
+        title: '역대상 16장의 신앙: 항상 주의 얼굴을 구할지어다',
+        tag: '🔥 영적 권세 98% (전환)',
+        sub: '여호와와 그의 능력을 구할지어다 항상 그의 얼굴을 찾으라',
+        startSec: 2400,
+        duration: 45,
+        scenes: [
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“역대상 16장에서 다윗은 언약궤를 모시며 <span class=\'text-blue-400 font-bold\'>감사의 첫 노래를 선포했습니다</span>.”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“여호와와 그의 능력을 구할지어다! <span class=\'text-blue-400 font-bold\'>항상 그의 얼굴을 찾을지어다</span>!”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“세상의 손을 구하지 말고, <span class=\'text-blue-400 font-bold\'>하나님의 얼굴을 구하는 예배자가 되십시오</span>.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>주의 얼굴을 구할 때 하늘의 문이 열리고 모든 매임이 풀립니다!</span>”' }
+        ]
+      },
+      8: {
+        title: '원망의 자리를 털고 감사의 제단을 쌓으라',
+        tag: '💡 정체성·회복 95% (은혜)',
+        sub: '사탄의 밥이 되는 불평을 끊고 영적 승리를 가져오는 감사의 선포',
+        startSec: 2550,
+        duration: 45,
+        scenes: [
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“원망과 불평은 영혼을 갉아먹고 <span class=\'text-blue-400 font-bold\'>사탄에게 틈을 내어주는 영적 독소</span>입니다.”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“불평할 이유가 백 가지일지라도, <span class=\'text-blue-400 font-bold\'>십자가의 은혜 한 가지만으로도 우리는 영원히 감사</span>할 수 있습니다.”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“원망의 입술을 닫고, <span class=\'text-blue-400 font-bold\'>믿음의 감사를 선포하여 사탄의 결박을 끊어내십시오</span>.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>감사가 기적을 낳습니다! 오늘 당신의 입술에서 감사가 터져나올지어다!</span>”' }
+        ]
+      },
+      9: {
+        title: '닫힌 문을 여는 기적의 열쇠, 믿음의 감사',
+        tag: '⚡️ 능력·치유 97% (회복)',
+        sub: '바울과 실라처럼 깊은 옥중에서도 전심으로 찬양할 때 임하는 구원',
+        startSec: 2700,
+        duration: 45,
+        scenes: [
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“문이 닫히고 길이 막혔을 때, <span class=\'text-blue-400 font-bold\'>포기하거나 주저앉지 마십시오</span>.”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“감사는 막힌 홍해를 가르는 지팡이이며, <span class=\'text-blue-400 font-bold\'>견고한 여리고 성을 무너뜨리는 함성</span>입니다.”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“보이지 않는 곳에서 이미 일하고 계신 <span class=\'text-blue-400 font-bold\'>하나님을 바라보며 감사의 찬양을 올리십시오</span>.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>기적의 열쇠는 감사입니다! 주를 향한 감사가 새 길을 열 것입니다!</span>”' }
+        ]
+      },
+      10: {
+        title: '영원하신 주의 인자하심을 신뢰하는 성도',
+        tag: '🔥 복음 초청 99% (구원)',
+        sub: '주의 인자하심이 영원하오니 손으로 지으신 우리를 결코 버리지 않으십니다',
+        startSec: 2850,
+        duration: 45,
+        scenes: [
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“세상의 사랑은 조건에 따라 변하지만, <span class=\'text-blue-400 font-bold\'>하나님의 인자하심은 영원무궁</span>합니다.”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“다윗은 노래합니다: <span class=\'text-blue-400 font-bold\'>여호와여 주의 인자하심이 영원하오니 주의 손으로 지으신 것을 버리지 마옵소서</span>.”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“어떤 상황 속에서도 변함없이 나를 붙드시는 <span class=\'text-blue-400 font-bold\'>주님의 영원한 사랑 안에 거하십시오</span>.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>주 예수 그리스도의 이름으로 축복합니다! 영원한 주의 은혜가 함께하실지어다!</span>”' }
         ]
       }
     }
+  },
+  'F3IRIXNF1V8': {
+    get title() { return sermonPresets['F3lRIXNF1V8'].title; },
+    get scripture() { return sermonPresets['F3lRIXNF1V8'].scripture; },
+    get preacher() { return sermonPresets['F3lRIXNF1V8'].preacher; },
+    get fullDuration() { return sermonPresets['F3lRIXNF1V8'].fullDuration; },
+    get sermonRange() { return sermonPresets['F3lRIXNF1V8'].sermonRange; },
+    get coreMessage() { return sermonPresets['F3lRIXNF1V8'].coreMessage; },
+    get points() { return sermonPresets['F3lRIXNF1V8'].points; },
+    get shorts() { return sermonPresets['F3lRIXNF1V8'].shorts; }
   },
   'z5D_B9I7l1Y': {
     title: '너는 복이 될지라',
     scripture: '창세기 12장 1-3절',
     preacher: '관유중앙교회 송기운 담임목사',
-    coreMessage: '하나님은 우리를 단순한 수혜자가 아닌, 열방을 향한 축복의 거룩한 통로로 부르셨습니다. 본토 친척 아비 집을 떠나는 믿음의 결단으로 나아갈 때 하늘의 복이 임합니다.',
+    fullDuration: '1시간 08분 15초',
+    sermonRange: '20:10 ~ 48:30',
+    coreMessage: '하나님께서 아브람을 부르실 때 익숙한 본토 친척 아비 집을 떠나게 하셨습니다. 머무는 안주를 버리고 믿음으로 첫 발을 뗄 때, 주님은 우리를 단순한 수혜자가 아닌 온 땅에 흘러가는 거룩한 복의 근원으로 세우십니다.',
     points: [
-      '1대지: 안주하는 옛 삶을 떠나는 믿음의 첫걸음 (창 12:1)',
-      '2대지: 복의 근원이 되는 성도의 거룩한 정체성 (창 12:2)',
-      '3대지: 땅의 모든 족속을 살리고 치유하는 축복의 통로 (창 12:3)'
+      '1대지: 안주의 자리를 털고 일어나는 거룩한 떠남 (창 12:1)',
+      '2대지: 세상의 조건이 아닌 약속을 바라보는 시선 (창 12:2)',
+      '3대지: 너로 말미암아 모든 족속이 복을 얻는 사명 (창 12:3)'
     ],
     shorts: {
       1: {
-        title: '복의 근원이 되는 결단',
-        tag: '🔥 감정 고조도 98%',
-        sub: '도입: 떠남의 결단(15s) → 전환: 약속의 신실함(20s) → 결단: 축복의 선언(15s)',
-        startSec: 0,
-        duration: 12,
+        title: '너는 복이 될지라 - 복의 근원이 되는 결단',
+        tag: '🔥 감정 고조도 99% (결단)',
+        sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · 1.3배속 45초',
+        startSec: 1210,
+        duration: 45,
         scenes: [
-          { start: 0, end: 4, label: '씬 1 [00:00]', subtitle: '“머무르는 신앙에는 <span class=\'text-blue-400 font-bold\'>기적이 없습니다</span>. 믿음으로 떠나십시오.”' },
-          { start: 4, end: 8, label: '씬 2 [00:04]', subtitle: '“하나님은 당신을 단순한 피해자가 아닌 <span class=\'text-blue-400 font-bold\'>복의 통로</span>로 부르셨습니다.”' },
-          { start: 8, end: 12, label: '씬 3 [00:08]', subtitle: '“너는 복이 될지라! 오늘 주님의 그 <span class=\'text-blue-400 font-bold\'>거룩한 약속을 붙드십시오</span>.”' }
-        ]
-      },
-      2: {
-        title: '약속을 붙들고 나아가는 믿음',
-        tag: '💡 감동·위로 95%',
-        sub: '보이지 않는 길 앞에서도 인도하시는 전능자의 손길을 신뢰함',
-        startSec: 45,
-        duration: 12,
-        scenes: [
-          { start: 0, end: 4, label: '씬 1 [00:45]', subtitle: '“갈 바를 알지 못해도 <span class=\'text-blue-400 font-bold\'>말씀을 따라가는 사람</span>이 승리합니다.”' },
-          { start: 4, end: 8, label: '씬 2 [00:49]', subtitle: '“하나님의 약속은 우리의 <span class=\'text-blue-400 font-bold\'>환경과 계산을 뛰어넘습니다</span>.”' },
-          { start: 8, end: 12, label: '씬 3 [00:53]', subtitle: '“너를 축복하는 자에게 복을 내리시는 <span class=\'text-blue-400 font-bold\'>주님의 신실하심</span>을 믿으십시오.”' }
-        ]
-      },
-      3: {
-        title: '세상을 살리는 축복의 통로',
-        tag: '⚡️ 결단·도전 93%',
-        sub: '나만의 울타리를 넘어 이웃과 열방을 주께로 인도하는 성도의 사명',
-        startSec: 120,
-        duration: 12,
-        scenes: [
-          { start: 0, end: 4, label: '씬 1 [02:00]', subtitle: '“진정한 복은 <span class=\'text-blue-400 font-bold\'>흘러넘쳐 이웃을 적실 때</span> 완성됩니다.”' },
-          { start: 4, end: 8, label: '씬 2 [02:04]', subtitle: '“여러분의 가정과 일터가 <span class=\'text-blue-400 font-bold\'>생명수의 진원지</span>가 되기를 축복합니다.”' },
-          { start: 8, end: 12, label: '씬 3 [02:08]', subtitle: '“땅의 모든 족속이 <span class=\'text-blue-400 font-bold\'>너로 말미암아 복을 얻으리라</span>.”' }
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“익숙한 자리에 주저앉아 있으면 <span class=\'text-blue-400 font-bold\'>하나님의 위대한 역사는 결코 시작</span>되지 않습니다.”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“주님은 아브람에게 명하셨습니다: <span class=\'text-blue-400 font-bold\'>너의 고향과 친척과 아버지의 집을 떠나</span> 내가 네게 보여 줄 땅으로 가라!”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“두려움의 자리를 털고 순종의 발걸음을 내딛을 때, <span class=\'text-blue-400 font-bold\'>하나님이 준비하신 기적의 복</span>이 열립니다.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>너는 복이 될지라! 오늘 주님의 그 선언을 믿음으로 취하십시오!</span>”' }
         ]
       }
     }
@@ -231,47 +220,26 @@ const sermonPresets = {
     title: '관유의 능력과 평화',
     scripture: '시편 133편 1-3절',
     preacher: '관유중앙교회 송기운 담임목사',
-    coreMessage: '형제가 연합하여 동거함이 어찌 그리 선하고 아름다운지요! 거룩한 기름부으심과 헐몬의 이슬이 임하는 공동체에 하나님은 영원한 생명의 복을 명하십니다.',
+    fullDuration: '1시간 12분 40초',
+    sermonRange: '18:45 ~ 46:20',
+    coreMessage: '보라 형제가 연합하여 동거함이 어찌 그리 선하고 아름다운고! 아론의 머리에 부어진 보배로운 기름처럼, 하나님의 성령의 기름 부으심은 공동체의 연합과 평화의 자리로 흘러내립니다.',
     points: [
-      '1대지: 아론의 수염을 타고 옷깃까지 흐르는 거룩한 기름부음 (시 133:2)',
-      '2대지: 메마른 대지를 적시는 헐몬의 신선한 하늘 이슬 (시 133:3a)',
-      '3대지: 거기서 하나님께서 친히 명하신 영생의 복 (시 133:3b)'
+      '1대지: 머리에서 수염으로 흘러내리는 보배로운 기름 (시 133:1-2)',
+      '2대지: 시온의 산들에 내리는 헐몬의 거룩한 이슬 (시 133:3a)',
+      '3대지: 거기서 명하신 여호와의 영영한 생명의 복 (시 133:3b)'
     ],
     shorts: {
       1: {
-        title: '연합할 때 부어지는 기름부음',
-        tag: '🔥 감정 고조도 98%',
-        sub: '아론의 머리에서 흘러내리는 성령의 거룩한 기름부으심의 임재',
-        startSec: 10,
-        duration: 12,
+        title: '관유의 기름 부으심과 화평의 축복',
+        tag: '🔥 감정 고조도 99% (결단)',
+        sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · 1.3배속 45초',
+        startSec: 1125,
+        duration: 45,
         scenes: [
-          { start: 0, end: 4, label: '씬 1 [00:10]', subtitle: '“성령의 기름부으심은 <span class=\'text-blue-400 font-bold\'>연합하는 곳에</span> 거침없이 흘러내립니다.”' },
-          { start: 4, end: 8, label: '씬 2 [00:14]', subtitle: '“분열과 다툼을 멈추고 <span class=\'text-blue-400 font-bold\'>예수의 사랑으로 하나 될 때</span> 능력이 나타납니다.”' },
-          { start: 8, end: 12, label: '씬 3 [00:18]', subtitle: '“그 거룩한 관유가 오늘 <span class=\'text-blue-400 font-bold\'>당신의 심령을 가득 채우실 것</span>입니다.”' }
-        ]
-      },
-      2: {
-        title: '헐몬의 이슬 같은 하늘의 은혜',
-        tag: '💡 감동·위로 96%',
-        sub: '밤새 대지를 촉촉하게 적시는 생명의 이슬과 시온의 회복',
-        startSec: 60,
-        duration: 12,
-        scenes: [
-          { start: 0, end: 4, label: '씬 1 [01:00]', subtitle: '“아무도 모르게 소리 없이 내리는 <span class=\'text-blue-400 font-bold\'>이슬 같은 은혜</span>가 있습니다.”' },
-          { start: 4, end: 8, label: '씬 2 [01:04]', subtitle: '“메마르고 지친 마음에 <span class=\'text-blue-400 font-bold\'>하늘의 생명수</span>가 스며들기 시작합니다.”' },
-          { start: 8, end: 12, label: '씬 3 [01:08]', subtitle: '“시온의 산들에 내리는 이슬처럼 <span class=\'text-blue-400 font-bold\'>성도의 삶은 소생합니다</span>.”' }
-        ]
-      },
-      3: {
-        title: '영원한 생명의 복을 누리는 공동체',
-        tag: '⚡️ 결단·도전 93%',
-        sub: '하나님이 친히 보증하시고 명령하신 영원한 생명의 축복',
-        startSec: 130,
-        duration: 12,
-        scenes: [
-          { start: 0, end: 4, label: '씬 1 [02:10]', subtitle: '“세상의 복은 지나가지만 <span class=\'text-blue-400 font-bold\'>하나님이 명하신 복</span>은 영원합니다.”' },
-          { start: 4, end: 8, label: '씬 2 [02:14]', subtitle: '“주 안에서 한마음으로 기도하는 가정마다 <span class=\'text-blue-400 font-bold\'>생명의 역사가</span> 일어납니다.”' },
-          { start: 8, end: 12, label: '씬 3 [02:18]', subtitle: '“거기서 여호와께서 복을 명하셨나니 <span class=\'text-blue-400 font-bold\'>곧 영생이로다</span>!”' }
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“메마르고 분열된 세상 속에서 <span class=\'text-blue-400 font-bold\'>영혼의 목마름을 느끼고 계십니까</span>?”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“아론의 머리에 부어진 보배로운 관유처럼, <span class=\'text-blue-400 font-bold\'>하나님의 거룩한 은혜는 연합의 자리</span>로 흘러내립니다.”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“미움과 시기를 십자가 앞에 묻고, <span class=\'text-blue-400 font-bold\'>사랑과 용서의 손을 맞잡으십시오</span>.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>주께서 명하신 영영한 생명의 복이 임할지어다!</span>”' }
         ]
       }
     }
@@ -280,47 +248,26 @@ const sermonPresets = {
     title: '광야에서 길을 내시는 하나님',
     scripture: '이사야 43장 18-21절',
     preacher: '관유중앙교회 송기운 담임목사',
-    coreMessage: '너희는 이전 일을 기억하지 말며 옛날 일을 생각하지 말라! 보라 내가 새 일을 행하리니 이제 나타낼 것이라. 하나님은 사막에 강을 내시며 광야에 대로를 여십니다.',
+    fullDuration: '1시간 05분 10초',
+    sermonRange: '19:30 ~ 47:15',
+    coreMessage: '너희는 이전 일을 기억하지 말며 옛날 일을 생각하지 말라. 보라 내가 새 일을 행하리니! 하나님은 사막에 강을 내시며 광야에 대로를 여시는 전능자이십니다.',
     points: [
-      '1대지: 과거의 상처와 실패를 털어내는 영적 출애굽 (사 43:18)',
-      '2대지: 눈앞에 보이지 않아도 이미 시작된 새 일 (사 43:19)',
-      '3대지: 하나님을 찬송하도록 지음받은 주 백성의 사명 (사 43:21)'
+      '1대지: 과거의 상처와 실패에 묶이지 않는 믿음 (사 43:18)',
+      '2대지: 메마른 사막에 강을 내시는 하나님의 새 일 (사 43:19)',
+      '3대지: 택하신 백성에게 생수를 마시게 하시는 은혜 (사 43:20-21)'
     ],
     shorts: {
       1: {
-        title: '이전 일에 갇히지 않는 믿음',
-        tag: '🔥 감정 고조도 99%',
-        sub: '과거의 후회와 실패를 딛고 하나님이 여시는 새 미래를 향한 전진',
-        startSec: 15,
-        duration: 12,
+        title: '광야에 길을, 사막에 강을 내시는 주님',
+        tag: '🔥 감정 고조도 99% (결단)',
+        sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · 1.3배속 45초',
+        startSec: 1170,
+        duration: 45,
         scenes: [
-          { start: 0, end: 4, label: '씬 1 [00:15]', subtitle: '“어제의 실패가 <span class=\'text-blue-400 font-bold\'>당신의 내일을 규정하지 못합니다</span>.”' },
-          { start: 4, end: 8, label: '씬 2 [00:19]', subtitle: '“옛날 일을 생각하지 마십시오. <span class=\'text-blue-400 font-bold\'>하나님의 시선은 내일</span>을 향하고 계십니다.”' },
-          { start: 8, end: 12, label: '씬 3 [00:23]', subtitle: '“보라 내가 새 일을 행하리니 <span class=\'text-blue-400 font-bold\'>이제 나타낼 것이라</span>!”' }
-        ]
-      },
-      2: {
-        title: '사막에 강을 내시는 하나님의 손길',
-        tag: '💡 감동·위로 95%',
-        sub: '도저히 불가능해 보이는 광야 한가운데서 터져 나오는 생명수',
-        startSec: 75,
-        duration: 12,
-        scenes: [
-          { start: 0, end: 4, label: '씬 1 [01:15]', subtitle: '“인간의 계산이 끝나는 자리에서 <span class=\'text-blue-400 font-bold\'>기적이 시작됩니다</span>.”' },
-          { start: 4, end: 8, label: '씬 2 [01:19]', subtitle: '“광야에 길을, 사막에 마르지 않는 강을 <span class=\'text-blue-400 font-bold\'>주님이 내실 것입니다</span>.”' },
-          { start: 8, end: 12, label: '씬 3 [01:23]', subtitle: '“말씀을 믿고 발을 내딛는 자에게 <span class=\'text-blue-400 font-bold\'>대로가 열립니다</span>.”' }
-        ]
-      },
-      3: {
-        title: '새 일을 시작하시는 주님의 시간표',
-        tag: '⚡️ 결단·도전 94%',
-        sub: '나를 통해 영광 받으실 하나님을 바라보는 찬송의 회복',
-        startSec: 140,
-        duration: 12,
-        scenes: [
-          { start: 0, end: 4, label: '씬 1 [02:20]', subtitle: '“광야의 여정은 방황이 아니라 <span class=\'text-blue-400 font-bold\'>믿음의 연단</span>입니다.”' },
-          { start: 4, end: 8, label: '씬 2 [02:24]', subtitle: '“이 백성은 내가 나를 위하여 지었나니 <span class=\'text-blue-400 font-bold\'>나를 찬송하게 하려 함이라</span>.”' },
-          { start: 8, end: 12, label: '씬 3 [02:28]', subtitle: '“오늘 광야에서 승리의 찬양을 <span class=\'text-blue-400 font-bold\'>선제적으로 올리십시오</span>!”' }
+          { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: '“과거의 실패와 뼈아픈 상처에 <span class=\'text-blue-400 font-bold\'>여전히 짓눌려 살아가고 계십니까</span>?”' },
+          { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: '“하나님은 선언하십니다: <span class=\'text-blue-400 font-bold\'>보라 내가 새 일을 행하리니 이제 나타낼 것이라</span>!”' },
+          { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: '“사막 한가운데서 도도히 흐르는 생수의 강을 <span class=\'text-blue-400 font-bold\'>믿음의 눈으로 바라보십시오</span>.”' },
+          { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: '“<span class=\'text-amber-400 font-black\'>주님이 오늘 당신의 광야에 대로를 여십니다!</span>”' }
         ]
       }
     }
@@ -328,7 +275,7 @@ const sermonPresets = {
 };
 
 // Default studio clips state
-let studioClips = sermonPresets['z5D_B9I7l1Y'].shorts;
+let studioClips = sermonPresets['F3lRIXNF1V8'].shorts;
 
 // Generated Ministry Assets Repository
 let generatedMinistryAssets = {
@@ -651,353 +598,62 @@ function loadSampleManuscript() {
 function extractYouTubeId(url) {
   if (!url) return null;
   url = url.trim();
-  // 1. YouTube Live URLs (e.g. https://youtube.com/live/F3IRIXNF1V8?feature=share)
+  let id = null;
+  // 1. YouTube Live URLs (e.g. https://youtube.com/live/F3lRIXNF1V8?feature=share)
   let m = url.match(/(?:youtube\.com|m\.youtube\.com)\/live\/([a-zA-Z0-9_-]{11})/i);
-  if (m) return m[1];
+  if (m) id = m[1];
   // 2. youtu.be short URLs
-  m = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/i);
-  if (m) return m[1];
+  if (!id) {
+    m = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/i);
+    if (m) id = m[1];
+  }
   // 3. watch?v= parameter
-  m = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/i);
-  if (m) return m[1];
+  if (!id) {
+    m = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/i);
+    if (m) id = m[1];
+  }
   // 4. embed / shorts / v
-  m = url.match(/(?:embed|shorts|\/v\/|\/e\/)\/([a-zA-Z0-9_-]{11})/i);
-  if (m) return m[1];
+  if (!id) {
+    m = url.match(/(?:embed|shorts|\/v\/|\/e\/)\/([a-zA-Z0-9_-]{11})/i);
+    if (m) id = m[1];
+  }
   // 5. Any generic /live/ path
-  m = url.match(/\/live\/([a-zA-Z0-9_-]{11})/i);
-  if (m) return m[1];
+  if (!id) {
+    m = url.match(/\/live\/([a-zA-Z0-9_-]{11})/i);
+    if (m) id = m[1];
+  }
   // 6. Raw 11-character alphanumeric ID
-  m = url.match(/^([a-zA-Z0-9_-]{11})$/);
-  if (m) return m[1];
-  // 7. General fallback for any YouTube link containing 11-char ID
-  if (url.includes('youtube') || url.includes('youtu.be')) {
-    m = url.match(/([a-zA-Z0-9_-]{11})/);
-    if (m) return m[1];
+  if (!id) {
+    m = url.match(/^([a-zA-Z0-9_-]{11})$/);
+    if (m) id = m[1];
   }
-  return null;
-}
+  if (!id) return null;
 
-async function handleYouTubeInput(val) {
-  if (!val || val.trim().length === 0) {
-    const card = document.getElementById('yt-recognized-card');
-    if (card) { card.classList.add('hidden'); card.classList.remove('flex'); }
-    return;
+  // Canonicalize case-sensitive typos (e.g. capital I vs lowercase l)
+  if (id.toLowerCase() === 'f3lrixnf1v8' || id === 'F3IRIXNF1V8' || id === 'F3lRIXNF1V8') {
+    return 'F3lRIXNF1V8';
   }
-
-  const id = extractYouTubeId(val);
-  const card = document.getElementById('yt-recognized-card');
-  const thumb = document.getElementById('yt-recognized-thumb');
-  const idEl = document.getElementById('yt-recognized-id');
-  const boundaryEl = document.getElementById('yt-recognized-boundary');
-  const customTitleEl = document.getElementById('yt-custom-title');
-  const customScriptureEl = document.getElementById('yt-custom-scripture');
-
-  if (!id) return;
-
-  currentYouTubeId = id;
-  currentInputMode = 'yt';
-
-  if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
-  if (thumb) thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-  const backdropImg = document.getElementById('sermon-backdrop-img');
-  if (backdropImg) backdropImg.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-
-  // 1. Preset check
-  const preset = sermonPresets[id];
-  if (preset) {
-    currentYouTubeTitle = preset.title;
-    currentYouTubeScripture = preset.scripture;
-    if (customTitleEl) customTitleEl.value = preset.title;
-    if (customScriptureEl) customScriptureEl.value = preset.scripture;
-    if (idEl) idEl.textContent = `설교: "${preset.title}" (${preset.scripture})`;
-    if (boundaryEl) boundaryEl.innerHTML = `<strong>전체 예배 (${preset.fullDuration || '1시간 14분'})</strong> 감지 ➔ <span class="text-blue-700 font-bold">설교 구간: ${preset.sermonRange || '21:30 ~ 52:45'} 정밀 추출</span>`;
-    showToast(`✨ 설교 영상 [${preset.title}] (${preset.scripture}) 인식 완료!`, '▶️');
-    return;
-  }
-
-  // 2. Dynamic Fetch via YouTube oEmbed API
-  if (idEl) idEl.innerHTML = `<span class="animate-pulse text-blue-700 font-bold">🔍 유튜브 영상 정보 및 성경 본문 실시간 분석 중...</span>`;
-
-  try {
-    const resp = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`);
-    if (resp.ok) {
-      const data = await resp.json();
-      const rawTitle = data.title || '';
-      const author = data.author_name || '';
-
-      const parsedScrip = parseScriptureFromText(rawTitle) || '본문 구절 자동 감지 중';
-      const parsedTitle = parseTitleFromText(rawTitle);
-
-      currentYouTubeTitle = parsedTitle;
-      currentYouTubeScripture = parsedScrip;
-
-      if (customTitleEl) customTitleEl.value = parsedTitle;
-      if (customScriptureEl) customScriptureEl.value = parsedScrip;
-      if (idEl) idEl.textContent = `설교: "${parsedTitle}" (${parsedScrip})`;
-      if (boundaryEl) boundaryEl.innerHTML = `<strong>${author || '주일 예배 영상'}</strong> 감지 ➔ <span class="text-blue-700 font-bold">설교 구간 자동 정밀 분리 완료</span>`;
-      
-      showToast(`✨ 유튜브 설교 감지 완료: "${parsedTitle}" (${parsedScrip})`, '🎬');
-      return;
-    }
-  } catch (err) {
-    console.log('oEmbed fetch error or CORS fallback:', err);
-  }
-
-  // 3. Fallback for unlisted/offline/unknown IDs
-  let parsedScrip = parseScriptureFromText(val);
-  let parsedTitle = parseTitleFromText(val);
-
-  if (!parsedScrip || parsedScrip.includes('새로운')) {
-    parsedTitle = (customTitleEl && customTitleEl.value && !customTitleEl.value.includes('감지') && !customTitleEl.value.includes('광야의 식탁'))
-      ? customTitleEl.value.trim()
-      : `주일 설교 영상 (ID: ${id})`;
-    parsedScrip = (customScriptureEl && customScriptureEl.value && !customScriptureEl.value.includes('감지') && !customScriptureEl.value.includes('시편 78장'))
-      ? customScriptureEl.value.trim()
-      : '성경 본문 직접 입력';
-  }
-
-  currentYouTubeTitle = parsedTitle;
-  currentYouTubeScripture = parsedScrip;
-  if (customTitleEl) customTitleEl.value = parsedTitle;
-  if (customScriptureEl) customScriptureEl.value = parsedScrip;
-  if (idEl) idEl.textContent = `설교: "${parsedTitle}" (${parsedScrip})`;
-  if (boundaryEl) boundaryEl.innerHTML = `<strong>전체 영상 (${id})</strong> 감지 ➔ <span class="text-blue-700 font-bold">설교 구간: 20:00 ~ 50:00 정밀 추출</span>`;
-  showToast(`✨ 영상 [ID: ${id}] 감지! 제목과 본문이 적용되었습니다.`, '🎬');
-}
-
-function loadSampleYouTube(id, title, scripture) {
-  const input = document.getElementById('youtube-url-input');
-  if (input) {
-    input.value = `https://www.youtube.com/watch?v=${id}`;
-  }
-  currentYouTubeId = id;
-  currentYouTubeTitle = title || '주일 설교';
-  currentYouTubeScripture = scripture || '';
-  currentInputMode = 'yt';
-
-  const customTitleEl = document.getElementById('yt-custom-title');
-  const customScriptureEl = document.getElementById('yt-custom-scripture');
-  if (customTitleEl) customTitleEl.value = currentYouTubeTitle;
-  if (customScriptureEl) customScriptureEl.value = currentYouTubeScripture;
-
-  const backdropImg = document.getElementById('sermon-backdrop-img');
-  if (backdropImg) backdropImg.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-
-  const card = document.getElementById('yt-recognized-card');
-  const thumb = document.getElementById('yt-recognized-thumb');
-  const idEl = document.getElementById('yt-recognized-id');
-  const boundaryEl = document.getElementById('yt-recognized-boundary');
-
-  if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
-  if (thumb) thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-  if (idEl) idEl.textContent = `설교: "${currentYouTubeTitle}" (${currentYouTubeScripture})`;
-  if (boundaryEl) boundaryEl.innerHTML = `<strong>전체 예배 영상 감지</strong> ➔ <span class="text-blue-700 font-bold">설교 구간: 21:30 ~ 52:45 정밀 추출</span>`;
-
-  selectUploadTab('yt');
-  showToast(`주일 설교 ["${currentYouTubeTitle}"] (${currentYouTubeScripture}) 선택 완료!`, '✨');
-}
-
-function applyYouTubeLinkAndStart() {
-  const input = document.getElementById('youtube-url-input');
-  const val = input ? input.value : '';
-  const id = extractYouTubeId(val);
-
-  const customTitleEl = document.getElementById('yt-custom-title');
-  const customScriptureEl = document.getElementById('yt-custom-scripture');
-  if (customTitleEl && customTitleEl.value.trim().length > 0) {
-    currentYouTubeTitle = customTitleEl.value.trim();
-  }
-  if (customScriptureEl && customScriptureEl.value.trim().length > 0) {
-    currentYouTubeScripture = customScriptureEl.value.trim();
-  }
-
-  if (id) {
-    currentYouTubeId = id;
-    currentInputMode = 'yt';
-
-    const backdropImg = document.getElementById('sermon-backdrop-img');
-    if (backdropImg) backdropImg.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-
-    showToast(`설교 영상 [ID: ${id}] 인식 완료! 쇼츠 생성을 시작합니다.`, '🎬');
-    startStudioGeneration();
-  } else {
-    showToast('올바른 유튜브 링크를 입력하시거나 위의 예시 설교 버튼을 눌러주세요.', '⚠️');
-  }
-}
-
-// ================= TAB 3: FILE UPLOAD & DRAG/DROP =================
-function handleDragOver(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  const dropzone = document.getElementById('file-dropzone');
-  if (dropzone) {
-    dropzone.classList.add('border-blue-500', 'bg-blue-50/70', 'ring-4', 'ring-blue-100');
-  }
-}
-
-function handleDragLeave(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  const dropzone = document.getElementById('file-dropzone');
-  if (dropzone) {
-    dropzone.classList.remove('border-blue-500', 'bg-blue-50/70', 'ring-4', 'ring-blue-100');
-  }
-}
-
-function handleFileDrop(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  handleDragLeave(e);
-  if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-    processUploadedFile(e.dataTransfer.files[0]);
-  }
-}
-
-function simulateFileUpload() {
-  const realInput = document.getElementById('real-file-input');
-  if (realInput) realInput.click();
-}
-
-function handleFileSelected(input) {
-  if (input.files && input.files[0]) {
-    processUploadedFile(input.files[0]);
-  }
-}
-
-function clearSelectedFile(e) {
-  if (e) e.stopPropagation();
-  const realInput = document.getElementById('real-file-input');
-  if (realInput) realInput.value = '';
-  const card = document.getElementById('file-recognized-card');
-  if (card) { card.classList.add('hidden'); card.classList.remove('flex'); }
-  currentFileVideoUrl = null;
-  currentFileAudioUrl = null;
-  currentFileName = '';
-  currentFileType = '';
-  showToast('선택된 파일이 취소되었습니다.', '🗑️');
-}
-
-function processUploadedFile(file) {
-  if (!file) return;
-  currentFileName = file.name;
-  const fileNameLower = file.name.toLowerCase();
-
-  const card = document.getElementById('file-recognized-card');
-  const nameEl = document.getElementById('file-recognized-name');
-  const sizeEl = document.getElementById('file-recognized-size');
-  const badgeEl = document.getElementById('file-type-badge');
-  const iconEl = document.getElementById('file-type-icon');
-  const fileTitleInp = document.getElementById('file-custom-title');
-  const fileScripInp = document.getElementById('file-custom-scripture');
-
-  const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-  if (sizeEl) sizeEl.textContent = `${sizeMb} MB`;
-  if (card) { card.classList.remove('hidden'); card.classList.add('flex'); }
-
-  // Auto detect Scripture and Title from file name
-  const detectedScrip = parseScriptureFromText(file.name) || '성경 본문 직접 입력 가능';
-  const detectedTitle = parseTitleFromText(file.name);
-
-  if (fileTitleInp) fileTitleInp.value = detectedTitle;
-  if (fileScripInp) fileScripInp.value = detectedScrip;
-  if (nameEl) nameEl.textContent = `${detectedTitle} (${detectedScrip})`;
-
-  // 1. Text or Markdown file
-  if (file.type.startsWith('text/') || fileNameLower.endsWith('.txt') || fileNameLower.endsWith('.md')) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const content = e.target.result;
-      const ta = document.getElementById('manuscript-input');
-      if (ta) {
-        ta.value = content;
-        updateCharCount(ta);
-      }
-      selectUploadTab('paste');
-      showToast(`설교 원고 파일 [${detectedTitle}] 내용을 성공적으로 불러왔습니다!`, '📝');
-    };
-    reader.readAsText(file, 'utf-8');
-    return;
-  }
-
-  // 2. Video file
-  if (file.type.startsWith('video/') || fileNameLower.endsWith('.mp4') || fileNameLower.endsWith('.mov')) {
-    currentInputMode = 'file';
-    currentFileType = 'video';
-    currentFileVideoUrl = URL.createObjectURL(file);
-    if (badgeEl) badgeEl.textContent = '설교 영상(MP4) 등록 완료';
-    if (iconEl) iconEl.textContent = '🎬';
-    selectUploadTab('file');
-    showToast(`설교 영상 [${detectedTitle}] (${detectedScrip}) 인식 완료!`, '🎬');
-    return;
-  }
-
-  // 3. Audio file
-  if (file.type.startsWith('audio/') || fileNameLower.endsWith('.mp3') || fileNameLower.endsWith('.m4a') || fileNameLower.endsWith('.wav')) {
-    currentInputMode = 'file';
-    currentFileType = 'audio';
-    currentFileAudioUrl = URL.createObjectURL(file);
-    if (badgeEl) badgeEl.textContent = '설교 음성(MP3) 등록 완료';
-    if (iconEl) iconEl.textContent = '🎙️';
-    selectUploadTab('file');
-    showToast(`설교 음성 [${detectedTitle}] (${detectedScrip}) 인식 완료!`, '🎙️');
-    return;
-  }
-}
-
-// ================= TOAST NOTIFICATION SYSTEM =================
-function showToast(msg, icon = '✅') {
-  const toast = document.getElementById('app-toast');
-  if (!toast) return;
-  const iconEl = document.getElementById('app-toast-icon');
-  const msgEl = document.getElementById('app-toast-msg');
-  if (iconEl) iconEl.textContent = icon;
-  if (msgEl) msgEl.textContent = msg;
-  toast.classList.remove('hidden');
-  toast.classList.add('flex');
-  clearTimeout(window.__toastTimer);
-  window.__toastTimer = setTimeout(() => {
-    toast.classList.add('hidden');
-    toast.classList.remove('flex');
-  }, 3500);
-}
-
-
-
-// ================= INTELLIGENT BIBLE SCRIPTURE & TITLE PARSER =================
-function parseScriptureFromText(text) {
-  if (!text) return null;
-  const fullBooks = '창세기|출애굽기|레위기|민수기|신명기|여호수아|사사기|룻기|사무엘상|사무엘하|열왕기상|열왕기하|역대상|역대하|에스라|느헤미야|에스더|욥기|시편|잠언|전도서|아가|이사야|예레미야|예레미야애가|에스겔|다니엘|호세아|요엘|아모스|오바댜|요나|미가|나훔|하박국|스바냐|학개|스가랴|말라기|마태복음|마가복음|누가복음|요한복음|사도행전|로마서|고린도전서|고린도후서|갈라디아서|에베소서|빌립보서|골로새서|데살로니가전서|데살로니가후서|디모데전서|디모데후서|디도서|빌레몬서|히브리서|야고보서|베드로전서|베드로후서|요한일서|요한이서|요한삼서|유다서|요한계시록';
-  const abbrBooks = '창|출|레|민|신|수|삿|룻|삼상|삼하|왕상|왕하|대상|대하|스|느|에|욥|시|잠|전|아|사|렘|애|겔|단|호|욜|암|옵|욘|미|나|합|습|학|슥|말|마|막|눅|요|행|롬|고전|고후|갈|엡|빌|골|살전|살후|딤전|딤후|딛|몬|히|약|벧전|벧후|요일|요이|요삼|유|계';
-
-  const fullRegex = new RegExp('(?:(' + fullBooks + '))\\s*(\\d+)\\s*(?:[:장])\\s*(\\d+)(?:\\s*[-~]\\s*(\\d+))?(?:\\s*절)?', 'i');
-  let m = text.match(fullRegex);
-  if (m) {
-    const v2 = m[4] ? '-' + m[4] : '';
-    return `${m[1]} ${m[2]}장 ${m[3]}${v2}절`;
-  }
-
-  const abbrRegex = new RegExp('(?:[\\[\\(]?)(' + abbrBooks + ')\\s*(\\d+)\\s*[:장]\\s*(\\d+)(?:\\s*[-~]\\s*(\\d+))?(?:절)?(?:[\\]\\)]?)', 'i');
-  m = text.match(abbrRegex);
-  if (m) {
-    const abbrMap = {'창':'창세기','출':'출애굽기','레':'레위기','민':'민수기','신':'신명기','수':'여호수아','삿':'사사기','룻':'룻기','삼상':'사무엘상','삼하':'사무엘하','왕상':'열왕기상','왕하':'열왕기하','대상':'역대상','대하':'역대하','스':'에스라','느':'느헤미야','에':'에스더','욥':'욥기','시':'시편','잠':'잠언','전':'전도서','아':'아가','사':'이사야','렘':'예레미야','애':'예레미야애가','겔':'에스겔','단':'다니엘','호':'호세아','욜':'요엘','암':'아모스','옵':'오바댜','욘':'요나','미':'미가','나':'나훔','합':'하박국','습':'스바냐','학':'학개','슥':'스가랴','말':'말라기','마':'마태복음','막':'마가복음','눅':'누가복음','요':'요한복음','행':'사도행전','롬':'로마서','고전':'고린도전서','고후':'고린도후서','갈':'갈라디아서','엡':'에베소서','빌':'빌립보서','골':'골로새서','살전':'데살로니가전서','살후':'데살로니가후서','딤전':'디모데전서','딤후':'디모데후서','딛':'디도서','몬':'빌레몬서','히':'히브리서','약':'야고보서','벧전':'베드로전서','벧후':'베드로후서','요일':'요한일서','요이':'요한이서','요삼':'요한삼서','유':'유다서','계':'요한계시록'};
-    const full = abbrMap[m[1]] || m[1];
-    const v2 = m[4] ? '-' + m[4] : '';
-    return `${full} ${m[2]}장 ${m[3]}${v2}절`;
-  }
-  return null;
+  return id;
 }
 
 function parseTitleFromText(text) {
   if (!text) return '새로운 주일 예배 설교';
+  // 1. Check explicit "제목:" pattern
+  const explicitMatch = text.match(/제목\s*:\s*([^본문\n|]+)/i);
+  if (explicitMatch) {
+    let t = explicitMatch[1].trim();
+    t = t.replace(/\s+/g, ' ');
+    return t;
+  }
   let t = text;
   t = t.replace(/\.[a-zA-Z0-9]{2,5}$/, '');
   t = t.replace(/(?:^|[^0-9])\d{6,8}(?:[^0-9]|$)/g, ' ');
   t = t.replace(/\b\d{4}[.\-_/]\d{1,2}[.\-_/]\d{1,2}\b/g, '');
   t = t.replace(/\[[^\]]*\]/g, ' ');
   t = t.replace(/\([^\)]*(?:이사야|시편|창세기|창|시|사|롬|히|마|막|눅|요|행|갈|엡|빌|골|벧전|약|계|\d+[:장]\d+)[^\)]*\)/g, ' ');
-  t = t.replace(/[|\-–—~].*?(?:목사|교회|워십|예배).*$/i, ' ');
-  t = t.replace(/[\[\]"']/g, '').replace(/[_~]/g, ' ').replace(/\s+/g, ' ').trim();
-  return t || '새로운 주일 예배 설교';
+  t = t.replace(/^(?:주일\s*예배\s*설교|주일설교|설교|특별집회|부흥회|설교영상)[\s_\-:]*/, '');
+  t = t.replace(/[\s_\-]+/g, ' ').trim();
+  return t.length >= 2 ? t : '새로운 주일 설교';
 }
 
 function onCustomYouTubeTitleChange(val) {
@@ -1023,8 +679,8 @@ function cleanPastoralSpeech(text) {
 }
 
 function generate10ShortsSuite(title, scripture, points) {
-  const cleanTitle = (title || '광야의 식탁을 베푸시는 하나님의 은혜').replace(/[\[\]"']/g, '').trim();
-  const scrip = scripture || '시편 78장 17-25절';
+  const cleanTitle = (title || '여호와께 감사하라!').replace(/[\[\]"']/g, '').trim();
+  const scrip = scripture || '시편 138편 (참고, 역대상 16:7-11)';
   const p1 = (points && points[0]) || '말씀을 따라가는 순종의 믿음';
   const p2 = (points && points[1]) || '감사로 상황을 돌파하는 영적 권세';
   const p3 = (points && points[2]) || '마음과 생각을 지키시는 참된 평강';
@@ -1032,7 +688,7 @@ function generate10ShortsSuite(title, scripture, points) {
   const themes = [
     { num: 1, title: `${cleanTitle} - 복의 근원이 되는 결단`, tag: '🔥 감정 고조도 99% (결단)', s1: '머무르는 안주에는 역사가 일어나지 않습니다. 익숙한 불안의 자리를 털고 일어나십시오.', s2: `세상은 조건을 보지만 하나님은 당신의 순종을 보십니다. ${p1}!`, s3: '상황보다 크신 하나님께서 당신을 반드시 거룩한 복의 통로로 세우실 것입니다.', s4: '너는 복이 될지라! 오늘 주님의 그 선언을 믿음으로 취하십시오!' },
     { num: 2, title: `염려를 기도로 바꾸는 단 하나의 비결`, tag: '💡 감동·위로 98% (믿음)', s1: '밤새 고민해도 바뀌는 것은 없습니다. 염려는 해결이 아니라 영혼의 소모입니다.', s2: `어떤 절망 속에서도 감사의 기도를 올릴 때 기적이 시작됩니다. ${p2}!`, s3: '내 계산이 끝나는 자리에서 비로소 하나님의 전능하신 손길이 일하십니다.', s4: '염려를 기도로 바꾸십시오! 하나님의 평강이 당신을 성벽처럼 지키십니다!' },
-    { num: 3, title: `광야의 식탁을 베푸시는 하나님의 손길`, tag: '⚡️ 능력·치유 97% (회복)', s1: '사방이 메마른 광야처럼 캄캄할 때, 낙심하며 불평의 늪에 빠지지 마십시오.', s2: '하나님은 반석을 쳐서 생수를 내시며 하늘 문을 열어 만나를 쏟아부으십니다.', s3: '인간의 방법이 막힌 그곳이 하나님의 기적이 시작되는 은혜의 식탁입니다.', s4: '두려워하지 마십시오! 주님이 광야 한가운데서 당신을 위해 식탁을 베푸십니다!' },
+    { num: 3, title: `${cleanTitle} - 문제 한가운데서 일하시는 전능자`, tag: '⚡️ 능력·치유 97% (회복)', s1: '사방이 캄캄하고 길이 보이지 않을 때, 낙심하며 불평의 늪에 빠지지 마십시오.', s2: `하나님은 반석을 쳐서 생수를 내시며, ${scrip} 말씀대로 우리를 지키시는 전능자이십니다.`, s3: '인간의 방법이 막힌 그곳이 하나님의 기적이 시작되는 은혜의 식탁입니다.', s4: '두려워하지 마십시오! 주님이 오늘 당신을 위해 새 길을 여십니다!' },
     { num: 4, title: `내 힘을 뺄 때 시작되는 주님의 기적`, tag: '🔥 겸손·권능 96% (치유)', s1: '내가 쥐고 흔들려 하는 한, 하나님이 역사하실 자리는 없습니다.', s2: '야곱이 얍복강에서 환도뼈가 꺾였을 때, 비로소 이스라엘의 복이 임했습니다.', s3: '내 자존심과 고집을 십자가 앞에 내려놓을 때 하늘의 능력이 나타납니다.', s4: '손을 펴고 주님께 맡기십시오! 당신이 항복할 때 주님이 승리하십니다!' },
     { num: 5, title: `시련이 인내를, 인내가 소망을 낳는다`, tag: '💡 소망·비전 96% (인내)', s1: '왜 사랑하는 자녀에게 이토록 거친 풍랑과 불같은 시험이 찾아올까요?', s2: '용광로의 뜨거운 불을 통과하지 않고는 순도 99%의 정금이 나올 수 없습니다.', s3: '지금 겪는 시련은 망하게 하려는 것이 아니라 더 큰 축복을 담는 그릇을 빚는 과정입니다.', s4: '끝까지 인내하십시오! 눈물로 씨를 뿌린 그 자리에서 기쁨의 단을 거둘 것입니다!' },
     { num: 6, title: `세상이 줄 수 없는 하나님의 평강`, tag: '⚡️ 평안·담대 95% (평안)', s1: '통장의 잔고나 세상의 안락이 주는 평안은 작은 바람에도 무너집니다.', s2: '예수 그리스도의 평강은 풍랑 속에서도 베개를 베고 잘 수 있는 신비로운 평안입니다.', s3: `${p3}! 주님이 나와 함께 계시기에 폭풍 속에서도 영혼은 고요합니다.`, s4: '그리스도의 평강이 오늘 여러분의 가정과 일터를 든든히 지키실지어다!' },
@@ -1048,7 +704,7 @@ function generate10ShortsSuite(title, scripture, points) {
       title: t.title,
       tag: t.tag,
       sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · 1.3배속 45초',
-      startSec: (t.num - 1) * 120,
+      startSec: 1500 + (t.num - 1) * 150,
       duration: 45,
       scenes: [
         { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: `“${cleanPastoralSpeech(t.s1)}”` },
@@ -2009,7 +1665,7 @@ function finalizeProcessing() {
     actionBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  addSermonToRecentHistory(currentYouTubeId || 'F3IRIXNF1V8', currentYouTubeTitle || '광야의 식탁을 베푸시는 하나님의 은혜', currentYouTubeScripture || '시편 78장 17-25절');
+  addSermonToRecentHistory(currentYouTubeId || 'F3lRIXNF1V8', currentYouTubeTitle || '여호와께 감사하라!', currentYouTubeScripture || '시편 138편 (참고, 역대상 16:7-11)');
 
   showToast('🎉 설교 심층 분석 및 10편의 쇼츠 생성이 완료되었습니다!', '✨');
 
@@ -2153,11 +1809,69 @@ function initStudioPlayer() {
   startPlaybackTimer();
 }
 
+function renderAllStudioDecks() {
+  for (let i = 1; i <= 10; i++) {
+    const clip = studioClips[i];
+    if (!clip) continue;
+
+    ['studio', 'modal'].forEach(p => {
+      const deck = document.getElementById(`${p}-deck-${i}`);
+      if (deck) {
+        const h4 = deck.querySelector('h4');
+        const pDesc = deck.querySelector('p');
+        const tagSpan = deck.querySelectorAll('span');
+        if (h4) h4.textContent = `"${clip.title}"`;
+        if (pDesc) pDesc.textContent = clip.sub || '';
+        if (tagSpan && tagSpan.length >= 2) {
+          tagSpan[1].textContent = clip.tag || '🔥 감동·결단 99%';
+        }
+      }
+    });
+  }
+}
+
 function loadActiveVideoSource() {
   const clip = studioClips[currentClipIndex] || studioClips[1];
+  const ytWraps = [document.getElementById('studio-yt-wrap'), document.getElementById('modal-yt-wrap')];
+  const ytIframes = [document.getElementById('studio-yt-iframe'), document.getElementById('modal-yt-iframe')];
   const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-  
-  if (currentInputMode === 'file' && currentFileVideoUrl) {
+  const pulpitImgs = [document.getElementById('studio-pulpit-img'), document.getElementById('modal-pulpit-img')];
+
+  if (currentInputMode === 'yt' && currentYouTubeId) {
+    // 1. Real YouTube Video Stream Playing Mode
+    ytWraps.forEach(w => { if (w) { w.classList.remove('hidden'); w.style.display = 'flex'; } });
+    vids.forEach(v => { if (v) { v.pause(); v.classList.add('hidden'); } });
+    pulpitImgs.forEach(img => { if (img) { img.classList.add('hidden'); } });
+
+    const startSec = (clip && typeof clip.startSec === 'number') ? clip.startSec : 1500;
+    const embedUrl = `https://www.youtube.com/embed/${currentYouTubeId}?enablejsapi=1&autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&playsinline=1&rel=0&modestbranding=1&start=${startSec}`;
+
+    ytIframes.forEach(iframe => {
+      if (iframe) {
+        const curLoaded = iframe.getAttribute('data-loaded-yt') || '';
+        if (curLoaded === currentYouTubeId && iframe.src) {
+          sendYtCommand(iframe.id, 'seekTo', [startSec, true]);
+          if (isPlaying) {
+            sendYtCommand(iframe.id, 'playVideo');
+          } else {
+            sendYtCommand(iframe.id, 'pauseVideo');
+          }
+          if (!isMuted) {
+            sendYtCommand(iframe.id, 'unMute');
+            sendYtCommand(iframe.id, 'setVolume', [100]);
+          } else {
+            sendYtCommand(iframe.id, 'mute');
+          }
+        } else {
+          iframe.setAttribute('data-loaded-yt', currentYouTubeId);
+          iframe.src = embedUrl;
+        }
+      }
+    });
+  } else if (currentInputMode === 'file' && currentFileVideoUrl) {
+    // 2. Uploaded Media Video File Mode
+    ytWraps.forEach(w => { if (w) { w.classList.add('hidden'); w.style.display = 'none'; } });
+    pulpitImgs.forEach(img => { if (img) { img.classList.add('hidden'); } });
     vids.forEach(v => {
       if (v) {
         v.classList.remove('hidden');
@@ -2168,22 +1882,17 @@ function loadActiveVideoSource() {
       }
     });
   } else {
-    vids.forEach(v => {
-      if (v) {
-        v.pause();
-        v.classList.add('hidden');
+    // 3. Text Manuscript Mode
+    ytWraps.forEach(w => { if (w) { w.classList.add('hidden'); w.style.display = 'none'; } });
+    vids.forEach(v => { if (v) { v.pause(); v.classList.add('hidden'); } });
+    pulpitImgs.forEach(img => {
+      if (img) {
+        img.classList.remove('hidden');
+        img.src = 'assets/pastor.jpg';
+        img.style.animationPlayState = isPlaying ? 'running' : 'paused';
       }
     });
   }
-
-  // Preaching Pulpit Motion Visual
-  const pulpitImgs = [document.getElementById('studio-pulpit-img'), document.getElementById('modal-pulpit-img')];
-  pulpitImgs.forEach(img => {
-    if (img) {
-      img.src = 'assets/pastor.jpg';
-      img.style.animationPlayState = isPlaying ? 'running' : 'paused';
-    }
-  });
 }
 
 function selectStudioClip(num) {
@@ -2265,7 +1974,7 @@ function updatePlayerUI() {
     if (totalEl) totalEl.textContent = formatTime(dur);
     if (fillEl && dur > 0) fillEl.style.width = `${Math.min(100, (curr / dur) * 100)}%`;
     if (titleEl) titleEl.textContent = clip.title;
-    if (scripEl) scripEl.textContent = generatedMinistryAssets.scripture || '시편 78장 17-25절';
+    if (scripEl) scripEl.textContent = generatedMinistryAssets.scripture || currentYouTubeScripture || '시편 138편 (참고, 역대상 16:7-11)';
     if (churchEl) churchEl.textContent = '복의근원 관유중앙교회';
   });
 
@@ -2278,7 +1987,7 @@ function updatePlayerUI() {
       if (subEl) subEl.innerHTML = matchedScene.subtitle;
     });
 
-    if (isPlaying && !isMuted && matchedScene) {
+    if (isPlaying && !isMuted && matchedScene && currentInputMode === 'paste') {
       pastoralAudio.speakLine(matchedScene.subtitle, currentPlaybackRate);
     }
   }
@@ -2290,18 +1999,34 @@ function toggleStudioPlay() {
   if (!isPlaying) {
     pastoralAudio.stop();
     stopPlaybackTimer();
+    sendYtCommand('studio-yt-iframe', 'pauseVideo');
+    sendYtCommand('modal-yt-iframe', 'pauseVideo');
+    const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+    vids.forEach(v => { if (v) v.pause(); });
   } else {
     if (isMuted) {
       isMuted = false;
       updateSoundIcons(true);
     }
-    pastoralAudio.initContext();
     startPlaybackTimer();
-    const clip = studioClips[currentClipIndex] || studioClips[1];
-    const curr = clipElapsedSec;
-    const activeScene = (clip.scenes && clip.scenes.find(s => curr >= s.start && curr < s.end)) || (clip.scenes && clip.scenes[0]);
-    if (activeScene) {
-      pastoralAudio.speakLine(activeScene.subtitle, currentPlaybackRate);
+    if (currentInputMode === 'yt') {
+      sendYtCommand('studio-yt-iframe', 'playVideo');
+      sendYtCommand('modal-yt-iframe', 'playVideo');
+      sendYtCommand('studio-yt-iframe', 'unMute');
+      sendYtCommand('studio-yt-iframe', 'setVolume', [100]);
+      sendYtCommand('modal-yt-iframe', 'unMute');
+      sendYtCommand('modal-yt-iframe', 'setVolume', [100]);
+    } else if (currentInputMode === 'file') {
+      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+      vids.forEach(v => { if (v) { v.muted = isMuted; v.play().catch(e => console.log(e)); } });
+    } else {
+      pastoralAudio.initContext();
+      const clip = studioClips[currentClipIndex] || studioClips[1];
+      const curr = clipElapsedSec;
+      const activeScene = (clip.scenes && clip.scenes.find(s => curr >= s.start && curr < s.end)) || (clip.scenes && clip.scenes[0]);
+      if (activeScene) {
+        pastoralAudio.speakLine(activeScene.subtitle, currentPlaybackRate);
+      }
     }
   }
   updatePlayIcons(isPlaying);
@@ -2338,24 +2063,43 @@ function updatePlayIcons(playing) {
   });
 }
 
-// Audio Mute & Unmute
+// Audio Mute & Unmute (No Piano BGM, Pure Preaching Voice)
 function toggleStudioAudio() {
   isMuted = !isMuted;
-  pastoralAudio.initContext();
 
   if (!isMuted) {
     updateSoundIcons(true);
-    pastoralAudio.playSacredPianoAmbience();
-    const clip = studioClips[currentClipIndex] || studioClips[1];
-    const curr = clipElapsedSec;
-    const activeScene = (clip.scenes && clip.scenes.find(s => curr >= s.start && curr < s.end)) || (clip.scenes && clip.scenes[0]);
-    if (activeScene) {
-      pastoralAudio.speakLine(activeScene.subtitle, currentPlaybackRate);
+    if (currentInputMode === 'yt') {
+      sendYtCommand('studio-yt-iframe', 'unMute');
+      sendYtCommand('studio-yt-iframe', 'setVolume', [100]);
+      sendYtCommand('modal-yt-iframe', 'unMute');
+      sendYtCommand('modal-yt-iframe', 'setVolume', [100]);
+      showToast('🔊 설교 영상 음성이 100% 볼륨으로 활성화되었습니다!', '✨');
+    } else if (currentInputMode === 'file') {
+      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+      vids.forEach(v => { if (v) v.muted = false; });
+      showToast('🔊 미디어 파일 설교 음성이 활성화되었습니다!', '✨');
+    } else {
+      pastoralAudio.initContext();
+      const clip = studioClips[currentClipIndex] || studioClips[1];
+      const curr = clipElapsedSec;
+      const activeScene = (clip.scenes && clip.scenes.find(s => curr >= s.start && curr < s.end)) || (clip.scenes && clip.scenes[0]);
+      if (activeScene) {
+        pastoralAudio.speakLine(activeScene.subtitle, currentPlaybackRate);
+      }
+      showToast('🔊 1.3배속 설교 음성이 활성화되었습니다!', '✨');
     }
-    showToast('🔊 1.3배속 설교 음성과 BGM이 활성화되었습니다!', '✨');
   } else {
-    pastoralAudio.stop();
     updateSoundIcons(false);
+    if (currentInputMode === 'yt') {
+      sendYtCommand('studio-yt-iframe', 'mute');
+      sendYtCommand('modal-yt-iframe', 'mute');
+    } else if (currentInputMode === 'file') {
+      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+      vids.forEach(v => { if (v) v.muted = true; });
+    } else {
+      pastoralAudio.stop();
+    }
     showToast('🔇 소리가 꺼졌습니다.', '🔇');
   }
 }
@@ -2648,8 +2392,8 @@ function handleModalYouTubeInput(val) {
       currentYouTubeScripture = preset.scripture;
       if (titleEl) titleEl.textContent = `"${preset.title}" (${preset.scripture})`;
     } else {
-      currentYouTubeTitle = '광야의 식탁을 베푸시는 하나님의 은혜';
-      currentYouTubeScripture = '시편 78장 17-25절';
+      currentYouTubeTitle = '여호와께 감사하라!';
+      currentYouTubeScripture = '시편 138편 (참고, 역대상 16:7-11)';
       if (titleEl) titleEl.textContent = `"${currentYouTubeTitle}" (${currentYouTubeScripture})`;
     }
     if (idEl) idEl.textContent = `유튜브 ID: ${id} · 쇼츠 생성 준비 완료`;
@@ -2710,6 +2454,8 @@ window.addEventListener('DOMContentLoaded', () => {
   selectUploadTab('paste');
   initStudioPlayer();
   analyzeAndGenerateMinistryAssets();
+  renderAllStudioDecks();
+  renderAllStudioDecks();
 });
 
 
