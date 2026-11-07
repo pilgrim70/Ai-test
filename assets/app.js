@@ -2663,3 +2663,471 @@ function renderAll10ShortsDecks() {
 function updatePlayerUI() {
   updateSubtitlesForCurrentTime(clipElapsedSec);
 }
+
+
+// ================= SEOLGYO AI 2-COLUMN APPLICATION NAVIGATION =================
+let currentAppFeature = 'materials';
+
+function switchAppFeature(featureId) {
+  currentAppFeature = featureId;
+  const features = ['materials', 'shorts', 'exegesis', 'outline', 'illustration', 'manuscript', 'library', 'account'];
+
+  features.forEach(id => {
+    const btn = document.getElementById('nav-item-' + id);
+    const view = document.getElementById('view-' + id);
+
+    if (btn) {
+      if (id === featureId) {
+        btn.className = 'w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-900 font-bold transition-all text-[13.5px]';
+        const icon = btn.querySelector('svg');
+        if (icon) icon.setAttribute('class', 'w-4 h-4 text-slate-900');
+      } else {
+        btn.className = 'w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium transition-all text-[13.5px]';
+        const icon = btn.querySelector('svg');
+        if (icon) icon.setAttribute('class', 'w-4 h-4 text-slate-500');
+      }
+    }
+
+    if (view) {
+      if (id === featureId) {
+        view.classList.remove('hidden');
+        view.classList.add('block');
+      } else {
+        view.classList.remove('block');
+        view.classList.add('hidden');
+      }
+    }
+  });
+
+  // Mobile drawer close if open
+  closeMobileSidebar();
+
+  // Scroll to top
+  const mainContent = document.getElementById('app-main-content');
+  if (mainContent) mainContent.scrollTop = 0;
+
+  // Specific Feature Hooks
+  if (featureId === 'shorts') {
+    loadActiveVideoSource();
+    if (isPlaying) {
+      startPlaybackTimer();
+    }
+  } else {
+    pauseStudioVideo();
+  }
+
+  if (featureId === 'materials') {
+    renderMinistryAssetsIntoDOM();
+  } else if (featureId === 'exegesis') {
+    searchBiblicalExegesis();
+  } else if (featureId === 'outline') {
+    generateSermonOutline();
+  } else if (featureId === 'illustration') {
+    searchIllustration('전체');
+  } else if (featureId === 'manuscript') {
+    generateFullManuscript(30);
+  }
+
+  const titles = {
+    'materials': '📁 자료 만들기 작업 공간입니다.',
+    'shorts': '🎬 쇼츠 만들기 작업 공간입니다.',
+    'exegesis': '📖 본문 주해 작업 공간입니다.',
+    'outline': '📝 설교 개요 생성 작업 공간입니다.',
+    'illustration': '🔍 설교 예화 찾기 작업 공간입니다.',
+    'manuscript': '✍️ 설교 원고 쓰기 작업 공간입니다.',
+    'library': '📚 설교 서재 보관함입니다.',
+    'account': '👤 계정 및 교회 프로필 화면입니다.'
+  };
+  if (titles[featureId]) {
+    showToast(titles[featureId], '✨');
+  }
+}
+
+function toggleMobileSidebar() {
+  const sidebar = document.getElementById('app-sidebar');
+  const backdrop = document.getElementById('sidebar-backdrop');
+  if (sidebar) sidebar.classList.toggle('-translate-x-full');
+  if (backdrop) backdrop.classList.toggle('hidden');
+}
+
+function closeMobileSidebar() {
+  const sidebar = document.getElementById('app-sidebar');
+  const backdrop = document.getElementById('sidebar-backdrop');
+  if (sidebar) sidebar.classList.add('-translate-x-full');
+  if (backdrop) backdrop.classList.add('hidden');
+}
+
+function openUploadModal(tabMode) {
+  selectUploadTab(tabMode);
+  const modal = document.getElementById('upload-action-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+}
+
+function closeUploadModal() {
+  const modal = document.getElementById('upload-action-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+function loadRecentSermon(sermonKey) {
+  if (sermonKey === 'recent-1') {
+    loadSermonDirectly('감사는 신앙이고 믿음입니다', '역대상 16:7-11', '관유중앙교회 송기운 담임목사');
+  } else if (sermonKey === 'recent-2') {
+    loadSermonDirectly('시련 속에서도 기쁨을 잃지 않는 인내의 삶', '야고보서 1:1-12', '관유중앙교회 송기운 담임목사');
+  } else if (sermonKey === 'recent-3') {
+    loadSermonDirectly('여호와께 감사하라!', '시편 138편 (참고, 역대상 16:7-11)', '관유중앙교회 송기운 담임목사');
+  } else if (sermonKey === 'recent-4') {
+    loadSermonDirectly('광야의 식탁을 베푸시는 하나님의 은혜', '시편 78장 17-25절', '관유중앙교회 송기운 담임목사');
+  }
+}
+
+function loadSermonDirectly(title, scripture, preacher) {
+  const titleInput = document.getElementById('sermon-title-input');
+  const scriptureInput = document.getElementById('sermon-scripture-input');
+  if (titleInput) titleInput.value = title;
+  if (scriptureInput) scriptureInput.value = scripture;
+
+  currentYouTubeTitle = title;
+  currentYouTubeScripture = scripture;
+
+  generateAllMinistryAssets(title, scripture, '장년부 & 전체 (기본)');
+  showToast('"' + title + '" 설교 자료가 로드되었습니다!', '✅');
+
+  const matEl = document.getElementById('materials-studio-container');
+  if (matEl) {
+    matEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// ================= BIBLICAL EXEGESIS (본문 주해) =================
+function searchBiblicalExegesis(scrip) {
+  const input = document.getElementById('exegesis-input');
+  const targetScrip = scrip || (input ? input.value : '') || '빌립보서 4:6-7';
+  if (input) input.value = targetScrip;
+
+  const resultContainer = document.getElementById('exegesis-results');
+  if (!resultContainer) return;
+
+  showToast('"' + targetScrip + '" 본문 원어 주해를 분석했습니다.', '📖');
+  let greekHebrewWords = '';
+  let contextText = '';
+  let theologicalPoints = '';
+  let homileticPoints = '';
+
+  if (targetScrip.includes('빌립보') || targetScrip.includes('4:6')) {
+    greekHebrewWords = `
+      <div class="space-y-2 text-[13px]">
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <span class="font-bold text-blue-700">1. 메림나오 (μεριμνάω, Merimnao)</span>: '염려하다', '마음이 나뉘다(Merizo)'. 문제를 마주할 때 영혼의 초점이 하나님과 상황 사이에서 분열되는 영적 상태를 의미합니다.
+        </div>
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <span class="font-bold text-blue-700">2. 프로슈케 & 데에시스 (προσευχή & δέησις)</span>: 일반적인 하나님과의 교제로서의 '기도(Proseuche)'와 영혼 깊은 갈망과 결핍을 아뢰는 구체적 '간구(Deesis)'의 결합입니다.
+        </div>
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <span class="font-bold text-blue-700">3. 에이레네 & 프루레오 (εἰρήνη & φρουρέω)</span>: 세상이 주는 일시적 안식이 아닌 삼위일체 하나님의 '평강(Eirene)'이 군사적 요새가 도시를 철통같이 '지키듯(Phroureo)' 성도의 마음과 생각을 방어함을 뜻합니다.
+        </div>
+      </div>
+    `;
+    contextText = '사도 바울이 로마 감옥에 투옥된 극한의 결핍과 생사의 갈림길에서, 빌립보 성도들에게 전하는 옥중서신의 절정입니다. 환경적 조건이 아닌 그리스도 예수 안에서 누리는 초월적 기쁨을 선포합니다.';
+    theologicalPoints = '인간의 이성과 계산을 뛰어넘는 하나님의 주권적 샬롬의 개입. 염려의 자리를 선제적 감사로 전환할 때 임하는 은혜의 통치.';
+    homileticPoints = '1) 염려는 해결책이 아니라 영혼의 에너지 소모입니다.\n2) 상황이 바뀌기 전에 감사함으로 아뢰십시오.\n3) 모든 지각에 뛰어난 하나님의 평강이 마음을 요새처럼 지키십니다.';
+  } else if (targetScrip.includes('시편 138') || targetScrip.includes('감사')) {
+    greekHebrewWords = `
+      <div class="space-y-2 text-[13px]">
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <span class="font-bold text-blue-700">1. 야다 (יָדָה, Yadah)</span>: 손을 높이 들어 찬양하며 하나님의 성품과 역사하심을 공적으로 고백하는 깊은 감사의 행위.
+        </div>
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <span class="font-bold text-blue-700">2. 헤세드 & 에메트 (חֶסֶד & אֱמֶת)</span>: 언약에 기초한 변함없는 성실한 사랑(\'인자하심\')과 영원히 흔들리지 않는 진리(\'진실하심\').
+        </div>
+      </div>
+    `;
+    contextText = '다윗이 환난과 대적들의 거센 위협 한가운데서 하나님의 신실하신 보호와 오른손의 구원을 확신하며 전심으로 올린 찬양 시편입니다.';
+    theologicalPoints = '고난보다 크신 하나님의 인자와 성실하심. 부르짖는 자의 영혼에 힘을 주어 담대하게 하시는 성령의 내주 역사.';
+    homileticPoints = '1) 전심으로 주께 감사하며 주의 이름을 높이십시오.\n2) 부르짖는 날에 주께서 내 영혼을 강하게 하십니다.\n3) 나를 향한 주의 완전하신 목적을 온전케 이루십니다.';
+  } else {
+    greekHebrewWords = `
+      <div class="space-y-2 text-[13px]">
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <span class="font-bold text-blue-700">1. 카리스 (χάρις, Charis)</span>: 자격 없는 자에게 거저 베푸시는 하나님의 거룩한 은혜와 구속의 사랑.
+        </div>
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <span class="font-bold text-blue-700">2. 피스티스 (πίστις, Pistis)</span>: 보이는 상황을 넘어 보이지 않는 하나님을 신뢰하고 끝까지 순종하는 견고한 믿음.
+        </div>
+      </div>
+    `;
+    contextText = '성경 전체를 관통하는 구속사의 은혜 언약 안에서, 하나님의 백성이 거친 세상 속에서도 타협하지 않고 승리하도록 격려하는 목회적 배경입니다.';
+    theologicalPoints = '하나님의 절대 주권과 신실하심. 광야와 같은 결핍의 환경 속에서도 성도를 위해 기적의 식탁을 예비하시는 주님의 공급하심.';
+    homileticPoints = '1) 인간의 계산을 내려놓고 주님의 말씀을 붙잡으십시오.\n2) 결핍의 자리가 하나님의 기적의 무대입니다.\n3) 날마다 공급하시는 생명의 떡 예수 그리스도를 바라보십시오.';
+  }
+
+  resultContainer.innerHTML = `
+    <div class="space-y-5 animate-in fade-in">
+      <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
+        <h4 class="text-[15px] font-black text-slate-900 mb-2 flex items-center gap-2">
+          <span>🏛️</span> 역사적 및 문맥적 배경
+        </h4>
+        <p class="text-[13.5px] text-slate-600 leading-relaxed">${contextText}</p>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
+        <h4 class="text-[15px] font-black text-slate-900 mb-3 flex items-center gap-2">
+          <span>📜</span> 원어(헬라어/히브리어) 핵심 어원 및 원형 분석
+        </h4>
+        ${greekHebrewWords}
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
+        <h4 class="text-[15px] font-black text-slate-900 mb-2 flex items-center gap-2">
+          <span>✝️</span> 구속사적 신학 주제
+        </h4>
+        <p class="text-[13.5px] text-slate-600 leading-relaxed">${theologicalPoints}</p>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
+        <h4 class="text-[15px] font-black text-slate-900 mb-2 flex items-center gap-2">
+          <span>💡</span> 강해 설교 적용 포인트
+        </h4>
+        <div class="text-[13.5px] text-slate-700 leading-relaxed whitespace-pre-line font-medium">${homileticPoints}</div>
+      </div>
+    </div>
+  `;
+}
+
+// ================= SERMON OUTLINE GENERATOR (개요 생성) =================
+function generateSermonOutline(style) {
+  const titleInput = document.getElementById('outline-title-input');
+  const scripInput = document.getElementById('outline-scrip-input');
+  const title = (titleInput ? titleInput.value : '') || (generatedMinistryAssets && generatedMinistryAssets.title) || '여호와께 감사하라!';
+  const scrip = (scripInput ? scripInput.value : '') || (generatedMinistryAssets && generatedMinistryAssets.scripture) || '시편 138편';
+
+  const output = document.getElementById('outline-result-output');
+  if (!output) return;
+
+  showToast('"' + title + '" 설교 개요가 생성되었습니다!', '📝');
+  output.innerHTML = `
+    <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-5 text-left select-all font-sans">
+      <div class="pb-3 border-b border-slate-100 flex items-center justify-between">
+        <div>
+          <span class="rounded-full bg-blue-100 text-blue-700 text-xs font-extrabold px-2.5 py-1">3대지 강해설교 개요</span>
+          <h3 class="text-[18px] font-black text-slate-900 mt-2">${title}</h3>
+          <p class="text-[12.5px] text-slate-500">본문: ${scrip} | 관유중앙교회 송기운 담임목사</p>
+        </div>
+        <button onclick="copyElementText('outline-result-output')" class="rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-3 py-2 transition-all">
+          📋 개요 복사
+        </button>
+      </div>
+
+      <div>
+        <h4 class="font-extrabold text-[15px] text-blue-700">1. 서론 (Introduction)</h4>
+        <p class="text-[13px] text-slate-600 mt-1 leading-relaxed">
+          • 주의 집중: 현대를 살아가는 성도들이 겪는 불안과 환경적 한계 앞에서의 낙심.<br>
+          • 문제 제기: 왜 우리는 눈앞의 결핍을 바라보며 감사를 잃어버리는가?<br>
+          • 본문 연결: 본문(${scrip})에서 다윗은 고난 한가운데서 주를 향한 감사의 제사를 선포합니다.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="font-extrabold text-[15px] text-blue-700">2. 본론 3대지 (Main Body)</h4>
+        <div class="space-y-3 mt-1.5 text-[13px] text-slate-700">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <strong>제 1대지: 결핍 속에서도 믿음을 지키는 성도</strong><br>
+            - 성경적 근거: 환경에 지배당하지 않고 언약의 하나님을 바라보는 믿음의 고백.<br>
+            - 강해 포인트: 눈에 보이는 조건이 아니라 하나님과의 관계가 감사의 진정한 뿌리입니다.
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <strong>제 2대지: 전심으로 주께 감사하며 이름을 찬양하라</strong><br>
+            - 성경적 근거: 환경이 바뀌기 전에 선제적으로 올리는 감사의 능력.<br>
+            - 강해 포인트: 감사는 하늘 문을 열고 기적을 끌어당기는 가장 강력한 영적 무기입니다.
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <strong>제 3대지: 부르짖는 날에 영혼을 강하게 하시는 은혜</strong><br>
+            - 성경적 근거: 기도의 자리에 나아갈 때 속사람을 능력으로 강건하게 하심.<br>
+            - 강해 포인트: 하나님은 우리를 위해 시작하신 선한 목적을 온전하게 이루십니다.
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-extrabold text-[15px] text-blue-700">3. 결론 및 삶의 적용 (Conclusion & Application)</h4>
+        <p class="text-[13px] text-slate-600 mt-1 leading-relaxed">
+          • 결단: 이번 한 주, 입술의 불평을 멈추고 주께 감사의 첫 열매를 선포하십시오.<br>
+          • 파송 기도: "주님, 상황보다 크신 하나님을 바라보며 날마다 찬송의 제사를 드리게 하옵소서. 예수님의 이름으로 기도합니다. 아멘."
+        </p>
+      </div>
+    </div>
+  `;
+}
+
+// ================= CHRISTIAN ILLUSTRATION FINDER (예화 찾기) =================
+const sampleIllustrations = [
+  {
+    category: '감사',
+    title: '스펄전 목사님의 세 가지 촛불 감사',
+    body: '영국의 위대한 설교자 찰스 스펄전 목사님은 이렇게 설교했습니다.\n"촛불을 보고 감사하는 자에게 하나님은 전등불을 주시고, 전등불을 보고 감사하는 자에게 달빛을 주시며, 달빛을 보고 감사하는 자에게 찬란한 햇빛을 주신다. 그리고 햇빛을 보고 감사하는 자에게는 마침내 해와 달이 필요 없는 하나님의 영광의 빛을 부어주신다."\n작은 은혜에 대한 감사가 더 큰 하나님의 기적을 낳습니다.',
+    scripture: '살전 5:18'
+  },
+  {
+    category: '믿음',
+    title: '조지 뮬러의 5만 번 기도 응답의 원리',
+    body: '고아의 아버지 조지 뮬러는 평생 5만 번 이상의 기도 응답을 받았습니다. 그는 고아원에 빵과 우유가 완전히 바닥났을 때에도 아이들을 식탁에 앉히고 먼저 감사의 기도를 올렸습니다. 기도가 끝나자마자 빵 공장의 트럭이 고아원 문 앞에 멈추어 섰습니다. 사람의 계산이 끝나는 곳이 하나님의 기적의 시작점입니다.',
+    scripture: '빌 4:6'
+  },
+  {
+    category: '염려',
+    title: '참새의 대화 - 염려하지 않는 하나님 백성',
+    body: '시인 엘리자베스 체니의 시에는 두 참새의 대화가 나옵니다.\n"사람들은 왜 저렇게 늘 불안해하고 염려하며 바쁘게 뛰어다닐까?"\n그러자 다른 참새가 대답했습니다.\n"아마 그들에게는 우리를 날마다 먹이시고 돌보시는 하늘 아버지가 계시지 않은 모양이지."\n공중의 새도 먹이시는 하나님께서 그분의 자녀인 당신을 결코 잊지 않으십니다.',
+    scripture: '마 6:26'
+  },
+  {
+    category: '고난',
+    title: '진주조개의 고통과 영롱한 보석',
+    body: '조개 속에 날카로운 모래알이 들어오면 극심한 고통이 찾아옵니다. 조개는 불평하는 대신 자신의 생명수와 같은 진주층으로 그 상처를 감싸고 또 감쌉니다. 오랜 세월의 눈물과 인내 끝에 가장 값진 진주가 탄생합니다. 성도에게 고난은 멸망이 아니라 영광스러운 하나님의 걸작품이 빚어지는 은혜의 무대입니다.',
+    scripture: '롬 8:18'
+  }
+];
+
+function searchIllustration(cat) {
+  if (!cat) cat = '전체';
+  const container = document.getElementById('illustration-cards-container');
+  if (!container) return;
+
+  const filtered = cat === '전체' ? sampleIllustrations : sampleIllustrations.filter(x => x.category === cat);
+  container.innerHTML = filtered.map((item, idx) => `
+    <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-blue-400 transition-all text-left flex flex-col justify-between min-h-[220px]">
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <span class="rounded-lg bg-blue-50 text-blue-700 text-[11px] font-extrabold px-2.5 py-0.5">#` + item.category + `</span>
+          <span class="text-xs font-bold text-slate-400">` + item.scripture + `</span>
+        </div>
+        <h4 class="text-[16px] font-black text-slate-900 mb-2">` + item.title + `</h4>
+        <p class="text-[13px] text-slate-600 leading-relaxed whitespace-pre-line">` + item.body + `</p>
+      </div>
+      <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-end">
+        <button onclick="copyIllustrationByIndex(` + idx + `)"
+          class="rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 transition-colors">
+          📋 예화 복사
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function copyIllustrationByIndex(idx) {
+  const item = sampleIllustrations[idx];
+  if (!item) return;
+  copyTextDirectly(item.title + '\n\n' + item.body);
+}
+
+// ================= FULL SERMON MANUSCRIPT (원고 쓰기) =================
+function generateFullManuscript(mins) {
+  if (!mins) mins = 30;
+  const title = (generatedMinistryAssets && generatedMinistryAssets.title) || '여호와께 감사하라!';
+  const scrip = (generatedMinistryAssets && generatedMinistryAssets.scripture) || '시편 138편';
+  const preacher = (generatedMinistryAssets && generatedMinistryAssets.preacher) || '관유중앙교회 송기운 담임목사';
+
+  const output = document.getElementById('manuscript-editor-text');
+  if (!output) return;
+
+  showToast('약 ' + mins + '분 분량의 강단 선포용 설교 원고가 생성되었습니다!', '✍️');
+  output.value = `[주일 대예배 설교 전문 원고]
+제목: ` + title + `
+본문: ` + scrip + `
+설교자: ` + preacher + `
+선포 시간: 약 ` + mins + `분 (구어체 강단 전달용)
+
+사랑하는 관유중앙교회 성도 여러분, 주님의 이름으로 축복하고 환영합니다.
+오늘 거룩한 주일 예배의 자리에 나아오신 여러분의 삶과 가정 위에, 세상이 줄 수 없는 하나님의 참된 평강과 위로가 가득하기를 간절히 소망합니다.
+
+우리는 지난 한 주간 각자의 삶의 자리에서 참으로 분주하고 치열한 날들을 보냈습니다. 때로는 생각지 못한 문제 앞에서 밤잠을 이루지 못하고 가슴을 졸이기도 했고, 뜻대로 풀리지 않는 현실의 벽 앞에서 깊은 한숨을 내쉬기도 했을 것입니다.
+
+인간의 본성은 상황이 편안하고 넉넉할 때는 쉽게 감사하지만, 결핍과 고난의 광야를 지날 때에는 본능적으로 입술에서 불평과 염려가 먼저 튀어나옵니다. 
+그러나 오늘 성경 본문(` + scrip + `)에서 다윗은 우리에게 전혀 다른 영적 원리를 가르쳐 줍니다.
+
+다윗은 모든 것이 형통할 때에만 하나님을 찬양한 것이 아닙니다. 사방이 대적으로 둘러싸이고 앞이 캄캄한 환난 한가운데서, 그는 손을 높이 들고 "내가 전심으로 주께 감사하며 주의 이름을 높이리이다"라고 선포했습니다.
+
+사랑하는 성도 여러분!
+오늘 첫 번째로 우리가 기억해야 할 것은, 결핍 속에서도 믿음을 지키는 성도가 되어야 한다는 사실입니다. 
+우리의 감사는 환경의 조건에서 나오는 것이 아니라, 문제보다 크신 하나님을 바라보는 믿음의 시선에서 시작됩니다. 인간의 계산이 끝나는 바로 그 자리가 하나님의 기적이 시작되는 은혜의 식탁입니다.
+
+두 번째로, 주님은 우리가 환경이 바뀌기 전에 선제적으로 감사의 고백을 올리기를 원하십니다.
+감사는 하늘의 문을 여는 열쇠이며, 하나님의 임재를 끌어당기는 거룩한 자석입니다. 염려의 자리를 털고 일어나 기도의 무릎을 꿇으십시오. 모든 일에 기도와 간구로, 여러분이 구할 것을 감사함으로 아뢸 때 모든 지각에 뛰어난 하나님의 평강이 여러분의 마음과 생각을 요새처럼 지키실 것입니다.
+
+세 번째로, 부르짖는 날에 우리 영혼을 강하게 하시는 하나님의 신실하심을 신뢰하십시오.
+하나님은 당신을 향해 시작하신 선한 일을 결코 중단하지 않으십니다. 그분의 오른손이 여러분을 붙드시고 온전하게 세우실 것입니다.
+
+이번 한 주, 세상의 계산을 내려놓고 주님의 신실하신 말씀을 굳게 붙잡으십시오. 주님의 은혜가 여러분의 일터와 가정 가운데 기적의 식탁으로 풍성히 펼쳐지기를 주님의 이름으로 축원합니다. 아멘.`;
+}
+
+function copyTextDirectly(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('📋 내용이 클립보드에 복사되었습니다!', '✨');
+    }).catch(() => {
+      prompt('내용을 복사하세요:', text);
+    });
+  } else {
+    prompt('내용을 복사하세요:', text);
+  }
+}
+
+function copyElementText(elId) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  copyTextDirectly(el.innerText || el.textContent);
+}
+
+
+async function downloadAll10MinistryAssetsZip() {
+  if (typeof JSZip === 'undefined') {
+    alert('JSZip 라이브러리를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+    return;
+  }
+
+  showToast('📦 10종 목회 사역 자료 전체를 ZIP 압축 패키징 중입니다...', '⏳');
+
+  try {
+    const zip = new JSZip();
+    const folder = zip.folder('복의근원_관유중앙교회_사역자료패키지');
+
+    const title = (generatedMinistryAssets && generatedMinistryAssets.title) || '주일예배설교';
+    const scripture = (generatedMinistryAssets && generatedMinistryAssets.scripture) || '성경본문';
+
+    // 1. Text Assets
+    folder.file('01_소그룹_나눔_질문지.txt', (generatedMinistryAssets && generatedMinistryAssets.smallGroupText) || '소그룹 나눔 질문지');
+    folder.file('02_주간_QT_6일치_묵상집.txt', (generatedMinistryAssets && generatedMinistryAssets.qtText) || '주간 QT 6일치 묵상집');
+    folder.file('03_설교_3대지_구조화_요약.txt', (generatedMinistryAssets && generatedMinistryAssets.outlineText) || '설교 3대지 요약');
+    folder.file('04_성도_단톡방_알림톡.txt', (generatedMinistryAssets && generatedMinistryAssets.kakaoText) || '성도 단톡방 알림톡');
+    folder.file('05_주보_요약_및_기도문.txt', (generatedMinistryAssets && generatedMinistryAssets.bulletinText) || '주보 요약');
+    folder.file('06_설교_쇼츠_한글자막.srt', (generatedMinistryAssets && generatedMinistryAssets.srtText) || '쇼츠 자막 SRT');
+    folder.file('07_유튜브_챕터_타임스탬프.txt', (generatedMinistryAssets && generatedMinistryAssets.ytInfoText) || '타임스탬프 정보');
+
+    // 2. Card News Folder
+    const cards = (generatedMinistryAssets && generatedMinistryAssets.cardNewsCards) || [];
+    if (cards.length > 0) {
+      const cardFolder = folder.folder('08_인스타_카드뉴스_7장_고화질');
+      for (let i = 0; i < cards.length; i++) {
+        const canvas = await generateCardNewsCanvas(i, cards);
+        const dataUrl = canvas.toDataURL('image/png');
+        const base64Data = dataUrl.replace(/^data:image\/png;base64,/, '');
+        cardFolder.file(`카드뉴스_0${i + 1}번.png`, base64Data, { base64: true });
+      }
+    }
+
+    const content = await zip.generateAsync({ type: 'blob' });
+    const link = document.createElement('a');
+    const safeTitle = title.replace(/[^a-zA-Z0-9가-힣]/g, '_');
+    link.download = `관유중앙교회_10종_사역자료_${safeTitle}.zip`;
+    link.href = URL.createObjectURL(content);
+    link.click();
+    showToast('🎉 10종 사역 자료 전체 압축 ZIP 다운로드가 완료되었습니다!', '📦');
+  } catch (err) {
+    console.error('All assets zip error:', err);
+    alert('ZIP 압축 생성 중 오류가 발생했습니다: ' + err.message);
+  }
+}
