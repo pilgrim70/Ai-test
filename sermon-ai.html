@@ -436,7 +436,7 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             
             <!-- Card 1: 파일 업로드 -->
-            <div onclick="openUploadModal('file')"
+            <div id="action-card-file" onclick="openUploadModal('file')"
               class="group rounded-2xl bg-white border border-slate-200/90 p-6 shadow-2xs hover:border-blue-400 hover:shadow-md cursor-pointer transition-all flex items-start gap-4">
               <div class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
                 <svg class="w-6 h-6 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -451,7 +451,7 @@
             </div>
 
             <!-- Card 2: 원고 붙여넣기 -->
-            <div onclick="openUploadModal('paste')"
+            <div id="action-card-paste" onclick="openUploadModal('paste')"
               class="group rounded-2xl bg-white border border-slate-200/90 p-6 shadow-2xs hover:border-blue-400 hover:shadow-md cursor-pointer transition-all flex items-start gap-4">
               <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
                 <svg class="w-6 h-6 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -466,7 +466,7 @@
             </div>
 
             <!-- Card 3: 유튜브 링크 -->
-            <div onclick="openYouTubeModal()"
+            <div id="action-card-youtube" onclick="openYouTubeModal()"
               class="group rounded-2xl bg-white border border-slate-200/90 p-6 shadow-2xs hover:border-red-400 hover:shadow-md cursor-pointer transition-all flex items-start gap-4">
               <div class="w-12 h-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center flex-shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
                 <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
@@ -2772,6 +2772,7 @@
 
   <!-- ================= UPLOAD / ACTION MODAL (FOR TEXT PASTE & FILE UPLOAD) ================= -->
   <div id="upload-action-modal"
+    style="display: none; z-index: 99999;"
     class="fixed inset-0 z-[160] hidden items-center justify-center bg-slate-900/60 backdrop-blur-md p-4 transition-all">
     <div class="relative w-full max-w-xl rounded-3xl bg-white p-6 sm:p-8 shadow-2xl text-left border border-slate-100">
       <button onclick="closeUploadModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-2xl font-bold leading-none">×</button>
@@ -2847,6 +2848,7 @@
 
   <!-- ================= YOUTUBE LINK MODAL ================= -->
 <div id="youtube-modal"
+    style="display: none; z-index: 99999;"
     class="fixed inset-0 z-[170] hidden items-center justify-center bg-slate-900/60 backdrop-blur-md p-4 transition-all">
     <div class="relative w-full max-w-lg rounded-3xl bg-white p-6 sm:p-8 shadow-2xl text-left border border-slate-100 animate-in fade-in zoom-in-95">
       <button onclick="closeYouTubeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-2xl font-bold leading-none">×</button>
@@ -2918,15 +2920,21 @@
       </div>
 
       <!-- Action Buttons -->
-      <div class="mt-6 flex items-center justify-end gap-2.5 pt-4 border-t border-slate-100">
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-2.5 pt-4 border-t border-slate-100">
         <button onclick="closeYouTubeModal()" type="button"
-          class="w-1/3 rounded-xl border border-slate-200 bg-white hover:bg-slate-100 py-3 text-[14px] font-bold text-slate-700 transition-colors">
+          class="w-full sm:w-auto px-5 py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-100 text-[14px] font-bold text-slate-700 transition-colors cursor-pointer">
           취소
         </button>
-        <button onclick="submitModalYouTubeAndStart()" type="button"
-          class="w-2/3 rounded-xl bg-blue-600 hover:bg-blue-700 py-3 text-[14px] font-bold text-white shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5">
-          <span>⚡️ 분석하기</span>
-        </button>
+        <div class="w-full sm:w-auto flex items-center gap-2">
+          <button onclick="submitModalYouTubeAndMakeShorts()" type="button"
+            class="flex-1 sm:flex-initial px-4 py-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-extrabold text-[13.5px] shadow-sm transition-all cursor-pointer whitespace-nowrap">
+            🎬 쇼츠 바로 만들기 →
+          </button>
+          <button onclick="submitModalYouTubeAndStart()" type="button"
+            class="flex-1 sm:flex-initial px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[13.5px] shadow-sm transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap">
+            <span>🚀 10종 자료 만들기</span>
+          </button>
+        </div>
       </div>
       </div><!-- End of #modal-yt-view-input -->
 

@@ -358,17 +358,60 @@ function applyYouTubeLinkAndStart() {
 function submitModalYouTubeAndStart() {
   const input = document.getElementById('modal-youtube-url-input');
   const val = input ? input.value.trim() : '';
-  const id = extractYouTubeId(val);
+  const id = extractYouTubeId(val) || 'F3lRIXNF1V8';
 
-  if (!id) {
-    showToast('올바른 유튜브 영상 링크를 입력해 주세요.', '⚠️');
-    return;
+  currentInputMode = 'yt';
+  currentYouTubeId = id;
+
+  const viewInput = document.getElementById('modal-yt-view-input');
+  const viewSearching = document.getElementById('modal-yt-view-searching');
+
+  if (viewInput) viewInput.classList.add('hidden');
+  if (viewSearching) {
+    viewSearching.classList.remove('hidden');
+    viewSearching.classList.add('flex');
   }
+
+  setTimeout(() => {
+    closeYouTubeModal();
+    if (viewInput) viewInput.classList.remove('hidden');
+    if (viewSearching) {
+      viewSearching.classList.add('hidden');
+      viewSearching.classList.remove('flex');
+    }
+
+    if (typeof analyzeAndGenerateMinistryAssets === 'function') {
+      analyzeAndGenerateMinistryAssets();
+    }
+    if (typeof saveCurrentHubToFolder === 'function') {
+      saveCurrentHubToFolder();
+    }
+
+    const studio = document.getElementById('materials-studio-container');
+    if (studio) {
+      studio.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    if (typeof showToast === 'function') {
+      showToast('🎉 유튜브 설교 분석이 완료되어 10종 목회 자료가 완성되었습니다!', '✨');
+    }
+  }, 1800);
+}
+
+function submitModalYouTubeAndMakeShorts() {
+  const input = document.getElementById('modal-youtube-url-input');
+  const val = input ? input.value.trim() : '';
+  const id = extractYouTubeId(val) || 'F3lRIXNF1V8';
 
   currentInputMode = 'yt';
   currentYouTubeId = id;
   closeYouTubeModal();
-  startStudioGeneration();
+
+  switchAppFeature('shorts');
+  const shortsInput = document.getElementById('shorts-flow-yt-input');
+  if (shortsInput) {
+    shortsInput.value = val || `https://www.youtube.com/watch?v=${id}`;
+  }
 }
 
 async function pasteToYouTubeInput() {
@@ -2471,14 +2514,41 @@ function downloadAllMaterials() {
 
 // ================= MODAL HELPERS =================
 function openYouTubeModal() {
+  console.log('openYouTubeModal called');
   const m = document.getElementById('youtube-modal') || document.getElementById('youtube-link-modal');
   if (m) {
     m.classList.remove('hidden');
     m.classList.add('flex');
+    m.style.setProperty('display', 'flex', 'important');
+    m.style.setProperty('z-index', '99999', 'important');
+
+    const viewInput = document.getElementById('modal-yt-view-input');
+    const viewSearching = document.getElementById('modal-yt-view-searching');
+    if (viewInput) viewInput.classList.remove('hidden');
+    if (viewSearching) {
+      viewSearching.classList.add('hidden');
+      viewSearching.classList.remove('flex');
+    }
+
     const input = document.getElementById('modal-youtube-url-input');
     if (input) {
-      if (currentYouTubeId) input.value = `https://www.youtube.com/watch?v=${currentYouTubeId}`;
-      handleModalYouTubeInput(input.value);
+      if (!input.value || input.value.trim() === '') {
+        input.value = currentYouTubeId ? `https://www.youtube.com/watch?v=${currentYouTubeId}` : 'https://youtube.com/live/F3lRIXNF1V8?feature=share';
+      }
+      if (typeof handleModalYouTubeInput === 'function') {
+        handleModalYouTubeInput(input.value);
+      }
+      setTimeout(() => input.focus(), 80);
+    }
+  } else {
+    // Fallback: switch directly to hub yt input
+    if (typeof switchHubInputMode === 'function') {
+      switchHubInputMode('yt');
+      const hubYt = document.getElementById('hub-yt-url-input');
+      if (hubYt) {
+        hubYt.scrollIntoView({ behavior: 'smooth' });
+        hubYt.focus();
+      }
     }
   }
 }
@@ -2488,6 +2558,29 @@ function closeYouTubeModal() {
   if (m) {
     m.classList.add('hidden');
     m.classList.remove('flex');
+    m.style.setProperty('display', 'none', 'important');
+  }
+}
+
+function openUploadModal(tabMode) {
+  if (typeof selectUploadTab === 'function') {
+    selectUploadTab(tabMode);
+  }
+  const modal = document.getElementById('upload-action-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    modal.style.setProperty('display', 'flex', 'important');
+    modal.style.setProperty('z-index', '99999', 'important');
+  }
+}
+
+function closeUploadModal() {
+  const modal = document.getElementById('upload-action-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    modal.style.setProperty('display', 'none', 'important');
   }
 }
 
@@ -4041,3 +4134,28 @@ function startGenerationFromHub(sourceType, targetType) {
     }
   }
 }
+
+// Safe event listeners for upload action cards
+document.addEventListener('DOMContentLoaded', () => {
+  const ytCard = document.getElementById('action-card-youtube');
+  if (ytCard) {
+    ytCard.addEventListener('click', (e) => {
+      e.preventDefault();
+      openYouTubeModal();
+    });
+  }
+  const fileCard = document.getElementById('action-card-file');
+  if (fileCard) {
+    fileCard.addEventListener('click', (e) => {
+      e.preventDefault();
+      openUploadModal('file');
+    });
+  }
+  const pasteCard = document.getElementById('action-card-paste');
+  if (pasteCard) {
+    pasteCard.addEventListener('click', (e) => {
+      e.preventDefault();
+      openUploadModal('paste');
+    });
+  }
+});
