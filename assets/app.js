@@ -750,7 +750,7 @@ function generate10ShortsSuite(title, scripture, points) {
       title: t.title,
       tag: t.tag,
       sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · 1.0배속 원본',
-      startSec: 1290 + (t.num - 1) * 150, // Distributed jumps across sermon (21:30, 24:00, 26:30...)
+      startSec: [3376, 3513, 4201, 3068, 3710, 4361, 3200, 3600, 3850, 4100][(t.num - 1) % 10], // Distributed jumps across sermon (21:30, 24:00, 26:30...)
       duration: 45,
       scenes: [
         { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: `“${cleanPastoralSpeech(t.s1)}”` },
@@ -1817,19 +1817,30 @@ function loadActiveVideoSource() {
       }
     });
     updateModeButtons('native');
-  } else if (isFileAudio) {
-    // 2. User uploaded audio file: Show Pastor pulpit photo with user's sermon audio
+  } else if (isFileAudio || playerDisplayMode === 'native') {
+    // 2. Native Mode (Pulpit visual + guaranteed stable audio stream)
     ytWraps.forEach(w => { if (w) { w.classList.add('hidden'); w.style.display = 'none'; } });
     pulpitImgs.forEach(img => { if (img) { img.classList.remove('hidden'); img.style.display = 'block'; } });
+    
+    // Pause YouTube iframes
+    ytIframes.forEach(iframe => {
+      if (iframe) sendYtCommand(iframe.id, 'pauseVideo');
+    });
+
     vids.forEach(v => {
       if (v) {
-        v.classList.remove('hidden');
-        v.style.display = 'block';
-        if (v.src !== currentFileAudioUrl) v.src = currentFileAudioUrl;
-        v.playbackRate = currentPlaybackRate || 1.0;
-        v.muted = isMuted;
-        if (!isMuted) v.volume = 1.0;
-        if (isPlaying && typeof v.play === 'function') v.play().catch(e => console.log('Audio play error:', e));
+        if (isFileAudio) {
+          v.classList.remove('hidden');
+          v.style.display = 'block';
+          if (v.src !== currentFileAudioUrl) v.src = currentFileAudioUrl;
+          v.playbackRate = currentPlaybackRate || 1.0;
+          v.muted = isMuted;
+          if (!isMuted) v.volume = 1.0;
+          if (isPlaying && typeof v.play === 'function') v.play().catch(e => console.log('Audio play error:', e));
+        } else {
+          v.classList.add('hidden');
+          v.style.display = 'none';
+        }
       }
     });
     updateModeButtons('native');
@@ -1840,21 +1851,24 @@ function loadActiveVideoSource() {
         if (typeof v.pause === 'function') v.pause();
         v.classList.add('hidden');
         v.style.display = 'none';
-        v.src = '';
       }
     });
     pulpitImgs.forEach(img => { if (img) { img.classList.add('hidden'); img.style.display = 'none'; } });
     ytWraps.forEach(w => { if (w) { w.classList.remove('hidden'); w.style.display = 'flex'; } });
 
-    const startSec = (clip && typeof clip.startSec === 'number') ? clip.startSec : 1500;
-    const embedUrl = `https://www.youtube.com/embed/${currentYouTubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&playsinline=1&rel=0&start=${startSec}`;
+    const startSec = (clip && typeof clip.startSec === 'number') ? clip.startSec : 3376;
+    const originParam = (window.location && window.location.origin && window.location.origin !== 'null') ? ('&origin=' + encodeURIComponent(window.location.origin)) : '';
+    const embedUrl = 'https://www.youtube.com/embed/' + currentYouTubeId + '?enablejsapi=1&autoplay=1&mute=0&playsinline=1&rel=0&controls=1&modestbranding=1&start=' + startSec + originParam;
 
     ytIframes.forEach(iframe => {
       if (iframe) {
         iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
         iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+        
         const curLoaded = iframe.getAttribute('data-loaded-yt') || '';
-        if (curLoaded === currentYouTubeId && iframe.src) {
+        const curStart = iframe.getAttribute('data-loaded-start') || '';
+        
+        if (curLoaded === currentYouTubeId && curStart === String(startSec) && iframe.src) {
           sendYtCommand(iframe.id, 'seekTo', [startSec, true]);
           if (isPlaying) sendYtCommand(iframe.id, 'playVideo');
           else sendYtCommand(iframe.id, 'pauseVideo');
@@ -1866,6 +1880,7 @@ function loadActiveVideoSource() {
           }
         } else {
           iframe.setAttribute('data-loaded-yt', currentYouTubeId);
+          iframe.setAttribute('data-loaded-start', String(startSec));
           iframe.src = embedUrl;
         }
       }
@@ -3414,7 +3429,29 @@ function selectShortsFlowTemplate(tplId) {
   }
 }
 
+function handleShortsFlowYouTubeInput(val) {
+  const id = extractYouTubeId(val);
+  if (id) {
+    currentYouTubeId = id;
+    currentInputMode = 'yt';
+    fetchYouTubeVideoTitle(id);
+    const hubInput = document.getElementById('hub-yt-url-input');
+    if (hubInput) hubInput.value = val;
+    const modalInput = document.getElementById('modal-youtube-url-input');
+    if (modalInput) modalInput.value = val;
+  }
+}
+
 function startShortsStepAnalysis() {
+  const ytInput = document.getElementById('shorts-flow-yt-input');
+  if (ytInput && ytInput.value.trim()) {
+    const id = extractYouTubeId(ytInput.value.trim());
+    if (id) {
+      currentYouTubeId = id;
+      currentInputMode = 'yt';
+      fetchYouTubeVideoTitle(id);
+    }
+  }
   const stepInput = document.getElementById('shorts-step-input');
   const stepAnalyzing = document.getElementById('shorts-step-analyzing');
   const stepSelect = document.getElementById('shorts-step-select');
