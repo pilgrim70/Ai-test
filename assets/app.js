@@ -18,8 +18,8 @@ let currentClipIndex = 1;
 let isPlaying = true;
 let isMuted = false;
 let currentShortsLayout = 1;
-let playerDisplayMode = 'native'; // 'native' (100% stable video+audio) | 'youtube'
-let currentPlaybackRate = 1.3;
+let playerDisplayMode = 'youtube'; // 'native' (100% stable video+audio) | 'youtube'
+let currentPlaybackRate = 1.0;
 let clipElapsedSec = 0;
 let playbackTimer = null;
 let processingTimer = null;
@@ -706,7 +706,7 @@ function generate10ShortsSuite(title, scripture, points) {
     result[t.num] = {
       title: t.title,
       tag: t.tag,
-      sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · 1.3배속 45초',
+      sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · 1.0배속 원본',
       startSec: 1290 + (t.num - 1) * 150, // Distributed jumps across sermon (21:30, 24:00, 26:30...)
       duration: 45,
       scenes: [
@@ -1069,7 +1069,7 @@ function updateAllSermonUIElements(sermonTitle, scripture) {
 
   // In-page Studio subtitle
   const subEl = document.getElementById('studio-section-subtitle');
-  if (subEl) subEl.textContent = `본문: "${cleanTitle}" (${scripture}) · 1.3배속 45초 황금규격 쇼츠 10편 완비`;
+  if (subEl) subEl.textContent = `본문: "${cleanTitle}" (${scripture}) · 1.0배속 원본 황금규격 쇼츠 10편 완비`;
 
   // Phone screen headers
   const stScrip = document.getElementById('studio-scripture-title');
@@ -1638,7 +1638,7 @@ function startProcessingPipeline() {
     { sec: 1, pct: 18, step: 1, status: '1단계: 전체 예배 중 순수 설교 본문 정밀 분리 중...', log: `✓ [설교 구간 분리 완료] "${activeTitle}" 순수 설교 31분 15초 추출 완료`, est: 12 },
     { sec: 2, pct: 40, step: 2, status: `2단계: 성경 본문(${activeScrip}) 원문 정밀 대조 및 3대지 명제 구조화 중...`, log: `✓ [본문 대조 완료] ${activeScrip} 원문 텍스트 일치율 99.8% 검증`, est: 9 },
     { sec: 3, pct: 65, step: 2, status: '2단계: AI 숨소리·호흡음 필터링 및 어·음·으 무음 컷팅 중...', log: '✓ [오디오 클리닝] 들숨/날숨 숨소리 48개소 및 추임새 100% 무음 컷팅 완료', est: 6 },
-    { sec: 4, pct: 85, step: 2, status: '2단계: 1.3배속 45초 황금 규격 4단계 씬(도입-전환-결단-선포) 결합 중...', log: '✓ [감정 곡선 분석] 1.3배속 45초 황금 규격 씬 결합 및 호소력 극대화 선포 자막 생성', est: 3 },
+    { sec: 4, pct: 85, step: 2, status: '2단계: 1.0배속 원본 황금 규격 4단계 씬(도입-전환-결단-선포) 결합 중...', log: '✓ [감정 곡선 분석] 1.0배속 원본 황금 규격 씬 결합 및 호소력 극대화 선포 자막 생성', est: 3 },
     { sec: 5, pct: 100, step: 3, status: '완료: 10편의 쇼츠와 10종 사역 자료가 최고 품질로 완성되었습니다!', log: `🎉 [처리 완료] "${activeTitle}" 설교가 10종 전문 사역 자료와 10편 쇼츠로 완성되었습니다.`, est: 0 }
   ];
 
@@ -1755,67 +1755,61 @@ function loadActiveVideoSource() {
   const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
   const pulpitImgs = [document.getElementById('studio-pulpit-img'), document.getElementById('modal-pulpit-img')];
 
-  const clipNum = currentClipIndex || 1;
+  const isFileVideo = (currentInputMode === 'file' && currentFileVideoUrl);
+  const isFileAudio = (currentInputMode === 'file' && currentFileAudioUrl);
 
-  // Resolve Video Source
-  let videoSrc = '';
-  if (currentInputMode === 'file' && currentFileVideoUrl) {
-    videoSrc = currentFileVideoUrl;
-  } else {
-    // Real preaching video files in assets (samples 1, 2, 3 with high-definition preaching video and audio)
-    const sampleIdx = ((clipNum - 1) % 3) + 1;
-    videoSrc = `assets/sample-shorts-${sampleIdx}.mp4`;
-  }
-
-  // Determine display mode: on file:// protocol or native mode, use high-definition video player
-  const isFileProtocol = (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:');
-  const useNative = (playerDisplayMode === 'native' || isFileProtocol || currentInputMode === 'file');
-
-  if (useNative) {
-    // 1. Native High-Definition Preaching Video Player (100% Video & Audio Guaranteed)
+  if (isFileVideo) {
+    // 1. User uploaded video file: Play user's video with original voice
     ytWraps.forEach(w => { if (w) { w.classList.add('hidden'); w.style.display = 'none'; } });
     pulpitImgs.forEach(img => { if (img) { img.classList.add('hidden'); img.style.display = 'none'; } });
-
     vids.forEach(v => {
       if (v) {
         v.classList.remove('hidden');
         v.style.display = 'block';
-        if (typeof v.src !== 'string' || (!v.src.endsWith(videoSrc) && v.src !== videoSrc)) {
-          v.src = videoSrc;
-        }
-        v.playbackRate = currentPlaybackRate || 1.3;
+        if (v.src !== currentFileVideoUrl) v.src = currentFileVideoUrl;
+        v.playbackRate = currentPlaybackRate || 1.0;
         v.muted = isMuted;
         if (!isMuted) v.volume = 1.0;
-
-        if (isPlaying && typeof v.play === 'function') {
-          v.play().catch(e => {
-            console.log('Video autoplay notice:', e);
-            showAudioPromptBanner();
-          });
-        }
+        if (isPlaying && typeof v.play === 'function') v.play().catch(e => console.log('Video play error:', e));
       }
     });
-
+    updateModeButtons('native');
+  } else if (isFileAudio) {
+    // 2. User uploaded audio file: Show Pastor pulpit photo with user's sermon audio
+    ytWraps.forEach(w => { if (w) { w.classList.add('hidden'); w.style.display = 'none'; } });
+    pulpitImgs.forEach(img => { if (img) { img.classList.remove('hidden'); img.style.display = 'block'; } });
+    vids.forEach(v => {
+      if (v) {
+        v.classList.remove('hidden');
+        v.style.display = 'block';
+        if (v.src !== currentFileAudioUrl) v.src = currentFileAudioUrl;
+        v.playbackRate = currentPlaybackRate || 1.0;
+        v.muted = isMuted;
+        if (!isMuted) v.volume = 1.0;
+        if (isPlaying && typeof v.play === 'function') v.play().catch(e => console.log('Audio play error:', e));
+      }
+    });
     updateModeButtons('native');
   } else {
-    // 2. YouTube Stream Mode (used when on HTTP/HTTPS web server)
+    // 3. YouTube Preaching Video (Plays real sermon video & pastor's preaching sound directly)
     vids.forEach(v => {
       if (v) {
         if (typeof v.pause === 'function') v.pause();
         v.classList.add('hidden');
         v.style.display = 'none';
+        v.src = '';
       }
     });
     pulpitImgs.forEach(img => { if (img) { img.classList.add('hidden'); img.style.display = 'none'; } });
     ytWraps.forEach(w => { if (w) { w.classList.remove('hidden'); w.style.display = 'flex'; } });
 
     const startSec = (clip && typeof clip.startSec === 'number') ? clip.startSec : 1500;
-    const origin = (typeof window !== 'undefined' && window.location && window.location.origin) ? encodeURIComponent(window.location.origin) : 'http%3A%2F%2Flocalhost%3A3000';
-    const embedUrl = `https://www.youtube-nocookie.com/embed/${currentYouTubeId}?enablejsapi=1&autoplay=1&mute=${isMuted ? 1 : 0}&playsinline=1&rel=0&origin=${origin}&start=${startSec}`;
+    const embedUrl = `https://www.youtube.com/embed/${currentYouTubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&playsinline=1&rel=0&start=${startSec}`;
 
     ytIframes.forEach(iframe => {
       if (iframe) {
         iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
         const curLoaded = iframe.getAttribute('data-loaded-yt') || '';
         if (curLoaded === currentYouTubeId && iframe.src) {
           sendYtCommand(iframe.id, 'seekTo', [startSec, true]);
@@ -2055,12 +2049,20 @@ function setStudioPlaybackRate(rate) {
   const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
   vids.forEach(v => { if (v) v.playbackRate = rate; });
 
-  if (currentInputMode === 'yt' && playerDisplayMode === 'youtube') {
+  if (currentInputMode === 'yt' || playerDisplayMode === 'youtube') {
     sendYtCommand('studio-yt-iframe', 'setPlaybackRate', [rate]);
     sendYtCommand('modal-yt-iframe', 'setPlaybackRate', [rate]);
   }
 
-  showToast(`⚡ 쇼츠 재생 속도가 ${rate}배속으로 변경되었습니다.`, '⚡');
+  // Update speed badge in 9:16 mobile player
+  const badges = [document.getElementById('player-speed-badge'), document.getElementById('modal-player-speed-badge')];
+  badges.forEach(badge => {
+    if (badge) {
+      badge.textContent = rate === 1.0 ? '▶️ 1.0x (원본)' : `⚡ ${rate}x`;
+    }
+  });
+
+  showToast(`재생 속도가 ${rate}배속으로 변경되었습니다. (기본: 1.0배속 원본)`, '⏱️');
 }
 
 function startPlaybackTimer() {
