@@ -2471,7 +2471,7 @@ function downloadAllMaterials() {
 
 // ================= MODAL HELPERS =================
 function openYouTubeModal() {
-  const m = document.getElementById('youtube-modal');
+  const m = document.getElementById('youtube-modal') || document.getElementById('youtube-link-modal');
   if (m) {
     m.classList.remove('hidden');
     m.classList.add('flex');
@@ -2484,7 +2484,7 @@ function openYouTubeModal() {
 }
 
 function closeYouTubeModal() {
-  const m = document.getElementById('youtube-modal');
+  const m = document.getElementById('youtube-modal') || document.getElementById('youtube-link-modal');
   if (m) {
     m.classList.add('hidden');
     m.classList.remove('flex');
@@ -3792,5 +3792,252 @@ function addCustomTimeSegment() {
   const end = document.getElementById('custom-end-input')?.value || '1:30';
   if (typeof showToast === 'function') {
     showToast(`✅ [${start} ~ ${end}] 구간이 성공적으로 추가되었습니다!`, '➕');
+  }
+}
+
+
+// ============================================================================
+// ================= ALL-IN-ONE SERMON UPLOAD & FOLDER STORAGE HUB ============
+// ============================================================================
+
+let currentHubInputMode = 'yt';
+let currentHubFile = null;
+
+function switchHubInputMode(mode) {
+  currentHubInputMode = mode;
+  const modes = ['yt', 'file', 'text'];
+
+  modes.forEach(m => {
+    const tabBtn = document.getElementById('hub-tab-' + m);
+    const panel = document.getElementById('hub-panel-' + m);
+
+    if (tabBtn) {
+      if (m === mode) {
+        tabBtn.className = 'flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs sm:text-[13.5px] font-extrabold transition-all bg-white text-blue-600 shadow-2xs border border-slate-200/60 cursor-pointer';
+      } else {
+        tabBtn.className = 'flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs sm:text-[13.5px] font-bold transition-all text-slate-600 hover:text-slate-900 cursor-pointer';
+      }
+    }
+
+    if (panel) {
+      if (m === mode) {
+        panel.classList.remove('hidden');
+        panel.classList.add('block');
+      } else {
+        panel.classList.remove('block');
+        panel.classList.add('hidden');
+      }
+    }
+  });
+}
+
+function onHubYtInput(val) {
+  const ytId = extractYouTubeId(val);
+  const card = document.getElementById('hub-yt-recognized');
+  const titleEl = document.getElementById('hub-yt-title');
+
+  if (ytId) {
+    if (card) card.classList.remove('hidden');
+    if (titleEl) titleEl.textContent = `유튜브 영상 인식 완료 (ID: ${ytId})`;
+    currentYouTubeId = ytId;
+  }
+}
+
+async function pasteToHubYtInput() {
+  try {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      const text = await navigator.clipboard.readText();
+      const input = document.getElementById('hub-yt-url-input');
+      if (input) {
+        input.value = text.trim();
+        onHubYtInput(text.trim());
+        if (typeof showToast === 'function') {
+          showToast('📋 유튜브 링크가 붙여넣어졌습니다!', '✨');
+        }
+      }
+    } else {
+      prompt('유튜브 링크를 붙여넣으세요:');
+    }
+  } catch (err) {
+    prompt('유튜브 링크를 붙여넣으세요:');
+  }
+}
+
+function loadPresetToHub(id, title, scripture) {
+  const input = document.getElementById('hub-yt-url-input');
+  if (input) {
+    input.value = `https://www.youtube.com/watch?v=${id}`;
+    onHubYtInput(input.value);
+  }
+  const titleEl = document.getElementById('hub-yt-title');
+  if (titleEl) {
+    titleEl.textContent = `${title} (${scripture})`;
+  }
+  currentYouTubeId = id;
+  currentYouTubeTitle = title;
+  currentYouTubeScripture = scripture;
+  if (typeof showToast === 'function') {
+    showToast(`✨ '${title}' 설교가 선택되었습니다!`, '🎬');
+  }
+}
+
+function onHubFileSelected(e) {
+  const file = e.target.files ? e.target.files[0] : null;
+  if (!file) return;
+
+  currentHubFile = file;
+  const card = document.getElementById('hub-file-recognized');
+  const nameEl = document.getElementById('hub-file-name');
+  const sizeEl = document.getElementById('hub-file-size');
+
+  if (card) card.classList.remove('hidden');
+  if (nameEl) nameEl.textContent = file.name;
+  if (sizeEl) sizeEl.textContent = (file.size / (1024 * 1024)).toFixed(1) + ' MB';
+
+  if (typeof showToast === 'function') {
+    showToast(`📁 파일 '${file.name}'이(가) 등록되었습니다!`, '✅');
+  }
+}
+
+function clearHubFile() {
+  currentHubFile = null;
+  const card = document.getElementById('hub-file-recognized');
+  if (card) card.classList.add('hidden');
+  const input = document.getElementById('hub-real-file');
+  if (input) input.value = '';
+}
+
+async function pasteToHubTextarea() {
+  try {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      const text = await navigator.clipboard.readText();
+      const ta = document.getElementById('hub-text-content');
+      if (ta) {
+        ta.value = text;
+        updateHubCharCount(ta);
+        if (typeof showToast === 'function') {
+          showToast('📋 클립보드 원고가 붙여넣어졌습니다!', '✨');
+        }
+      }
+    }
+  } catch (err) {
+    alert('원고를 직접 붙여넣어주세요.');
+  }
+}
+
+function loadSampleToHubText() {
+  const titleIn = document.getElementById('hub-text-title');
+  const scripIn = document.getElementById('hub-text-scripture');
+  const ta = document.getElementById('hub-text-content');
+
+  if (titleIn) titleIn.value = '여호와께 감사하라! - 광야의 식탁';
+  if (scripIn) scripIn.value = '시편 138편 1-8절';
+  if (ta) {
+    ta.value = `사랑하는 성도 여러분!
+오늘 본문 시편 138편을 통해 다윗은 고난과 환난의 현장 한가운데서 주님을 향해 전심으로 감사의 제사를 드립니다.
+우리가 기억해야 할 첫 번째 믿음은, 감사는 환경의 조건에서 나오는 것이 아니라 결핍 속에서도 일하시는 하나님을 신뢰할 때 터져 나오는 영혼의 노래라는 사실입니다. 인간의 계산이 끝나는 그 자리가 하나님의 기적이 시작되는 은혜의 식탁입니다.
+둘째로, 환난 중에도 나를 살리시는 주의 오른손을 온전히 의지하십시오.
+세 번째로, 주님은 우리를 위하여 모든 것을 온전하게 이루시는 신실하신 분이십니다. 이번 한 주, 염려의 자리를 털고 일어나 감사의 무릎으로 승리하시기를 축원합니다. 아멘.`;
+    updateHubCharCount(ta);
+  }
+  if (typeof showToast === 'function') {
+    showToast('✨ 샘플 주일 설교 원고가 입력되었습니다!', '📝');
+  }
+}
+
+function updateHubCharCount(el) {
+  const len = el ? el.value.length : 0;
+  const countEl = document.getElementById('hub-char-count');
+  if (countEl) countEl.textContent = `${len.toLocaleString()} / 40,000자`;
+}
+
+function saveCurrentHubToFolder() {
+  const folder = document.getElementById('hub-folder-select')?.value || '주일 대예배';
+  let title = '주일 예배 설교';
+  let scripture = '성경 본문 말씀';
+  let format = '유튜브 영상';
+
+  if (currentHubInputMode === 'yt') {
+    const input = document.getElementById('hub-yt-url-input')?.value || '';
+    title = currentYouTubeTitle || '여호와께 감사하라!';
+    scripture = currentYouTubeScripture || '시편 138편';
+    format = '유튜브 영상';
+  } else if (currentHubInputMode === 'file') {
+    title = currentHubFile ? currentHubFile.name.replace(/\.[^/.]+$/, "") : '업로드 설교 파일';
+    scripture = '설교 본문';
+    format = '파일 (영상·음성)';
+  } else if (currentHubInputMode === 'text') {
+    title = document.getElementById('hub-text-title')?.value || '설교 원고';
+    scripture = document.getElementById('hub-text-scripture')?.value || '성경 본문';
+    format = '설교문 원고';
+  }
+
+  const item = {
+    id: Date.now(),
+    title: title,
+    scripture: scripture,
+    folder: folder,
+    format: format,
+    date: new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }),
+    church: '복의근원 관유중앙교회'
+  };
+
+  try {
+    let folders = JSON.parse(localStorage.getItem('my_sermon_folders') || '[]');
+    folders.unshift(item);
+    localStorage.setItem('my_sermon_folders', JSON.stringify(folders));
+  } catch (e) {
+    console.error('Folder save error:', e);
+  }
+
+  if (typeof showToast === 'function') {
+    showToast(`📂 '${title}'이(가) [${folder}] 폴더에 성공적으로 담겼습니다!`, '🎉');
+  }
+}
+
+function startGenerationFromHub(sourceType, targetType) {
+  // 1. Set global sermon info
+  if (sourceType === 'yt') {
+    const url = document.getElementById('hub-yt-url-input')?.value || '';
+    const id = extractYouTubeId(url) || 'F3lRIXNF1V8';
+    currentYouTubeId = id;
+    if (typeof loadActiveVideoSource === 'function') {
+      loadActiveVideoSource();
+    }
+  } else if (sourceType === 'text') {
+    const t = document.getElementById('hub-text-title')?.value || '새로운 주일 설교';
+    const s = document.getElementById('hub-text-scripture')?.value || '성경 본문 말씀';
+    currentYouTubeTitle = t;
+    currentYouTubeScripture = s;
+  }
+
+  // 2. Also save to folder automatically so user never loses it
+  saveCurrentHubToFolder();
+
+  // 3. Route to target
+  if (targetType === 'shorts') {
+    switchAppFeature('shorts');
+    // If in shorts step 1, fill the YouTube link!
+    const shortsYtInput = document.getElementById('shorts-flow-yt-input');
+    const hubYtInput = document.getElementById('hub-yt-url-input');
+    if (shortsYtInput && hubYtInput) {
+      shortsYtInput.value = hubYtInput.value;
+    }
+    if (typeof showToast === 'function') {
+      showToast('🎬 쇼츠 만들기 화면으로 연결되었습니다. 분석하기를 눌러주세요!', '✨');
+    }
+  } else {
+    // Generate 10 ministry materials
+    if (typeof analyzeAndGenerateMinistryAssets === 'function') {
+      analyzeAndGenerateMinistryAssets();
+    }
+    // Scroll to materials studio
+    const studio = document.getElementById('materials-studio-container');
+    if (studio) {
+      studio.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (typeof showToast === 'function') {
+      showToast('🎉 10종 목회 사역 자료가 모두 생성되었습니다!', '✨');
+    }
   }
 }
