@@ -865,42 +865,49 @@ Q7. 환경에 관계없이 매일 아침 '감사 고백 3가지'를 적고 선�
     qtText += `-----------------------------------------------------\n\n`;
   });
 
-  // 3. 인스타 카드뉴스 7장
+  // 3. 인스타 카드뉴스 7장 (원사이트 seolgyo-ai.com 수채화 비주얼 일러스트 연동)
   const cardNewsCards = [
     {
-      tag: 'CARD 1: 표지',
+      tag: 'CARD 01 · 표지',
       title: cleanTitle,
+      scripture: scripture,
       body: `본문: ${scripture}\n말씀 선포: ${preacher}\n\n"세상이 줄 수 없는 하나님의 거룩한 평강과 회복의 메시지"`
     },
     {
-      tag: 'CARD 2: 삶의 질문',
-      title: '왜 우리는 늘 불안과 염려에 쫓길까요?',
-      body: '염려는 문제의 해결이 아니라 우리 영혼의 에너지를 소모시킬 뿐입니다. 인간의 노력으로 붙잡으려 할수록 마음의 평안은 멀어져 갑니다.'
+      tag: 'CARD 02 · 삶의 질문',
+      title: `${cleanTitle} 앞에서 마주하는 질문`,
+      scripture: scripture,
+      body: `인생의 고난과 결핍의 자리에서 우리는 종종 흔들립니다. 그러나 주님은 오늘 본문(${scripture})을 통해 환경보다 크신 하나님의 은혜를 바라보라고 말씀하십니다.`
     },
     {
-      tag: 'CARD 3: 말씀의 원리 1',
-      title: points[0] || '모든 일에 기도로 나아가십시오',
-      body: `말씀은 명확하게 권면합니다. ${points[0]}! 염려의 무익함을 직시하고 모든 일에 기도로 전환하십시오.`
+      tag: 'CARD 03 · 말씀의 원리 1',
+      title: points[0] || '1대지: 결핍 속에서도 믿음을 지키라',
+      scripture: scripture,
+      body: `상황을 내 힘으로 바꾸려 애쓰지 말고 모든 염려를 기도로 바꾸십시오. ${points[0]}의 결단이 있을 때 은혜의 문이 열립니다.`
     },
     {
-      tag: 'CARD 4: 말씀의 원리 2',
-      title: points[1] || '감사의 선제적 고백을 올리십시오',
-      body: `환경이 바뀌기 전에 감사함으로 아뢸 때 하늘 문이 열립니다. ${points[1]}! 감사는 하나님의 기적을 끌어당기는 자석입니다.`
+      tag: 'CARD 04 · 말씀의 원리 2',
+      title: points[1] || '2대지: 전심으로 드리는 감사의 제사',
+      scripture: scripture,
+      body: `환경이 바뀌기 전에 감사의 고백을 선제적으로 올리십시오. ${points[1]}! 감사는 하나님의 기적을 끌어당기는 가장 강력한 믿음의 통로입니다.`
     },
     {
-      tag: 'CARD 5: 말씀의 원리 3',
-      title: points[2] || '모든 지각에 뛰어난 하나님의 평강',
-      body: `인간의 좁은 시야와 계산을 뛰어넘는 하나님의 지혜가 개입하십니다. ${points[2]}! 당신의 마음과 생각을 주님이 친히 요새처럼 지키십니다.`
+      tag: 'CARD 05 · 말씀의 원리 3',
+      title: points[2] || '3대지: 마음과 생각을 지키시는 평강',
+      scripture: scripture,
+      body: `모든 지각에 뛰어난 하나님의 평강이 우리의 마음과 생각을 지키십니다. ${points[2]}의 약속을 신뢰하며 담대히 나아가십시오.`
     },
     {
-      tag: 'CARD 6: 결론 & 은혜',
-      title: '염려의 짐을 십자가 앞에 내려놓으라',
-      body: '기도한 후에도 환경은 즉시 변하지 않을 수 있습니다. 그러나 상황보다 크신 하나님이 당신과 함께하십니다.'
+      tag: 'CARD 06 · 결론 & 은혜',
+      title: `${cleanTitle}의 은혜로 일어서라`,
+      scripture: scripture,
+      body: `기도한 후에도 환경은 즉시 변하지 않을 수 있습니다. 그러나 상황보다 크신 하나님께서 이미 당신을 위해 일하고 계십니다.`
     },
     {
-      tag: 'CARD 7: 축복과 결단',
+      tag: 'CARD 07 · 축복과 결단',
       title: '오늘 당신의 삶에 참된 평안이 넘치기를',
-      body: '이번 한 주, 염려가 찾아올 때마다 기도의 무릎을 꿇으십시오. 주님의 평강이 여러분의 가정과 일터를 지키실 것입니다. 아멘!'
+      scripture: scripture,
+      body: `이번 한 주, 세상의 계산을 내려놓고 주님의 거룩한 말씀 위에 굳게 서십시오. 복의근원 관유중앙교회가 함께 기도합니다. 아멘!`
     }
   ];
 
@@ -1116,29 +1123,455 @@ function renderMinistryAssetsIntoDOM() {
   const ytBody = document.getElementById('content-timestamp-body');
   if (ytBody) ytBody.textContent = generatedMinistryAssets.ytInfoText;
 
-  // Render Card News
-  renderCardNewsGrid(generatedMinistryAssets.cardNewsCards);
+  // Render Card News (Carousel & Grid)
+  renderCardNewsCarousel(generatedMinistryAssets.cardNewsCards);
+}
+
+// ================= INSTAGRAM CARD NEWS SUITE (seolgyo-ai.com Visual Engine) =================
+let currentCardSlide = 0;
+let cardNewsViewMode = 'carousel'; // 'carousel' | 'grid'
+
+function renderCardNewsCarousel(cards) {
+  if (!cards || !cards.length) {
+    cards = (generatedMinistryAssets && generatedMinistryAssets.cardNewsCards) || [];
+  }
+  if (!cards || !cards.length) return;
+
+  if (currentCardSlide < 0) currentCardSlide = 0;
+  if (currentCardSlide >= cards.length) currentCardSlide = cards.length - 1;
+
+  const card = cards[currentCardSlide];
+  const slideNum = currentCardSlide + 1;
+
+  // 1. Update Main Card Elements
+  const mainImg = document.getElementById('cardnews-main-img');
+  if (mainImg) {
+    mainImg.src = `assets/cards/card-${slideNum}.jpg`;
+    mainImg.alt = `카드뉴스 ${slideNum}번 배경`;
+  }
+
+  const badgeEl = document.getElementById('cardnews-slide-badge');
+  if (badgeEl) badgeEl.textContent = `CARD ${slideNum} / ${cards.length}`;
+
+  const scripEl = document.getElementById('cardnews-slide-scripture');
+  if (scripEl) {
+    scripEl.textContent = card.scripture || (generatedMinistryAssets && generatedMinistryAssets.scripture) || '성경 본문';
+  }
+
+  const titleEl = document.getElementById('cardnews-slide-title');
+  if (titleEl) {
+    titleEl.textContent = card.title;
+  }
+
+  const bodyEl = document.getElementById('cardnews-slide-body');
+  if (bodyEl) {
+    bodyEl.textContent = card.body;
+  }
+
+  const watermarkPageEl = document.getElementById('cardnews-watermark-page');
+  if (watermarkPageEl) {
+    watermarkPageEl.textContent = `${slideNum} / ${cards.length}`;
+  }
+
+  const counterTextEl = document.getElementById('cardnews-counter-text');
+  if (counterTextEl) {
+    counterTextEl.textContent = `${slideNum} / ${cards.length} 슬라이드 선택됨`;
+  }
+
+  // 2. Update Prev / Next Buttons
+  const prevBtn = document.getElementById('cardnews-btn-prev');
+  if (prevBtn) {
+    prevBtn.disabled = currentCardSlide === 0;
+  }
+
+  const nextBtn = document.getElementById('cardnews-btn-next');
+  if (nextBtn) {
+    nextBtn.disabled = currentCardSlide === cards.length - 1;
+  }
+
+  // 3. Render Dots
+  const dotsContainer = document.getElementById('cardnews-dots');
+  if (dotsContainer) {
+    dotsContainer.innerHTML = cards.map((_, i) => {
+      const isActive = i === currentCardSlide;
+      return `<button onclick="setCardNewsSlide(${i})" class="${isActive ? 'w-8 h-2.5 rounded-full bg-blue-600 shadow-xs' : 'w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400'} transition-all cursor-pointer" title="카드 ${i + 1}번으로 이동"></button>`;
+    }).join('');
+  }
+
+  // 4. Render Thumbnails
+  const thumbContainer = document.getElementById('cardnews-thumbnails');
+  if (thumbContainer) {
+    thumbContainer.innerHTML = cards.map((c, i) => {
+      const isActive = i === currentCardSlide;
+      return `
+        <button onclick="setCardNewsSlide(${i})"
+          class="flex-shrink-0 relative w-16 h-20 rounded-xl overflow-hidden border-2 transition-all ${
+            isActive
+              ? 'border-blue-600 ring-2 ring-blue-400 shadow-md scale-105'
+              : 'border-slate-200 hover:border-blue-300 opacity-80 hover:opacity-100'
+          }">
+          <img src="assets/cards/card-${i + 1}.jpg" class="w-full h-full object-cover" alt="썸네일 ${i + 1}">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-center pb-1">
+            <span class="text-[10px] font-bold text-white tracking-tighter">${i + 1}장</span>
+          </div>
+        </button>
+      `;
+    }).join('');
+  }
+
+  // 5. Also Render Grid View
+  renderCardNewsGrid(cards);
+}
+
+function prevCardNewsSlide() {
+  const cards = (generatedMinistryAssets && generatedMinistryAssets.cardNewsCards) || [];
+  if (currentCardSlide > 0) {
+    currentCardSlide--;
+    renderCardNewsCarousel(cards);
+  }
+}
+
+function nextCardNewsSlide() {
+  const cards = (generatedMinistryAssets && generatedMinistryAssets.cardNewsCards) || [];
+  if (currentCardSlide < cards.length - 1) {
+    currentCardSlide++;
+    renderCardNewsCarousel(cards);
+  }
+}
+
+function setCardNewsSlide(idx) {
+  const cards = (generatedMinistryAssets && generatedMinistryAssets.cardNewsCards) || [];
+  if (idx >= 0 && idx < cards.length) {
+    currentCardSlide = idx;
+    renderCardNewsCarousel(cards);
+  }
+}
+
+function switchCardNewsView(mode) {
+  cardNewsViewMode = mode;
+  const carouselEl = document.getElementById('cardnews-carousel-view');
+  const gridEl = document.getElementById('cardnews-grid-view');
+  const tabCarousel = document.getElementById('cardnews-tab-carousel');
+  const tabGrid = document.getElementById('cardnews-tab-grid');
+
+  if (mode === 'carousel') {
+    if (carouselEl) carouselEl.classList.remove('hidden');
+    if (gridEl) gridEl.classList.add('hidden');
+    if (tabCarousel) {
+      tabCarousel.className = 'rounded-lg px-3 py-1.5 text-[12px] font-bold transition-all bg-white text-blue-700 shadow-xs';
+    }
+    if (tabGrid) {
+      tabGrid.className = 'rounded-lg px-3 py-1.5 text-[12px] font-bold transition-all text-slate-600 hover:text-slate-900';
+    }
+  } else {
+    if (carouselEl) carouselEl.classList.add('hidden');
+    if (gridEl) gridEl.classList.remove('hidden');
+    if (tabCarousel) {
+      tabCarousel.className = 'rounded-lg px-3 py-1.5 text-[12px] font-bold transition-all text-slate-600 hover:text-slate-900';
+    }
+    if (tabGrid) {
+      tabGrid.className = 'rounded-lg px-3 py-1.5 text-[12px] font-bold transition-all bg-white text-blue-700 shadow-xs';
+    }
+  }
 }
 
 function renderCardNewsGrid(cards) {
   const grid = document.getElementById('content-cardnews-grid');
   if (!grid || !cards) return;
   grid.innerHTML = cards.map((c, i) => `
-    <div class="rounded-2xl border border-slate-200/90 bg-gradient-to-br from-slate-50 to-white p-5 shadow-xs hover:border-blue-400 hover:shadow-md transition-all flex flex-col justify-between min-h-[220px]">
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="rounded-lg bg-blue-100 text-blue-700 text-[11px] font-extrabold px-2.5 py-1">${c.tag}</span>
-          <span class="text-[12px] font-bold text-slate-400">${i + 1} / ${cards.length}</span>
-        </div>
-        <h4 class="text-[15px] font-extrabold text-slate-900 leading-snug mb-2">${c.title}</h4>
-        <p class="text-[12.5px] text-slate-600 leading-relaxed whitespace-pre-line">${c.body}</p>
+    <div class="group relative rounded-2xl overflow-hidden shadow-md border border-slate-200/90 bg-slate-900 aspect-[4/5] flex flex-col justify-end p-5 transition-all hover:shadow-xl hover:scale-[1.02]">
+      <img src="assets/cards/card-${i + 1}.jpg" alt="카드 ${i + 1}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 via-50% to-black/10"></div>
+      
+      <!-- Top info -->
+      <div class="absolute top-4 inset-x-4 flex items-center justify-between text-white z-10">
+        <span class="rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-amber-300 text-[10px] font-bold px-2.5 py-0.5">
+          CARD 0${i + 1}
+        </span>
+        <button onclick="downloadSingleCardPNG(${i})" title="이 카드만 고화질 PNG 다운로드"
+          class="rounded-lg bg-white/20 hover:bg-white text-white hover:text-slate-900 p-1.5 backdrop-blur-md transition-all active:scale-95 shadow-xs">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        </button>
       </div>
-      <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
-        <span>AI 사역도구</span>
-        <span class="font-bold text-blue-600">밀어서 다음장 →</span>
+
+      <!-- Bottom content -->
+      <div class="relative z-10 text-white">
+        <span class="text-[11px] font-bold text-amber-300 drop-shadow mb-1 block">${c.scripture || (generatedMinistryAssets && generatedMinistryAssets.scripture) || '성경 본문'}</span>
+        <h4 class="text-[16px] font-black leading-snug drop-shadow-md mb-1.5 text-white">${c.title}</h4>
+        <p class="text-[11.5px] text-slate-200 leading-relaxed line-clamp-3 mb-3">${c.body}</p>
+        <div class="pt-2.5 border-t border-white/20 flex items-center justify-between text-[10px] text-slate-300">
+          <span>✨ 관유중앙교회</span>
+          <button onclick="setCardNewsSlide(${i}); switchCardNewsView('carousel');" class="text-amber-300 font-bold hover:underline flex items-center gap-0.5">
+            크게 보기 →
+          </button>
+        </div>
       </div>
     </div>
   `).join('');
+}
+
+function wrapTextLines(ctx, text, maxWidth) {
+  if (!text) return [];
+  const words = text.split(' ');
+  const lines = [];
+  let currentLine = words[0] || '';
+
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i];
+    const width = ctx.measureText(currentLine + ' ' + word).width;
+    if (width < maxWidth) {
+      currentLine += ' ' + word;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+  if (currentLine) lines.push(currentLine);
+  return lines;
+}
+
+function generateCardNewsCanvas(cardIndex, cards) {
+  return new Promise((resolve, reject) => {
+    const card = cards[cardIndex];
+    if (!card) return reject(new Error('Card not found: ' + cardIndex));
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1350; // 4:5 Instagram Portrait Ratio
+    const ctx = canvas.getContext('2d');
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = `assets/cards/card-${cardIndex + 1}.jpg`;
+
+    img.onload = () => {
+      // 1. Draw Image with center-crop fill
+      const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+      const x = (canvas.width - img.width * scale) / 2;
+      const y = (canvas.height - img.height * scale) / 2;
+      ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+
+      // 2. Draw Smooth Dark Vignette Gradient
+      const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      grad.addColorStop(0, 'rgba(0, 0, 0, 0.15)');
+      grad.addColorStop(0.40, 'rgba(0, 0, 0, 0.10)');
+      grad.addColorStop(0.65, 'rgba(0, 0, 0, 0.65)');
+      grad.addColorStop(0.85, 'rgba(0, 0, 0, 0.92)');
+      grad.addColorStop(1.0, 'rgba(0, 0, 0, 0.98)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 3. Top Slide Badge (Pill)
+      ctx.save();
+      const badgeText = `CARD 0${cardIndex + 1} / 0${cards.length}`;
+      ctx.font = 'bold 28px -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif';
+      const badgeWidth = ctx.measureText(badgeText).width + 44;
+      const badgeHeight = 54;
+      const badgeX = 64;
+      const badgeY = 64;
+
+      // Draw rounded pill
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') {
+        ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, 27);
+      } else {
+        ctx.rect(badgeX, badgeY, badgeWidth, badgeHeight);
+      }
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Badge text
+      ctx.fillStyle = '#FCD34D'; // amber-300
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(badgeText, badgeX + 22, badgeY + badgeHeight / 2);
+
+      // Top Church Name
+      ctx.font = '500 28px -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+      ctx.textAlign = 'right';
+      ctx.fillText('복의근원 관유중앙교회', canvas.width - 64, badgeY + badgeHeight / 2);
+      ctx.restore();
+
+      // 4. Scripture Reference
+      ctx.save();
+      const scripture = card.scripture || (generatedMinistryAssets && generatedMinistryAssets.scripture) || '말씀 본문';
+      ctx.font = 'bold 36px -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif';
+      ctx.fillStyle = '#FCD34D'; // amber 300
+      ctx.shadowColor = 'rgba(0,0,0,0.85)';
+      ctx.shadowBlur = 8;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 2;
+      ctx.textAlign = 'left';
+      ctx.fillText(scripture, 64, canvas.height - 460);
+
+      // 5. Main Title (Word wrap)
+      ctx.font = '900 60px -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.shadowColor = 'rgba(0,0,0,0.95)';
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 3;
+
+      const titleLines = wrapTextLines(ctx, card.title, canvas.width - 128);
+      let titleY = canvas.height - 390;
+      titleLines.slice(0, 2).forEach(line => {
+        ctx.fillText(line, 64, titleY);
+        titleY += 76;
+      });
+
+      // 6. Body Text (Word wrap)
+      ctx.font = '500 32px -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif';
+      ctx.fillStyle = '#E2E8F0'; // slate-200
+      ctx.shadowColor = 'rgba(0,0,0,0.8)';
+      ctx.shadowBlur = 6;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 2;
+
+      const bodyClean = (card.body || '').replace(/\n+/g, ' ');
+      const bodyLines = wrapTextLines(ctx, bodyClean, canvas.width - 128);
+      let bodyY = titleY + 12;
+      bodyLines.slice(0, 3).forEach(line => {
+        ctx.fillText(line, 64, bodyY);
+        bodyY += 46;
+      });
+
+      // 7. Divider Line
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(64, canvas.height - 110);
+      ctx.lineTo(canvas.width - 64, canvas.height - 110);
+      ctx.stroke();
+
+      // 8. Bottom Watermark & Page Number
+      ctx.font = 'bold 28px -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = 'left';
+      ctx.fillText('✨ 복의근원 관유중앙교회 ✨', 64, canvas.height - 65);
+
+      ctx.fillStyle = '#FCD34D';
+      ctx.textAlign = 'right';
+      ctx.fillText(`${cardIndex + 1} / ${cards.length}`, canvas.width - 64, canvas.height - 65);
+
+      ctx.restore();
+      resolve(canvas);
+    };
+
+    img.onerror = (e) => reject(e);
+  });
+}
+
+async function downloadCurrentCardNewsPNG() {
+  const cards = (generatedMinistryAssets && generatedMinistryAssets.cardNewsCards) || [];
+  if (!cards || cards.length === 0) {
+    alert('다운로드할 카드뉴스 데이터가 없습니다.');
+    return;
+  }
+  try {
+    const canvas = await generateCardNewsCanvas(currentCardSlide, cards);
+    const link = document.createElement('a');
+    const safeTitle = (generatedMinistryAssets.title || '주일설교').replace(/[^a-zA-Z0-9가-힣]/g, '_');
+    link.download = `관유중앙교회_카드뉴스_0${currentCardSlide + 1}_${safeTitle}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showToast(`✅ 카드뉴스 0${currentCardSlide + 1}번 고화질 PNG(1080×1350) 저장 완료!`, '🖼️');
+  } catch (err) {
+    console.error('PNG download error:', err);
+    alert('이미지 생성 중 오류가 발생했습니다: ' + err.message);
+  }
+}
+
+async function downloadSingleCardPNG(idx) {
+  const cards = (generatedMinistryAssets && generatedMinistryAssets.cardNewsCards) || [];
+  if (!cards[idx]) return;
+  try {
+    const canvas = await generateCardNewsCanvas(idx, cards);
+    const link = document.createElement('a');
+    const safeTitle = (generatedMinistryAssets.title || '주일설교').replace(/[^a-zA-Z0-9가-힣]/g, '_');
+    link.download = `관유중앙교회_카드뉴스_0${idx + 1}_${safeTitle}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showToast(`✅ 카드뉴스 0${idx + 1}번 고화질 PNG(1080×1350) 저장 완료!`, '🖼️');
+  } catch (err) {
+    console.error('Single card download error:', err);
+    alert('이미지 생성 중 오류가 발생했습니다: ' + err.message);
+  }
+}
+
+async function downloadAllCardNewsZIP() {
+  const cards = (generatedMinistryAssets && generatedMinistryAssets.cardNewsCards) || [];
+  if (!cards || cards.length === 0) {
+    alert('다운로드할 카드뉴스 데이터가 없습니다.');
+    return;
+  }
+  if (typeof JSZip === 'undefined') {
+    alert('JSZip 라이브러리를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+    return;
+  }
+
+  showToast('📦 7장 고화질 카드뉴스(1080×1350) 압축 생성 중...', '⏳');
+  try {
+    const zip = new JSZip();
+    const folder = zip.folder('관유중앙교회_카드뉴스_7장');
+
+    for (let i = 0; i < cards.length; i++) {
+      const canvas = await generateCardNewsCanvas(i, cards);
+      const dataUrl = canvas.toDataURL('image/png');
+      const base64Data = dataUrl.replace(/^data:image\/png;base64,/, '');
+      folder.file(`0${i + 1}_관유중앙교회_카드뉴스.png`, base64Data, { base64: true });
+    }
+
+    const content = await zip.generateAsync({ type: 'blob' });
+    const link = document.createElement('a');
+    const safeTitle = (generatedMinistryAssets.title || '주일설교').replace(/[^a-zA-Z0-9가-힣]/g, '_');
+    link.download = `관유중앙교회_설교카드뉴스_7장_${safeTitle}.zip`;
+    link.href = URL.createObjectURL(content);
+    link.click();
+    showToast('🎉 카드뉴스 7장 전체 고화질 ZIP 다운로드가 완료되었습니다!', '📦');
+  } catch (err) {
+    console.error('ZIP generation error:', err);
+    alert('ZIP 압축 생성 중 오류가 발생했습니다: ' + err.message);
+  }
+}
+
+function copyInstagramCaption() {
+  const cards = (generatedMinistryAssets && generatedMinistryAssets.cardNewsCards) || [];
+  const title = (generatedMinistryAssets && generatedMinistryAssets.title) || '주일 예배 설교';
+  const scripture = (generatedMinistryAssets && generatedMinistryAssets.scripture) || '성경 본문';
+  const preacher = (generatedMinistryAssets && generatedMinistryAssets.preacher) || '관유중앙교회 담임목사';
+
+  let caption = `✨ [관유중앙교회 주일 설교 카드뉴스] ✨\n\n`;
+  caption += `📖 본문: ${scripture}\n`;
+  caption += `🎙️ 설교: "${title}"\n`;
+  caption += `✝️ 선포: ${preacher}\n\n`;
+  caption += `─────────────────────────\n`;
+  caption += `🌿 한 줄 핵심 요약:\n"세상이 줄 수 없는 하나님의 거룩한 평강과 회복이 당신의 삶과 가정에 가득하기를 축복합니다."\n`;
+  caption += `─────────────────────────\n\n`;
+
+  cards.forEach((c, idx) => {
+    caption += `[CARD 0${idx + 1}] ${c.title}\n`;
+    caption += `${c.body}\n\n`;
+  });
+
+  caption += `💒 예배 안내 & 섬기는 교회\n`;
+  caption += `• 교회: 복의근원 관유중앙교회\n`;
+  caption += `• 주일 예배: 매주 주일 오전 11:00\n`;
+  caption += `• 위치: 서울 관유중앙교회\n\n`;
+  caption += `#복의근원관유중앙교회 #관유중앙교회 #주일설교 #카드뉴스 #기독교카드뉴스 #말씀묵상 #QT #설교나눔 #은혜 #평안 #성경구절 #기독교일러스트`;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(caption).then(() => {
+      showToast('📋 인스타그램 본문 캡션 및 해시태그가 복사되었습니다!', '✨');
+    }).catch(() => {
+      prompt('인스타그램 캡션을 복사하세요 (Ctrl+C):', caption);
+    });
+  } else {
+    prompt('인스타그램 캡션을 복사하세요 (Ctrl+C):', caption);
+  }
 }
 
 function renderAllStudioDecks() {
@@ -1833,7 +2266,22 @@ function switchStudioTab(tabId) {
       sendYtCommand('modal-yt-iframe', 'playVideo');
     }
   }
+
+  if (tabId === 'cardnews') {
+    renderCardNewsCarousel(generatedMinistryAssets && generatedMinistryAssets.cardNewsCards);
+  }
 }
+
+// Arrow Key Navigation for Card News Carousel
+window.addEventListener('keydown', (e) => {
+  if (currentActiveStudioTab === 'cardnews') {
+    if (e.key === 'ArrowLeft') {
+      prevCardNewsSlide();
+    } else if (e.key === 'ArrowRight') {
+      nextCardNewsSlide();
+    }
+  }
+});
 
 function openAssetFeature(key) {
   analyzeAndGenerateMinistryAssets();
