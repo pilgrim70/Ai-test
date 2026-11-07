@@ -2710,12 +2710,16 @@ function switchAppFeature(featureId) {
 
   // Specific Feature Hooks
   if (featureId === 'shorts') {
-    loadActiveVideoSource();
-    if (isPlaying) {
-      startPlaybackTimer();
+    if (!window.currentShortsStep) {
+      window.currentShortsStep = 'input';
+    }
+    if (typeof initShortsViewStep === 'function') {
+      initShortsViewStep();
     }
   } else {
-    pauseStudioVideo();
+    if (typeof pauseStudioVideo === 'function') {
+      pauseStudioVideo();
+    }
   }
 
   if (featureId === 'materials') {
@@ -3131,5 +3135,462 @@ async function downloadAll10MinistryAssetsZip() {
   } catch (err) {
     console.error('All assets zip error:', err);
     alert('ZIP 압축 생성 중 오류가 발생했습니다: ' + err.message);
+  }
+}
+
+
+// ============================================================================
+// ================= SEOLGYO AI SHORTS MULTI-STEP WORKFLOW CONTROLLER ==========
+// ============================================================================
+
+const SHORTS_CANDIDATES = [
+  {
+    id: 1,
+    badge: "2장면 모음",
+    duration: "1분",
+    desc: "열 명 중 한 명의 감사, 감사의 비율, 감사가 주는 영적 건강까지 이어지는 감사 신앙 선언.",
+    s1_time: "59:32 · 19초",
+    s1_quote: "예수님께서 그 한 사람의 믿음을 보시고 하나님께서 그에게 구원을 선포하셨습니다.",
+    s1_sec: 3572,
+    s2_time: "71:58 · 41초",
+    s2_quote: "여러분, 그러면 감동어린 감사가 많으면 많을수록 따라합시다. 내 영혼은 살아납니다!",
+    s2_sec: 4318,
+    t1: "감사는",
+    t2: "100% 믿음이다"
+  },
+  {
+    id: 2,
+    badge: "2장면 모음",
+    duration: "42초",
+    desc: "다윗처럼 체면을 버리고 하나님 앞에서 솔직하게 찬양해야 한다는 메시지.",
+    s1_time: "55:33 · 22초",
+    s1_quote: "체면 눈치 보지 않습니다. 체면을 차리지 않고 내가 하나님 앞에서 춤을 추리라!",
+    s1_sec: 3333,
+    s2_time: "56:46 · 20초",
+    s2_quote: "기쁨을 즐거움을 주십니다. 아멘. 그래서 여러분 다윗이 하나님 앞에 엎드렸던 것입니다.",
+    s2_sec: 3406,
+    t1: "체면 차리면",
+    t2: "하나님 위에 내가"
+  },
+  {
+    id: 3,
+    badge: "2장면 모음",
+    duration: "50초",
+    desc: "부르짖는 날에 영혼을 강하게 하시는 하나님의 응답과 영적 회복의 확신.",
+    s1_time: "28:10 · 24초",
+    s1_quote: "내가 부르짖는 날에 주께서 응답하시고 내 영혼에 힘을 주어 강하게 하셨나이다.",
+    s1_sec: 1690,
+    s2_time: "29:45 · 26초",
+    s2_quote: "위기의 순간 무릎 꿇는 성도에게 하늘의 문을 여시는 은혜가 임합니다.",
+    s2_sec: 1785,
+    t1: "부르짖는 날에",
+    t2: "영혼을 강하게"
+  },
+  {
+    id: 4,
+    badge: "2장면 모음",
+    duration: "45초",
+    desc: "낮고 비천한 자를 굽어보시는 하나님의 은혜와 겸손한 자의 승리.",
+    s1_time: "32:15 · 21초",
+    s1_quote: "여호와께서는 높이 계셔도 낮은 자를 굽어살피시며 교만한 자를 아십니다.",
+    s1_sec: 1935,
+    s2_time: "33:50 · 24초",
+    s2_quote: "나의 무력함을 인정하고 주께 엎드릴 때 하나님의 기적이 시작됩니다.",
+    s2_sec: 2030,
+    t1: "낮은 자를",
+    t2: "굽어보시는 은혜"
+  },
+  {
+    id: 5,
+    badge: "2장면 모음",
+    duration: "55초",
+    desc: "환난 중에도 지켜주시는 주의 능력의 오른손과 안전한 보호의 약속.",
+    s1_time: "35:20 · 25초",
+    s1_quote: "내가 환난 중에 다닐지라도 주께서 나를 살아나게 하시고 주의 손을 펴사 지키십니다.",
+    s1_sec: 2120,
+    s2_time: "36:45 · 30초",
+    s2_quote: "원수들의 분노 속에서도 주의 오른손이 나를 온전하게 지키십니다.",
+    s2_sec: 2205,
+    t1: "환난 중에도",
+    t2: "살리시는 주의 손"
+  },
+  {
+    id: 6,
+    badge: "2장면 모음",
+    duration: "48초",
+    desc: "인생의 모든 것을 온전하게 이루시는 하나님의 영원하신 인자하심 선포.",
+    s1_time: "38:10 · 24초",
+    s1_quote: "여호와께서 나를 위하여 모든 것을 온전하게 이루시리로다!",
+    s1_sec: 2290,
+    s2_time: "39:30 · 24초",
+    s2_quote: "주의 인자하심이 영원하오니 손으로 지으신 주의 백성을 버리지 마옵소서.",
+    s2_sec: 2370,
+    t1: "나를 위하여",
+    t2: "온전하게 이루심"
+  },
+  {
+    id: 7,
+    badge: "2장면 모음",
+    duration: "42초",
+    desc: "광야의 메마른 결핍 속에서 기적의 식탁을 베푸시는 하나님의 돌보심.",
+    s1_time: "41:15 · 20초",
+    s1_quote: "인간의 계산이 끝나는 그 자리가 하나님의 기적이 시작되는 은혜의 식탁입니다.",
+    s1_sec: 2475,
+    s2_time: "42:40 · 22초",
+    s2_quote: "결핍 앞에서 불평 대신 감사의 기도를 올리는 성도에게 기적이 임합니다.",
+    s2_sec: 2560,
+    t1: "광야의 식탁을",
+    t2: "베푸시는 하나님"
+  },
+  {
+    id: 8,
+    badge: "2장면 모음",
+    duration: "1분 05초",
+    desc: "익숙한 불안의 자리를 털고 일어나 복의 근원으로 전진하는 거룩한 결단.",
+    s1_time: "45:10 · 30초",
+    s1_quote: "머무르는 안주에는 기적이 없습니다. 익숙한 불안의 자리를 털고 일어나십시오!",
+    s1_sec: 2710,
+    s2_time: "46:50 · 35초",
+    s2_quote: "하나님께서 당신을 거룩한 복의 통로로 반드시 세우실 것입니다. 할렐루야!",
+    s2_sec: 2810,
+    t1: "익숙한 안주를",
+    t2: "털고 일어나라"
+  }
+];
+
+let selectedShortsCandidateId = 1;
+let selectedShortsTemplateId = 1;
+window.currentShortsStep = 'input';
+
+function initShortsViewStep() {
+  const stepInput = document.getElementById('shorts-step-input');
+  const stepAnalyzing = document.getElementById('shorts-step-analyzing');
+  const stepSelect = document.getElementById('shorts-step-select');
+  const stepStudio = document.getElementById('shorts-step-studio');
+  const viewMyShorts = document.getElementById('shorts-view-myshorts');
+
+  const step = window.currentShortsStep || 'input';
+  if (stepInput) stepInput.classList.toggle('hidden', step !== 'input');
+  if (stepAnalyzing) stepAnalyzing.classList.toggle('hidden', step !== 'analyzing');
+  if (stepSelect) stepSelect.classList.toggle('hidden', step !== 'select');
+  if (stepStudio) stepStudio.classList.toggle('hidden', step !== 'studio');
+  if (viewMyShorts) viewMyShorts.classList.add('hidden');
+
+  if (step === 'studio' && typeof loadActiveVideoSource === 'function') {
+    loadActiveVideoSource();
+  }
+}
+
+function switchShortsMainTab(tab) {
+  const btnCreate = document.getElementById('shorts-tab-btn-create');
+  const btnMyShorts = document.getElementById('shorts-tab-btn-myshorts');
+  const viewMyShorts = document.getElementById('shorts-view-myshorts');
+
+  const stepInput = document.getElementById('shorts-step-input');
+  const stepAnalyzing = document.getElementById('shorts-step-analyzing');
+  const stepSelect = document.getElementById('shorts-step-select');
+  const stepStudio = document.getElementById('shorts-step-studio');
+
+  if (tab === 'create') {
+    if (btnCreate) {
+      btnCreate.className = 'border-b-2 border-blue-600 text-blue-600 font-extrabold pb-2.5 px-1 transition-all cursor-pointer';
+    }
+    if (btnMyShorts) {
+      btnMyShorts.className = 'border-b-2 border-transparent text-slate-500 hover:text-slate-900 font-bold pb-2.5 px-1 transition-all cursor-pointer';
+    }
+    if (viewMyShorts) viewMyShorts.classList.add('hidden');
+
+    if (window.currentShortsStep === 'studio' && stepStudio) {
+      stepStudio.classList.remove('hidden');
+    } else if (window.currentShortsStep === 'select' && stepSelect) {
+      stepSelect.classList.remove('hidden');
+    } else {
+      if (stepInput) stepInput.classList.remove('hidden');
+    }
+  } else if (tab === 'myshorts') {
+    if (btnCreate) {
+      btnCreate.className = 'border-b-2 border-transparent text-slate-500 hover:text-slate-900 font-bold pb-2.5 px-1 transition-all cursor-pointer';
+    }
+    if (btnMyShorts) {
+      btnMyShorts.className = 'border-b-2 border-blue-600 text-blue-600 font-extrabold pb-2.5 px-1 transition-all cursor-pointer';
+    }
+    if (stepInput) stepInput.classList.add('hidden');
+    if (stepAnalyzing) stepAnalyzing.classList.add('hidden');
+    if (stepSelect) stepSelect.classList.add('hidden');
+    if (stepStudio) stepStudio.classList.add('hidden');
+
+    if (viewMyShorts) viewMyShorts.classList.remove('hidden');
+    renderMyShortsList();
+  }
+}
+
+function selectShortsFlowTemplate(tplId) {
+  selectedShortsTemplateId = tplId;
+  for (let i = 1; i <= 5; i++) {
+    const card = document.getElementById(`flow-tpl-card-${i}`);
+    if (card) {
+      if (i === tplId) {
+        card.className = 'flow-tpl-card border-2 border-blue-600 bg-blue-50/20 ring-2 ring-blue-500/20 rounded-2xl p-3 cursor-pointer transition-all flex flex-col items-center text-center';
+      } else {
+        card.className = 'flow-tpl-card border border-slate-200 bg-white hover:border-slate-300 rounded-2xl p-3 cursor-pointer transition-all flex flex-col items-center text-center';
+      }
+    }
+  }
+}
+
+function startShortsStepAnalysis() {
+  const stepInput = document.getElementById('shorts-step-input');
+  const stepAnalyzing = document.getElementById('shorts-step-analyzing');
+  const stepSelect = document.getElementById('shorts-step-select');
+  const progressBar = document.getElementById('shorts-flow-progress');
+
+  if (stepInput) stepInput.classList.add('hidden');
+  if (stepAnalyzing) stepAnalyzing.classList.remove('hidden');
+  window.currentShortsStep = 'analyzing';
+
+  let progress = 12;
+  if (progressBar) progressBar.style.width = '12%';
+
+  const interval = setInterval(() => {
+    progress += Math.floor(Math.random() * 15) + 10;
+    if (progress > 95) progress = 95;
+    if (progressBar) progressBar.style.width = progress + '%';
+  }, 220);
+
+  setTimeout(() => {
+    clearInterval(interval);
+    if (progressBar) progressBar.style.width = '100%';
+
+    setTimeout(() => {
+      if (stepAnalyzing) stepAnalyzing.classList.add('hidden');
+      if (stepSelect) stepSelect.classList.remove('hidden');
+      window.currentShortsStep = 'select';
+      if (typeof showToast === 'function') {
+        showToast('✨ 강력한 8개 쇼츠 구간 추출이 완료되었습니다!', '🎬');
+      }
+      const viewShorts = document.getElementById('view-shorts');
+      if (viewShorts) viewShorts.scrollIntoView({ behavior: 'smooth' });
+    }, 350);
+  }, 2000);
+}
+
+function selectCandidateCard(cardId) {
+  selectedShortsCandidateId = cardId;
+  for (let i = 1; i <= 8; i++) {
+    const card = document.getElementById(`candidate-card-${i}`);
+    const chk = document.getElementById(`candidate-chk-${i}`);
+    if (card && chk) {
+      if (i === cardId) {
+        card.className = 'candidate-card rounded-2xl border-2 border-blue-600 bg-blue-50/20 ring-2 ring-blue-500/20 shadow-md p-5 cursor-pointer transition-all relative flex flex-col justify-between';
+        chk.className = 'w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-2xs transition-colors';
+        chk.textContent = '✓';
+      } else {
+        card.className = 'candidate-card rounded-2xl border border-slate-200/90 bg-white hover:border-slate-300 shadow-2xs p-5 cursor-pointer transition-all relative flex flex-col justify-between';
+        chk.className = 'w-6 h-6 rounded-full border-2 border-slate-300 text-transparent flex items-center justify-center text-xs font-black shadow-2xs transition-colors';
+        chk.textContent = '';
+      }
+    }
+  }
+
+  const counter = document.getElementById('shorts-selection-counter');
+  if (counter) counter.textContent = '1개 선택됨';
+
+  const btnLabel = document.getElementById('shorts-create-btn-label');
+  if (btnLabel) btnLabel.textContent = '1개 만들기';
+}
+
+function onCandidateTitleInput(cardId, val, lineNum) {
+  const item = SHORTS_CANDIDATES.find(c => c.id === cardId);
+  if (item) {
+    if (lineNum === 1) item.t1 = val;
+    else if (lineNum === 2) item.t2 = val;
+  }
+  const preview = document.getElementById(`preview-t${lineNum}-${cardId}`);
+  if (preview) {
+    preview.textContent = val || (lineNum === 1 ? '제목 1' : '제목 2');
+  }
+}
+
+function proceedToStudioWithSelectedCandidate() {
+  const cand = SHORTS_CANDIDATES.find(c => c.id === selectedShortsCandidateId) || SHORTS_CANDIDATES[0];
+  const combinedTitle = `${cand.t1} ${cand.t2}`.trim();
+
+  const stepSelect = document.getElementById('shorts-step-select');
+  const stepStudio = document.getElementById('shorts-step-studio');
+
+  if (stepSelect) stepSelect.classList.add('hidden');
+  if (stepStudio) stepStudio.classList.remove('hidden');
+  window.currentShortsStep = 'studio';
+
+  // Update Studio Badge & Title
+  const badge = document.getElementById('studio-active-title-badge');
+  if (badge) {
+    badge.textContent = `쇼츠 0${cand.id}: ${combinedTitle}`;
+  }
+
+  // Load into refine editor
+  const refTitle = document.getElementById('refine-title-input');
+  if (refTitle) refTitle.value = combinedTitle;
+
+  const refScene1 = document.getElementById('refine-scene-1-input');
+  if (refScene1) refScene1.value = cand.s1_quote;
+
+  const refScene2 = document.getElementById('refine-scene-2-input');
+  if (refScene2) refScene2.value = cand.s2_quote;
+
+  // Make sure playback rate is 1.0x (Original)
+  if (typeof setPlaybackRate === 'function') {
+    setPlaybackRate(1.0);
+  }
+
+  // Update studioClips if defined
+  if (typeof studioClips !== 'undefined' && studioClips && studioClips[cand.id]) {
+    studioClips[cand.id].title = combinedTitle;
+    if (studioClips[cand.id].scenes && studioClips[cand.id].scenes[0]) {
+      studioClips[cand.id].scenes[0].subtitle = `“${cand.s1_quote}”`;
+    }
+    if (studioClips[cand.id].scenes && studioClips[cand.id].scenes[1]) {
+      studioClips[cand.id].scenes[1].subtitle = `“${cand.s2_quote}”`;
+    }
+  }
+
+  // Select clip in studioClips
+  if (typeof selectStudioClip === 'function') {
+    selectStudioClip(cand.id);
+  }
+
+  // Ensure YouTube sermon video/voice is ready at 1.0x
+  if (typeof loadActiveVideoSource === 'function') {
+    loadActiveVideoSource();
+  }
+
+  stepStudio.scrollIntoView({ behavior: 'smooth' });
+  if (typeof showToast === 'function') {
+    showToast(`🎬 '${combinedTitle}' 쇼츠 스튜디오가 열렸습니다!`, '✨');
+  }
+}
+
+function backToShortsCandidateSelection() {
+  const stepStudio = document.getElementById('shorts-step-studio');
+  const stepSelect = document.getElementById('shorts-step-select');
+  if (stepStudio) stepStudio.classList.add('hidden');
+  if (stepSelect) stepSelect.classList.remove('hidden');
+  window.currentShortsStep = 'select';
+
+  if (typeof pauseStudioVideo === 'function') {
+    pauseStudioVideo();
+  }
+
+  if (stepSelect) stepSelect.scrollIntoView({ behavior: 'smooth' });
+}
+
+function saveToMyShorts() {
+  const cand = SHORTS_CANDIDATES.find(c => c.id === selectedShortsCandidateId) || SHORTS_CANDIDATES[0];
+  const combinedTitle = `${cand.t1} ${cand.t2}`.trim();
+
+  const item = {
+    id: Date.now(),
+    candId: cand.id,
+    title: combinedTitle,
+    duration: cand.duration,
+    badge: cand.badge,
+    date: new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }),
+    church: '복의근원 관유중앙교회'
+  };
+
+  try {
+    let saved = JSON.parse(localStorage.getItem('my_seolgyo_shorts') || '[]');
+    saved.unshift(item);
+    localStorage.setItem('my_seolgyo_shorts', JSON.stringify(saved));
+  } catch (e) {
+    console.error('Save shorts error:', e);
+  }
+
+  if (typeof showToast === 'function') {
+    showToast(`⭐ '${combinedTitle}'이(가) 내 쇼츠에 보관되었습니다!`, '🎉');
+  }
+}
+
+function renderMyShortsList() {
+  const emptyNotice = document.getElementById('myshorts-empty-notice');
+  const cardsList = document.getElementById('myshorts-cards-list');
+  if (!cardsList) return;
+
+  let saved = [];
+  try {
+    saved = JSON.parse(localStorage.getItem('my_seolgyo_shorts') || '[]');
+  } catch (e) {
+    saved = [];
+  }
+
+  if (!saved || saved.length === 0) {
+    saved = [
+      {
+        id: 101,
+        candId: 1,
+        title: "감사는 100% 믿음이다",
+        duration: "1분",
+        badge: "2장면 모음",
+        date: "2026년 11월 7일",
+        church: "복의근원 관유중앙교회"
+      }
+    ];
+  }
+
+  if (emptyNotice) emptyNotice.classList.add('hidden');
+  cardsList.classList.remove('hidden');
+
+  cardsList.innerHTML = saved.map(s => `
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+      <div>
+        <div class="w-full aspect-[9/16] max-h-48 rounded-xl bg-slate-950 p-3 flex flex-col justify-between text-center border border-slate-800 mb-3 mx-auto">
+          <div class="text-[11px] font-black text-amber-400 mt-2">${s.title}</div>
+          <div class="text-slate-600 text-xs">🎬 완성된 쇼츠</div>
+          <div class="text-[8px] text-slate-400 border border-slate-800 rounded px-1.5 py-0.5 inline-block mx-auto mb-1">${s.church}</div>
+        </div>
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 px-2 py-0.5 text-[10px] font-black">${s.badge || '2장면 모음'}</span>
+          <span class="text-[11px] font-bold text-slate-500">${s.duration || '45초'}</span>
+        </div>
+        <h4 class="text-[14px] font-black text-slate-900 leading-snug">${s.title}</h4>
+        <p class="text-[11px] text-slate-400 mt-1">${s.date}</p>
+      </div>
+
+      <div class="flex items-center gap-2 mt-4 pt-3 border-t border-slate-100">
+        <button type="button" onclick="playSavedShorts(${s.candId})"
+          class="flex-1 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-2xs transition-colors cursor-pointer">
+          스튜디오 열기
+        </button>
+        <button type="button" onclick="downloadSelectedShortsVideo()"
+          class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors cursor-pointer">
+          다운로드
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function playSavedShorts(candId) {
+  selectCandidateCard(candId || 1);
+  switchShortsMainTab('create');
+  proceedToStudioWithSelectedCandidate();
+}
+
+function previewCustomTimeSegment() {
+  const start = document.getElementById('custom-start-input')?.value || '0:45';
+  const end = document.getElementById('custom-end-input')?.value || '1:30';
+  if (typeof showToast === 'function') {
+    showToast(`▶ [${start} ~ ${end}] 구간 미리보기를 재생합니다.`, '🎬');
+  }
+  if (typeof playStudioVideo === 'function') {
+    playStudioVideo();
+  }
+}
+
+function addCustomTimeSegment() {
+  const start = document.getElementById('custom-start-input')?.value || '0:45';
+  const end = document.getElementById('custom-end-input')?.value || '1:30';
+  if (typeof showToast === 'function') {
+    showToast(`✅ [${start} ~ ${end}] 구간이 성공적으로 추가되었습니다!`, '➕');
   }
 }

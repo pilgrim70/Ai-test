@@ -984,35 +984,904 @@
 
 
         <!-- ================= VIEW 2: 쇼츠 만들기 (Dedicated 9:16 Shorts Studio) ================= -->
-        <section id="view-shorts" class="space-y-3.5 hidden">
+                <!-- ================= VIEW 2: 쇼츠 만들기 (Complete Seolgyo AI Multi-Step Workflow) ================= -->
+        <section id="view-shorts" class="space-y-6 hidden">
           
-          <!-- Compact Sleek Top Header Bar (Directly at Top Right - No Empty Gap) -->
-          <div class="rounded-2xl bg-white border border-slate-200/80 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-2xs">
+          <!-- Top Header matching Screenshot 1~4 -->
+          <div>
             <div class="flex items-center gap-2.5">
-              <span class="rounded-lg bg-blue-600 text-white text-[11px] font-black px-2.5 py-1">쇼츠 만들기</span>
-              <h2 class="text-[17px] sm:text-[19px] font-black text-slate-900 tracking-tight">
-                9:16 설교 쇼츠 10편 제작 스튜디오
-              </h2>
-              <span class="text-xs text-slate-300 hidden sm:inline">|</span>
-              <span id="shorts-current-sermon-badge" class="text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200/60 px-2.5 py-0.5 rounded-full truncate max-w-xs">
-                여호와께 감사하라! (시편 138편)
-              </span>
+              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-red-600 text-white text-xs shadow-sm">▶</span>
+              <h1 class="text-[23px] sm:text-[26px] font-black text-slate-900 tracking-tight">쇼츠 만들기</h1>
             </div>
+            <p class="text-[13px] sm:text-[13.5px] text-slate-500 mt-1">
+              유튜브 설교 영상 링크만 넣으면, 적절한 구간을 골라 쇼츠 영상을 자동으로 만들어 드립니다.
+            </p>
+          </div>
 
-            <div class="flex items-center gap-2">
-              <div class="hidden sm:flex items-center gap-1.5 text-xs text-slate-500 font-semibold">
-                <span class="text-slate-400">프리셋:</span>
-                <button type="button" onclick="loadRecentSermon('recent-3')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 hover:text-blue-700 font-bold transition-colors">시편 138편</button>
-                <button type="button" onclick="loadRecentSermon('recent-4')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 hover:text-blue-700 font-bold transition-colors">시편 78장</button>
+          <!-- Top Tabs: 만들기 | 내 쇼츠 (Screenshot 1~4) -->
+          <div class="border-b border-slate-200 flex items-center gap-6 text-[14px]">
+            <button type="button" id="shorts-tab-btn-create" onclick="switchShortsMainTab('create')"
+              class="border-b-2 border-blue-600 text-blue-600 font-extrabold pb-2.5 px-1 transition-all cursor-pointer">
+              만들기
+            </button>
+            <button type="button" id="shorts-tab-btn-myshorts" onclick="switchShortsMainTab('myshorts')"
+              class="border-b-2 border-transparent text-slate-500 hover:text-slate-900 font-bold pb-2.5 px-1 transition-all cursor-pointer">
+              내 쇼츠
+            </button>
+          </div>
+
+          <!-- ================= STEP 1: 입력 및 템플릿 선택 (Screenshot 1 & 2) ================= -->
+          <div id="shorts-step-input" class="space-y-6 block max-w-4xl">
+            <!-- Form Card -->
+            <div class="rounded-3xl bg-white border border-slate-200/90 p-6 sm:p-8 shadow-xs space-y-6">
+              
+              <!-- Field 1: 유튜브 링크 -->
+              <div>
+                <label class="block text-[14px] font-black text-slate-900 mb-2">유튜브 링크</label>
+                <input id="shorts-flow-yt-input" type="text"
+                  value="https://youtube.com/live/F3lRIXNF1V8?feature=share"
+                  placeholder="https://youtube.com/watch?v=..."
+                  class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3.5 text-[14px] font-semibold text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all shadow-2xs" />
+                <p class="text-[12px] text-slate-500 mt-2">
+                  설교 영상은 물론, 찬양·광고가 포함된 예배 전체 영상도 괜찮아요. 설교 부분만 자동으로 찾아냅니다.
+                </p>
+                <div class="mt-1">
+                  <a onclick="switchAppFeature('materials')" class="text-[12px] text-blue-600 font-bold hover:underline cursor-pointer">
+                    유튜브 영상이 없나요? 설교 원고로 만들기 →
+                  </a>
+                </div>
               </div>
-              <button type="button" onclick="openYouTubeModal()" class="rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-[12px] px-3.5 py-1.5 transition-all flex items-center gap-1.5 shadow-2xs active:scale-95">
-                <span>▶️ 유튜브 링크 변경</span>
+
+              <!-- Field 2: 템플릿 (스타일) (Screenshot 1 & 2) -->
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <label class="text-[14px] font-black text-slate-900">템플릿 (스타일)</label>
+                  <span class="text-[12px] text-slate-400 font-bold cursor-pointer hover:text-slate-600">고급 ›</span>
+                </div>
+
+                <!-- 5 Template Cards (Exact Match to Screenshot 1 & 2) -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
+                  <!-- Template 1: 기본 (Active Default) -->
+                  <div onclick="selectShortsFlowTemplate(1)" id="flow-tpl-card-1"
+                    class="flow-tpl-card border-2 border-blue-600 bg-blue-50/20 ring-2 ring-blue-500/20 rounded-2xl p-3 cursor-pointer transition-all flex flex-col items-center text-center">
+                    <div class="w-full aspect-[9/16] rounded-xl bg-slate-950 p-2.5 flex flex-col justify-between text-white shadow-md relative overflow-hidden border border-slate-800">
+                      <div class="text-[9.5px] font-black text-white leading-tight">
+                        내 열심보다 중요한<br/><span class="text-amber-400">하나님의 이끄심</span>
+                      </div>
+                      <div class="my-auto opacity-70">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[10px]">👤</div>
+                      </div>
+                      <div>
+                        <div class="text-[7px] text-slate-300 font-medium">하나님이 나를 이끄십니다</div>
+                        <div class="text-[6.5px] text-slate-400 border border-slate-700 rounded px-1 mt-1 inline-block">설교자 교회</div>
+                      </div>
+                    </div>
+                    <span class="text-[12px] font-bold text-slate-800 mt-2">기본</span>
+                  </div>
+
+                  <!-- Template 2: 그라데이션 -->
+                  <div onclick="selectShortsFlowTemplate(2)" id="flow-tpl-card-2"
+                    class="flow-tpl-card border border-slate-200 bg-white hover:border-slate-300 rounded-2xl p-3 cursor-pointer transition-all flex flex-col items-center text-center">
+                    <div class="w-full aspect-[9/16] rounded-xl bg-gradient-to-b from-purple-950 via-slate-900 to-black p-2.5 flex flex-col justify-between text-white shadow-sm relative overflow-hidden border border-slate-800">
+                      <div class="text-[9.5px] font-black text-amber-200 leading-tight">
+                        내 열심보다 중요한<br/><span class="text-amber-400">하나님의 이끄심</span>
+                      </div>
+                      <div class="my-auto opacity-70">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-purple-900/60 border border-purple-700/60 flex items-center justify-center text-[10px]">👤</div>
+                      </div>
+                      <div>
+                        <div class="text-[7px] text-slate-300 font-medium">하나님이 나를 이끄십니다</div>
+                        <div class="text-[6.5px] text-slate-400 border border-slate-700 rounded px-1 mt-1 inline-block">설교자 교회</div>
+                      </div>
+                    </div>
+                    <span class="text-[12px] font-medium text-slate-600 mt-2">그라데이션</span>
+                  </div>
+
+                  <!-- Template 3: 강조 -->
+                  <div onclick="selectShortsFlowTemplate(3)" id="flow-tpl-card-3"
+                    class="flow-tpl-card border border-slate-200 bg-white hover:border-slate-300 rounded-2xl p-3 cursor-pointer transition-all flex flex-col items-center text-center">
+                    <div class="w-full aspect-[9/16] rounded-xl bg-slate-950 p-2.5 flex flex-col justify-between text-white shadow-sm relative overflow-hidden border border-slate-800">
+                      <div class="text-[9.5px] font-black text-white leading-tight">
+                        내 열심보다 중요한<br/>
+                        <span class="inline-block bg-yellow-400 text-slate-950 font-black px-1 rounded-sm mt-0.5">하나님의 이끄심</span>
+                      </div>
+                      <div class="my-auto opacity-70">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[10px]">👤</div>
+                      </div>
+                      <div>
+                        <div class="text-[7px] text-slate-300 font-medium">하나님이 나를 이끄십니다</div>
+                        <div class="text-[6.5px] text-slate-400 border border-slate-700 rounded px-1 mt-1 inline-block">설교자 교회</div>
+                      </div>
+                    </div>
+                    <span class="text-[12px] font-medium text-slate-600 mt-2">강조</span>
+                  </div>
+
+                  <!-- Template 4: 라이트 -->
+                  <div onclick="selectShortsFlowTemplate(4)" id="flow-tpl-card-4"
+                    class="flow-tpl-card border border-slate-200 bg-white hover:border-slate-300 rounded-2xl p-3 cursor-pointer transition-all flex flex-col items-center text-center">
+                    <div class="w-full aspect-[9/16] rounded-xl bg-[#f5f5f0] p-2.5 flex flex-col justify-between text-slate-900 shadow-sm relative overflow-hidden border border-slate-300">
+                      <div class="text-[9.5px] font-black text-slate-900 leading-tight">
+                        내 열심보다 중요한<br/><span class="text-blue-700">하나님의 이끄심</span>
+                      </div>
+                      <div class="my-auto opacity-70">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-200 border border-slate-300 flex items-center justify-center text-[10px]">👤</div>
+                      </div>
+                      <div>
+                        <div class="text-[7px] text-slate-600 font-medium">하나님이 나를 이끄십니다</div>
+                        <div class="text-[6.5px] text-slate-500 border border-slate-300 rounded px-1 mt-1 inline-block">설교자 교회</div>
+                      </div>
+                    </div>
+                    <span class="text-[12px] font-medium text-slate-600 mt-2">라이트</span>
+                  </div>
+
+                  <!-- Template 5: 커버 -->
+                  <div onclick="selectShortsFlowTemplate(5)" id="flow-tpl-card-5"
+                    class="flow-tpl-card border border-slate-200 bg-white hover:border-slate-300 rounded-2xl p-3 cursor-pointer transition-all flex flex-col items-center text-center">
+                    <div class="w-full aspect-[9/16] rounded-xl bg-black p-2.5 flex flex-col justify-between text-white shadow-sm relative overflow-hidden border border-slate-800">
+                      <div class="text-[9.5px] font-black text-amber-100 leading-tight">
+                        내 열심보다 중요한<br/><span class="text-rose-400">하나님의 이끄심</span>
+                      </div>
+                      <div class="my-auto opacity-70">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-[10px]">👤</div>
+                      </div>
+                      <div>
+                        <div class="text-[7px] text-slate-400 font-medium">하나님이 나를 이끄십니다</div>
+                        <div class="text-[6.5px] text-slate-500 border border-slate-700 rounded px-1 mt-1 inline-block">설교자 교회</div>
+                      </div>
+                    </div>
+                    <span class="text-[12px] font-medium text-slate-600 mt-2">커버</span>
+                  </div>
+                </div>
+
+                <p class="text-[12px] text-slate-400 mt-2">완성 후 화면을 확대·축소할 수 있어요.</p>
+              </div>
+
+              <!-- Field 3: 교회 정보 (선택) -->
+              <div>
+                <label class="block text-[14px] font-black text-slate-900 mb-2">교회 정보 (선택)</label>
+                <div class="inline-flex rounded-xl bg-slate-100 p-1 mb-2.5 text-xs font-bold">
+                  <button type="button" class="rounded-lg bg-white text-slate-900 px-3 py-1 shadow-2xs">교회명</button>
+                  <button type="button" class="rounded-lg text-slate-500 hover:text-slate-900 px-3 py-1">로고</button>
+                </div>
+                <input id="shorts-flow-church-input" type="text" value="복의근원 관유중앙교회"
+                  class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-[14px] font-semibold text-slate-900 focus:border-blue-500 outline-none shadow-2xs" />
+                <p class="text-[12px] text-slate-400 mt-1.5">영상 하단에 교회 이름이 표시됩니다.</p>
+              </div>
+
+              <!-- Bottom Big Blue Action Button (Screenshot 1 & 2) -->
+              <button type="button" onclick="startShortsStepAnalysis()"
+                class="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[16px] shadow-sm transition-all active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2">
+                <span>분석하기</span>
               </button>
+
             </div>
           </div>
 
-          <!-- The Complete 3-Column Shorts Studio Panel (Immediately at Top!) -->
-          <div class="rounded-2xl bg-white border border-slate-200/80 p-4 sm:p-5 shadow-sm">
+          <!-- ================= STEP 2: 분석 중 화면 (Screenshot 3) ================= -->
+          <div id="shorts-step-analyzing" class="hidden max-w-4xl">
+            <div class="rounded-3xl bg-white border border-slate-200/90 p-12 sm:p-20 shadow-xs flex flex-col items-center justify-center text-center">
+              <!-- Circular Spinner -->
+              <div class="relative w-16 h-16 mb-6">
+                <svg class="animate-spin w-full h-full text-blue-600" viewBox="0 0 50 50">
+                  <circle class="opacity-20" cx="25" cy="25" r="20" stroke="#CBD5E1" stroke-width="4" fill="none"></circle>
+                  <circle class="opacity-90" cx="25" cy="25" r="20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="80" stroke-dashoffset="60" fill="none"></circle>
+                </svg>
+              </div>
+
+              <h3 class="text-[22px] sm:text-[25px] font-black text-slate-900 tracking-tight">
+                영상에서 쇼츠 구간을 찾는 중...
+              </h3>
+              <p class="text-[13.5px] sm:text-[14.5px] text-slate-500 mt-2 font-medium">
+                자막을 분석해 강력한 장면 8개를 골라요. 잠시만 기다려주세요.
+              </p>
+
+              <!-- Progress bar -->
+              <div class="w-full max-w-md bg-slate-100 rounded-full h-2.5 mt-6 overflow-hidden">
+                <div id="shorts-flow-progress" class="bg-blue-600 h-full rounded-full transition-all duration-300" style="width: 15%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= STEP 3: 8개 후보 구간 선택 (Screenshot 4 & 5) ================= -->
+          <div id="shorts-step-select" class="hidden space-y-6 max-w-5xl">
+            
+            <div>
+              <h2 class="text-[22px] sm:text-[25px] font-black text-slate-900 tracking-tight">
+                쇼츠로 만들 구간을 골라주세요
+              </h2>
+              <p class="text-[13.5px] text-slate-500 mt-1">
+                제안된 구간을 고르거나, 원하는 구간을 직접 추가해 한 번에 만들 수 있어요.
+              </p>
+            </div>
+
+            <!-- Block 1: 원하는 구간 직접 추가 (Screenshot 4) -->
+            <div class="rounded-2xl border border-blue-200 bg-blue-50/40 p-5 sm:p-6 space-y-3">
+              <div class="text-[14px] font-black text-slate-900 flex items-center gap-1.5">
+                <span class="text-blue-600 font-extrabold">+</span>
+                <span>원하는 구간 직접 추가</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-3">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-slate-600">시작</span>
+                  <input id="custom-start-input" type="text" value="0:45"
+                    class="w-24 rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-bold text-center outline-none focus:border-blue-500" />
+                </div>
+                <span class="text-slate-400 font-bold">-</span>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-slate-600">끝</span>
+                  <input id="custom-end-input" type="text" value="1:30"
+                    class="w-24 rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-bold text-center outline-none focus:border-blue-500" />
+                </div>
+                <button type="button" onclick="previewCustomTimeSegment()"
+                  class="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-2xs">
+                  ▶ 미리보기
+                </button>
+              </div>
+
+              <div class="flex items-center justify-between pt-1">
+                <button type="button" onclick="showToast('구간이 추가되었습니다.', '➕')"
+                  class="text-xs font-bold text-blue-600 hover:underline">
+                  + 구간 더하기
+                </button>
+              </div>
+
+              <div>
+                <button type="button" onclick="addCustomTimeSegment()"
+                  class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-xs transition-all active:scale-[0.99]">
+                  이 구간 추가
+                </button>
+                <p class="text-[11.5px] text-slate-400 mt-2">
+                  미리보기로 원하는 지점을 찾아 시작·끝 시간을 넣어주세요. 구간을 2~3개 넣으면 하나로 이어진 쇼츠가 돼요. 제목은 자동으로 만들어져요.
+                </p>
+              </div>
+            </div>
+
+            <!-- Block 2: 여러 장면 모음 8개 후보 그리드 (Screenshot 4 & 5) -->
+            <div>
+              <div class="mb-3">
+                <h3 class="text-[17px] font-black text-slate-900">여러 장면 모음</h3>
+                <p class="text-[12.5px] text-slate-500 mt-0.5">설교 곳곳의 장면을 이어 붙였어요.</p>
+              </div>
+
+              <!-- 8 Candidate Cards Grid -->
+              <div id="shorts-candidates-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-20">
+                <!-- Candidate Card 1 -->
+                <div id="candidate-card-1" onclick="selectCandidateCard(1)"
+                  class="candidate-card rounded-2xl border-2 border-blue-600 bg-blue-50/20 ring-2 ring-blue-500/20 shadow-md p-5 cursor-pointer transition-all relative flex flex-col justify-between">
+                  
+                  <!-- Top Selection Circle (Screenshot 4 & 5) -->
+                  <div class="absolute top-4 right-4 z-10">
+                    <div id="candidate-chk-1" class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-2xs transition-colors">
+                      ✓
+                    </div>
+                  </div>
+
+                  <div>
+                    <!-- Center Phone Mockup Graphic (Matching Screenshot 4 & 5) -->
+                    <div class="w-36 h-48 rounded-2xl bg-slate-950 mx-auto p-3.5 flex flex-col justify-between text-center shadow-md border border-slate-800 my-2">
+                      <div class="text-[11px] font-black leading-snug">
+                        <span id="preview-t1-1" class="text-white block">감사는</span>
+                        <span id="preview-t2-1" class="text-amber-400 font-extrabold block text-[13px] mt-0.5">100% 믿음이다</span>
+                      </div>
+                      <div class="opacity-60 my-auto">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-xs">👤</div>
+                      </div>
+                      <div class="text-[7.5px] text-slate-400 border border-slate-800 rounded px-1.5 py-0.5 inline-block mx-auto">
+                        복의근원 관유중앙교회
+                      </div>
+                    </div>
+
+                    <!-- Meta Badges & Summary -->
+                    <div class="flex items-center gap-2 mt-4 mb-2">
+                      <span class="rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 px-2.5 py-0.5 text-[11px] font-extrabold">
+                        2장면 모음
+                      </span>
+                      <span class="text-[12px] font-bold text-slate-500">1분</span>
+                    </div>
+
+                    <p class="text-[13px] text-slate-600 font-medium leading-relaxed mb-4">
+                      열 명 중 한 명의 감사, 감사의 비율, 감사가 주는 영적 건강까지 이어지는 감사 신앙 선언.
+                    </p>
+
+                    <!-- 2 Scenes with Timestamps & Quotes -->
+                    <div class="space-y-3 pt-3 border-t border-slate-100 text-[12px]">
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>① 59:32 · 19초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          예수님께서 그 한 사람의 믿음을 보시고 하나님께서 그에게 구원을...
+                        </p>
+                      </div>
+
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>② 71:58 · 41초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          여러분, 그러면 감동어린 감사가 많으면 많을수록 따라합시다. 내 영혼은...
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Editable Title Inputs (Matching Screenshot 4 & 5) -->
+                  <div class="mt-4 pt-3.5 border-t border-slate-100" onclick="event.stopPropagation()">
+                    <label class="block text-[11.5px] font-bold text-slate-500 mb-1.5">제목 (직접 수정 가능)</label>
+                    <input id="candidate-t1-1" type="text" value="감사는"
+                      oninput="onCandidateTitleInput(1, this.value, 1)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-bold text-slate-800 focus:bg-white focus:border-blue-500 outline-none transition-colors" />
+                    <input id="candidate-t2-1" type="text" value="100% 믿음이다"
+                      oninput="onCandidateTitleInput(1, this.value, 2)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-black text-amber-600 focus:bg-white focus:border-blue-500 outline-none transition-colors mt-1.5" />
+                  </div>
+
+                </div>
+
+                <!-- Candidate Card 2 -->
+                <div id="candidate-card-2" onclick="selectCandidateCard(2)"
+                  class="candidate-card rounded-2xl border border-slate-200/90 bg-white hover:border-slate-300 shadow-2xs p-5 cursor-pointer transition-all relative flex flex-col justify-between">
+                  
+                  <!-- Top Selection Circle (Screenshot 4 & 5) -->
+                  <div class="absolute top-4 right-4 z-10">
+                    <div id="candidate-chk-2" class="w-6 h-6 rounded-full border-2 border-slate-300 text-transparent flex items-center justify-center text-xs font-black shadow-2xs transition-colors">
+                      
+                    </div>
+                  </div>
+
+                  <div>
+                    <!-- Center Phone Mockup Graphic (Matching Screenshot 4 & 5) -->
+                    <div class="w-36 h-48 rounded-2xl bg-slate-950 mx-auto p-3.5 flex flex-col justify-between text-center shadow-md border border-slate-800 my-2">
+                      <div class="text-[11px] font-black leading-snug">
+                        <span id="preview-t1-2" class="text-white block">체면 차리면</span>
+                        <span id="preview-t2-2" class="text-amber-400 font-extrabold block text-[13px] mt-0.5">하나님 위에 내가</span>
+                      </div>
+                      <div class="opacity-60 my-auto">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-xs">👤</div>
+                      </div>
+                      <div class="text-[7.5px] text-slate-400 border border-slate-800 rounded px-1.5 py-0.5 inline-block mx-auto">
+                        복의근원 관유중앙교회
+                      </div>
+                    </div>
+
+                    <!-- Meta Badges & Summary -->
+                    <div class="flex items-center gap-2 mt-4 mb-2">
+                      <span class="rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 px-2.5 py-0.5 text-[11px] font-extrabold">
+                        2장면 모음
+                      </span>
+                      <span class="text-[12px] font-bold text-slate-500">42초</span>
+                    </div>
+
+                    <p class="text-[13px] text-slate-600 font-medium leading-relaxed mb-4">
+                      다윗처럼 체면을 버리고 하나님 앞에서 솔직하게 찬양해야 한다는 메시지.
+                    </p>
+
+                    <!-- 2 Scenes with Timestamps & Quotes -->
+                    <div class="space-y-3 pt-3 border-t border-slate-100 text-[12px]">
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>① 55:33 · 22초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          체면 눈치 보지 않습니다. 체면 체면을 차리지 않고 내가...
+                        </p>
+                      </div>
+
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>② 56:46 · 20초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          기쁨을 즐거움을 주십니다. 아멘. 그래서 여러분 다윗이 하나님 앞에...
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Editable Title Inputs (Matching Screenshot 4 & 5) -->
+                  <div class="mt-4 pt-3.5 border-t border-slate-100" onclick="event.stopPropagation()">
+                    <label class="block text-[11.5px] font-bold text-slate-500 mb-1.5">제목 (직접 수정 가능)</label>
+                    <input id="candidate-t1-2" type="text" value="체면 차리면"
+                      oninput="onCandidateTitleInput(2, this.value, 1)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-bold text-slate-800 focus:bg-white focus:border-blue-500 outline-none transition-colors" />
+                    <input id="candidate-t2-2" type="text" value="하나님 위에 내가"
+                      oninput="onCandidateTitleInput(2, this.value, 2)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-black text-amber-600 focus:bg-white focus:border-blue-500 outline-none transition-colors mt-1.5" />
+                  </div>
+
+                </div>
+
+                <!-- Candidate Card 3 -->
+                <div id="candidate-card-3" onclick="selectCandidateCard(3)"
+                  class="candidate-card rounded-2xl border border-slate-200/90 bg-white hover:border-slate-300 shadow-2xs p-5 cursor-pointer transition-all relative flex flex-col justify-between">
+                  
+                  <!-- Top Selection Circle (Screenshot 4 & 5) -->
+                  <div class="absolute top-4 right-4 z-10">
+                    <div id="candidate-chk-3" class="w-6 h-6 rounded-full border-2 border-slate-300 text-transparent flex items-center justify-center text-xs font-black shadow-2xs transition-colors">
+                      
+                    </div>
+                  </div>
+
+                  <div>
+                    <!-- Center Phone Mockup Graphic (Matching Screenshot 4 & 5) -->
+                    <div class="w-36 h-48 rounded-2xl bg-slate-950 mx-auto p-3.5 flex flex-col justify-between text-center shadow-md border border-slate-800 my-2">
+                      <div class="text-[11px] font-black leading-snug">
+                        <span id="preview-t1-3" class="text-white block">부르짖는 날에</span>
+                        <span id="preview-t2-3" class="text-amber-400 font-extrabold block text-[13px] mt-0.5">영혼을 강하게</span>
+                      </div>
+                      <div class="opacity-60 my-auto">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-xs">👤</div>
+                      </div>
+                      <div class="text-[7.5px] text-slate-400 border border-slate-800 rounded px-1.5 py-0.5 inline-block mx-auto">
+                        복의근원 관유중앙교회
+                      </div>
+                    </div>
+
+                    <!-- Meta Badges & Summary -->
+                    <div class="flex items-center gap-2 mt-4 mb-2">
+                      <span class="rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 px-2.5 py-0.5 text-[11px] font-extrabold">
+                        2장면 모음
+                      </span>
+                      <span class="text-[12px] font-bold text-slate-500">50초</span>
+                    </div>
+
+                    <p class="text-[13px] text-slate-600 font-medium leading-relaxed mb-4">
+                      부르짖는 날에 영혼을 강하게 하시는 하나님의 응답과 영적 회복의 확신.
+                    </p>
+
+                    <!-- 2 Scenes with Timestamps & Quotes -->
+                    <div class="space-y-3 pt-3 border-t border-slate-100 text-[12px]">
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>① 28:10 · 24초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          내가 부르짖는 날에 주께서 응답하시고 내 영혼에 힘을 주어 강하게 하셨나이다.
+                        </p>
+                      </div>
+
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>② 29:45 · 26초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          위기의 순간 무릎 꿇는 성도에게 하늘의 문을 여시는 은혜가 임합니다.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Editable Title Inputs (Matching Screenshot 4 & 5) -->
+                  <div class="mt-4 pt-3.5 border-t border-slate-100" onclick="event.stopPropagation()">
+                    <label class="block text-[11.5px] font-bold text-slate-500 mb-1.5">제목 (직접 수정 가능)</label>
+                    <input id="candidate-t1-3" type="text" value="부르짖는 날에"
+                      oninput="onCandidateTitleInput(3, this.value, 1)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-bold text-slate-800 focus:bg-white focus:border-blue-500 outline-none transition-colors" />
+                    <input id="candidate-t2-3" type="text" value="영혼을 강하게"
+                      oninput="onCandidateTitleInput(3, this.value, 2)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-black text-amber-600 focus:bg-white focus:border-blue-500 outline-none transition-colors mt-1.5" />
+                  </div>
+
+                </div>
+
+                <!-- Candidate Card 4 -->
+                <div id="candidate-card-4" onclick="selectCandidateCard(4)"
+                  class="candidate-card rounded-2xl border border-slate-200/90 bg-white hover:border-slate-300 shadow-2xs p-5 cursor-pointer transition-all relative flex flex-col justify-between">
+                  
+                  <!-- Top Selection Circle (Screenshot 4 & 5) -->
+                  <div class="absolute top-4 right-4 z-10">
+                    <div id="candidate-chk-4" class="w-6 h-6 rounded-full border-2 border-slate-300 text-transparent flex items-center justify-center text-xs font-black shadow-2xs transition-colors">
+                      
+                    </div>
+                  </div>
+
+                  <div>
+                    <!-- Center Phone Mockup Graphic (Matching Screenshot 4 & 5) -->
+                    <div class="w-36 h-48 rounded-2xl bg-slate-950 mx-auto p-3.5 flex flex-col justify-between text-center shadow-md border border-slate-800 my-2">
+                      <div class="text-[11px] font-black leading-snug">
+                        <span id="preview-t1-4" class="text-white block">낮은 자를</span>
+                        <span id="preview-t2-4" class="text-amber-400 font-extrabold block text-[13px] mt-0.5">굽어보시는 은혜</span>
+                      </div>
+                      <div class="opacity-60 my-auto">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-xs">👤</div>
+                      </div>
+                      <div class="text-[7.5px] text-slate-400 border border-slate-800 rounded px-1.5 py-0.5 inline-block mx-auto">
+                        복의근원 관유중앙교회
+                      </div>
+                    </div>
+
+                    <!-- Meta Badges & Summary -->
+                    <div class="flex items-center gap-2 mt-4 mb-2">
+                      <span class="rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 px-2.5 py-0.5 text-[11px] font-extrabold">
+                        2장면 모음
+                      </span>
+                      <span class="text-[12px] font-bold text-slate-500">45초</span>
+                    </div>
+
+                    <p class="text-[13px] text-slate-600 font-medium leading-relaxed mb-4">
+                      낮고 비천한 자를 굽어보시는 하나님의 은혜와 겸손한 자의 승리.
+                    </p>
+
+                    <!-- 2 Scenes with Timestamps & Quotes -->
+                    <div class="space-y-3 pt-3 border-t border-slate-100 text-[12px]">
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>① 32:15 · 21초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          여호와께서는 높이 계셔도 낮은 자를 굽어살피시며 교만한 자를 아십니다.
+                        </p>
+                      </div>
+
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>② 33:50 · 24초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          나의 무력함을 인정하고 주께 엎드릴 때 하나님의 기적이 시작됩니다.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Editable Title Inputs (Matching Screenshot 4 & 5) -->
+                  <div class="mt-4 pt-3.5 border-t border-slate-100" onclick="event.stopPropagation()">
+                    <label class="block text-[11.5px] font-bold text-slate-500 mb-1.5">제목 (직접 수정 가능)</label>
+                    <input id="candidate-t1-4" type="text" value="낮은 자를"
+                      oninput="onCandidateTitleInput(4, this.value, 1)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-bold text-slate-800 focus:bg-white focus:border-blue-500 outline-none transition-colors" />
+                    <input id="candidate-t2-4" type="text" value="굽어보시는 은혜"
+                      oninput="onCandidateTitleInput(4, this.value, 2)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-black text-amber-600 focus:bg-white focus:border-blue-500 outline-none transition-colors mt-1.5" />
+                  </div>
+
+                </div>
+
+                <!-- Candidate Card 5 -->
+                <div id="candidate-card-5" onclick="selectCandidateCard(5)"
+                  class="candidate-card rounded-2xl border border-slate-200/90 bg-white hover:border-slate-300 shadow-2xs p-5 cursor-pointer transition-all relative flex flex-col justify-between">
+                  
+                  <!-- Top Selection Circle (Screenshot 4 & 5) -->
+                  <div class="absolute top-4 right-4 z-10">
+                    <div id="candidate-chk-5" class="w-6 h-6 rounded-full border-2 border-slate-300 text-transparent flex items-center justify-center text-xs font-black shadow-2xs transition-colors">
+                      
+                    </div>
+                  </div>
+
+                  <div>
+                    <!-- Center Phone Mockup Graphic (Matching Screenshot 4 & 5) -->
+                    <div class="w-36 h-48 rounded-2xl bg-slate-950 mx-auto p-3.5 flex flex-col justify-between text-center shadow-md border border-slate-800 my-2">
+                      <div class="text-[11px] font-black leading-snug">
+                        <span id="preview-t1-5" class="text-white block">환난 중에도</span>
+                        <span id="preview-t2-5" class="text-amber-400 font-extrabold block text-[13px] mt-0.5">살리시는 주의 손</span>
+                      </div>
+                      <div class="opacity-60 my-auto">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-xs">👤</div>
+                      </div>
+                      <div class="text-[7.5px] text-slate-400 border border-slate-800 rounded px-1.5 py-0.5 inline-block mx-auto">
+                        복의근원 관유중앙교회
+                      </div>
+                    </div>
+
+                    <!-- Meta Badges & Summary -->
+                    <div class="flex items-center gap-2 mt-4 mb-2">
+                      <span class="rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 px-2.5 py-0.5 text-[11px] font-extrabold">
+                        2장면 모음
+                      </span>
+                      <span class="text-[12px] font-bold text-slate-500">55초</span>
+                    </div>
+
+                    <p class="text-[13px] text-slate-600 font-medium leading-relaxed mb-4">
+                      환난 중에도 지켜주시는 주의 능력의 오른손과 안전한 보호의 약속.
+                    </p>
+
+                    <!-- 2 Scenes with Timestamps & Quotes -->
+                    <div class="space-y-3 pt-3 border-t border-slate-100 text-[12px]">
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>① 35:20 · 25초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          내가 환난 중에 다닐지라도 주께서 나를 살아나게 하시고 주의 손을 펴사...
+                        </p>
+                      </div>
+
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>② 36:45 · 30초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          원수들의 분노 속에서도 주의 오른손이 나를 온전하게 지키십니다.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Editable Title Inputs (Matching Screenshot 4 & 5) -->
+                  <div class="mt-4 pt-3.5 border-t border-slate-100" onclick="event.stopPropagation()">
+                    <label class="block text-[11.5px] font-bold text-slate-500 mb-1.5">제목 (직접 수정 가능)</label>
+                    <input id="candidate-t1-5" type="text" value="환난 중에도"
+                      oninput="onCandidateTitleInput(5, this.value, 1)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-bold text-slate-800 focus:bg-white focus:border-blue-500 outline-none transition-colors" />
+                    <input id="candidate-t2-5" type="text" value="살리시는 주의 손"
+                      oninput="onCandidateTitleInput(5, this.value, 2)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-black text-amber-600 focus:bg-white focus:border-blue-500 outline-none transition-colors mt-1.5" />
+                  </div>
+
+                </div>
+
+                <!-- Candidate Card 6 -->
+                <div id="candidate-card-6" onclick="selectCandidateCard(6)"
+                  class="candidate-card rounded-2xl border border-slate-200/90 bg-white hover:border-slate-300 shadow-2xs p-5 cursor-pointer transition-all relative flex flex-col justify-between">
+                  
+                  <!-- Top Selection Circle (Screenshot 4 & 5) -->
+                  <div class="absolute top-4 right-4 z-10">
+                    <div id="candidate-chk-6" class="w-6 h-6 rounded-full border-2 border-slate-300 text-transparent flex items-center justify-center text-xs font-black shadow-2xs transition-colors">
+                      
+                    </div>
+                  </div>
+
+                  <div>
+                    <!-- Center Phone Mockup Graphic (Matching Screenshot 4 & 5) -->
+                    <div class="w-36 h-48 rounded-2xl bg-slate-950 mx-auto p-3.5 flex flex-col justify-between text-center shadow-md border border-slate-800 my-2">
+                      <div class="text-[11px] font-black leading-snug">
+                        <span id="preview-t1-6" class="text-white block">나를 위하여</span>
+                        <span id="preview-t2-6" class="text-amber-400 font-extrabold block text-[13px] mt-0.5">온전하게 이루심</span>
+                      </div>
+                      <div class="opacity-60 my-auto">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-xs">👤</div>
+                      </div>
+                      <div class="text-[7.5px] text-slate-400 border border-slate-800 rounded px-1.5 py-0.5 inline-block mx-auto">
+                        복의근원 관유중앙교회
+                      </div>
+                    </div>
+
+                    <!-- Meta Badges & Summary -->
+                    <div class="flex items-center gap-2 mt-4 mb-2">
+                      <span class="rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 px-2.5 py-0.5 text-[11px] font-extrabold">
+                        2장면 모음
+                      </span>
+                      <span class="text-[12px] font-bold text-slate-500">48초</span>
+                    </div>
+
+                    <p class="text-[13px] text-slate-600 font-medium leading-relaxed mb-4">
+                      인생의 모든 것을 온전하게 이루시는 하나님의 영원하신 인자하심 선포.
+                    </p>
+
+                    <!-- 2 Scenes with Timestamps & Quotes -->
+                    <div class="space-y-3 pt-3 border-t border-slate-100 text-[12px]">
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>① 38:10 · 24초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          여호와께서 나를 위하여 모든 것을 온전하게 이루시리로다!
+                        </p>
+                      </div>
+
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>② 39:30 · 24초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          주의 인자하심이 영원하오니 손으로 지으신 주의 백성을 버리지 마옵소서.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Editable Title Inputs (Matching Screenshot 4 & 5) -->
+                  <div class="mt-4 pt-3.5 border-t border-slate-100" onclick="event.stopPropagation()">
+                    <label class="block text-[11.5px] font-bold text-slate-500 mb-1.5">제목 (직접 수정 가능)</label>
+                    <input id="candidate-t1-6" type="text" value="나를 위하여"
+                      oninput="onCandidateTitleInput(6, this.value, 1)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-bold text-slate-800 focus:bg-white focus:border-blue-500 outline-none transition-colors" />
+                    <input id="candidate-t2-6" type="text" value="온전하게 이루심"
+                      oninput="onCandidateTitleInput(6, this.value, 2)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-black text-amber-600 focus:bg-white focus:border-blue-500 outline-none transition-colors mt-1.5" />
+                  </div>
+
+                </div>
+
+                <!-- Candidate Card 7 -->
+                <div id="candidate-card-7" onclick="selectCandidateCard(7)"
+                  class="candidate-card rounded-2xl border border-slate-200/90 bg-white hover:border-slate-300 shadow-2xs p-5 cursor-pointer transition-all relative flex flex-col justify-between">
+                  
+                  <!-- Top Selection Circle (Screenshot 4 & 5) -->
+                  <div class="absolute top-4 right-4 z-10">
+                    <div id="candidate-chk-7" class="w-6 h-6 rounded-full border-2 border-slate-300 text-transparent flex items-center justify-center text-xs font-black shadow-2xs transition-colors">
+                      
+                    </div>
+                  </div>
+
+                  <div>
+                    <!-- Center Phone Mockup Graphic (Matching Screenshot 4 & 5) -->
+                    <div class="w-36 h-48 rounded-2xl bg-slate-950 mx-auto p-3.5 flex flex-col justify-between text-center shadow-md border border-slate-800 my-2">
+                      <div class="text-[11px] font-black leading-snug">
+                        <span id="preview-t1-7" class="text-white block">광야의 식탁을</span>
+                        <span id="preview-t2-7" class="text-amber-400 font-extrabold block text-[13px] mt-0.5">베푸시는 하나님</span>
+                      </div>
+                      <div class="opacity-60 my-auto">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-xs">👤</div>
+                      </div>
+                      <div class="text-[7.5px] text-slate-400 border border-slate-800 rounded px-1.5 py-0.5 inline-block mx-auto">
+                        복의근원 관유중앙교회
+                      </div>
+                    </div>
+
+                    <!-- Meta Badges & Summary -->
+                    <div class="flex items-center gap-2 mt-4 mb-2">
+                      <span class="rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 px-2.5 py-0.5 text-[11px] font-extrabold">
+                        2장면 모음
+                      </span>
+                      <span class="text-[12px] font-bold text-slate-500">42초</span>
+                    </div>
+
+                    <p class="text-[13px] text-slate-600 font-medium leading-relaxed mb-4">
+                      광야의 메마른 결핍 속에서 기적의 식탁을 베푸시는 하나님의 돌보심.
+                    </p>
+
+                    <!-- 2 Scenes with Timestamps & Quotes -->
+                    <div class="space-y-3 pt-3 border-t border-slate-100 text-[12px]">
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>① 41:15 · 20초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          인간의 계산이 끝나는 그 자리가 하나님의 기적이 시작되는 은혜의 식탁입니다.
+                        </p>
+                      </div>
+
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>② 42:40 · 22초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          결핍 앞에서 불평 대신 감사의 기도를 올리는 성도에게 기적이 임합니다.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Editable Title Inputs (Matching Screenshot 4 & 5) -->
+                  <div class="mt-4 pt-3.5 border-t border-slate-100" onclick="event.stopPropagation()">
+                    <label class="block text-[11.5px] font-bold text-slate-500 mb-1.5">제목 (직접 수정 가능)</label>
+                    <input id="candidate-t1-7" type="text" value="광야의 식탁을"
+                      oninput="onCandidateTitleInput(7, this.value, 1)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-bold text-slate-800 focus:bg-white focus:border-blue-500 outline-none transition-colors" />
+                    <input id="candidate-t2-7" type="text" value="베푸시는 하나님"
+                      oninput="onCandidateTitleInput(7, this.value, 2)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-black text-amber-600 focus:bg-white focus:border-blue-500 outline-none transition-colors mt-1.5" />
+                  </div>
+
+                </div>
+
+                <!-- Candidate Card 8 -->
+                <div id="candidate-card-8" onclick="selectCandidateCard(8)"
+                  class="candidate-card rounded-2xl border border-slate-200/90 bg-white hover:border-slate-300 shadow-2xs p-5 cursor-pointer transition-all relative flex flex-col justify-between">
+                  
+                  <!-- Top Selection Circle (Screenshot 4 & 5) -->
+                  <div class="absolute top-4 right-4 z-10">
+                    <div id="candidate-chk-8" class="w-6 h-6 rounded-full border-2 border-slate-300 text-transparent flex items-center justify-center text-xs font-black shadow-2xs transition-colors">
+                      
+                    </div>
+                  </div>
+
+                  <div>
+                    <!-- Center Phone Mockup Graphic (Matching Screenshot 4 & 5) -->
+                    <div class="w-36 h-48 rounded-2xl bg-slate-950 mx-auto p-3.5 flex flex-col justify-between text-center shadow-md border border-slate-800 my-2">
+                      <div class="text-[11px] font-black leading-snug">
+                        <span id="preview-t1-8" class="text-white block">익숙한 안주를</span>
+                        <span id="preview-t2-8" class="text-amber-400 font-extrabold block text-[13px] mt-0.5">털고 일어나라</span>
+                      </div>
+                      <div class="opacity-60 my-auto">
+                        <div class="w-7 h-7 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-xs">👤</div>
+                      </div>
+                      <div class="text-[7.5px] text-slate-400 border border-slate-800 rounded px-1.5 py-0.5 inline-block mx-auto">
+                        복의근원 관유중앙교회
+                      </div>
+                    </div>
+
+                    <!-- Meta Badges & Summary -->
+                    <div class="flex items-center gap-2 mt-4 mb-2">
+                      <span class="rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 px-2.5 py-0.5 text-[11px] font-extrabold">
+                        2장면 모음
+                      </span>
+                      <span class="text-[12px] font-bold text-slate-500">1분 05초</span>
+                    </div>
+
+                    <p class="text-[13px] text-slate-600 font-medium leading-relaxed mb-4">
+                      익숙한 불안의 자리를 털고 일어나 복의 근원으로 전진하는 거룩한 결단.
+                    </p>
+
+                    <!-- 2 Scenes with Timestamps & Quotes -->
+                    <div class="space-y-3 pt-3 border-t border-slate-100 text-[12px]">
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>① 45:10 · 30초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          머무르는 안주에는 기적이 없습니다. 익숙한 불안의 자리를 털고 일어나십시오!
+                        </p>
+                      </div>
+
+                      <div>
+                        <div class="font-extrabold text-blue-600 flex items-center gap-1.5">
+                          <span>▶</span>
+                          <span>② 46:50 · 35초</span>
+                        </div>
+                        <p class="text-slate-600 pl-4 mt-0.5 text-[12px] leading-snug">
+                          하나님께서 당신을 거룩한 복의 통로로 반드시 세우실 것입니다. 할렐루야!
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Editable Title Inputs (Matching Screenshot 4 & 5) -->
+                  <div class="mt-4 pt-3.5 border-t border-slate-100" onclick="event.stopPropagation()">
+                    <label class="block text-[11.5px] font-bold text-slate-500 mb-1.5">제목 (직접 수정 가능)</label>
+                    <input id="candidate-t1-8" type="text" value="익숙한 안주를"
+                      oninput="onCandidateTitleInput(8, this.value, 1)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-bold text-slate-800 focus:bg-white focus:border-blue-500 outline-none transition-colors" />
+                    <input id="candidate-t2-8" type="text" value="털고 일어나라"
+                      oninput="onCandidateTitleInput(8, this.value, 2)"
+                      class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[13px] font-black text-amber-600 focus:bg-white focus:border-blue-500 outline-none transition-colors mt-1.5" />
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Sticky Bottom Action Bar (Screenshot 5) -->
+            <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-2xl rounded-2xl px-6 py-3.5 flex items-center justify-between gap-8 min-w-[340px] max-w-lg w-full">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span>
+                <span id="shorts-selection-counter" class="text-[14px] font-black text-slate-900">1개 선택됨</span>
+              </div>
+              <button type="button" onclick="proceedToStudioWithSelectedCandidate()"
+                class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-[13.5px] shadow-sm transition-all active:scale-95 cursor-pointer flex items-center gap-1.5">
+                <span id="shorts-create-btn-label">1개 만들기</span>
+                <span>→</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- ================= STEP 4: 선택한 쇼츠 실시간 편집 스튜디오 ================= -->
+          <div id="shorts-step-studio" class="hidden space-y-4">
+            
+            <!-- Back Button Header -->
+            <div class="flex items-center justify-between pb-2 border-b border-slate-200/80">
+              <button type="button" onclick="backToShortsCandidateSelection()"
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors shadow-2xs cursor-pointer">
+                <span>← 다른 구간 다시 고르기</span>
+              </button>
+              <div class="flex items-center gap-2">
+                <span id="studio-active-title-badge" class="text-xs font-extrabold text-blue-700 bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full">
+                  쇼츠 01: 감사는 100% 믿음이다
+                </span>
+                <button type="button" onclick="saveToMyShorts()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs transition-colors cursor-pointer">
+                  ⭐ 내 쇼츠에 보관
+                </button>
+              </div>
+            </div>
+
+            <div class="rounded-2xl bg-white border border-slate-200/80 p-4 sm:p-5 shadow-sm">
             <div id="studio-panel-shorts" class="block">
               <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
                 
@@ -1477,6 +2346,31 @@
 
         <!-- Panel 2: 소그룹 나눔 질문지 -->
         </div>
+          </div>
+          </div>
+
+          <!-- ================= TAB: 내 쇼츠 (My Shorts Gallery) ================= -->
+          <div id="shorts-view-myshorts" class="hidden space-y-6 max-w-5xl">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-[20px] font-black text-slate-900">내 쇼츠 보관함</h2>
+                <p class="text-[13px] text-slate-500">지금까지 완성된 쇼츠 영상 목록입니다.</p>
+              </div>
+              <button type="button" onclick="switchShortsMainTab('create'); showShortsStep('input');"
+                class="px-4 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 transition-colors">
+                + 새 쇼츠 만들기
+              </button>
+            </div>
+
+            <div id="myshorts-empty-notice" class="rounded-2xl border border-slate-200 bg-white p-12 text-center text-slate-400">
+              <span class="text-3xl block mb-2">🎬</span>
+              <p class="text-sm font-bold text-slate-600">아직 보관된 쇼츠가 없습니다.</p>
+              <p class="text-xs text-slate-400 mt-1">'만들기' 탭에서 분석 후 1개 만들기를 진행해 보세요.</p>
+            </div>
+
+            <div id="myshorts-cards-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 hidden">
+              <!-- Dynamically populated -->
+            </div>
           </div>
 
         </section>
