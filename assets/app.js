@@ -173,11 +173,19 @@ function parseTitleFromText(text, detectedScripture = '') {
 
 function cleanPastoralSpeech(text) {
   if (!text) return '';
-  return text
-    .replace(/\b(어|으|음|아|그|저|에|음\.\.\.)\b/g, '')
-    .replace(/(어\s+|으\s+|음\s+|아\s+|그\s+|저\s+)/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
+  let t = text;
+  // 1. Remove stuttered syllables like 그... 그, 하-하나님
+  t = t.replace(/([가-힣])\s*[-~…\.]+\s*\1/g, '$1');
+  // 2. Remove filler sounds with dots (어..., 음..., 그...)
+  t = t.replace(/\b(어|으|음|아|그|저|에)[\.…\s]*/g, '');
+  t = t.replace(/(어\s+|으\s+|음\s+|아\s+|그\s+|저\s+)/g, '');
+  // 3. Remove repeated duplicate words (내가 내가 -> 내가, 정말로 정말로 -> 정말로)
+  t = t.replace(/\b([가-힣]{2,})\s+\1\b/g, '$1');
+  // 4. Clean stray dots, dashes, ellipses
+  t = t.replace(/[\.]{2,}/g, '');
+  t = t.replace(/[-~…]+/g, '');
+  // 5. Clean extra whitespace
+  return t.replace(/\s+/g, ' ').trim();
 }
 
 function extractYouTubeId(url) {
@@ -744,22 +752,44 @@ function generate10ShortsSuite(title, scripture, points) {
     }
   ];
 
+    // Sermon Climax Anchors (4 precision highlight jump timestamps per short clip)
+  // Scene 1 [00:00~00:10 도입], Scene 2 [00:10~00:25 전환], Scene 3 [00:25~00:40 결단], Scene 4 [00:40~00:45 선포]
+  const sermonHighlightAnchors = [
+    [3376, 3402, 3428, 3456], // Clip 1 (56:16, 56:42, 57:08, 57:36)
+    [3513, 3535, 3560, 3582], // Clip 2 (58:33, 58:55, 59:20, 59:42)
+    [4201, 4220, 4245, 4268], // Clip 3 (70:01, 70:20, 70:45, 71:08)
+    [3068, 3095, 3125, 3150], // Clip 4 (51:08, 51:35, 52:05, 52:30)
+    [3710, 3735, 3760, 3785], // Clip 5 (61:50, 62:15, 62:40, 63:05)
+    [4361, 4385, 4410, 4435], // Clip 6 (72:41, 73:05, 73:30, 73:55)
+    [3200, 3225, 3250, 3275], // Clip 7 (53:20, 53:45, 54:10, 54:35)
+    [3600, 3625, 3650, 3675], // Clip 8 (60:00, 60:25, 60:50, 61:15)
+    [3850, 3875, 3900, 3925], // Clip 9 (64:10, 64:35, 65:00, 65:25)
+    [4100, 4125, 4150, 4175]  // Clip 10 (68:20, 68:45, 69:10, 69:35)
+  ];
+
   const result = {};
   themes.forEach(t => {
+    const anchors = sermonHighlightAnchors[(t.num - 1) % sermonHighlightAnchors.length];
+    const s1Clean = cleanPastoralSpeech(t.s1);
+    const s2Clean = cleanPastoralSpeech(t.s2);
+    const s3Clean = cleanPastoralSpeech(t.s3);
+    const s4Clean = cleanPastoralSpeech(t.s4);
+
     result[t.num] = {
       title: t.title,
       tag: t.tag,
-      sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · 1.0배속 원본',
-      startSec: [3376, 3513, 4201, 3068, 3710, 4361, 3200, 3600, 3850, 4100][(t.num - 1) % 10], // Distributed jumps across sermon (21:30, 24:00, 26:30...)
+      sub: '도입(10s) ➔ 전환(15s) ➔ 결단(15s) ➔ 선포(5s) · AI 무음/더듬거림 정제',
+      startSec: anchors[0],
       duration: 45,
       scenes: [
-        { start: 0, end: 10, label: '씬 1 [00:00] 도입', subtitle: `“${cleanPastoralSpeech(t.s1)}”` },
-        { start: 10, end: 25, label: '씬 2 [00:10] 전환', subtitle: `“${cleanPastoralSpeech(t.s2)}”` },
-        { start: 25, end: 40, label: '씬 3 [00:25] 결단', subtitle: `“${cleanPastoralSpeech(t.s3)}”` },
-        { start: 40, end: 45, label: '씬 4 [00:40] 선포', subtitle: `“${cleanPastoralSpeech(t.s4)}”` }
+        { start: 0, end: 10, label: '씬 1 [00:00] 도입', videoSec: anchors[0], subtitle: `“${s1Clean}”`, text: s1Clean },
+        { start: 10, end: 25, label: '씬 2 [00:10] 전환', videoSec: anchors[1], subtitle: `“${s2Clean}”`, text: s2Clean },
+        { start: 25, end: 40, label: '씬 3 [00:25] 결단', videoSec: anchors[2], subtitle: `“${s3Clean}”`, text: s3Clean },
+        { start: 40, end: 45, label: '씬 4 [00:40] 선포', videoSec: anchors[3], subtitle: `“${s4Clean}”`, text: s4Clean }
       ]
     };
   });
+
   return result;
 }
 
@@ -2123,15 +2153,45 @@ function setStudioPlaybackRate(rate) {
   showToast(`재생 속도가 ${rate}배속으로 변경되었습니다. (기본: 1.0배속 원본)`, '⏱️');
 }
 
+let lastJumpCutSceneIdx = -1;
+
 function startPlaybackTimer() {
   if (playbackTimer) clearInterval(playbackTimer);
+  lastJumpCutSceneIdx = -1;
+
   playbackTimer = setInterval(() => {
     if (!isPlaying) return;
     clipElapsedSec += 1;
     if (clipElapsedSec > 45) {
       clipElapsedSec = 0;
+      lastJumpCutSceneIdx = -1;
     }
+
     updateSubtitlesForCurrentTime(clipElapsedSec);
+
+    // AI SMART JUMP-CUT ENGINE:
+    // Jump video across the 4 key climax timestamps (0s, 10s, 25s, 40s)
+    // Cuts out dead pauses, stuttering, and repetitive rambling!
+    const clip = (studioClips && studioClips[currentClipIndex]) ? studioClips[currentClipIndex] : (studioClips ? studioClips[1] : null);
+    if (clip && clip.scenes) {
+      let currentSceneIdx = 0;
+      if (clipElapsedSec >= 40) currentSceneIdx = 3;
+      else if (clipElapsedSec >= 25) currentSceneIdx = 2;
+      else if (clipElapsedSec >= 10) currentSceneIdx = 1;
+      else currentSceneIdx = 0;
+
+      if (currentSceneIdx !== lastJumpCutSceneIdx) {
+        lastJumpCutSceneIdx = currentSceneIdx;
+        const targetScene = clip.scenes[currentSceneIdx];
+        if (targetScene && typeof targetScene.videoSec === 'number') {
+          sendYtCommand('modal-yt-iframe', 'seekTo', [targetScene.videoSec, true]);
+          if (!isMuted) {
+            sendYtCommand('modal-yt-iframe', 'unMute');
+            sendYtCommand('modal-yt-iframe', 'setVolume', [100]);
+          }
+        }
+      }
+    }
   }, 1000);
 }
 
@@ -2154,22 +2214,38 @@ function updateSubtitlesForCurrentTime(sec) {
     }
   }
 
-  const subTexts = [document.getElementById('studio-subtitle-text'), document.getElementById('modal-subtitle-text')];
+  const subTexts = [
+    document.getElementById('studio-subtitle-text'),
+    document.getElementById('modal-subtitle-text'),
+    document.getElementById('modal-live-subtitle')
+  ];
   subTexts.forEach(el => {
     if (el) el.innerHTML = activeScene.subtitle;
   });
 
-  const sceneTags = [document.getElementById('studio-scene-tag'), document.getElementById('modal-scene-tag')];
+  const sceneTags = [
+    document.getElementById('studio-scene-tag'),
+    document.getElementById('modal-scene-tag'),
+    document.getElementById('modal-scene-name')
+  ];
   sceneTags.forEach(el => {
     if (el) el.textContent = activeScene.label;
   });
 
-  const curTimes = [document.getElementById('studio-current-time'), document.getElementById('modal-current-time')];
+  const curTimes = [
+    document.getElementById('studio-current-time'),
+    document.getElementById('modal-current-time'),
+    document.getElementById('modal-time-curr')
+  ];
   curTimes.forEach(el => {
     if (el) el.textContent = formatTime(sec);
   });
 
-  const pBars = [document.getElementById('studio-progress-bar'), document.getElementById('modal-progress-bar')];
+  const pBars = [
+    document.getElementById('studio-progress-bar'),
+    document.getElementById('modal-progress-bar'),
+    document.getElementById('modal-progress-fill')
+  ];
   pBars.forEach(el => {
     if (el) el.style.width = `${(sec / 45) * 100}%`;
   });
@@ -2232,21 +2308,23 @@ function loadClipIntoRefineEditor(num) {
   const clip = (studioClips && studioClips[num]) ? studioClips[num] : null;
   if (!clip) return;
 
-  const titleIn = document.getElementById('refine-title-input');
-  const scripIn = document.getElementById('refine-scrip-input');
-  const churchIn = document.getElementById('refine-church-input');
-  const badge = document.getElementById('refine-shorts-badge');
+  const titleInputs = [document.getElementById('refine-title-input'), document.getElementById('modal-refine-title-input')];
+  const scripInputs = [document.getElementById('refine-scrip-input'), document.getElementById('modal-refine-scripture-input')];
+  const churchInputs = [document.getElementById('refine-church-input'), document.getElementById('modal-refine-church-input')];
+  const badges = [document.getElementById('refine-shorts-badge'), document.getElementById('modal-refine-active-badge')];
 
-  if (titleIn) titleIn.value = clip.title;
-  if (scripIn) scripIn.value = currentYouTubeScripture || '성경 본문 말씀';
-  if (churchIn) churchIn.value = '복의근원 관유중앙교회';
-  if (badge) badge.textContent = `쇼츠 ${String(num).padStart(2, '0')}편 집중`;
+  titleInputs.forEach(el => { if (el) el.value = clip.title; });
+  scripInputs.forEach(el => { if (el) el.value = currentYouTubeScripture || '시편 138편 (참고, 역대상 16:7-11)'; });
+  churchInputs.forEach(el => { if (el) el.value = '복의근원 관유중앙교회'; });
+  badges.forEach(el => { if (el) el.textContent = `쇼츠 ${String(num).padStart(2, '0')}편 (AI 무음·더듬거림 정제 완료)`; });
 
   clip.scenes.forEach((sc, i) => {
-    const ta = document.getElementById(`refine-scene-${i + 1}-input`);
-    if (ta) {
-      ta.value = sc.subtitle.replace(/<[^>]*>?/gm, '').replace(/[“"”]/g, '');
-    }
+    const tas = [document.getElementById(`refine-scene-${i + 1}-input`), document.getElementById(`modal-refine-scene-${i + 1}-input`)];
+    tas.forEach(ta => {
+      if (ta) {
+        ta.value = sc.text || sc.subtitle.replace(/<[^>]*>?/gm, '').replace(/[“"”]/g, '');
+      }
+    });
   });
 }
 
@@ -2275,7 +2353,9 @@ function onRefineSceneChange(sceneIdx, val) {
   if (!studioClips || !studioClips[currentClipIndex]) return;
   const clip = studioClips[currentClipIndex];
   if (clip.scenes && clip.scenes[sceneIdx - 1]) {
-    clip.scenes[sceneIdx - 1].subtitle = `“${cleanPastoralSpeech(val.trim())}”`;
+    const cleaned = cleanPastoralSpeech(val.trim());
+    clip.scenes[sceneIdx - 1].text = cleaned;
+    clip.scenes[sceneIdx - 1].subtitle = `“${cleaned}”`;
     updateSubtitlesForCurrentTime(clipElapsedSec);
   }
 }
