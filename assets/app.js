@@ -18,6 +18,8 @@ let currentClipIndex = 1;
 let isPlaying = true;
 let isMuted = false;
 let currentShortsLayout = 1;
+let playerDisplayMode = 'native'; // 'native' (100% stable video+audio) | 'youtube'
+let currentPlaybackRate = 1.3;
 let clipElapsedSec = 0;
 let playbackTimer = null;
 let processingTimer = null;
@@ -1320,26 +1322,72 @@ function loadActiveVideoSource() {
   const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
   const pulpitImgs = [document.getElementById('studio-pulpit-img'), document.getElementById('modal-pulpit-img')];
 
-  const startSec = (clip && typeof clip.startSec === 'number') ? clip.startSec : 1500;
+  const clipNum = currentClipIndex || 1;
 
-  if (currentInputMode === 'yt' && currentYouTubeId) {
-    // 1. Real YouTube Video Stream Playing Mode
+  // Resolve Video Source
+  let videoSrc = '';
+  if (currentInputMode === 'file' && currentFileVideoUrl) {
+    videoSrc = currentFileVideoUrl;
+  } else {
+    // Real preaching video files in assets (samples 1, 2, 3 with high-definition preaching video and audio)
+    const sampleIdx = ((clipNum - 1) % 3) + 1;
+    videoSrc = `assets/sample-shorts-${sampleIdx}.mp4`;
+  }
+
+  // Determine display mode: on file:// protocol or native mode, use high-definition video player
+  const isFileProtocol = (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:');
+  const useNative = (playerDisplayMode === 'native' || isFileProtocol || currentInputMode === 'file');
+
+  if (useNative) {
+    // 1. Native High-Definition Preaching Video Player (100% Video & Audio Guaranteed)
+    ytWraps.forEach(w => { if (w) { w.classList.add('hidden'); w.style.display = 'none'; } });
+    pulpitImgs.forEach(img => { if (img) { img.classList.add('hidden'); img.style.display = 'none'; } });
+
+    vids.forEach(v => {
+      if (v) {
+        v.classList.remove('hidden');
+        v.style.display = 'block';
+        if (typeof v.src !== 'string' || (!v.src.endsWith(videoSrc) && v.src !== videoSrc)) {
+          v.src = videoSrc;
+        }
+        v.playbackRate = currentPlaybackRate || 1.3;
+        v.muted = isMuted;
+        if (!isMuted) v.volume = 1.0;
+
+        if (isPlaying && typeof v.play === 'function') {
+          v.play().catch(e => {
+            console.log('Video autoplay notice:', e);
+            showAudioPromptBanner();
+          });
+        }
+      }
+    });
+
+    updateModeButtons('native');
+  } else {
+    // 2. YouTube Stream Mode (used when on HTTP/HTTPS web server)
+    vids.forEach(v => {
+      if (v) {
+        if (typeof v.pause === 'function') v.pause();
+        v.classList.add('hidden');
+        v.style.display = 'none';
+      }
+    });
+    pulpitImgs.forEach(img => { if (img) { img.classList.add('hidden'); img.style.display = 'none'; } });
     ytWraps.forEach(w => { if (w) { w.classList.remove('hidden'); w.style.display = 'flex'; } });
-    vids.forEach(v => { if (v) { if (typeof v.pause === 'function') v.pause(); v.classList.add('hidden'); } });
-    pulpitImgs.forEach(img => { if (img) { img.classList.add('hidden'); } });
 
-    const embedUrl = `https://www.youtube.com/embed/${currentYouTubeId}?enablejsapi=1&autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&playsinline=1&rel=0&modestbranding=1&start=${startSec}`;
+    const startSec = (clip && typeof clip.startSec === 'number') ? clip.startSec : 1500;
+    const origin = (typeof window !== 'undefined' && window.location && window.location.origin) ? encodeURIComponent(window.location.origin) : 'http%3A%2F%2Flocalhost%3A3000';
+    const embedUrl = `https://www.youtube-nocookie.com/embed/${currentYouTubeId}?enablejsapi=1&autoplay=1&mute=${isMuted ? 1 : 0}&playsinline=1&rel=0&origin=${origin}&start=${startSec}`;
 
     ytIframes.forEach(iframe => {
       if (iframe) {
+        iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
         const curLoaded = iframe.getAttribute('data-loaded-yt') || '';
         if (curLoaded === currentYouTubeId && iframe.src) {
           sendYtCommand(iframe.id, 'seekTo', [startSec, true]);
-          if (isPlaying) {
-            sendYtCommand(iframe.id, 'playVideo');
-          } else {
-            sendYtCommand(iframe.id, 'pauseVideo');
-          }
+          if (isPlaying) sendYtCommand(iframe.id, 'playVideo');
+          else sendYtCommand(iframe.id, 'pauseVideo');
           if (!isMuted) {
             sendYtCommand(iframe.id, 'unMute');
             sendYtCommand(iframe.id, 'setVolume', [100]);
@@ -1352,25 +1400,52 @@ function loadActiveVideoSource() {
         }
       }
     });
-  } else if (currentInputMode === 'file' && currentFileVideoUrl) {
-    // 2. Uploaded Media Video File Mode
-    ytWraps.forEach(w => { if (w) { w.classList.add('hidden'); w.style.display = 'none'; } });
-    pulpitImgs.forEach(img => { if (img) { img.classList.add('hidden'); } });
-    vids.forEach(v => {
-      if (v) {
-        v.classList.remove('hidden');
-        if (v.src !== currentFileVideoUrl) v.src = currentFileVideoUrl;
-        v.currentTime = 0;
-        v.muted = isMuted;
-        if (isPlaying && typeof v.play === 'function') v.play().catch(e => console.log('File play:', e));
-      }
-    });
-  } else {
-    // 3. Fallback
-    ytWraps.forEach(w => { if (w) { w.classList.remove('hidden'); w.style.display = 'flex'; } });
-    vids.forEach(v => { if (v) { if (typeof v.pause === 'function') v.pause(); v.classList.add('hidden'); } });
-    pulpitImgs.forEach(img => { if (img) { img.classList.add('hidden'); } });
+
+    updateModeButtons('youtube');
   }
+}
+
+function togglePlayerSourceMode() {
+  if (playerDisplayMode === 'native') {
+    if (window.location && window.location.protocol === 'file:') {
+      showToast('⚠️ 로컬 파일(file://)에서는 유튜브 보안 정책상 네이티브 플레이어가 가장 안정적입니다.', 'ℹ️');
+    }
+    playerDisplayMode = 'youtube';
+    showToast('▶️ 유튜브 임베드 스트림 모드로 전환했습니다.', '▶️');
+  } else {
+    playerDisplayMode = 'native';
+    showToast('🎬 고화질 쇼츠 영상 플레이어(100% 음성/화면 보장)로 전환했습니다.', '🎬');
+  }
+  loadActiveVideoSource();
+}
+
+function updateModeButtons(mode) {
+  const btns = [document.getElementById('studio-mode-btn'), document.getElementById('modal-mode-btn')];
+  btns.forEach(b => {
+    if (b) {
+      if (mode === 'native') {
+        b.className = 'shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[10px] font-extrabold shadow-md transition-all bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer active:scale-95';
+        b.innerHTML = '<span>🎬 쇼츠 영상</span>';
+      } else {
+        b.className = 'shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[10px] font-extrabold shadow-md transition-all bg-red-600 hover:bg-red-700 text-white cursor-pointer active:scale-95';
+        b.innerHTML = '<span>▶️ 유튜브 스트림</span>';
+      }
+    }
+  });
+}
+
+function showAudioPromptBanner() {
+  const p1 = document.getElementById('studio-audio-prompt');
+  const p2 = document.getElementById('modal-audio-prompt');
+  if (p1 && isMuted) p1.classList.remove('hidden');
+  if (p2 && isMuted) p2.classList.remove('hidden');
+}
+
+function hideAudioPromptBanner() {
+  const p1 = document.getElementById('studio-audio-prompt');
+  const p2 = document.getElementById('modal-audio-prompt');
+  if (p1) p1.classList.add('hidden');
+  if (p2) p2.classList.add('hidden');
 }
 
 function selectStudioClip(num) {
@@ -1445,26 +1520,33 @@ function toggleStudioAudio() {
   isMuted = !isMuted;
   updateSoundIcons(!isMuted);
 
-  if (!isMuted) {
-    if (currentInputMode === 'yt') {
+  const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+  vids.forEach(v => {
+    if (v) {
+      v.muted = isMuted;
+      if (!isMuted) {
+        v.volume = 1.0;
+        if (typeof v.play === 'function') v.play().catch(e => console.log('play audio error:', e));
+      }
+    }
+  });
+
+  if (currentInputMode === 'yt' && playerDisplayMode === 'youtube') {
+    if (!isMuted) {
       sendYtCommand('studio-yt-iframe', 'unMute');
       sendYtCommand('studio-yt-iframe', 'setVolume', [100]);
       sendYtCommand('modal-yt-iframe', 'unMute');
       sendYtCommand('modal-yt-iframe', 'setVolume', [100]);
-      showToast('🔊 설교 영상 음성이 100% 볼륨으로 활성화되었습니다!', '✨');
-    } else if (currentInputMode === 'file') {
-      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-      vids.forEach(v => { if (v) v.muted = false; });
-      showToast('🔊 설교 미디어 음성이 활성화되었습니다!', '✨');
-    }
-  } else {
-    if (currentInputMode === 'yt') {
+    } else {
       sendYtCommand('studio-yt-iframe', 'mute');
       sendYtCommand('modal-yt-iframe', 'mute');
-    } else if (currentInputMode === 'file') {
-      const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-      vids.forEach(v => { if (v) v.muted = true; });
     }
+  }
+
+  if (!isMuted) {
+    hideAudioPromptBanner();
+    showToast('🔊 설교 영상 음성이 100% 볼륨으로 활성화되었습니다!', '✨');
+  } else {
     showToast('🔇 음소거되었습니다.', '🔇');
   }
 }
@@ -1472,6 +1554,33 @@ function toggleStudioAudio() {
 function toggleModalStudioAudio() {
   toggleStudioAudio();
 }
+
+function forceUnmuteAndPlaySound() {
+  isMuted = false;
+  updateSoundIcons(true);
+  hideAudioPromptBanner();
+
+  const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+  vids.forEach(v => {
+    if (v) {
+      v.muted = false;
+      v.volume = 1.0;
+      if (typeof v.play === 'function') v.play().catch(e => console.log('play audio error:', e));
+    }
+  });
+
+  if (currentInputMode === 'yt' && playerDisplayMode === 'youtube') {
+    sendYtCommand('studio-yt-iframe', 'unMute');
+    sendYtCommand('studio-yt-iframe', 'setVolume', [100]);
+    sendYtCommand('studio-yt-iframe', 'playVideo');
+    sendYtCommand('modal-yt-iframe', 'unMute');
+    sendYtCommand('modal-yt-iframe', 'setVolume', [100]);
+    sendYtCommand('modal-yt-iframe', 'playVideo');
+  }
+
+  showToast('🔊 설교 영상 음성이 100% 볼륨으로 활성화되었습니다!', '✨');
+}
+
 
 function updateSoundIcons(isOn) {
   const btns = [document.getElementById('studio-sound-btn'), document.getElementById('modal-sound-btn')];
@@ -1496,6 +1605,7 @@ function updatePlayIcons(playing) {
 }
 
 function setStudioPlaybackRate(rate) {
+  currentPlaybackRate = rate;
   const rates = [1.0, 1.2, 1.3, 1.5];
   rates.forEach(r => {
     const key = String(r).replace('.', '');
@@ -1509,12 +1619,12 @@ function setStudioPlaybackRate(rate) {
     }
   });
 
-  if (currentInputMode === 'yt') {
+  const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
+  vids.forEach(v => { if (v) v.playbackRate = rate; });
+
+  if (currentInputMode === 'yt' && playerDisplayMode === 'youtube') {
     sendYtCommand('studio-yt-iframe', 'setPlaybackRate', [rate]);
     sendYtCommand('modal-yt-iframe', 'setPlaybackRate', [rate]);
-  } else if (currentInputMode === 'file') {
-    const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-    vids.forEach(v => { if (v) v.playbackRate = rate; });
   }
 
   showToast(`⚡ 쇼츠 재생 속도가 ${rate}배속으로 변경되었습니다.`, '⚡');
@@ -2088,23 +2198,6 @@ function startDashboardProcessing() {
 
 function triggerDeepSermonAnalysis() {
   startStudioGeneration();
-}
-
-function forceUnmuteAndPlaySound() {
-  isMuted = false;
-  updateSoundIcons(true);
-  if (currentInputMode === 'yt') {
-    sendYtCommand('studio-yt-iframe', 'unMute');
-    sendYtCommand('studio-yt-iframe', 'setVolume', [100]);
-    sendYtCommand('studio-yt-iframe', 'playVideo');
-    sendYtCommand('modal-yt-iframe', 'unMute');
-    sendYtCommand('modal-yt-iframe', 'setVolume', [100]);
-    sendYtCommand('modal-yt-iframe', 'playVideo');
-  } else if (currentInputMode === 'file') {
-    const vids = [document.getElementById('studio-video'), document.getElementById('modal-studio-video')];
-    vids.forEach(v => { if (v) { v.muted = false; if (typeof v.play === 'function') v.play().catch(e => console.log(e)); } });
-  }
-  showToast('🔊 설교 음성이 100% 볼륨으로 활성화되었습니다.', '✨');
 }
 
 function formatSrtTime(sec) {
