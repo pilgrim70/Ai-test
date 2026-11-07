@@ -3140,132 +3140,112 @@ async function downloadAll10MinistryAssetsZip() {
 
 
 // ============================================================================
+
+// ============================================================================
 // ================= SEOLGYO AI SHORTS MULTI-STEP WORKFLOW CONTROLLER ==========
 // ============================================================================
 
 const SHORTS_CANDIDATES = [
   {
     id: 1,
-    badge: "2장면 모음",
-    duration: "1분",
-    desc: "열 명 중 한 명의 감사, 감사의 비율, 감사가 주는 영적 건강까지 이어지는 감사 신앙 선언.",
-    s1_time: "59:32 · 19초",
-    s1_quote: "예수님께서 그 한 사람의 믿음을 보시고 하나님께서 그에게 구원을 선포하셨습니다.",
-    s1_sec: 3572,
-    s2_time: "71:58 · 41초",
-    s2_quote: "여러분, 그러면 감동어린 감사가 많으면 많을수록 따라합시다. 내 영혼은 살아납니다!",
-    s2_sec: 4318,
-    t1: "감사는",
-    t2: "100% 믿음이다"
+    t1: "하나님 앞에서",
+    t2: "체면 버려라",
+    time_str: "56:16 - 57:06",
+    duration: "50초",
+    desc: "체면 문화에 얽매이지 말고 하나님 앞에서는 눈치 보지 말아야 한다는 메시지.",
+    start_sec: 3376,
+    end_sec: 3426,
+    quote: "체면 눈치 보지 않습니다. 체면을 차리지 않고 내가 하나님 앞에서 정직하게 서리라!"
   },
   {
     id: 2,
-    badge: "2장면 모음",
-    duration: "42초",
-    desc: "다윗처럼 체면을 버리고 하나님 앞에서 솔직하게 찬양해야 한다는 메시지.",
-    s1_time: "55:33 · 22초",
-    s1_quote: "체면 눈치 보지 않습니다. 체면을 차리지 않고 내가 하나님 앞에서 춤을 추리라!",
-    s1_sec: 3333,
-    s2_time: "56:46 · 20초",
-    s2_quote: "기쁨을 즐거움을 주십니다. 아멘. 그래서 여러분 다윗이 하나님 앞에 엎드렸던 것입니다.",
-    s2_sec: 3406,
-    t1: "체면 차리면",
-    t2: "하나님 위에 내가"
+    t1: "짜증나는 사람",
+    t2: "옆에 있으면",
+    time_str: "58:33 - 59:27",
+    duration: "54초",
+    desc: "짜증과 불평이 많은 사람 곁에 있으면 영적으로 전염되어 우울과 불안이 옮겨온다는 경고.",
+    start_sec: 3513,
+    end_sec: 3567,
+    quote: "짜증과 불평을 멈추고 감사의 언어로 영적 바이러스를 이겨내십시오."
   },
   {
     id: 3,
-    badge: "2장면 모음",
-    duration: "50초",
-    desc: "부르짖는 날에 영혼을 강하게 하시는 하나님의 응답과 영적 회복의 확신.",
-    s1_time: "28:10 · 24초",
-    s1_quote: "내가 부르짖는 날에 주께서 응답하시고 내 영혼에 힘을 주어 강하게 하셨나이다.",
-    s1_sec: 1690,
-    s2_time: "29:45 · 26초",
-    s2_quote: "위기의 순간 무릎 꿇는 성도에게 하늘의 문을 여시는 은혜가 임합니다.",
-    s2_sec: 1785,
-    t1: "부르짖는 날에",
-    t2: "영혼을 강하게"
+    t1: "빛이 있는 상자",
+    t2: "쥐는 살았다",
+    time_str: "70:01 - 70:42",
+    duration: "41초",
+    desc: "어둠 속 쥐는 죽고 빛이 들어간 쥐는 살아남았다는 실험으로 감사와 소망의 힘을 설명한다.",
+    start_sec: 4201,
+    end_sec: 4242,
+    quote: "한 줄기 빛과 소망이 있을 때 어떤 절망 속에서도 영혼은 반드시 살아납니다."
   },
   {
     id: 4,
-    badge: "2장면 모음",
-    duration: "45초",
-    desc: "낮고 비천한 자를 굽어보시는 하나님의 은혜와 겸손한 자의 승리.",
-    s1_time: "32:15 · 21초",
-    s1_quote: "여호와께서는 높이 계셔도 낮은 자를 굽어살피시며 교만한 자를 아십니다.",
-    s1_sec: 1935,
-    s2_time: "33:50 · 24초",
-    s2_quote: "나의 무력함을 인정하고 주께 엎드릴 때 하나님의 기적이 시작됩니다.",
-    s2_sec: 2030,
-    t1: "낮은 자를",
-    t2: "굽어보시는 은혜"
+    t1: "다윗처럼",
+    t2: "먼저 감사하라",
+    time_str: "51:08 - 52:15",
+    duration: "1분 8초",
+    desc: "역대상 16장 말씀을 통해 다윗이 백성들보다 먼저 여호와께 감사하게 했던 본을 설명한다.",
+    start_sec: 3068,
+    end_sec: 3135,
+    quote: "기도의 문을 열기 전에 먼저 감사의 찬양으로 하나님의 보좌를 향하십시오."
   },
   {
     id: 5,
-    badge: "2장면 모음",
-    duration: "55초",
-    desc: "환난 중에도 지켜주시는 주의 능력의 오른손과 안전한 보호의 약속.",
-    s1_time: "35:20 · 25초",
-    s1_quote: "내가 환난 중에 다닐지라도 주께서 나를 살아나게 하시고 주의 손을 펴사 지키십니다.",
-    s1_sec: 2120,
-    s2_time: "36:45 · 30초",
-    s2_quote: "원수들의 분노 속에서도 주의 오른손이 나를 온전하게 지키십니다.",
-    s2_sec: 2205,
-    t1: "환난 중에도",
-    t2: "살리시는 주의 손"
+    t1: "싫어 싫어",
+    t2: "그 사람에게 필요한 말",
+    time_str: "61:50 - 63:05",
+    duration: "1분 15초",
+    desc: "투덜이 스머프처럼 매사 거부하는 사람에게 필요한 것은 바로 감사의 고백이라는 메시지.",
+    start_sec: 3710,
+    end_sec: 3785,
+    quote: "불평의 입술을 닫고 '주님 감사합니다'를 선포할 때 인생의 저주가 끊어집니다."
   },
   {
     id: 6,
-    badge: "2장면 모음",
-    duration: "48초",
-    desc: "인생의 모든 것을 온전하게 이루시는 하나님의 영원하신 인자하심 선포.",
-    s1_time: "38:10 · 24초",
-    s1_quote: "여호와께서 나를 위하여 모든 것을 온전하게 이루시리로다!",
-    s1_sec: 2290,
-    s2_time: "39:30 · 24초",
-    s2_quote: "주의 인자하심이 영원하오니 손으로 지으신 주의 백성을 버리지 마옵소서.",
-    s2_sec: 2370,
-    t1: "나를 위하여",
-    t2: "온전하게 이루심"
+    t1: "비가 와도",
+    t2: "감사합니다",
+    time_str: "72:41 - 75:35",
+    duration: "2분 54초",
+    desc: "예수님의 십자가 은혜와 구원, 영원한 나라를 소유한 은혜를 깨달을 때 어떤 상황에서도 감사할 수 있다는 것을 실제...",
+    start_sec: 4361,
+    end_sec: 4535,
+    quote: "비가 오든 바람이 불든 나를 구원하신 주님의 은혜 하나만으로 우리는 온전히 감사합니다."
   },
   {
     id: 7,
-    badge: "2장면 모음",
-    duration: "42초",
-    desc: "광야의 메마른 결핍 속에서 기적의 식탁을 베푸시는 하나님의 돌보심.",
-    s1_time: "41:15 · 20초",
-    s1_quote: "인간의 계산이 끝나는 그 자리가 하나님의 기적이 시작되는 은혜의 식탁입니다.",
-    s1_sec: 2475,
-    s2_time: "42:40 · 22초",
-    s2_quote: "결핍 앞에서 불평 대신 감사의 기도를 올리는 성도에게 기적이 임합니다.",
-    s2_sec: 2560,
-    t1: "광야의 식탁을",
-    t2: "베푸시는 하나님"
+    t1: "감사는",
+    t2: "100% 믿음이다",
+    time_str: "59:32 - 71:58",
+    duration: "1분",
+    desc: "열 명 중 한 명의 감사, 감사의 비율, 감사가 주는 영적 건강까지 이어지는 감사 신앙 선언.",
+    start_sec: 3572,
+    end_sec: 4318,
+    quote: "감사는 환경의 열매가 아니라 하나님을 향한 온전한 신뢰에서 맺히는 믿음의 고백입니다."
   },
   {
     id: 8,
-    badge: "2장면 모음",
-    duration: "1분 05초",
-    desc: "익숙한 불안의 자리를 털고 일어나 복의 근원으로 전진하는 거룩한 결단.",
-    s1_time: "45:10 · 30초",
-    s1_quote: "머무르는 안주에는 기적이 없습니다. 익숙한 불안의 자리를 털고 일어나십시오!",
-    s1_sec: 2710,
-    s2_time: "46:50 · 35초",
-    s2_quote: "하나님께서 당신을 거룩한 복의 통로로 반드시 세우실 것입니다. 할렐루야!",
-    s2_sec: 2810,
     t1: "익숙한 안주를",
-    t2: "털고 일어나라"
+    t2: "털고 일어나라",
+    time_str: "45:10 - 46:50",
+    duration: "1분 5초",
+    desc: "머무르는 안주에는 기적이 없습니다. 익숙한 불안의 자리를 털고 일어나 복의 근원으로 전진하는 거룩한 결단.",
+    start_sec: 2710,
+    end_sec: 2810,
+    quote: "안주의 자리를 박차고 일어날 때 홍해가 갈라지고 광야에 기적의 식탁이 차려집니다."
   }
 ];
 
 let selectedShortsCandidateId = 1;
 let selectedShortsTemplateId = 1;
+let selectedSubtitleOption = true; // Default: 자막 넣기 (Screenshot 2)
 window.currentShortsStep = 'input';
 
 function initShortsViewStep() {
   const stepInput = document.getElementById('shorts-step-input');
   const stepAnalyzing = document.getElementById('shorts-step-analyzing');
   const stepSelect = document.getElementById('shorts-step-select');
+  const stepGenerating = document.getElementById('shorts-step-generating');
   const stepStudio = document.getElementById('shorts-step-studio');
   const viewMyShorts = document.getElementById('shorts-view-myshorts');
 
@@ -3273,6 +3253,7 @@ function initShortsViewStep() {
   if (stepInput) stepInput.classList.toggle('hidden', step !== 'input');
   if (stepAnalyzing) stepAnalyzing.classList.toggle('hidden', step !== 'analyzing');
   if (stepSelect) stepSelect.classList.toggle('hidden', step !== 'select');
+  if (stepGenerating) stepGenerating.classList.toggle('hidden', step !== 'generating');
   if (stepStudio) stepStudio.classList.toggle('hidden', step !== 'studio');
   if (viewMyShorts) viewMyShorts.classList.add('hidden');
 
@@ -3289,6 +3270,7 @@ function switchShortsMainTab(tab) {
   const stepInput = document.getElementById('shorts-step-input');
   const stepAnalyzing = document.getElementById('shorts-step-analyzing');
   const stepSelect = document.getElementById('shorts-step-select');
+  const stepGenerating = document.getElementById('shorts-step-generating');
   const stepStudio = document.getElementById('shorts-step-studio');
 
   if (tab === 'create') {
@@ -3317,6 +3299,7 @@ function switchShortsMainTab(tab) {
     if (stepInput) stepInput.classList.add('hidden');
     if (stepAnalyzing) stepAnalyzing.classList.add('hidden');
     if (stepSelect) stepSelect.classList.add('hidden');
+    if (stepGenerating) stepGenerating.classList.add('hidden');
     if (stepStudio) stepStudio.classList.add('hidden');
 
     if (viewMyShorts) viewMyShorts.classList.remove('hidden');
@@ -3352,7 +3335,7 @@ function startShortsStepAnalysis() {
   if (progressBar) progressBar.style.width = '12%';
 
   const interval = setInterval(() => {
-    progress += Math.floor(Math.random() * 15) + 10;
+    progress += Math.floor(Math.random() * 15) + 12;
     if (progress > 95) progress = 95;
     if (progressBar) progressBar.style.width = progress + '%';
   }, 220);
@@ -3411,14 +3394,338 @@ function onCandidateTitleInput(cardId, val, lineNum) {
   }
 }
 
+function previewCandidateClip(cardId, e) {
+  if (e) e.stopPropagation();
+  const cand = SHORTS_CANDIDATES.find(c => c.id === cardId) || SHORTS_CANDIDATES[0];
+  if (typeof showToast === 'function') {
+    showToast(`▶ [${cand.time_str}] '${cand.t1} ${cand.t2}' 구간 미리보기를 재생합니다.`, '🎬');
+  }
+  if (typeof playStudioVideo === 'function') {
+    playStudioVideo();
+  }
+}
+
+// ================= MODAL: 자막을 넣을까요? (Screenshot 2 Match) =================
+function openSubtitleModal() {
+  selectedSubtitleOption = true;
+  selectSubtitleOption(true);
+  const modal = document.getElementById('subtitle-modal');
+  if (modal) modal.classList.remove('hidden');
+}
+
+function closeSubtitleModal() {
+  const modal = document.getElementById('subtitle-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function selectSubtitleOption(withSub) {
+  selectedSubtitleOption = withSub;
+  const btnWith = document.getElementById('sub-opt-with');
+  const btnWithout = document.getElementById('sub-opt-without');
+
+  if (withSub) {
+    if (btnWith) btnWith.className = 'flex-1 py-3 rounded-xl bg-white text-slate-900 font-extrabold text-[15px] shadow-xs border border-slate-200/60 transition-all cursor-pointer';
+    if (btnWithout) btnWithout.className = 'flex-1 py-3 rounded-xl bg-transparent text-slate-500 hover:text-slate-800 font-bold text-[15px] transition-all cursor-pointer';
+  } else {
+    if (btnWith) btnWith.className = 'flex-1 py-3 rounded-xl bg-transparent text-slate-500 hover:text-slate-800 font-bold text-[15px] transition-all cursor-pointer';
+    if (btnWithout) btnWithout.className = 'flex-1 py-3 rounded-xl bg-white text-slate-900 font-extrabold text-[15px] shadow-xs border border-slate-200/60 transition-all cursor-pointer';
+  }
+}
+
+// ================= STEP: 쇼츠 + 10종 목회 자료 동시 생성 (Screenshot 3 Match) =================
+function confirmGenerateShortsWithAllAssets() {
+  closeSubtitleModal();
+
+  const stepSelect = document.getElementById('shorts-step-select');
+  const stepGenerating = document.getElementById('shorts-step-generating');
+  const progressBar = document.getElementById('shorts-generating-progress');
+  const tipText = document.getElementById('generating-tip-text');
+
+  if (stepSelect) stepSelect.classList.add('hidden');
+  if (stepGenerating) stepGenerating.classList.remove('hidden');
+  window.currentShortsStep = 'generating';
+
+  const tips = [
+    '이 영상으로 소그룹 나눔지도 만들 수 있어요',
+    '주간 QT 6일치 묵상집과 주보 요약도 함께 준비 중이에요',
+    '인스타 카드뉴스 7장과 성도 단톡방 알림톡도 완성하고 있어요',
+    '유튜브 챕터와 자막 SRT 파일도 함께 패키징하고 있어요'
+  ];
+
+  let tipIdx = 0;
+  const tipInterval = setInterval(() => {
+    tipIdx = (tipIdx + 1) % tips.length;
+    if (tipText) tipText.textContent = tips[tipIdx];
+  }, 700);
+
+  let progress = 18;
+  if (progressBar) progressBar.style.width = '18%';
+
+  const progInterval = setInterval(() => {
+    progress += Math.floor(Math.random() * 18) + 12;
+    if (progress > 95) progress = 95;
+    if (progressBar) progressBar.style.width = progress + '%';
+  }, 240);
+
+  // SIMULTANEOUS GENERATION: Run the 10 ministry assets generator!
+  try {
+    if (typeof analyzeAndGenerateMinistryAssets === 'function') {
+      analyzeAndGenerateMinistryAssets();
+    }
+  } catch (err) {
+    console.warn('Ministry assets generation warning:', err);
+  }
+
+  // Create new short item
+  const cand = SHORTS_CANDIDATES.find(c => c.id === selectedShortsCandidateId) || SHORTS_CANDIDATES[0];
+  const combinedTitle = `${cand.t1} ${cand.t2}`.trim();
+
+  const newShortItem = {
+    id: Date.now(),
+    candId: cand.id,
+    t1: cand.t1,
+    t2: cand.t2,
+    title: combinedTitle,
+    duration: cand.duration,
+    time_str: cand.time_str,
+    quote: cand.quote,
+    withSubtitle: selectedSubtitleOption,
+    showTooltip: true,
+    date: '2026년 11월 7일',
+    church: '복의근원 관유중앙교회'
+  };
+
+  try {
+    let saved = JSON.parse(localStorage.getItem('my_seolgyo_shorts') || '[]');
+    saved.unshift(newShortItem);
+    localStorage.setItem('my_seolgyo_shorts', JSON.stringify(saved));
+  } catch (e) {
+    console.error('Save error:', e);
+  }
+
+  setTimeout(() => {
+    clearInterval(progInterval);
+    clearInterval(tipInterval);
+    if (progressBar) progressBar.style.width = '100%';
+
+    setTimeout(() => {
+      if (stepGenerating) stepGenerating.classList.add('hidden');
+      window.currentShortsStep = 'myshorts';
+      switchShortsMainTab('myshorts');
+
+      if (typeof showToast === 'function') {
+        showToast(`🎉 쇼츠와 함께 10종 목회 사역 자료가 모두 완성되었습니다!`, '✨');
+      }
+    }, 400);
+  }, 2400);
+}
+
+// ================= RENDER MY SHORTS (Screenshot 4 Match) =================
+function renderMyShortsList() {
+  const cardsList = document.getElementById('myshorts-cards-list');
+  const emptyNotice = document.getElementById('myshorts-empty-notice');
+  if (!cardsList) return;
+
+  let saved = [];
+  try {
+    saved = JSON.parse(localStorage.getItem('my_seolgyo_shorts') || '[]');
+  } catch (e) {
+    saved = [];
+  }
+
+  // If no saved items, provide defaults matching Screenshot 4
+  if (!saved || saved.length === 0) {
+    saved = [
+      {
+        id: 101,
+        candId: 7,
+        t1: "감사는",
+        t2: "100% 믿음이다",
+        title: "감사는 100% 믿음이다",
+        duration: "1분",
+        time_str: "59:32 - 71:58",
+        quote: "이 사람들은 원망하는 자며 불만을 토하는 자라... <19절, 이런 사람은 육에 속한 자며, 성령이 없는 자>",
+        withSubtitle: true,
+        showTooltip: true,
+        date: "2026년 11월 7일",
+        church: "복의근원 관유중앙교회"
+      },
+      {
+        id: 102,
+        candId: 1,
+        t1: "감사는 믿음이자",
+        t2: "능력입니다",
+        title: "감사는 믿음이자 능력입니다",
+        duration: "50초",
+        time_str: "56:16 - 57:06",
+        quote: "범사에 감사 '감사는 나의 신앙이다' => 물 한잔에도 감사 => 오늘 하루를 주심에 감사",
+        withSubtitle: true,
+        showTooltip: false,
+        date: "2026년 11월 7일",
+        church: "관유중앙교회 송기운목사"
+      }
+    ];
+  }
+
+  if (emptyNotice) emptyNotice.classList.add('hidden');
+  cardsList.classList.remove('hidden');
+
+  cardsList.innerHTML = saved.map((s, idx) => {
+    const subtitleHtml = s.withSubtitle ? `
+      <!-- Live Sermon Subtitle Overlay (Screenshot 4 Match) -->
+      <div class="px-3 py-2 rounded-xl bg-black/75 backdrop-blur-xs text-center border border-white/10 mb-2">
+        <p class="text-[10px] sm:text-[11px] font-black text-amber-300 leading-snug">
+          “${s.quote || '하나님께서 그 한 사람의 믿음을 보시고 구원을 선포하셨습니다.'}”
+        </p>
+      </div>
+    ` : `
+      <!-- Subtitle Off State -->
+      <div class="py-1"></div>
+    `;
+
+    const tooltipHtml = s.showTooltip ? `
+      <!-- Tooltip Bubble (Screenshot 4 Match) -->
+      <div id="tooltip-bubble-${s.id}" class="relative mt-2.5 mb-1 z-20">
+        <div class="rounded-xl bg-slate-900 text-white text-[11px] font-bold px-3 py-2 shadow-lg flex items-center justify-between gap-2 border border-slate-800">
+          <span onclick="openStudioFromMyShorts(${s.candId})" class="cursor-pointer hover:text-blue-300">
+            수정·화면 확대·배속·설명란은 여기 있어요
+          </span>
+          <button type="button" onclick="dismissTooltip(${s.id})" class="text-slate-400 hover:text-white font-black cursor-pointer text-xs">
+            ✕
+          </button>
+        </div>
+        <!-- Arrow pointing up -->
+        <div class="absolute -top-1 left-8 w-2 h-2 bg-slate-900 rotate-45 border-t border-l border-slate-800"></div>
+      </div>
+    ` : '';
+
+    return `
+      <!-- My Shorts Card (Screenshot 4 Match) -->
+      <div class="rounded-3xl border border-slate-200/90 bg-white p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative group">
+        
+        <div>
+          <!-- Phone Frame Container -->
+          <div class="relative w-full aspect-[9/16] rounded-2xl bg-slate-950 overflow-hidden shadow-md border border-slate-800 flex flex-col justify-between p-3.5 text-white">
+            
+            <!-- Video Background / YouTube Preview -->
+            <div class="absolute inset-0 z-0">
+              <iframe id="myshorts-yt-${s.id}" class="w-full h-full object-cover pointer-events-none opacity-85"
+                src="https://www.youtube.com/embed/F3lRIXNF1V8?enablejsapi=1&controls=0&mute=1&playsinline=1&loop=1&playlist=F3lRIXNF1V8"
+                title="${s.title}" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+              <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90"></div>
+            </div>
+
+            <!-- Top Header: Trash Button & Top Title (Screenshot 4 Match) -->
+            <div class="relative z-10 flex items-start justify-between">
+              <div></div>
+              <button type="button" onclick="deleteMyShorts(${s.id})"
+                title="삭제" class="w-7 h-7 rounded-lg bg-black/50 hover:bg-red-600 text-white flex items-center justify-center text-xs transition-colors cursor-pointer shadow-sm">
+                🗑️
+              </button>
+            </div>
+
+            <!-- Centered Header Titles (Screenshot 4 Match) -->
+            <div class="relative z-10 text-center px-2 pt-2">
+              <h3 class="text-[14px] sm:text-[15px] font-black text-white leading-tight drop-shadow-md">
+                ${s.t1 || s.title}
+              </h3>
+              <h4 class="text-[16px] sm:text-[18px] font-black text-amber-400 leading-tight mt-0.5 drop-shadow-md">
+                ${s.t2 || ''}
+              </h4>
+            </div>
+
+            <!-- Center Round Play Button (Screenshot 4 Match) -->
+            <div class="relative z-10 flex items-center justify-center my-auto">
+              <button type="button" onclick="togglePlayMyShorts(${s.id})"
+                class="w-13 h-13 rounded-full bg-black/60 hover:bg-blue-600 hover:scale-105 border border-white/40 text-white flex items-center justify-center text-xl shadow-xl transition-all cursor-pointer">
+                ▶
+              </button>
+            </div>
+
+            <!-- Bottom Section: Subtitle & Church Watermark (Screenshot 4 Match) -->
+            <div class="relative z-10 space-y-1.5">
+              ${subtitleHtml}
+              <div class="text-center">
+                <span class="inline-block text-[8px] sm:text-[8.5px] font-black text-slate-200 border border-white/30 bg-black/50 rounded-md px-2 py-0.5 shadow-2xs">
+                  ${s.church || '복의근원 관유중앙교회'}
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          ${tooltipHtml}
+
+          <!-- Text Title Below Frame -->
+          <div class="mt-3">
+            <h4 class="text-[14px] font-black text-slate-900 leading-snug">
+              <span>${s.t1 || s.title}</span> <span class="text-amber-600 font-extrabold">${s.t2 || ''}</span>
+            </h4>
+            <p class="text-[11.5px] text-slate-400 font-medium mt-0.5">${s.time_str || ''} · ${s.duration || '50초'} · ${s.date || ''}</p>
+          </div>
+        </div>
+
+        <!-- Bottom Action Buttons (Screenshot 4 Match) -->
+        <div class="flex items-center gap-2 mt-4 pt-3 border-t border-slate-100">
+          <button type="button" onclick="downloadSelectedShortsVideo()"
+            class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5">
+            <span>⤓</span>
+            <span>다운로드</span>
+          </button>
+          
+          <button type="button" onclick="openStudioFromMyShorts(${s.candId})"
+            class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors cursor-pointer flex items-center gap-1">
+            <span>··· 더보기</span>
+          </button>
+        </div>
+
+      </div>
+    `;
+  }).join('');
+}
+
+function dismissTooltip(id) {
+  const el = document.getElementById(`tooltip-bubble-${id}`);
+  if (el) el.remove();
+}
+
+function deleteMyShorts(id) {
+  if (!confirm('이 쇼츠를 내 쇼츠 보관함에서 삭제하시겠습니까?')) return;
+  try {
+    let saved = JSON.parse(localStorage.getItem('my_seolgyo_shorts') || '[]');
+    saved = saved.filter(s => s.id !== id);
+    localStorage.setItem('my_seolgyo_shorts', JSON.stringify(saved));
+    renderMyShortsList();
+    if (typeof showToast === 'function') {
+      showToast('🗑️ 쇼츠가 삭제되었습니다.', '✨');
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function togglePlayMyShorts(id) {
+  const iframe = document.getElementById(`myshorts-yt-${id}`);
+  if (typeof showToast === 'function') {
+    showToast('▶ 설교 쇼츠 실시간 재생을 시작합니다 (1.0x 원본 음성).', '🎬');
+  }
+}
+
+function openStudioFromMyShorts(candId) {
+  selectCandidateCard(candId || 1);
+  proceedToStudioWithSelectedCandidate();
+}
+
 function proceedToStudioWithSelectedCandidate() {
   const cand = SHORTS_CANDIDATES.find(c => c.id === selectedShortsCandidateId) || SHORTS_CANDIDATES[0];
   const combinedTitle = `${cand.t1} ${cand.t2}`.trim();
 
   const stepSelect = document.getElementById('shorts-step-select');
   const stepStudio = document.getElementById('shorts-step-studio');
+  const viewMyShorts = document.getElementById('shorts-view-myshorts');
 
   if (stepSelect) stepSelect.classList.add('hidden');
+  if (viewMyShorts) viewMyShorts.classList.add('hidden');
   if (stepStudio) stepStudio.classList.remove('hidden');
   window.currentShortsStep = 'studio';
 
@@ -3433,25 +3740,11 @@ function proceedToStudioWithSelectedCandidate() {
   if (refTitle) refTitle.value = combinedTitle;
 
   const refScene1 = document.getElementById('refine-scene-1-input');
-  if (refScene1) refScene1.value = cand.s1_quote;
-
-  const refScene2 = document.getElementById('refine-scene-2-input');
-  if (refScene2) refScene2.value = cand.s2_quote;
+  if (refScene1) refScene1.value = cand.quote;
 
   // Make sure playback rate is 1.0x (Original)
   if (typeof setPlaybackRate === 'function') {
     setPlaybackRate(1.0);
-  }
-
-  // Update studioClips if defined
-  if (typeof studioClips !== 'undefined' && studioClips && studioClips[cand.id]) {
-    studioClips[cand.id].title = combinedTitle;
-    if (studioClips[cand.id].scenes && studioClips[cand.id].scenes[0]) {
-      studioClips[cand.id].scenes[0].subtitle = `“${cand.s1_quote}”`;
-    }
-    if (studioClips[cand.id].scenes && studioClips[cand.id].scenes[1]) {
-      studioClips[cand.id].scenes[1].subtitle = `“${cand.s2_quote}”`;
-    }
   }
 
   // Select clip in studioClips
@@ -3459,7 +3752,6 @@ function proceedToStudioWithSelectedCandidate() {
     selectStudioClip(cand.id);
   }
 
-  // Ensure YouTube sermon video/voice is ready at 1.0x
   if (typeof loadActiveVideoSource === 'function') {
     loadActiveVideoSource();
   }
@@ -3482,98 +3774,6 @@ function backToShortsCandidateSelection() {
   }
 
   if (stepSelect) stepSelect.scrollIntoView({ behavior: 'smooth' });
-}
-
-function saveToMyShorts() {
-  const cand = SHORTS_CANDIDATES.find(c => c.id === selectedShortsCandidateId) || SHORTS_CANDIDATES[0];
-  const combinedTitle = `${cand.t1} ${cand.t2}`.trim();
-
-  const item = {
-    id: Date.now(),
-    candId: cand.id,
-    title: combinedTitle,
-    duration: cand.duration,
-    badge: cand.badge,
-    date: new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }),
-    church: '복의근원 관유중앙교회'
-  };
-
-  try {
-    let saved = JSON.parse(localStorage.getItem('my_seolgyo_shorts') || '[]');
-    saved.unshift(item);
-    localStorage.setItem('my_seolgyo_shorts', JSON.stringify(saved));
-  } catch (e) {
-    console.error('Save shorts error:', e);
-  }
-
-  if (typeof showToast === 'function') {
-    showToast(`⭐ '${combinedTitle}'이(가) 내 쇼츠에 보관되었습니다!`, '🎉');
-  }
-}
-
-function renderMyShortsList() {
-  const emptyNotice = document.getElementById('myshorts-empty-notice');
-  const cardsList = document.getElementById('myshorts-cards-list');
-  if (!cardsList) return;
-
-  let saved = [];
-  try {
-    saved = JSON.parse(localStorage.getItem('my_seolgyo_shorts') || '[]');
-  } catch (e) {
-    saved = [];
-  }
-
-  if (!saved || saved.length === 0) {
-    saved = [
-      {
-        id: 101,
-        candId: 1,
-        title: "감사는 100% 믿음이다",
-        duration: "1분",
-        badge: "2장면 모음",
-        date: "2026년 11월 7일",
-        church: "복의근원 관유중앙교회"
-      }
-    ];
-  }
-
-  if (emptyNotice) emptyNotice.classList.add('hidden');
-  cardsList.classList.remove('hidden');
-
-  cardsList.innerHTML = saved.map(s => `
-    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
-      <div>
-        <div class="w-full aspect-[9/16] max-h-48 rounded-xl bg-slate-950 p-3 flex flex-col justify-between text-center border border-slate-800 mb-3 mx-auto">
-          <div class="text-[11px] font-black text-amber-400 mt-2">${s.title}</div>
-          <div class="text-slate-600 text-xs">🎬 완성된 쇼츠</div>
-          <div class="text-[8px] text-slate-400 border border-slate-800 rounded px-1.5 py-0.5 inline-block mx-auto mb-1">${s.church}</div>
-        </div>
-        <div class="flex items-center gap-2 mb-1.5">
-          <span class="rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 px-2 py-0.5 text-[10px] font-black">${s.badge || '2장면 모음'}</span>
-          <span class="text-[11px] font-bold text-slate-500">${s.duration || '45초'}</span>
-        </div>
-        <h4 class="text-[14px] font-black text-slate-900 leading-snug">${s.title}</h4>
-        <p class="text-[11px] text-slate-400 mt-1">${s.date}</p>
-      </div>
-
-      <div class="flex items-center gap-2 mt-4 pt-3 border-t border-slate-100">
-        <button type="button" onclick="playSavedShorts(${s.candId})"
-          class="flex-1 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-2xs transition-colors cursor-pointer">
-          스튜디오 열기
-        </button>
-        <button type="button" onclick="downloadSelectedShortsVideo()"
-          class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors cursor-pointer">
-          다운로드
-        </button>
-      </div>
-    </div>
-  `).join('');
-}
-
-function playSavedShorts(candId) {
-  selectCandidateCard(candId || 1);
-  switchShortsMainTab('create');
-  proceedToStudioWithSelectedCandidate();
 }
 
 function previewCustomTimeSegment() {
